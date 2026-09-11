@@ -83,6 +83,57 @@
         block-size: auto;
         opacity: 1;
       }
+      .chip {
+        display: flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        border: 1px solid #27272a;
+        background: #161616;
+        padding: 0.5rem 0.75rem;
+        text-align: center;
+        font-size: 13.5px;
+        line-height: 1.35;
+        color: #d4d4d8;
+        cursor: pointer;
+        transition: border-color 0.15s ease, background-color 0.15s ease,
+          color 0.15s ease;
+      }
+      .chip:hover {
+        background: #1d1d1d;
+      }
+      input:checked + .chip {
+        border-color: #1c69d4;
+        background: rgba(28, 105, 212, 0.18);
+        color: #fff;
+        font-weight: 600;
+      }
+      input:focus-visible + .chip {
+        outline: 2px solid #5b9dff;
+        outline-offset: 2px;
+      }
+      .field {
+        width: 100%;
+        border-radius: 0.75rem;
+        border: 1px solid #27272a;
+        background: #0f0f0f;
+        padding: 0.875rem 1rem;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #fff;
+      }
+      .field::placeholder {
+        color: #52525b;
+      }
+      .field:focus {
+        outline: none;
+        border-color: #1c69d4;
+        box-shadow: 0 0 0 3px rgba(28, 105, 212, 0.18);
+      }
+      .field-error {
+        border-color: #f87171;
+      }
       .stock-table tbody tr {
         transition: background-color 0.15s ease;
       }
@@ -118,12 +169,22 @@
             >
           </span>
         </a>
-        <a
-          href="#cta"
-          class="rounded-full bg-[#1C69D4] px-3.5 py-2 text-xs font-semibold tracking-wide text-white shadow-[0_0_24px_rgba(28,105,212,0.35)]"
-        >
-          빠른 문의
-        </a>
+        <div class="flex items-center gap-2">
+          <a
+            href="tel:01091649639"
+            class="rounded-full border border-[#C9A24A]/45 bg-[#C9A24A]/10 px-3 py-2 text-xs font-semibold tracking-wide text-[#E4CB86]"
+          >
+            전화상담
+          </a>
+          <a
+            href="https://open.kakao.com/o/skdA6cZc"
+            target="_blank"
+            rel="noopener"
+            class="rounded-full bg-[#1C69D4] px-3 py-2 text-xs font-semibold tracking-wide text-white shadow-[0_0_24px_rgba(28,105,212,0.35)]"
+          >
+            카톡상담
+          </a>
+        </div>
       </div>
     </header>
 
@@ -767,6 +828,285 @@
         </div>
       </section>
 
+      <!-- Consultation form -->
+      <section id="consult" class="mt-12 px-4" aria-labelledby="consult-title">
+        <div class="rounded-2xl border border-[#27272A] bg-[#161616] p-5">
+          <h2 id="consult-title" class="text-[19px] font-semibold leading-snug tracking-tight text-white">
+            벤츠 실구매 상담 신청<br />
+            <span class="text-[15px] font-medium text-zinc-400">벤츠프로 김민구 과장</span>
+          </h2>
+
+          <ul class="mt-4 space-y-2">
+            <li
+              class="flex items-start gap-2 rounded-xl border border-[#C9A24A]/30 bg-[#C9A24A]/10 px-3 py-2.5 text-[13px] leading-snug text-[#E4CB86]"
+            >
+              <span class="mt-[1px]">✔</span>
+              <span>현재 재고 / 실제 출고 조건 기준 안내</span>
+            </li>
+            <li
+              class="flex items-start gap-2 rounded-xl border border-[#C9A24A]/30 bg-[#C9A24A]/10 px-3 py-2.5 text-[13px] leading-snug text-[#E4CB86]"
+            >
+              <span class="mt-[1px]">✔</span>
+              <span>최대한 빠르게 피드백 드리겠습니다</span>
+            </li>
+          </ul>
+
+          <p class="mt-3 text-[12px] text-zinc-500">
+            <span class="text-[#F87171]">*</span> 표시는 필수 질문임
+          </p>
+
+          <form id="consult-form" class="mt-6 space-y-7" novalidate>
+            <!-- 1. 관심 차종 -->
+            <fieldset data-question="carModel" data-required="true">
+              <legend class="text-[14px] font-semibold text-white">
+                관심 차종 <span class="text-[#F87171]">*</span>
+              </legend>
+              <div class="mt-3 grid grid-cols-2 gap-2">
+                <label>
+                  <input type="radio" name="carModel" value="A, CLA, GLA, GLB" class="sr-only" />
+                  <span class="chip">A, CLA, GLA, GLB</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="C-Class" class="sr-only" />
+                  <span class="chip">C-Class</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="E-Class" class="sr-only" />
+                  <span class="chip">E-Class</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="GLC" class="sr-only" />
+                  <span class="chip">GLC</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="GLE" class="sr-only" />
+                  <span class="chip">GLE</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="GLS" class="sr-only" />
+                  <span class="chip">GLS</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="S-Class" class="sr-only" />
+                  <span class="chip">S-Class</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="AMG" class="sr-only" />
+                  <span class="chip">AMG</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="MAYBACH" class="sr-only" />
+                  <span class="chip">MAYBACH</span>
+                </label>
+                <label>
+                  <input type="radio" name="carModel" value="상담 후 결정" class="sr-only" />
+                  <span class="chip">상담 후 결정</span>
+                </label>
+              </div>
+              <p class="error mt-2 hidden text-[12px] text-[#F87171]">필수 선택 항목입니다.</p>
+            </fieldset>
+
+            <!-- 2. 구매 예상 시기 -->
+            <fieldset data-question="purchaseTiming" data-required="true">
+              <legend class="text-[14px] font-semibold text-white">
+                구매 예상 시기 <span class="text-[#F87171]">*</span>
+              </legend>
+              <div class="mt-3 grid grid-cols-2 gap-2">
+                <label>
+                  <input
+                    type="radio"
+                    name="purchaseTiming"
+                    value="지금 바로 구매 가능"
+                    class="sr-only"
+                  />
+                  <span class="chip">지금 바로 구매 가능</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseTiming" value="1개월 이내" class="sr-only" />
+                  <span class="chip">1개월 이내</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseTiming" value="3개월 이내" class="sr-only" />
+                  <span class="chip">3개월 이내</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseTiming" value="6개월 이상" class="sr-only" />
+                  <span class="chip">6개월 이상</span>
+                </label>
+                <label class="col-span-2">
+                  <input
+                    type="radio"
+                    name="purchaseTiming"
+                    value="정보 확인 단계"
+                    class="sr-only"
+                  />
+                  <span class="chip">정보 확인 단계</span>
+                </label>
+              </div>
+              <p class="error mt-2 hidden text-[12px] text-[#F87171]">필수 선택 항목입니다.</p>
+            </fieldset>
+
+            <!-- 3. 구매 방식 -->
+            <fieldset data-question="purchaseMethod">
+              <legend class="text-[14px] font-semibold text-white">구매 방식</legend>
+              <div class="mt-3 grid grid-cols-2 gap-2">
+                <label>
+                  <input type="radio" name="purchaseMethod" value="현금" class="sr-only" />
+                  <span class="chip">현금</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseMethod" value="할부" class="sr-only" />
+                  <span class="chip">할부</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseMethod" value="금융리스" class="sr-only" />
+                  <span class="chip">금융리스</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseMethod" value="운용리스" class="sr-only" />
+                  <span class="chip">운용리스</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseMethod" value="장기렌트" class="sr-only" />
+                  <span class="chip">장기렌트</span>
+                </label>
+                <label>
+                  <input type="radio" name="purchaseMethod" value="아직 미정" class="sr-only" />
+                  <span class="chip">아직 미정</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- 4. 기존 차량 보유 여부 -->
+            <fieldset data-question="currentCar">
+              <legend class="text-[14px] font-semibold text-white">기존 차량 보유 여부</legend>
+              <div class="mt-3 grid grid-cols-2 gap-2">
+                <label>
+                  <input type="radio" name="currentCar" value="벤츠 보유" class="sr-only" />
+                  <span class="chip">벤츠 보유</span>
+                </label>
+                <label>
+                  <input type="radio" name="currentCar" value="타 브랜드 보유" class="sr-only" />
+                  <span class="chip">타 브랜드 보유</span>
+                </label>
+                <label>
+                  <input type="radio" name="currentCar" value="첫 차량 구매" class="sr-only" />
+                  <span class="chip">첫 차량 구매</span>
+                </label>
+                <label>
+                  <input type="radio" name="currentCar" value="없음" class="sr-only" />
+                  <span class="chip">없음</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- 5. 지역 -->
+            <fieldset data-question="region">
+              <legend class="text-[14px] font-semibold text-white">지역</legend>
+              <div class="mt-3 grid grid-cols-2 gap-2">
+                <label>
+                  <input type="radio" name="region" value="고양 인근" class="sr-only" />
+                  <span class="chip">고양 인근</span>
+                </label>
+                <label>
+                  <input type="radio" name="region" value="서울" class="sr-only" />
+                  <span class="chip">서울</span>
+                </label>
+                <label>
+                  <input type="radio" name="region" value="경기" class="sr-only" />
+                  <span class="chip">경기</span>
+                </label>
+                <label>
+                  <input type="radio" name="region" value="이외 모든 지역" class="sr-only" />
+                  <span class="chip">이외 모든 지역</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- 6. 성함 -->
+            <div data-question="name" data-required="true">
+              <label for="field-name" class="block text-[14px] font-semibold text-white">
+                성함 <span class="text-[#F87171]">*</span>
+              </label>
+              <input
+                id="field-name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                class="field mt-3"
+                placeholder="성함을 입력해주세요"
+              />
+              <p class="error mt-2 hidden text-[12px] text-[#F87171]">성함을 입력해주세요.</p>
+            </div>
+
+            <!-- 7. 연락처 -->
+            <div data-question="phone" data-required="true">
+              <label for="field-phone" class="block text-[14px] font-semibold text-white">
+                연락처 <span class="text-[#F87171]">*</span>
+              </label>
+              <input
+                id="field-phone"
+                name="phone"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                class="field mt-3"
+                placeholder="010-0000-0000"
+              />
+              <p class="error mt-2 hidden text-[12px] text-[#F87171]">연락처를 입력해주세요.</p>
+            </div>
+
+            <!-- 8. 문의 내용 -->
+            <div data-question="inquiry">
+              <label for="field-inquiry" class="block text-[14px] font-semibold text-white">
+                문의 내용
+              </label>
+              <textarea
+                id="field-inquiry"
+                name="inquiry"
+                rows="4"
+                class="field mt-3 resize-none"
+                placeholder="희망 색상 / 예산 / 궁금한 점 자유롭게 작성해주세요."
+              ></textarea>
+            </div>
+
+            <button
+              id="consult-submit"
+              type="submit"
+              class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1C69D4] py-4 text-[16px] font-semibold text-white shadow-[0_10px_30px_rgba(28,105,212,0.32)] transition-opacity disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <svg
+                id="consult-spinner"
+                class="hidden h-4 w-4 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  class="opacity-25"
+                />
+                <path
+                  d="M22 12a10 10 0 0 1-10 10"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span id="consult-submit-label">상담 신청 완료하기</span>
+            </button>
+
+            <p id="consult-network-error" class="hidden text-center text-[13px] text-[#F87171]">
+              전송에 실패했습니다. 잠시 후 다시 시도하거나 직통 전화로 연락 주세요.
+            </p>
+          </form>
+        </div>
+      </section>
+
       <footer class="mt-10 px-4 pb-4 text-center">
         <p class="text-[12px] font-semibold tracking-[0.14em] text-zinc-300">
           BENZ <span class="text-[#D8B65F]">PRO</span>
@@ -785,18 +1125,177 @@
     >
       <div class="mx-auto grid max-w-lg grid-cols-2 gap-2">
         <a
-          href="tel:01000000000"
+          href="tel:01091649639"
           class="flex items-center justify-center gap-1.5 rounded-xl bg-[#1A1A1A] py-3.5 text-sm font-semibold text-white ring-1 ring-white/10"
         >
           📞 직통 전화상담
         </a>
         <a
-          href="https://pf.kakao.com/"
+          href="https://open.kakao.com/o/skdA6cZc"
+          target="_blank"
+          rel="noopener"
           class="flex items-center justify-center gap-1.5 rounded-xl bg-[#1C69D4] py-3.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(28,105,212,0.35)]"
         >
           💬 카톡 1:1 견적문의
         </a>
       </div>
     </div>
+
+    <!-- Success modal -->
+    <div
+      id="consult-modal"
+      class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="consult-modal-title"
+    >
+      <div class="w-full max-w-sm rounded-2xl border border-[#27272A] bg-[#161616] p-6 text-center">
+        <div
+          class="mx-auto grid h-12 w-12 place-items-center rounded-full border border-emerald-500/40 bg-emerald-500/15 text-xl text-emerald-400"
+        >
+          ✓
+        </div>
+        <h3 id="consult-modal-title" class="mt-4 text-[17px] font-semibold text-white">
+          상담 신청이 접수되었습니다
+        </h3>
+        <p class="mt-3 text-[14px] leading-relaxed text-zinc-300">
+          정상적으로 접수되었습니다. 벤츠프로 김민구 과장이 배정 재고 및 실 출고 조건을 확인 후
+          신속히 연락드리겠습니다.
+        </p>
+        <button
+          type="button"
+          id="consult-modal-close"
+          class="mt-6 w-full rounded-xl bg-[#1C69D4] py-3.5 text-[15px] font-semibold text-white"
+        >
+          확인
+        </button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var WEBHOOK_URL =
+          "https://script.google.com/macros/s/AKfycbyMYl6sQkslfptAd5ZpOybJNrBV9vJYW1WiAMhLuPiuNLkHNF-3gUQNTEepZCEoWSWJ/exec";
+
+        var form = document.getElementById("consult-form");
+        var submitBtn = document.getElementById("consult-submit");
+        var spinner = document.getElementById("consult-spinner");
+        var submitLabel = document.getElementById("consult-submit-label");
+        var networkError = document.getElementById("consult-network-error");
+        var modal = document.getElementById("consult-modal");
+        var modalClose = document.getElementById("consult-modal-close");
+
+        function openModal() {
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+          document.body.style.overflow = "hidden";
+          modalClose.focus();
+        }
+
+        function closeModal() {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+          document.body.style.overflow = "";
+        }
+
+        modalClose.addEventListener("click", closeModal);
+        modal.addEventListener("click", function (event) {
+          if (event.target === modal) closeModal();
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
+        });
+
+        function clearErrors() {
+          networkError.classList.add("hidden");
+          form.querySelectorAll(".error").forEach(function (el) {
+            el.classList.add("hidden");
+          });
+          form.querySelectorAll(".field-error").forEach(function (el) {
+            el.classList.remove("field-error");
+          });
+        }
+
+        function showError(group, field) {
+          var message = group.querySelector(".error");
+          if (message) message.classList.remove("hidden");
+          if (field) field.classList.add("field-error");
+        }
+
+        function validate() {
+          var firstInvalid = null;
+
+          form.querySelectorAll("[data-required='true']").forEach(function (group) {
+            var name = group.getAttribute("data-question");
+            var radios = group.querySelectorAll("input[type='radio']");
+            var filled;
+
+            if (radios.length) {
+              filled = !!form.querySelector("input[name='" + name + "']:checked");
+              if (!filled) showError(group, null);
+            } else {
+              var field = group.querySelector(".field");
+              filled = field.value.trim() !== "";
+              if (!filled) showError(group, field);
+            }
+
+            if (!filled && !firstInvalid) firstInvalid = group;
+          });
+
+          if (firstInvalid) {
+            firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+            return false;
+          }
+          return true;
+        }
+
+        function getValue(name) {
+          var data = new FormData(form).get(name);
+          return data ? String(data).trim() : "";
+        }
+
+        function setLoading(isLoading) {
+          submitBtn.disabled = isLoading;
+          spinner.classList.toggle("hidden", !isLoading);
+          submitLabel.textContent = isLoading ? "전송 중..." : "상담 신청 완료하기";
+        }
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          clearErrors();
+          if (!validate()) return;
+
+          var payload = {
+            carModel: getValue("carModel"),
+            purchaseTiming: getValue("purchaseTiming"),
+            purchaseMethod: getValue("purchaseMethod"),
+            currentCar: getValue("currentCar"),
+            region: getValue("region"),
+            name: getValue("name"),
+            phone: getValue("phone"),
+            inquiry: getValue("inquiry"),
+          };
+
+          setLoading(true);
+
+          fetch(WEBHOOK_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload),
+          })
+            .then(function () {
+              form.reset();
+              openModal();
+            })
+            .catch(function () {
+              networkError.classList.remove("hidden");
+            })
+            .finally(function () {
+              setLoading(false);
+            });
+        });
+      })();
+    </script>
   </body>
 </html>
