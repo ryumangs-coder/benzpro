@@ -1175,7 +1175,11 @@
     <script>
       (function () {
         var WEBHOOK_URL =
-          "https://script.google.com/macros/s/AKfycbyMYl6sQkslfptAd5ZpOybJNrBV9vJYW1WiAMhLuPiuNLkHNF-3gUQNTEepZCEoWSWJ/exec";
+          "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
+
+        // 주의: 이 토큰은 페이지 소스에 노출됩니다. 유출 시 봇을 재발급해야 합니다.
+        var TELEGRAM_TOKEN = "8965845109:AAEY2R04S1-hjHSN-Vct77HScktSKNJcFh0";
+        var TELEGRAM_CHAT_ID = "658125499";
 
         var form = document.getElementById("consult-form");
         var submitBtn = document.getElementById("consult-submit");
@@ -1265,7 +1269,7 @@
           clearErrors();
           if (!validate()) return;
 
-          var payload = {
+          var values = {
             carModel: getValue("carModel"),
             purchaseTiming: getValue("purchaseTiming"),
             purchaseMethod: getValue("purchaseMethod"),
@@ -1276,20 +1280,61 @@
             inquiry: getValue("inquiry"),
           };
 
+          var formData = new URLSearchParams();
+          Object.keys(values).forEach(function (key) {
+            formData.append(key, values[key]);
+          });
+
+          var message =
+            "🚨 [벤츠프로] 신규 상담 신청 도착!\n\n" +
+            "👤 고객명: " + values.name + "\n" +
+            "📞 연락처: " + values.phone + "\n" +
+            "🚘 관심차종: " + values.carModel + "\n" +
+            "⏰ 구매시기: " + values.purchaseTiming + "\n" +
+            "💳 구매방식: " + (values.purchaseMethod || "-") + "\n" +
+            "🔄 기존차량: " + (values.currentCar || "-") + "\n" +
+            "📍 거주지역: " + (values.region || "-") + "\n" +
+            "📝 문의내용:\n" + (values.inquiry || "-");
+
           setLoading(true);
 
-          fetch(WEBHOOK_URL, {
+          var sheetRequest = fetch(WEBHOOK_URL, {
             method: "POST",
             mode: "no-cors",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(payload),
-          })
-            .then(function () {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+            body: formData.toString(),
+          });
+
+          var telegramRequest = fetch(
+            "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendMessage",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+              }),
+            }
+          ).catch(function (err) {
+            console.error("Telegram error:", err);
+            throw err;
+          });
+
+          Promise.allSettled([sheetRequest, telegramRequest])
+            .then(function (results) {
+              var allFailed = results.every(function (result) {
+                return result.status === "rejected";
+              });
+
+              if (allFailed) {
+                networkError.classList.remove("hidden");
+                return;
+              }
+
               form.reset();
               openModal();
-            })
-            .catch(function () {
-              networkError.classList.remove("hidden");
             })
             .finally(function () {
               setLoading(false);
