@@ -45,6 +45,12 @@
       input:checked + .pick { border-color: #1c1917; background: #1c1917; color: #fff; }
       .jump { scroll-margin-top: 7.5rem; }
       .shot { width: 100%; border-radius: 1.5rem; background: #e7e5e4; object-fit: cover; }
+      .cmp { min-width: 760px; border-collapse: separate; border-spacing: 0; }
+      .cmp th, .cmp td { border-bottom: 1px solid #e7e5e4; padding: 12px 10px; text-align: left; vertical-align: top; background: #fff; font-size: 15px; line-height: 1.45; }
+      .cmp thead th { background: #1c1917; color: #fff; font-weight: 700; }
+      .cmp th:first-child, .cmp td:first-child { position: sticky; left: 0; z-index: 1; min-width: 88px; background: #f6f3ee; font-weight: 700; }
+      .cmp thead th:first-child { z-index: 2; background: #1c1917; }
+      .cmp .up { background: #fff7ed; font-weight: 700; }
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
@@ -80,7 +86,7 @@
         <section id="glc" class="jump mt-8">
           <p class="text-[15px] font-bold text-[#1C69D4]">9월 출시 · 사전계약 진행 중</p>
           <h2 class="mt-1 text-[2rem] font-bold">일렉트릭 GLC</h2>
-          <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">지금 타는 GLC와 같은 가족용 SUV인데, 기름 대신 전기로 갑니다. 국내에는 네 단계로 나옵니다. 윗 단계는 아랫 단계를 그대로 품고, 좋은 것이 더해집니다.</p>
+          <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">지금 타는 GLC와 같은 가족용 SUV인데, 기름 대신 전기로 갑니다. 차종 코드는 X540, 연식은 MY27입니다. 국내 라인업은 네 트림이고, 윗 트림은 아랫 트림을 그대로 포함합니다. 겉모습 디자인 라인은 네 트림 모두 AMG Line(950)입니다. 힘은 네 바퀴로 나가는 4MATIC입니다.</p>
           <img class="shot mt-4 max-h-[420px]" src="images/preorder/glc-04.jpg" alt="빨간색 일렉트릭 GLC 앞모습" />
 
           <div class="mt-4 grid gap-3 sm:grid-cols-3">
@@ -112,74 +118,326 @@
             </figure>
             <figure>
               <img class="shot h-52 sm:h-64" src="images/preorder/star-f1.jpg" alt="천장에 별처럼 켜진 스타라이트" />
-              <figcaption class="mt-2 text-[16px] leading-relaxed text-[#44403C]">AMG Line부터 천장에 별이 들어옵니다. 낮에는 유리 지붕으로도 씁니다.</figcaption>
+              <figcaption class="mt-2 text-[16px] leading-relaxed text-[#44403C]">AMG Line부터 일루미네이티드 스타라이트(415)가 들어옵니다. 유리 안에 삼각별 162개입니다. 낮에는 SKY CONTROL 유리 지붕으로 투명도를 바꿉니다.</figcaption>
             </figure>
             <figure>
               <img class="shot h-52 sm:h-64" src="images/preorder/fr-4.jpg" alt="보닛 안 짐칸에 과일이 담긴 모습" />
-              <figcaption class="mt-2 text-[16px] leading-relaxed text-[#44403C]">보닛 안에도 128리터 짐칸이 있습니다. 충전 케이블은 여기에 넣으면 됩니다. 뒷좌석을 접으면 트렁크는 최대 1,740리터까지 넓어집니다.</figcaption>
+              <figcaption class="mt-2 text-[16px] leading-relaxed text-[#44403C]">전자식 전방 프렁크(3K1)는 128리터입니다. 트렁크 기본은 570리터, 바닥을 80mm 내리면 최대 1,740리터, 뒷좌석을 접으면 1,868리터입니다.</figcaption>
             </figure>
           </div>
 
-          <h3 class="mt-10 text-[26px] font-bold">네 단계, 이렇게 올라갑니다</h3>
-          <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">9월에 먼저 나온 것은 가운데 두 단계입니다. 기본형과 맨 위 GLC 400은 2027년 1월 예정입니다. 먼저 나온 물량은 빠르게 나갔습니다. 지금 접수하시면 다음 배정 순번으로 안내합니다.</p>
+          <nav class="mt-6 flex gap-2 overflow-x-auto pb-1" aria-label="일렉트릭 GLC 목차">
+            <a href="#glc-trims" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">4트림</a>
+            <a href="#glc-compare" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">사양 비교</a>
+            <a href="#glc-base" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">기본 26개</a>
+            <a href="#glc-charge" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">충전</a>
+            <a href="#glc-space" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">크기</a>
+            <a href="#glc-color" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">색</a>
+            <a href="#glc-faq" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">자주 묻는 말</a>
+          </nav>
+
+          <h3 id="glc-trims" class="jump mt-10 text-[26px] font-bold">국내 라인업 4트림</h3>
+          <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">9월에 계약 가능한 것은 2단계와 3단계입니다. 1단계와 4단계는 2027년 1월 예정이고, 그 가격은 예상입니다. 먼저 나온 물량은 빠르게 나갔습니다. 지금 접수하시면 다음 배정 순번으로 안내합니다. 괄호 안 번호는 사양 코드입니다.</p>
 
           <div class="mt-4 space-y-3">
             <article class="rounded-3xl bg-[#E7E5E4] p-5">
               <p class="text-[15px] font-bold text-[#57534E]">1단계 · 2027년 1월 예정</p>
-              <h4 class="mt-1 text-[24px] font-bold">GLC 300 기본</h4>
+              <h4 class="mt-1 text-[24px] font-bold">GLC 300 4MATIC</h4>
+              <p class="mt-1 text-[16px] text-[#57534E]">기본형</p>
               <p class="mt-2 text-[22px] font-bold">8,600만~8,800만원 예상</p>
-              <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">화면은 세 조각으로 나뉜 슈퍼스크린입니다. 열선·통풍·마사지, 디지털 라이트, 부메스터 사운드는 여기부터 들어갑니다. 가격은 확정되면 다시 알려 드립니다.</p>
+              <ul class="mt-3 space-y-1 text-[17px] leading-relaxed text-[#44403C]">
+                <li>기준 사양 26개가 여기부터 들어갑니다.</li>
+                <li>화면은 MBUX 슈퍼스크린(860). 10.3인치, 14인치, 14인치 세 장입니다.</li>
+                <li>시트는 ARTICO 인조가죽(110A). 실내 트림은 하이 글로스 실버 혼방(73H).</li>
+                <li>휠은 20인치 5-스포크(RRM). 서스펜션은 컴포트(485)에 AMG 액티브 라이드 컨트롤이 더해집니다.</li>
+              </ul>
             </article>
             <article class="rounded-3xl bg-white p-5 shadow-sm">
-              <p class="text-[15px] font-bold text-[#1C69D4]">2단계 · 지금 계약</p>
-              <h4 class="mt-1 text-[24px] font-bold">GLC 300 AMG Line</h4>
+              <p class="text-[15px] font-bold text-[#1C69D4]">2단계 · 9월 론칭 · 지금 계약</p>
+              <h4 class="mt-1 text-[24px] font-bold">GLC 300 4MATIC AMG Line</h4>
               <p class="mt-2 text-[28px] font-bold">9,000만원</p>
-              <ul class="mt-3 space-y-1 text-[17px] leading-relaxed text-[#44403C]">
-                <li>1단계에 있던 것을 모두 포함합니다.</li>
-                <li>화면이 39.1인치 한 장으로 커집니다.</li>
-                <li>천장에 별이 들어옵니다.</li>
-                <li>스포츠 시트, 나무 트림이 바뀝니다.</li>
+              <p class="mt-2 text-[17px] font-bold">1단계 전부 포함, 여기가 추가됩니다.</p>
+              <ul class="mt-2 space-y-1 text-[17px] leading-relaxed text-[#44403C]">
+                <li>MBUX 하이퍼스크린(870). 39.1인치 한 장으로 바뀝니다.</li>
+                <li>일루미네이티드 스타라이트 루프(415). 삼각별 162개.</li>
+                <li>스포츠 시트(7U4).</li>
+                <li>브라운 오픈포어 파인라인 버치 우드 트림(26H).</li>
+                <li>PRE-SAFE 임펄스 사이드(292). 측면 충돌 직전, 시트가 탑승자를 안쪽으로 밀어 줍니다.</li>
               </ul>
-              <button type="button" class="mt-4 rounded-2xl bg-[#1C1917] px-4 py-3 text-[17px] font-bold text-white" data-pick="일렉트릭 GLC" data-trim="GLC 300 AMG Line · 9,000만원">이 트림으로 접수</button>
+              <button type="button" class="mt-4 rounded-2xl bg-[#1C1917] px-4 py-3 text-[17px] font-bold text-white" data-pick="일렉트릭 GLC" data-trim="GLC 300 4MATIC AMG Line · 9,000만원">이 트림으로 접수</button>
             </article>
             <article class="rounded-3xl bg-[#1C1917] p-5 text-white">
-              <p class="text-[15px] font-bold text-[#E4CB86]">3단계 · 지금 계약 · 많이 고르시는 곳</p>
-              <h4 class="mt-1 text-[24px] font-bold">GLC 300 AMG Line+</h4>
+              <p class="text-[15px] font-bold text-[#E4CB86]">3단계 · 9월 론칭 · 지금 계약</p>
+              <h4 class="mt-1 text-[24px] font-bold">GLC 300 4MATIC AMG Line+</h4>
               <p class="mt-2 text-[28px] font-bold">9,480만원</p>
-              <ul class="mt-3 space-y-1 text-[17px] leading-relaxed text-zinc-200">
+              <p class="mt-2 text-[17px] font-bold text-[#E4CB86]">2단계보다 480만원. 승차감과 회전이 여기서 바뀝니다.</p>
+              <ul class="mt-2 space-y-1 text-[17px] leading-relaxed text-zinc-200">
                 <li>2단계에 있던 것을 모두 포함합니다.</li>
-                <li>에어 서스펜션이 들어가 승차감이 부드러워집니다.</li>
-                <li>뒷바퀴가 최대 4.5도 돌아 골목과 주차가 쉬워집니다.</li>
+                <li>AIRMATIC 에어 서스펜션(489)과 AMG 액티브 라이드 컨트롤. 쇠 스프링 대신 공기로 높이와 단단함을 조절합니다.</li>
+                <li>AMG 리어 액슬 스티어링 4.5도(201). 뒷바퀴가 돌아 골목과 주차가 쉬워집니다.</li>
+                <li>어질리티 &amp; 컴포트 패키지(PAD). 위 두 장비와, 앞차가 보낸 노면 정보로 댐핑을 미리 맞추는 제어가 들어갑니다.</li>
+                <li>실내 트림은 블랙/실버 메탈릭 혼방 패브릭(H75)으로 바뀝니다.</li>
               </ul>
-              <button type="button" class="mt-4 rounded-2xl bg-white px-4 py-3 text-[17px] font-bold text-[#1C1917]" data-pick="일렉트릭 GLC" data-trim="GLC 300 AMG Line+ · 9,480만원">이 트림으로 접수</button>
+              <button type="button" class="mt-4 rounded-2xl bg-white px-4 py-3 text-[17px] font-bold text-[#1C1917]" data-pick="일렉트릭 GLC" data-trim="GLC 300 4MATIC AMG Line+ · 9,480만원">이 트림으로 접수</button>
             </article>
             <article class="rounded-3xl bg-[#E7E5E4] p-5">
               <p class="text-[15px] font-bold text-[#57534E]">4단계 · 2027년 1월 예정</p>
-              <h4 class="mt-1 text-[24px] font-bold">GLC 400</h4>
+              <h4 class="mt-1 text-[24px] font-bold">GLC 400 4MATIC</h4>
+              <p class="mt-1 text-[16px] text-[#57534E]">최상위</p>
               <p class="mt-2 text-[22px] font-bold">9,900만~10,100만원 예상</p>
-              <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">배터리가 94.4kWh로 커져 유럽 기준 최대 715km입니다. 정지에서 시속 100km까지 4.3초. 시트는 천연가죽입니다.</p>
+              <p class="mt-2 text-[17px] font-bold">3단계 전부 포함, 여기가 추가됩니다.</p>
+              <ul class="mt-2 space-y-1 text-[17px] leading-relaxed text-[#44403C]">
+                <li>천연가죽 시트(210A). 3단계까지는 ARTICO 인조가죽(110A)입니다.</li>
+                <li>배터리 94.4kWh. 유럽(WLTP) 기준 최대 715km.</li>
+                <li>최고 출력 360kW. 정지에서 시속 100km까지 4.3초.</li>
+                <li>21인치 AMG Y-스포크 단조 휠(RWD).</li>
+                <li>실내 트림은 다시 브라운 오픈포어 파인라인 버치 우드(26H)입니다.</li>
+              </ul>
             </article>
           </div>
 
-          <h3 class="mt-10 text-[26px] font-bold">색은 이렇게 보입니다</h3>
-          <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">9월 출시에 함께 나온 색입니다. 라벤더 실버와 쉬어 블루는 이번에 새로 들어왔습니다.</p>
+          <h3 id="glc-compare" class="jump mt-10 text-[26px] font-bold">트림별 사양 비교</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">주황 칸은 그 트림에서 새로 바뀌는 항목입니다. 서스펜션, 후륜 조향, 화면, 지붕은 한번 바뀌면 위 트림에도 남습니다. 휠은 트림마다 다르고, 실내 마감은 AMG Line+의 패브릭(H75)에서 GLC 400의 우드(26H)로 다시 바뀝니다. 옆으로 밀어 보시면 네 칸이 모두 나옵니다.</p>
+          <div class="-mx-4 mt-4 overflow-x-auto px-4">
+            <table class="cmp">
+              <caption class="sr-only">일렉트릭 GLC 국내 4트림 사양 비교</caption>
+              <thead>
+                <tr>
+                  <th scope="col">항목</th>
+                  <th scope="col">GLC 300 4MATIC<br />1월 예정</th>
+                  <th scope="col">AMG Line<br />9,000만원</th>
+                  <th scope="col">AMG Line+<br />9,480만원</th>
+                  <th scope="col">GLC 400 4MATIC<br />1월 예정</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">휠</th>
+                  <td>20인치 5-스포크<br />탄탈 그레이 (RRM)</td>
+                  <td class="up">20인치 AMG 5-스포크<br />고광택 블랙 (RRN)</td>
+                  <td class="up">20인치 AMG 10-스포크<br />고광택 블랙 (RVQ)</td>
+                  <td class="up">21인치 AMG Y-스포크<br />단조 (RWD)</td>
+                </tr>
+                <tr>
+                  <th scope="row">서스펜션</th>
+                  <td>컴포트 (485)<br />+ AMG 액티브 라이드 컨트롤</td>
+                  <td>같음</td>
+                  <td class="up">AIRMATIC 에어 (489)<br />+ AMG 액티브 라이드 컨트롤</td>
+                  <td>AIRMATIC 에어 (489)<br />+ AMG 액티브 라이드 컨트롤</td>
+                </tr>
+                <tr>
+                  <th scope="row">후륜 조향</th>
+                  <td>없음</td>
+                  <td>없음</td>
+                  <td class="up">리어 액슬 스티어링<br />최대 4.5도 (201)</td>
+                  <td>리어 액슬 스티어링<br />최대 4.5도 (201)</td>
+                </tr>
+                <tr>
+                  <th scope="row">화면</th>
+                  <td>슈퍼스크린 (860)<br />10.3 / 14 / 14인치</td>
+                  <td class="up">하이퍼스크린 (870)<br />39.1인치 한 장</td>
+                  <td>하이퍼스크린 (870)<br />39.1인치</td>
+                  <td>하이퍼스크린 (870)<br />39.1인치</td>
+                </tr>
+                <tr>
+                  <th scope="row">지붕</th>
+                  <td>SKY CONTROL (398)<br />9칸 투명도 조절</td>
+                  <td class="up">SKY CONTROL<br />+ 스타라이트 (415)</td>
+                  <td>SKY CONTROL<br />+ 스타라이트 (415)</td>
+                  <td>SKY CONTROL<br />+ 스타라이트 (415)</td>
+                </tr>
+                <tr>
+                  <th scope="row">시트</th>
+                  <td>ARTICO 인조가죽 (110A)</td>
+                  <td>ARTICO 인조가죽 (110A)<br />스포츠 시트 (7U4)</td>
+                  <td>ARTICO 인조가죽 (110A)<br />스포츠 시트 (7U4)</td>
+                  <td class="up">천연가죽 (210A)</td>
+                </tr>
+                <tr>
+                  <th scope="row">실내 마감</th>
+                  <td>하이 글로스 실버 혼방 (73H)</td>
+                  <td class="up">파인라인 버치 우드 (26H)</td>
+                  <td class="up">메탈릭 혼방 패브릭 (H75)</td>
+                  <td class="up">파인라인 버치 우드 (26H)</td>
+                </tr>
+                <tr>
+                  <th scope="row">헤드램프</th>
+                  <td colspan="4">DIGITAL LIGHT, Micro-LED. 네 트림 동일</td>
+                </tr>
+                <tr>
+                  <th scope="row">열선·통풍</th>
+                  <td colspan="4">1열 열선·통풍·마사지, 2열 열선. 네 트림 동일</td>
+                </tr>
+                <tr>
+                  <th scope="row">HUD</th>
+                  <td colspan="4">MBUX AR 내비게이션 HUD (444). 네 트림 동일</td>
+                </tr>
+                <tr>
+                  <th scope="row">사운드</th>
+                  <td colspan="4">부메스터 4D (811). 스피커 19개, 시트 익사이터 2개, 750W. 네 트림 동일</td>
+                </tr>
+                <tr>
+                  <th scope="row">주행 보조</th>
+                  <td colspan="4">MB.DRIVE ASSIST (P20). 카메라 10, 레이더 5, 초음파 12. 차간거리·조향·차선변경 보조. 네 트림 동일</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-3 text-[15px] leading-relaxed text-[#57534E]">MY27 국내 사양 기준입니다. 1월 트림의 확정 사양과 가격은 출시 공지가 우선합니다. 9월 론칭 휠은 RRN, RVQ입니다.</p>
+
+          <h3 id="glc-base" class="jump mt-10 text-[26px] font-bold">기본형부터 들어가는 26개</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">GLC 300 4MATIC부터 아래가 기본입니다. AMG Line에서 화면·지붕·시트·실내 마감이 바뀌고, 나머지는 위 트림에도 남습니다.</p>
+          <div class="mt-4 space-y-3">
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[20px] font-bold">밖</h4>
+              <ul class="mt-3 space-y-2 text-[16px] leading-relaxed text-[#44403C]">
+                <li><span class="font-bold text-[#1C1917]">일루미네이티드 아이코닉 그릴.</span> 앞 그릴에 불이 들어옵니다.</li>
+                <li><span class="font-bold text-[#1C1917]">디지털 라이트, Micro-LED.</span> 램프 소자가 직접 빛을 냅니다. 국내 전 트림 기본입니다.</li>
+                <li><span class="font-bold text-[#1C1917]">SKY CONTROL 파노라믹 루프 (398).</span> 유리를 9칸으로 나눠 투명도를 바꿉니다. 은 코팅으로 자외선 99.9%를 막고, 시동을 끄면 불투명으로 바뀝니다.</li>
+                <li><span class="font-bold text-[#1C1917]">브랜드 로고 빔 프로젝션 (587).</span> 문을 열 때 바닥에 별을 비춥니다.</li>
+                <li><span class="font-bold text-[#1C1917]">발광 도어 실 패널 (U45).</span> 문턱에 불이 들어옵니다.</li>
+                <li><span class="font-bold text-[#1C1917]">전자식 전방 프렁크 (3K1).</span> 보닛 별을 누르거나, 운전석 도어 버튼, 화면으로 엽니다.</li>
+                <li><span class="font-bold text-[#1C1917]">키레스 고 컴포트 패키지 (P17).</span> 키를 주머니에 둔 채 문을 엽니다.</li>
+                <li><span class="font-bold text-[#1C1917]">저소음 타이어 (R06), 어쿠스틱 글래스 (851).</span> 노면 소리와 바람 소리를 줄입니다.</li>
+              </ul>
+            </article>
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[20px] font-bold">실내</h4>
+              <ul class="mt-3 space-y-2 text-[16px] leading-relaxed text-[#44403C]">
+                <li><span class="font-bold text-[#1C1917]">하이 글로스 실버 혼방 트림 (73H).</span> AMG Line은 버치 우드(26H), AMG Line+는 패브릭(H75)으로 바뀝니다.</li>
+                <li><span class="font-bold text-[#1C1917]">AMG Line 스포츠 시트 패키지 (949).</span> AMG Line 트림에서는 스포츠 시트(7U4)가 추가됩니다.</li>
+                <li><span class="font-bold text-[#1C1917]">앞좌석 열선·통풍 (401), 마사지 (257), 뒷좌석 열선 (872).</span></li>
+                <li><span class="font-bold text-[#1C1917]">뒷좌석 접이식 시트 (287).</span> 40:20:40으로 접힙니다. 가운데만 접으면 긴 짐이 들어갑니다.</li>
+                <li><span class="font-bold text-[#1C1917]">메모리 패키지 (275).</span> 시트와 미러 위치를 기억합니다.</li>
+                <li><span class="font-bold text-[#1C1917]">THERMATIC 자동 온도 조절 (580), 공기 청정 패키지 (P53).</span></li>
+                <li><span class="font-bold text-[#1C1917]">MBUX 슈퍼스크린 (860).</span> AMG Line부터는 하이퍼스크린(870)으로 교체됩니다.</li>
+                <li><span class="font-bold text-[#1C1917]">AR 내비게이션 HUD (444).</span> 앞 유리에 길 안내가 겹쳐 나옵니다.</li>
+                <li><span class="font-bold text-[#1C1917]">부메스터 4D 하이엔드 (811).</span> 스피커 19개와 시트 진동 2개, 750W. Dolby Atmos를 지원합니다.</li>
+                <li><span class="font-bold text-[#1C1917]">액티브 앰비언트 라이트 (878), 앞좌석 무선 충전 (869).</span> 휴대폰은 2대를 동시에 올립니다.</li>
+              </ul>
+            </article>
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[20px] font-bold">주행</h4>
+              <ul class="mt-3 space-y-2 text-[16px] leading-relaxed text-[#44403C]">
+                <li><span class="font-bold text-[#1C1917]">컴포트 서스펜션 (485) + AMG 액티브 라이드 컨트롤.</span> AMG Line+부터는 컴포트 대신 AIRMATIC(489)입니다. 액티브 라이드 컨트롤은 남습니다.</li>
+                <li><span class="font-bold text-[#1C1917]">360° 주차 어시스트 (P47, Digital Extra).</span> 높은 연석도 화면에 나옵니다. 액티브 파킹 어시스트는 조향과 가감속을 차가 합니다.</li>
+                <li><span class="font-bold text-[#1C1917]">MB.드라이브 어시스트 (P20, Digital Extra).</span> 액티브 디스턴스 어시스트 디스트로닉, 액티브 스티어링 어시스트, 액티브 레인 체인지 어시스트가 들어갑니다.</li>
+                <li><span class="font-bold text-[#1C1917]">4MATIC.</span> 앞바퀴와 뒷바퀴 모터가 따로 있고, 뒤쪽에는 2단 변속기가 있습니다. 내리막 속도 조절(DSR)도 있습니다.</li>
+              </ul>
+            </article>
+          </div>
+          <p class="mt-3 text-[16px] leading-relaxed text-[#44403C]">스티어링 휠은 국내 사양 기준 D컷 나파 가죽(L5C)이고, 로커·롤러 물리 버튼이 돌아와 차간 거리와 볼륨은 손끝으로 조절합니다. 비건 인테리어 패키지(P00)를 고르면 ARTICO 휠(L5N)이 적용됩니다. 열선 시트, 통풍, 요추, 메모리, 스티어링 휠 열선, SKY CONTROL은 중앙 화면에서 조작합니다.</p>
+
+          <h3 id="glc-charge" class="jump mt-10 text-[26px] font-bold">충전과 배터리</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">GLC 300의 숫자는 유럽(WLTP) 기준입니다. 국내 인증 주행거리는 출고 전에 다시 안내합니다.</p>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <p class="text-[15px] font-bold text-[#1C69D4]">GLC 300</p>
+              <ul class="mt-2 space-y-1 text-[16px] leading-relaxed text-[#44403C]">
+                <li>사용 가능 용량 85.5kWh, NCM(니켈·망간·코발트)</li>
+                <li>각형 셀 4개 모듈. 차 바닥, 앞뒤 바퀴 사이에 있습니다.</li>
+                <li>800V. 초급속 최대 330kW</li>
+                <li>10% → 80% 약 22분. 20분이면 약 390km</li>
+                <li>400V 급속은 DC 부스터로 최대 100kW</li>
+                <li>집과 공공 완속은 최대 11kW</li>
+                <li>100km당 15kWh 미만. 공기저항 Cd 0.26</li>
+                <li>최대 616km</li>
+              </ul>
+            </article>
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <p class="text-[15px] font-bold text-[#1C69D4]">GLC 400 · 1월 예정</p>
+              <ul class="mt-2 space-y-1 text-[16px] leading-relaxed text-[#44403C]">
+                <li>사용 가능 용량 94.4kWh</li>
+                <li>최고 출력 360kW</li>
+                <li>0 → 100km/h 4.3초</li>
+                <li>유럽(WLTP) 기준 최대 715km</li>
+              </ul>
+            </article>
+          </div>
+          <div class="mt-3 rounded-3xl bg-white p-5 text-[16px] leading-relaxed text-[#44403C] shadow-sm">
+            <p class="text-[18px] font-bold text-[#1C1917]">길을 넣을 때</p>
+            <p class="mt-2">내비게이션은 4세대 MBUX에 티맵 오토가 들어가 한국 도로 기준으로 안내합니다. 일렉트릭 인텔리전스는 날씨, 교통, 경사를 보고 충전 정차까지 경로에 넣습니다. 충전소가 잡히면 도착 전에 배터리를 예열해, 꽂자마자 높은 출력으로 받도록 준비합니다.</p>
+            <p class="mt-3">구매 고객에게는 MB.CHARGE Public의 PLUS 요금제가 1년 제공되는 것으로 안내되어 있습니다. 안내 요금은 완속 199원, 급속 299원(1kWh)입니다. 가입 순서와 적용 충전소는 인도 때 같이 확인합니다.</p>
+          </div>
+
+          <h3 id="glc-space" class="jump mt-10 text-[26px] font-bold">지금 GLC보다 커진 곳</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">비교 대상은 지금 판매 중인 GLC(X254)입니다. 뼈대는 전기차 전용 MB.EA-M이라, 휠베이스가 84mm 늘고 뒷좌석 무릎 공간이 40mm 늘었습니다.</p>
+          <div class="-mx-4 mt-4 overflow-x-auto px-4">
+            <table class="cmp">
+              <caption class="sr-only">일렉트릭 GLC와 현행 GLC 크기 비교</caption>
+              <thead>
+                <tr>
+                  <th scope="col">항목</th>
+                  <th scope="col">일렉트릭 GLC<br />X540</th>
+                  <th scope="col">현행 GLC<br />X254</th>
+                  <th scope="col">차이</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">전장</th><td>4,845mm</td><td>4,716mm</td><td class="up">+129mm</td></tr>
+                <tr><th scope="row">전폭</th><td>1,913mm</td><td>1,890mm</td><td class="up">+23mm</td></tr>
+                <tr><th scope="row">전고</th><td>1,644mm</td><td>1,637mm</td><td class="up">+7mm</td></tr>
+                <tr><th scope="row">휠베이스</th><td>2,972mm</td><td>2,888mm</td><td class="up">+84mm</td></tr>
+                <tr><th scope="row">앞 머리</th><td>1,039mm</td><td>1,005mm</td><td class="up">+34mm</td></tr>
+                <tr><th scope="row">앞 다리</th><td>1,049mm</td><td>1,036mm</td><td class="up">+13mm</td></tr>
+                <tr><th scope="row">뒷 머리</th><td>1,023mm</td><td>1,007mm</td><td class="up">+16mm</td></tr>
+                <tr><th scope="row">뒷 다리</th><td>990mm</td><td>950mm</td><td class="up">+40mm</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-3 text-[16px] leading-relaxed text-[#44403C]">짐은 트렁크 570리터에 프렁크 128리터를 더해, 다섯 명이 탄 상태로 698리터입니다. 현행 GLC 트렁크 620리터보다 합계 78리터 넓습니다. 견인은 4MATIC 기준 2,400kg입니다.</p>
+
+          <h3 id="glc-color" class="jump mt-10 text-[26px] font-bold">9월 론칭 색 7가지</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">폴라 화이트(149U)가 기본색입니다. 라벤더 실버(689U)와 쉬어 블루(809U)는 이번 차의 새 색입니다. 알파인 그레이(956U)는 MANUFAKTUR 추가 옵션입니다. 이후 색 3가지가 더 나올 예정입니다.</p>
           <div class="mt-4 grid grid-cols-2 gap-3">
             <figure>
-              <img class="shot h-36 sm:h-44" src="images/preorder/c-922u.jpg" alt="하이테크 실버 일렉트릭 GLC" />
-              <figcaption class="mt-2 text-[16px] font-bold">하이테크 실버</figcaption>
+              <img class="shot h-36 sm:h-44" src="images/preorder/c-149u.jpg" alt="폴라 화이트 일렉트릭 GLC" />
+              <figcaption class="mt-2 text-[16px] font-bold">폴라 화이트 <span class="font-medium text-[#57534E]">149U · 기본</span></figcaption>
             </figure>
             <figure>
               <img class="shot h-36 sm:h-44" src="images/preorder/c-197u.jpg" alt="옵시디안 블랙 일렉트릭 GLC" />
-              <figcaption class="mt-2 text-[16px] font-bold">옵시디안 블랙</figcaption>
+              <figcaption class="mt-2 text-[16px] font-bold">옵시디안 블랙 <span class="font-medium text-[#57534E]">197U</span></figcaption>
+            </figure>
+            <figure>
+              <img class="shot h-36 sm:h-44" src="images/preorder/c-922u.jpg" alt="하이테크 실버 일렉트릭 GLC" />
+              <figcaption class="mt-2 text-[16px] font-bold">하이테크 실버 <span class="font-medium text-[#57534E]">922U</span></figcaption>
+            </figure>
+            <figure>
+              <img class="shot h-36 sm:h-44" src="images/preorder/c-842u.jpg" alt="소달라이트 블루 일렉트릭 GLC" />
+              <figcaption class="mt-2 text-[16px] font-bold">소달라이트 블루 <span class="font-medium text-[#57534E]">842U</span></figcaption>
             </figure>
             <figure>
               <img class="shot h-36 sm:h-44" src="images/preorder/c-689u.jpg" alt="라벤더 실버 일렉트릭 GLC" />
-              <figcaption class="mt-2 text-[16px] font-bold">라벤더 실버</figcaption>
+              <figcaption class="mt-2 text-[16px] font-bold">라벤더 실버 <span class="font-medium text-[#57534E]">689U · 신규</span></figcaption>
             </figure>
             <figure>
               <img class="shot h-36 sm:h-44" src="images/preorder/c-809u.jpg" alt="쉬어 블루 일렉트릭 GLC" />
-              <figcaption class="mt-2 text-[16px] font-bold">쉬어 블루</figcaption>
+              <figcaption class="mt-2 text-[16px] font-bold">쉬어 블루 <span class="font-medium text-[#57534E]">809U · 신규</span></figcaption>
             </figure>
+            <figure class="col-span-2">
+              <img class="shot h-44 sm:h-56" src="images/preorder/c-956u.jpg" alt="알파인 그레이 일렉트릭 GLC" />
+              <figcaption class="mt-2 text-[16px] font-bold">알파인 그레이 <span class="font-medium text-[#57534E]">956U · MANUFAKTUR</span></figcaption>
+            </figure>
+          </div>
+
+          <h3 id="glc-faq" class="jump mt-10 text-[26px] font-bold">출고 전에 많이 물어보시는 것</h3>
+          <div class="mt-4 space-y-3">
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[18px] font-bold">뒷바퀴는 언제, 어느 쪽으로 도나요?</h4>
+              <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">AMG Line+와 GLC 400의 리어 액슬 스티어링(201)입니다. 시속 약 60km 이하에서는 앞바퀴와 반대로 최대 4.5도 돌아, 회전 반경이 줄어듭니다. 시속 70km 이상에서는 상황에 따라 같은 방향 또는 반대 방향으로 최대 2.5도, 시속 140km를 넘으면 같은 방향으로 최대 2.5도 돌아 차선 변경을 안정시킵니다. 장치에 문제가 생기면 스스로 잠깁니다.</p>
+            </article>
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[18px] font-bold">배터리는 어디 제품이고, 보증은요?</h4>
+              <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">확정된 것은 셀 종류가 NCM이고, 사용 가능 용량이 GLC 300은 85.5kWh, GLC 400은 94.4kWh라는 점입니다. 배터리 팩의 설계·조립과 배터리 관리 장치(BMS)는 메르세데스-벤츠가 담당합니다. 국내 출고분의 셀 공급사와 보증 조건은 공식 발표 전입니다. 지금 국내 EQ 전기차의 기준은 고전압 배터리 8년 또는 16만km 선도래, 용량 70%입니다. 확정되면 계약하신 분께 그 조건으로 안내합니다.</p>
+            </article>
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[18px] font-bold">충전 케이블이 안 빠지면요?</h4>
+              <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">차가 잠겨 있으면 케이블도 잠깁니다. 완속은 키의 잠금 버튼을 5초 안에 세 번 누르거나, 잠금 해제 뒤 소켓 옆 충전 중지 버튼을 누릅니다. 급속은 잠금 해제 상태에서 충전 중지 버튼을 누릅니다. 주황 불이 꺼지고 흰 불이 켜지면 뽑습니다.</p>
+            </article>
+            <article class="rounded-3xl bg-white p-5 shadow-sm">
+              <h4 class="text-[18px] font-bold">배터리가 완전히 꺼져 문이 안 열리면요?</h4>
+              <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">기계식 비상 키로 여는 방식이 아닙니다. 벤츠 24시간 긴급출동을 부르시면, 앞범퍼의 외부 전원 단자로 전원을 넣어 스마트키 잠금을 풉니다. 직접 커버를 벗기실 필요는 없습니다.</p>
+            </article>
           </div>
           <a href="#reserve" class="mt-5 flex items-center justify-center rounded-2xl bg-[#1C69D4] py-4 text-[18px] font-bold text-white" data-pick="일렉트릭 GLC">일렉트릭 GLC 사전계약 접수</a>
         </section>
