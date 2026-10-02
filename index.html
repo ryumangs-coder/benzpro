@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0F0F0F" />
     <meta
       name="description"
-      content="직판제 시대의 벤츠 구매 의사결정 가이드. 이달의 배정 로드맵, 트림별 잔존가치 분석, 개인·법인 맞춤 금융 큐레이션을 벤츠프로가 안내합니다."
+      content="벤츠프로 구매 전략. 이번 달 차값, 지금 타는 차, 회사 할인, 신차교환을 김민구 차장이 안내합니다."
     />
     <title>벤츠프로 | 메르세데스-벤츠 코리아 공식 파트너 김민구 차장</title>
     <link
@@ -88,29 +88,24 @@
       }
       .chip {
         display: flex;
-        min-height: 48px;
+        min-height: 52px;
         align-items: center;
         justify-content: center;
-        border-radius: 0.75rem;
-        border: 1px solid #27272a;
-        background: #161616;
-        padding: 0.5rem 0.75rem;
+        border-radius: 0.9rem;
+        border: 2px solid #d6d3d1;
+        background: #fff;
+        padding: 0.55rem 0.75rem;
         text-align: center;
-        font-size: 13.5px;
+        font-size: 16px;
+        font-weight: 650;
         line-height: 1.35;
-        color: #d4d4d8;
+        color: #1c1917;
         cursor: pointer;
-        transition: border-color 0.15s ease, background-color 0.15s ease,
-          color 0.15s ease;
-      }
-      .chip:hover {
-        background: #1d1d1d;
       }
       input:checked + .chip {
-        border-color: #1c69d4;
-        background: rgba(28, 105, 212, 0.18);
+        border-color: #1c1917;
+        background: #1c1917;
         color: #fff;
-        font-weight: 600;
       }
       input:focus-visible + .chip {
         outline: 2px solid #5b9dff;
@@ -118,16 +113,24 @@
       }
       .field {
         width: 100%;
-        border-radius: 0.75rem;
-        border: 1px solid #27272a;
-        background: #0f0f0f;
-        padding: 0.875rem 1rem;
-        font-size: 16px;
+        border-radius: 0.9rem;
+        border: 2px solid #d6d3d1;
+        background: #fff;
+        padding: 0.95rem 1rem;
+        font-size: 18px;
         line-height: 1.5;
-        color: #fff;
+        color: #1c1917;
       }
       .field::placeholder {
-        color: #52525b;
+        color: #a8a29e;
+      }
+      #consulting h2,
+      #consulting legend,
+      #consulting label {
+        color: #1c1917;
+      }
+      #consulting legend {
+        font-size: 16px;
       }
       .field:focus {
         outline: none;
@@ -152,82 +155,29 @@
       }
     </style>
   </head>
-  <body class="bg-[#0F0F0F] text-zinc-100 antialiased">
-    <!-- GNB -->
-    <header
-      class="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/90 backdrop-blur-xl"
-    >
-      <div class="mx-auto max-w-lg px-4 pt-3">
-        <div class="flex items-center justify-between">
-          <a href="#top" class="flex items-center gap-3" aria-label="벤츠프로 홈">
+  <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]">
+      <div class="mx-auto max-w-3xl px-4 pt-3">
+        <div class="flex items-center justify-between gap-3">
+          <a href="index.html" class="flex items-center gap-3" aria-label="벤츠프로 홈">
             <svg class="h-9 w-9 shrink-0" viewBox="0 0 64 64" aria-hidden="true">
               <circle cx="32" cy="32" r="30" fill="#0A0A0A" stroke="#F5F5F5" stroke-width="1.75" />
               <path fill="#F5F5F5" d="M32 7 36.8 29.2 53.7 44.5 32 37.5 10.3 44.5 27.2 29.2Z" />
             </svg>
             <span class="leading-tight">
-              <span class="block text-[15px] font-semibold tracking-[0.14em] text-white">
-                BENZ <span class="text-[#D8B65F]">PRO</span>
-              </span>
-              <span
-                class="mt-0.5 block max-w-[132px] text-[9px] font-medium leading-snug text-zinc-400 sm:max-w-none sm:text-[10px]"
-                >메르세데스-벤츠 코리아 공식 파트너 김민구 차장</span
-              >
+              <span class="block text-[15px] font-semibold tracking-[0.14em] text-white">BENZ <span class="text-[#D8B65F]">PRO</span></span>
+              <span class="mt-0.5 block text-[9px] font-medium leading-snug text-zinc-400 sm:text-[10px]">메르세데스-벤츠 코리아 공식 파트너 김민구 차장</span>
             </span>
           </a>
-
-          <a
-            href="https://www.youtube.com/@benzpro.official"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-[#1A1A1A] px-2.5 py-1.5 text-[10px] font-semibold text-zinc-300"
-            aria-label="벤츠프로 공식 유튜브 채널"
-          >
-            <svg class="h-3.5 w-3.5 text-[#FF0033]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"
-              />
-            </svg>
-            <span class="hidden sm:inline">YouTube</span>
-            <span class="hidden tracking-tight sm:inline">@benzpro.official</span>
-          </a>
+          <a href="https://www.youtube.com/@benzpro.official" target="_blank" rel="noopener noreferrer" class="shrink-0 rounded-full border border-white/10 bg-[#1A1A1A] px-2.5 py-1.5 text-[10px] font-semibold text-zinc-300">YouTube</a>
         </div>
-
-        <nav class="-mx-4 mt-3 overflow-x-auto pb-2.5" aria-label="주요 섹션">
+        <nav class="-mx-4 mt-3 overflow-x-auto pb-2.5" aria-label="주요 메뉴">
           <ul class="flex w-max gap-2 px-4">
+            <li><a href="prices.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">프로모션</a></li>
+            <li><a href="index.html" aria-current="page" class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]">구매 전략</a></li>
             <li>
-              <a
-                href="prices.html"
-                class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]"
-                >10월 프로모션</a
-              >
-            </li>
-            <li>
-              <a
-                href="promotion.html"
-                class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300"
-                >구매 타이밍</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://mercedes.benzpro.co.kr"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-1 rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300"
-                >벤츠 인사이트 &amp; 팁
-                <svg
-                  class="h-3 w-3 text-zinc-500"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M7 17 17 7" />
-                  <path d="M9 7h8v8" />
-                </svg>
+              <a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠 인사이트 &amp; 팁
+                <svg class="h-3 w-3 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
               </a>
             </li>
           </ul>
@@ -235,772 +185,101 @@
       </div>
     </header>
 
-    <main id="top" class="mx-auto max-w-lg pb-28">
-      <!-- Hero -->
-      <section class="relative overflow-hidden px-4 pb-9 pt-8">
-        <div
-          class="pointer-events-none absolute -top-24 right-[-40%] h-64 w-64 rounded-full bg-[#1C69D4]/20 blur-3xl"
-        ></div>
-        <p
-          class="inline-flex items-start gap-2 rounded-2xl border border-[#C9A24A]/35 bg-[#C9A24A]/10 px-3.5 py-2 text-[10.5px] font-medium leading-relaxed tracking-wide text-[#E4CB86]"
-        >
-          <span class="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#D8B65F]"></span>
-          <span>
-            The New Era of Mercedes-Benz Experience
-            <span class="mx-0.5 text-[#C9A24A]/50">|</span>
-            <span class="whitespace-nowrap font-semibold tracking-tight text-[#F3E3B8]"
-              >2026.10.01 Launching</span
-            >
-          </span>
-        </p>
-        <h1 class="mt-4 text-[1.5rem] font-semibold leading-snug tracking-tight">
-          <span class="block text-zinc-400">
-            직판제 시대, 더 이상의 무의미한 견적 비교는 없습니다.
-          </span>
-          <span class="mt-2 block text-white">
-            중요한 것은 ‘누가 가장 정확한 의사결정을 내려주는가’입니다.
-          </span>
-        </h1>
-        <p class="mt-4 text-sm leading-relaxed text-zinc-400">
-          단순 제원 설명은 카탈로그로 충분합니다. 벤츠프로는 이달의 입항 물량 배정 로드맵, 트림별
-          잔존가치 방어 분석, 그리고 개인·법인별 최적 금융 큐레이션으로 당신의 시간과 선택의
-          무게를 덜어드립니다.
-        </p>
+    <main id="top" class="mx-auto max-w-3xl px-4 pb-32 pt-8">
+      <p class="text-[15px] font-semibold text-[#8A6A22]">2026년 10월 · 벤츠프로</p>
+      <h1 class="mt-2 text-[2.05rem] font-bold leading-tight tracking-tight sm:text-[2.6rem]">이번 달 차값부터<br />보여 드립니다</h1>
+      <p class="mt-4 max-w-2xl text-[18px] leading-relaxed text-[#44403C]">견적을 여러 장 비교하지 않으셔도 됩니다. 메르세데스-벤츠 코리아 공식 파트너 김민구 차장이, 사기 전에 볼 것만 네 가지로 정리합니다.</p>
 
-        <div class="mt-6 grid grid-cols-1 gap-2.5">
-          <a
-            href="#report"
-            class="flex items-center justify-center rounded-xl bg-[#1C69D4] py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_30px_rgba(28,105,212,0.32)]"
-          >
-            10월 구매 타이밍 리포트
+      <a href="prices.html" class="mt-6 block rounded-3xl bg-white p-5 shadow-sm sm:p-6">
+        <p class="text-[15px] font-semibold text-[#1C69D4]">먼저 이 차부터</p>
+        <p class="mt-1 text-[26px] font-bold leading-snug">E 200 Exclusive</p>
+        <p class="mt-3 text-[30px] font-bold leading-tight sm:text-[34px]"><span class="text-[18px] font-medium text-[#A8A29E] line-through">7,750만원</span> <span class="text-[#A8A29E]">→</span> 6,200만원</p>
+        <p class="mt-2 text-[22px] font-bold text-[#B45309]">1,550만원 내려갑니다</p>
+        <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">현금 15% + 금융 5%. 안심보장할부는 월 35만원 × 6개월이 따로 붙습니다.</p>
+        <p class="mt-4 text-[18px] font-bold text-[#1C69D4]">10월 차값 전체 보기 →</p>
+      </a>
+
+      <section id="strategy" class="mt-10">
+        <h2 class="text-[26px] font-bold">구매는 이 순서로 보시면 됩니다</h2>
+        <div class="mt-4 grid gap-3">
+          <a href="prices.html" class="flex gap-4 rounded-3xl bg-white p-5 shadow-sm">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#F6F3EE] text-[28px]" aria-hidden="true">🏷️</span>
+            <span>
+              <span class="block text-[15px] font-semibold text-[#8A6A22]">1. 차값</span>
+              <span class="mt-1 block text-[22px] font-bold">이번 달, 얼마에 내려가는지</span>
+              <span class="mt-2 block text-[17px] leading-relaxed text-[#44403C]">제값과 할인 후 금액을 차종별로 적어 두었습니다. 현금 할인과 금융 할인을 더한 숫자입니다.</span>
+            </span>
           </a>
-          <a
-            href="#stock"
-            class="flex items-center justify-center rounded-xl border border-[#C9A24A]/45 bg-[#C9A24A]/10 py-3.5 text-[15px] font-semibold text-[#E4CB86]"
-          >
-            배정 재고 현황 확인
+          <a href="prices.html#owned" class="flex gap-4 rounded-3xl bg-white p-5 shadow-sm">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#F6F3EE] text-[28px]" aria-hidden="true">🔑</span>
+            <span>
+              <span class="block text-[15px] font-semibold text-[#8A6A22]">2. 지금 타는 차</span>
+              <span class="mt-1 block text-[22px] font-bold">그 차만 봐도 혜택이 갈립니다</span>
+              <span class="mt-2 block text-[17px] leading-relaxed text-[#44403C]">벤츠를 타시면 1%에서 9%. BMW·아우디·제네시스 등을 타시고 GLC·GLE를 사시면 1%가 더 붙습니다.</span>
+            </span>
           </a>
-        </div>
-      </section>
-
-      <!-- Decision guide cards -->
-      <section id="guide" class="px-4" aria-labelledby="guide-title">
-        <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-          Decision Guide
-        </p>
-        <h2 id="guide-title" class="mt-1 text-xl font-semibold tracking-tight text-white">
-          구매를 망설이게 하는<br />3가지 질문에 답합니다
-        </h2>
-
-        <div class="mt-4 space-y-3">
-          <article class="rounded-2xl border border-[#27272A] bg-[#161616] p-4">
-            <div class="flex items-baseline gap-2.5">
-              <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7EB6FF]"
-                >Timing</span
-              >
-              <span class="h-px flex-1 bg-white/10"></span>
-            </div>
-            <h3 class="mt-2 text-[15.5px] font-semibold tracking-tight text-white">
-              10월 입항 vs 4분기 관망 분석
-            </h3>
-            <p class="mt-2.5 text-[13px] leading-relaxed text-zinc-400">
-              10월 공식 배정 추이와 4분기 마감 사이클을 분석해, 지금 계약해야 할 차종과 연말까지
-              기다리는 편이 유리한 차종을 가감 없이 브리핑합니다.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-[#27272A] bg-[#161616] p-4">
-            <div class="flex items-baseline gap-2.5">
-              <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7EB6FF]"
-                >Selection</span
-              >
-              <span class="h-px flex-1 bg-white/10"></span>
-            </div>
-            <h3 class="mt-2 text-[15.5px] font-semibold tracking-tight text-white">
-              트림별 실질 가치 &amp; 잔존가치 방어
-            </h3>
-            <p class="mt-2.5 text-[13px] leading-relaxed text-zinc-400">
-              마력·토크가 아닙니다. 익스클루시브(EX)와 AMG Line 중 향후 중고차 시장의 수요와 내
-              승차감 성향에 부합하는 쪽을 선별해 드립니다.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-[#27272A] bg-[#161616] p-4">
-            <div class="flex items-baseline gap-2.5">
-              <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7EB6FF]"
-                >Finance</span
-              >
-              <span class="h-px flex-1 bg-white/10"></span>
-            </div>
-            <h3 class="mt-2 text-[15.5px] font-semibold tracking-tight text-white">
-              법인 손금산입 &amp; 개인 금융 큐레이션
-            </h3>
-            <p class="mt-2.5 text-[13px] leading-relaxed text-zinc-400">
-              단순 금리 비교를 넘어, 법인·개인사업자의 손금산입 한도에 맞춘 비용처리 구조와 개인의
-              초기 자금 운용에 최적화된 플랜(운용리스 · 할부 · 일시불)을 설계합니다.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <!-- Monthly decision briefing -->
-      <section id="report" class="mt-12 px-4" aria-labelledby="report-title">
-        <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#7EB6FF]">
-          October Decision Briefing
-        </p>
-        <h2 id="report-title" class="mt-1 text-xl font-semibold tracking-tight text-white">
-          2026년 10월<br />실전 구매 브리핑
-        </h2>
-        <p class="mt-2 text-[13px] leading-relaxed text-zinc-400">
-          10월 주요 입항 컬러와 출고 리드타임을 모델별로 정리했습니다.
-        </p>
-
-        <div
-          class="mt-4 space-y-3 rounded-2xl border border-[#1C69D4]/30 bg-gradient-to-br from-[#152238] to-[#1A1A1A] p-4"
-        >
-          <article class="rounded-xl border border-white/10 bg-black/30 p-3.5">
-            <p class="text-[12px] font-semibold tracking-wide text-[#9CC4FF]">E-Class</p>
-            <p class="mt-1.5 text-[13.5px] leading-relaxed text-zinc-200">
-              주력 트림인 E200과 E300 익스클루시브의 10월 입항 컬러 배정 추이와, 지금 바로 출고
-              가능한 라인업을 정리했습니다.
-            </p>
-          </article>
-
-          <article class="rounded-xl border border-white/10 bg-black/30 p-3.5">
-            <p class="text-[12px] font-semibold tracking-wide text-[#9CC4FF]">GLC-Class</p>
-            <p class="mt-1.5 text-[13.5px] leading-relaxed text-zinc-200">
-              패밀리 SUV 수요가 집중되는 트림의 10월 입항 컬러와, 계약 전 반드시 확인해야 할 인도
-              리드타임 체크포인트를 안내합니다.
-            </p>
-          </article>
-
-          <article class="rounded-xl border border-white/10 bg-black/30 p-3.5">
-            <p class="text-[12px] font-semibold tracking-wide text-[#9CC4FF]">S-Class</p>
-            <p class="mt-1.5 text-[13.5px] leading-relaxed text-zinc-200">
-              의전 수요가 몰리는 사양 조합의 10월 배정 물량과 출고 리드타임입니다. 연내 출고가
-              필요하다면 지금 확인해야 하는 구간입니다.
-            </p>
-          </article>
-
-          <a
-            href="promotion.html"
-            class="flex items-center justify-between rounded-xl border border-[#C9A24A]/40 bg-[#C9A24A]/10 px-4 py-3.5 text-[14px] font-semibold text-[#E4CB86]"
-          >
-            10월 구매 타이밍 리포트 보기
-            <svg
-              class="h-4 w-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14" />
-              <path d="m13 6 6 6-6 6" />
-            </svg>
+          <a href="mou.html" class="flex gap-4 rounded-3xl bg-white p-5 shadow-sm">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#F6F3EE] text-[28px]" aria-hidden="true">🏢</span>
+            <span>
+              <span class="block text-[15px] font-semibold text-[#8A6A22]">3. 회사 이름</span>
+              <span class="mt-1 block text-[22px] font-bold">임직원이면 2%가 더 빠집니다</span>
+              <span class="mt-2 block text-[17px] leading-relaxed text-[#44403C]">제휴 회사와 의사회·변호사회도 있습니다. 8월부터는 부모님 차, 배우자 차도 그분 이름만으로 됩니다.</span>
+            </span>
           </a>
-          <a
-            href="prices.html"
-            class="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3.5 text-[14px] font-semibold text-white"
-          >
-            차종별 가격·프로모션 상세
-            <svg
-              class="h-4 w-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14" />
-              <path d="m13 6 6 6-6 6" />
-            </svg>
+          <a href="care.html" class="flex gap-4 rounded-3xl bg-[#1C1917] p-5 text-white">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-[28px]" aria-hidden="true">🔄</span>
+            <span>
+              <span class="block text-[15px] font-semibold text-[#E4CB86]">4. 타고 난 뒤</span>
+              <span class="mt-1 block text-[22px] font-bold">사고 나면 새 차, 타이어는 200만원</span>
+              <span class="mt-2 block text-[17px] leading-relaxed text-zinc-300">벤츠 금융으로 사면 신차교환이 따라옵니다. 운용리스·안심보장할부는 타이어 교환도 됩니다.</span>
+              <span class="mt-3 block text-[16px] font-bold text-[#E4CB86]">신차교환 조건 보기 →</span>
+            </span>
           </a>
         </div>
+        <p class="mt-4 text-[17px] leading-relaxed text-[#44403C]">타이어만 먼저 보시려면 <a class="font-bold text-[#1C69D4] underline" href="tire.html">타이어 교환</a>, 차량대금을 카드로 내시면 <a class="font-bold text-[#1C69D4] underline" href="cards.html">카드 혜택</a>을 따로 봐 주세요. 모델별 칼럼은 <a class="font-bold text-[#1C69D4] underline" href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer">벤츠 인사이트 &amp; 팁</a>에 있습니다.</p>
       </section>
 
-      <!-- Inventory — CSS-only tabs via radio + :has / peer -->
-      <section id="stock" class="mt-12 px-4" aria-labelledby="stock-title">
-        <div class="flex items-end justify-between">
-          <div>
-            <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-              Live Allocation
-            </p>
-            <h2 id="stock-title" class="mt-1 text-xl font-semibold tracking-tight text-white">
-              10월 실시간 배정 현황
-            </h2>
-          </div>
-          <span class="text-[10px] text-zinc-500">10.01 기준</span>
-        </div>
-
-        <div
-          class="mt-4 rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.07] p-4"
-          role="status"
-        >
-          <p class="flex items-start gap-2 text-[13.5px] font-semibold leading-snug text-emerald-300">
-            <span class="mt-[1px]">📌</span>
-            <span
-              >2026년 10월 1일 기준 전국 공식 배정 및 입항 예정 물량 모니터링 시스템 가동 중</span
-            >
-          </p>
-          <p class="mt-2.5 text-[13px] leading-relaxed text-zinc-400">
-            메르세데스-벤츠 코리아 공식 파트너 기준 물량 수급 현황을 바탕으로 가장 빠른 출고 일정을
-            매칭해 드립니다.
-          </p>
-          <p class="mt-2 text-[11.5px] leading-relaxed text-zinc-500">
-            ※ 구글 클라우드 재고 DB 실시간 연동 준비 완료
-          </p>
-        </div>
-
-        <div class="mt-4">
-          <input id="stock-e" type="radio" name="stock-tab" class="peer/e sr-only" checked />
-          <input id="stock-glc" type="radio" name="stock-tab" class="peer/glc sr-only" />
-          <input id="stock-c" type="radio" name="stock-tab" class="peer/c sr-only" />
-
-          <div class="flex gap-2" role="tablist" aria-label="차종 필터">
-            <label
-              for="stock-e"
-              class="flex-1 cursor-pointer rounded-full border border-white/10 bg-[#1A1A1A] py-2.5 text-center text-xs font-semibold text-zinc-300"
-              >E-Class</label
-            >
-            <label
-              for="stock-glc"
-              class="flex-1 cursor-pointer rounded-full border border-white/10 bg-[#1A1A1A] py-2.5 text-center text-xs font-semibold text-zinc-300"
-              >GLC</label
-            >
-            <label
-              for="stock-c"
-              class="flex-1 cursor-pointer rounded-full border border-white/10 bg-[#1A1A1A] py-2.5 text-center text-xs font-semibold text-zinc-300"
-              >C-Class</label
-            >
-          </div>
-
-          <!-- E-Class panel -->
-          <div class="mt-3 hidden overflow-hidden rounded-2xl bg-[#1A1A1A] peer-checked/e:block">
-            <table class="stock-table w-full border-collapse text-left text-[11px]">
-              <thead class="bg-black/50 text-[10px] uppercase tracking-wider text-zinc-500">
-                <tr>
-                  <th class="px-3 py-2.5 font-medium">모델</th>
-                  <th class="px-2 py-2.5 font-medium">트림</th>
-                  <th class="px-2 py-2.5 font-medium">외장/내장</th>
-                  <th class="px-3 py-2.5 font-medium">상태</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-white/5 text-zinc-200">
-                <tr>
-                  <td class="px-3 py-3 font-medium">E 300</td>
-                  <td class="px-2 py-3">Exclusive</td>
-                  <td class="px-2 py-3">블랙 / 베이지</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-ready">즉시 가능</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-3 py-3 font-medium">E 300</td>
-                  <td class="px-2 py-3">AMG Line</td>
-                  <td class="px-2 py-3">하이테크실버 / 블랙</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-soon">소량 남음</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-3 py-3 font-medium">E 220d</td>
-                  <td class="px-2 py-3">4MATIC Exclusive</td>
-                  <td class="px-2 py-3">화이트 / 블랙</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-ready">즉시 가능</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- GLC panel -->
-          <div class="mt-3 hidden overflow-hidden rounded-2xl bg-[#1A1A1A] peer-checked/glc:block">
-            <table class="stock-table w-full border-collapse text-left text-[11px]">
-              <thead class="bg-black/50 text-[10px] uppercase tracking-wider text-zinc-500">
-                <tr>
-                  <th class="px-3 py-2.5 font-medium">모델</th>
-                  <th class="px-2 py-2.5 font-medium">트림</th>
-                  <th class="px-2 py-2.5 font-medium">외장/내장</th>
-                  <th class="px-3 py-2.5 font-medium">상태</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-white/5 text-zinc-200">
-                <tr>
-                  <td class="px-3 py-3 font-medium">GLC 300</td>
-                  <td class="px-2 py-3">4MATIC</td>
-                  <td class="px-2 py-3">그래파이트그레이 / 블랙</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-ready">즉시 가능</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-3 py-3 font-medium">GLC 300</td>
-                  <td class="px-2 py-3">AMG Line</td>
-                  <td class="px-2 py-3">블랙 / 레드스티치</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-soon">소량 남음</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-3 py-3 font-medium">GLC 220d</td>
-                  <td class="px-2 py-3">4MATIC Exclusive</td>
-                  <td class="px-2 py-3">하이테크실버 / 베이지</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-ready">즉시 가능</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- C-Class panel -->
-          <div class="mt-3 hidden overflow-hidden rounded-2xl bg-[#1A1A1A] peer-checked/c:block">
-            <table class="stock-table w-full border-collapse text-left text-[11px]">
-              <thead class="bg-black/50 text-[10px] uppercase tracking-wider text-zinc-500">
-                <tr>
-                  <th class="px-3 py-2.5 font-medium">모델</th>
-                  <th class="px-2 py-2.5 font-medium">트림</th>
-                  <th class="px-2 py-2.5 font-medium">외장/내장</th>
-                  <th class="px-3 py-2.5 font-medium">상태</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-white/5 text-zinc-200">
-                <tr>
-                  <td class="px-3 py-3 font-medium">C 200</td>
-                  <td class="px-2 py-3">AMG Line</td>
-                  <td class="px-2 py-3">폴라화이트 / 블랙</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-ready">즉시 가능</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-3 py-3 font-medium">C 300</td>
-                  <td class="px-2 py-3">4MATIC AMG Line</td>
-                  <td class="px-2 py-3">블루 / 블랙</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-soon">5일 이내</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-3 py-3 font-medium">C 220d</td>
-                  <td class="px-2 py-3">Exclusive</td>
-                  <td class="px-2 py-3">실버 / 베이지</td>
-                  <td class="px-3 py-3">
-                    <span class="badge badge-ready">즉시 가능</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Line-up selection -->
-      <section id="lineup" class="mt-12 px-4" aria-labelledby="lineup-title">
-        <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-          Line-up Selection
-        </p>
-        <h2 id="lineup-title" class="mt-1 text-xl font-semibold tracking-tight text-white">
-          라인업별 의사결정 관문
-        </h2>
-        <p class="mt-2 text-[13px] leading-relaxed text-zinc-400">
-          모델마다 고객이 가장 오래 고민하는 지점이 다릅니다. 그 갈림길만 짚었습니다.
-        </p>
-
-        <div class="mt-4 space-y-3">
-          <details class="accordion rounded-2xl border border-[#27272A] bg-[#161616]">
-            <summary class="cursor-pointer px-4 py-4">
-              <span class="flex items-start gap-3.5">
-                <span class="mt-0.5 h-10 w-1 shrink-0 rounded-full bg-[#1C69D4]"></span>
-                <span class="min-w-0 flex-1">
-                  <span class="block text-[15px] font-semibold tracking-tight text-white"
-                    >E-Class</span
-                  >
-                  <span class="mt-1 block text-[12.5px] leading-snug text-zinc-400"
-                    >클래식의 품격(EX)인가, 스포티한 감각(AMG Line)인가</span
-                  >
-                </span>
-              </span>
-              <span
-                class="mt-3 flex items-center justify-between rounded-lg border border-[#1C69D4]/35 bg-[#1C69D4]/12 px-3 py-2 text-[12px] font-semibold text-[#9CC4FF]"
-              >
-                트림별 핵심 분석 보기
-                <svg
-                  class="chevron h-3.5 w-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </span>
-            </summary>
-            <div class="px-4 pb-4">
-              <dl
-                class="space-y-2.5 rounded-xl border border-[#27272A] bg-[#0F0F0F] p-3.5 text-[13px] leading-relaxed"
-              >
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">익스클루시브</dt>
-                  <dd class="text-zinc-200">
-                    스탠딩 엠블럼과 컴포트 세팅, 18인치 휠. 장거리 주행이 많고 정숙성이 우선인 분께
-                    맞습니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">AMG Line</dt>
-                  <dd class="text-zinc-200">
-                    다이아몬드 그릴과 스포츠 서스펜션, 19~20인치 휠. 외관 존재감과 주행 감각을
-                    중시할 때 선택합니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">감가 방어</dt>
-                  <dd class="text-zinc-200">
-                    중고 수요는 무채색 외장에 AMG Line 조합이 두터운 편입니다. 다만 재매각 계획이
-                    없다면 승차감 성향을 우선하는 편이 만족도가 높습니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">결정 순서</dt>
-                  <dd class="text-zinc-200">
-                    E200과 E300 익스클루시브는 월 납입 차이가 크지 않습니다. 원하는 컬러의 배정
-                    가능 시점부터 확인하는 편이 빠릅니다.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </details>
-
-          <details class="accordion rounded-2xl border border-[#27272A] bg-[#161616]">
-            <summary class="cursor-pointer px-4 py-4">
-              <span class="flex items-start gap-3.5">
-                <span class="mt-0.5 h-10 w-1 shrink-0 rounded-full bg-zinc-600"></span>
-                <span class="min-w-0 flex-1">
-                  <span class="block text-[15px] font-semibold tracking-tight text-white"
-                    >GLC-Class</span
-                  >
-                  <span class="mt-1 block text-[12.5px] leading-snug text-zinc-400"
-                    >패밀리카의 안락함과 실용성의 균형</span
-                  >
-                </span>
-              </span>
-              <span
-                class="mt-3 flex items-center justify-between rounded-lg border border-white/12 bg-white/5 px-3 py-2 text-[12px] font-semibold text-zinc-200"
-              >
-                트림별 핵심 분석 보기
-                <svg
-                  class="chevron h-3.5 w-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </span>
-            </summary>
-            <div class="px-4 pb-4">
-              <dl
-                class="space-y-2.5 rounded-xl border border-[#27272A] bg-[#0F0F0F] p-3.5 text-[13px] leading-relaxed"
-              >
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">기본 구성</dt>
-                  <dd class="text-zinc-200">
-                    4MATIC 사륜구동이 기본이라 계절과 노면 조건에 덜 민감합니다. 가족 단위 주행에서
-                    체감 차이가 큽니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">휠 선택</dt>
-                  <dd class="text-zinc-200">
-                    19인치가 승차감과 유지비에서 균형이 좋습니다. 20인치는 외관을 얻는 대신 노면
-                    소음과 타이어 비용이 늘어납니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">잔존가치</dt>
-                  <dd class="text-zinc-200">
-                    수요가 꾸준해 잔가가 안정적인 편입니다. 그래서 리스·할부 월 납입 조건이
-                    세단보다 유리하게 나오는 경우가 많습니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">체크포인트</dt>
-                  <dd class="text-zinc-200">
-                    수요가 몰리는 트림은 인도 리드타임이 길어질 수 있습니다. 필요 시점이 정해져
-                    있다면 배정 가능 물량부터 맞추는 것이 안전합니다.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </details>
-
-          <details class="accordion rounded-2xl border border-[#27272A] bg-[#161616]">
-            <summary class="cursor-pointer px-4 py-4">
-              <span class="flex items-start gap-3.5">
-                <span class="mt-0.5 h-10 w-1 shrink-0 rounded-full bg-[#C9A24A]"></span>
-                <span class="min-w-0 flex-1">
-                  <span class="block text-[15px] font-semibold tracking-tight text-white"
-                    >S-Class &amp; 플래그십</span
-                  >
-                  <span class="mt-1 block text-[12.5px] leading-snug text-zinc-400"
-                    >법인 의전 및 잔존가치 최우선 플랜</span
-                  >
-                </span>
-              </span>
-              <span
-                class="mt-3 flex items-center justify-between rounded-lg border border-[#C9A24A]/35 bg-[#C9A24A]/10 px-3 py-2 text-[12px] font-semibold text-[#E4CB86]"
-              >
-                트림별 핵심 분석 보기
-                <svg
-                  class="chevron h-3.5 w-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </span>
-            </summary>
-            <div class="px-4 pb-4">
-              <dl
-                class="space-y-2.5 rounded-xl border border-[#27272A] bg-[#0F0F0F] p-3.5 text-[13px] leading-relaxed"
-              >
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">의전 기준</dt>
-                  <dd class="text-zinc-200">
-                    뒷좌석이 주 사용 공간이라면 리어 컴포트 패키지와 이그제큐티브 시트 구성부터
-                    확인해야 합니다. 나중에 추가할 수 없는 항목입니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">마이바흐</dt>
-                  <dd class="text-zinc-200">
-                    의전 목적이 명확하고 배정 물량이 제한적인 구간입니다. 원하는 사양이 있다면
-                    대기 순번을 미리 확보하는 편이 유리합니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">법인 플랜</dt>
-                  <dd class="text-zinc-200">
-                    손금산입 한도를 고려하면 운용리스가 기본 축이 됩니다. 잔가 설정에 따라 월
-                    비용과 만기 선택지가 달라지므로 두 가지를 함께 계산해 드립니다.
-                  </dd>
-                </div>
-                <div class="grid grid-cols-[5.5rem_1fr] gap-3">
-                  <dt class="text-zinc-500">결정 순서</dt>
-                  <dd class="text-zinc-200">
-                    사양 조합에 따라 출고 대기가 크게 벌어집니다. 필요 시점을 먼저 정하고 그 안에
-                    가능한 조합을 좁히는 순서가 실수를 줄입니다.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </details>
-        </div>
-      </section>
-
-      <!-- Finance guide -->
-      <section class="mt-12 px-4" aria-labelledby="finance-title">
-        <p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-          Finance Guide
-        </p>
-        <h2 id="finance-title" class="mt-1 text-xl font-semibold tracking-tight text-white">
-          금융사 및 결제 혜택 비교
-        </h2>
-        <p class="mt-2 text-[13px] leading-relaxed text-zinc-400">
-          구매 방식 4가지를 고객 상황 기준으로 정리했습니다.
-        </p>
-
-        <div class="mt-4 space-y-3">
-          <article class="rounded-2xl border border-[#27272A] bg-[#161616] p-4">
-            <div class="flex items-center justify-between gap-3">
-              <h3 class="text-[15px] font-semibold tracking-tight text-white">현금 일시불</h3>
-              <span
-                class="rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2.5 py-1 text-[10px] font-semibold text-emerald-400"
-                >총액 최저</span
-              >
-            </div>
-            <p class="mt-2.5 text-[13px] font-medium leading-relaxed text-[#D6E7FF]">
-              현금 여유가 있다면 카드 캐시백을 얹은 일시불이 가장 저렴합니다.
-            </p>
-            <dl class="mt-3 space-y-2 text-[13px] leading-relaxed">
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">강점</dt>
-                <dd class="text-zinc-300">이자 0원, 카드 캐시백 추가 확보</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">유의점</dt>
-                <dd class="text-zinc-300">금융 프로모션 할인은 받을 수 없음</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">추천</dt>
-                <dd class="text-zinc-300">여유 자금 보유 · 단기 재매각 계획 없음</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="rounded-2xl border border-[#27272A] bg-[#161616] p-4">
-            <div class="flex items-center justify-between gap-3">
-              <h3 class="text-[15px] font-semibold tracking-tight text-white">
-                1금융 저금리 할부
-              </h3>
-              <span
-                class="rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] font-semibold text-zinc-300"
-                >금리 최저</span
-              >
-            </div>
-            <p class="mt-2.5 text-[13px] font-medium leading-relaxed text-[#D6E7FF]">
-              내 차로 오래 탈 계획이면 1금융 저금리 할부가 안전합니다.
-            </p>
-            <dl class="mt-3 space-y-2 text-[13px] leading-relaxed">
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">강점</dt>
-                <dd class="text-zinc-300">낮은 금리, 중도상환 부담 적음</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">유의점</dt>
-                <dd class="text-zinc-300">신용도에 따라 한도·금리 편차 발생</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">추천</dt>
-                <dd class="text-zinc-300">장기 보유 · 소유권을 바로 갖고 싶은 고객</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="rounded-2xl border border-[#1C69D4]/35 bg-[#141820] p-4">
-            <div class="flex items-center justify-between gap-3">
-              <h3 class="text-[15px] font-semibold tracking-tight text-white">
-                벤츠 파이낸셜
-              </h3>
-              <span
-                class="rounded-full border border-[#1C69D4]/45 bg-[#1C69D4]/20 px-2.5 py-1 text-[10px] font-semibold text-[#9CC4FF]"
-                >프로모션</span
-              >
-            </div>
-            <p class="mt-2.5 text-[13px] font-medium leading-relaxed text-[#D6E7FF]">
-              할인 폭이 가장 큰 달에는 파이낸셜 조건이 총액에서 앞섭니다.
-            </p>
-            <dl class="mt-3 space-y-2 text-[13px] leading-relaxed">
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">강점</dt>
-                <dd class="text-zinc-300">제조사 프로모션 할인 · 유예형 설계 가능</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">유의점</dt>
-                <dd class="text-zinc-300">약정 기간 유지 조건, 월별로 조건 변동</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">추천</dt>
-                <dd class="text-zinc-300">프로모션 달 출고 · 초기 부담을 낮추려는 고객</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="rounded-2xl border border-[#27272A] bg-[#161616] p-4">
-            <div class="flex items-center justify-between gap-3">
-              <h3 class="text-[15px] font-semibold tracking-tight text-white">
-                운용리스 · 장기렌트
-              </h3>
-              <span
-                class="rounded-full border border-amber-500/40 bg-amber-500/15 px-2.5 py-1 text-[10px] font-semibold text-amber-400"
-                >경비처리</span
-              >
-            </div>
-            <p class="mt-2.5 text-[13px] font-medium leading-relaxed text-[#D6E7FF]">
-              법인·개인사업자라면 경비처리가 되는 운용리스가 사실상 정답입니다.
-            </p>
-            <dl class="mt-3 space-y-2 text-[13px] leading-relaxed">
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">강점</dt>
-                <dd class="text-zinc-300">비용 처리, 초기 목돈·부채 비율 부담 완화</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">유의점</dt>
-                <dd class="text-zinc-300">중도 해지 위약금, 약정 주행거리 초과 정산</dd>
-              </div>
-              <div class="grid grid-cols-[4.25rem_1fr] gap-3">
-                <dt class="text-zinc-500">추천</dt>
-                <dd class="text-zinc-300">법인 · 개인사업자 · 3~4년 주기 교체 고객</dd>
-              </div>
-            </dl>
-          </article>
-        </div>
-
-        <div class="mt-4 rounded-2xl border border-[#27272A] bg-[#0F0F0F] p-4">
-          <p class="text-[13px] font-semibold text-white">고객 상황별 한 줄 가이드</p>
-          <ul class="mt-3 space-y-2.5 text-[13px] leading-relaxed text-zinc-300">
-            <li class="flex gap-2.5">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1C69D4]"></span>
-              <span>사업자 경비처리가 목적이면 고민 없이 운용리스입니다.</span>
-            </li>
-            <li class="flex gap-2.5">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1C69D4]"></span>
-              <span>현금 여유가 있다면 <a href="cards.html" class="font-semibold text-[#9CC4FF] underline">카드결제 혜택</a>을 더한 일시불이 총액 최저입니다.</span>
-            </li>
-            <li class="flex gap-2.5">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1C69D4]"></span>
-              <span>5년 이상 탈 고객은 1금융 저금리 할부가 가장 안전합니다.</span>
-            </li>
-            <li class="flex gap-2.5">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1C69D4]"></span>
-              <span>이달 프로모션이 크면 파이낸셜 조건부터 계산해 보세요. 금융으로 사면 <a href="care.html" class="font-semibold text-[#9CC4FF] underline">신차교환 3년</a>, 운용리스·안심보장할부는 <a href="tire.html" class="font-semibold text-[#9CC4FF] underline">타이어 교환</a>이 따라옵니다.</span>
-            </li>
-            <li class="flex gap-2.5">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1C69D4]"></span>
-              <span>회사에 다니시면 <a href="mou.html" class="font-semibold text-[#9CC4FF] underline">임직원 추가할인</a> 대상인지 회사 이름으로 확인해 보세요.</span>
-            </li>
-          </ul>
-        </div>
+      <section class="mt-10 grid gap-3 sm:grid-cols-3">
+        <article class="rounded-3xl bg-white p-5 shadow-sm">
+          <p class="text-[28px]" aria-hidden="true">★</p>
+          <h2 class="mt-2 text-[20px] font-bold">공식 파트너</h2>
+          <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">김민구 차장이 배정과 금액을 직접 계산합니다.</p>
+        </article>
+        <article class="rounded-3xl bg-white p-5 shadow-sm">
+          <p class="text-[28px]" aria-hidden="true">₩</p>
+          <h2 class="mt-2 text-[20px] font-bold">숫자로 안내</h2>
+          <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">제값, 빠진 금액, 남는 조건을 문장으로 숨기지 않습니다.</p>
+        </article>
+        <article class="rounded-3xl bg-white p-5 shadow-sm">
+          <p class="text-[28px]" aria-hidden="true">☎</p>
+          <h2 class="mt-2 text-[20px] font-bold">상담은 직접</h2>
+          <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">아래 신청, 전화, 카카오톡 모두 같은 차장에게 닿습니다.</p>
+        </article>
       </section>
 
       <!-- Consultation form -->
-      <section id="consulting" class="mt-12 px-4" aria-labelledby="consult-title">
-        <div class="rounded-2xl border border-[#27272A] bg-[#161616] p-5">
-          <h2 id="consult-title" class="text-[19px] font-semibold leading-snug tracking-tight text-white">
+      <section id="consulting" class="mt-12" aria-labelledby="consult-title">
+        <div class="rounded-3xl bg-white p-5 shadow-sm sm:p-6">
+          <h2 id="consult-title" class="text-[26px] font-bold leading-snug tracking-tight">
             메르세데스-벤츠 실구매<br />1:1 맞춤 상담 신청
           </h2>
-          <p class="mt-3 text-[13px] leading-relaxed text-zinc-400">
+          <p class="mt-3 text-[17px] leading-relaxed text-[#44403C]">
             메르세데스-벤츠 코리아 공식 파트너 김민구 차장이 허수 없는 배정 현황과
             최적의 금융 플랜을 직접 안내해 드립니다.
           </p>
 
-          <p
-            class="mt-3 rounded-xl border border-[#1C69D4]/35 bg-[#1C69D4]/12 px-3.5 py-3 text-[13px] leading-relaxed text-[#9CC4FF]"
-          >
+          <p class="mt-3 rounded-2xl bg-[#E8F1FC] px-4 py-3 text-[16px] leading-relaxed">
             메르세데스-벤츠 코리아 공식 파트너 김민구 차장이 1:1 맞춤형 구매 큐레이션을 직접
             진행합니다.
           </p>
 
           <ul class="mt-4 space-y-2">
-            <li
-              class="flex items-start gap-2 rounded-xl border border-[#C9A24A]/30 bg-[#C9A24A]/10 px-3 py-2.5 text-[13px] leading-snug text-[#E4CB86]"
-            >
-              <span class="mt-[1px]">✔</span>
+            <li class="flex items-start gap-2 rounded-2xl bg-[#F6F3EE] px-3 py-3 text-[16px] leading-snug">
+              <span>✓</span>
               <span>현재 재고 / 실제 출고 조건 기준 안내</span>
             </li>
-            <li
-              class="flex items-start gap-2 rounded-xl border border-[#C9A24A]/30 bg-[#C9A24A]/10 px-3 py-2.5 text-[13px] leading-snug text-[#E4CB86]"
-            >
-              <span class="mt-[1px]">✔</span>
+            <li class="flex items-start gap-2 rounded-2xl bg-[#F6F3EE] px-3 py-3 text-[16px] leading-snug">
+              <span>✓</span>
               <span>최대한 빠르게 피드백 드리겠습니다</span>
             </li>
           </ul>
@@ -1261,67 +540,25 @@
         </div>
       </section>
 
-      <footer class="mt-12 px-4 pb-4 text-center">
-        <p class="text-[13px] font-semibold tracking-[0.14em] text-zinc-300">
-          BENZ <span class="text-[#D8B65F]">PRO</span>
-        </p>
-        <p class="mt-2 text-[12px] leading-relaxed text-zinc-400">
-          벤츠프로 (BENZ PRO)<br />
-          메르세데스-벤츠 코리아 공식 파트너 김민구 차장
-        </p>
-
+      <footer class="mt-12 pb-4 text-center">
+        <p class="text-[13px] font-semibold tracking-[0.14em]">BENZ <span class="text-[#8A6A22]">PRO</span></p>
+        <p class="mt-2 text-[15px] leading-relaxed text-[#57534E]">벤츠프로 (BENZ PRO)<br />메르세데스-벤츠 코리아 공식 파트너 김민구 차장</p>
         <div class="mt-4 grid grid-cols-1 gap-2">
-          <a
-            href="https://mercedes.benzpro.co.kr"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center justify-center gap-2 rounded-xl border border-[#27272A] bg-[#161616] py-3 text-[13px] font-medium text-zinc-200"
-          >
-            벤츠 인사이트 블로그
-            <span class="text-[11px] text-zinc-500">mercedes.benzpro.co.kr</span>
-          </a>
-          <a
-            href="https://www.youtube.com/@benzpro.official"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center justify-center gap-2 rounded-xl border border-[#27272A] bg-[#161616] py-3 text-[13px] font-medium text-zinc-200"
-          >
-            <svg class="h-4 w-4 text-[#FF0033]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"
-              />
-            </svg>
-            공식 유튜브 채널
-            <span class="text-[11px] text-zinc-500">@benzpro.official</span>
-          </a>
+          <a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 rounded-2xl bg-white py-3 text-[16px] font-bold shadow-sm">벤츠 인사이트 블로그</a>
+          <a href="https://www.youtube.com/@benzpro.official" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 rounded-2xl bg-white py-3 text-[16px] font-bold shadow-sm">공식 유튜브 채널</a>
         </div>
-
-        <p class="mt-4 text-[10px] leading-relaxed text-zinc-600">
-          재고·조건은 공식 확정 데이터 기준으로 별도 업데이트됩니다.
-        </p>
+        <p class="mt-4 text-[14px] leading-relaxed text-[#78716C]">재고·조건은 공식 확정 데이터 기준으로 별도 업데이트됩니다.</p>
       </footer>
     </main>
 
     <!-- Sticky CTA -->
     <div
       id="cta"
-      class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0F0F0F]/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl"
+      class="fixed inset-x-0 bottom-0 z-50 border-t border-[#E7E5E4] bg-[#F6F3EE]/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur"
     >
-      <div class="mx-auto grid max-w-lg grid-cols-2 gap-2">
-        <a
-          href="tel:01091649639"
-          class="flex items-center justify-center gap-1.5 rounded-xl bg-[#1A1A1A] py-3.5 text-sm font-semibold text-white ring-1 ring-white/10"
-        >
-          📞 직통 전화상담
-        </a>
-        <a
-          href="https://open.kakao.com/o/skdA6cZc"
-          target="_blank"
-          rel="noopener"
-          class="flex items-center justify-center gap-1.5 rounded-xl bg-[#1C69D4] py-3.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(28,105,212,0.35)]"
-        >
-          💬 카톡 1:1 견적문의
-        </a>
+      <div class="mx-auto grid max-w-3xl grid-cols-2 gap-2">
+        <a href="tel:01091649639" class="flex min-h-[52px] items-center justify-center gap-1.5 rounded-2xl border-2 border-[#1C1917] bg-white text-[16px] font-bold">📞 전화 문의</a>
+        <a href="https://open.kakao.com/o/skdA6cZc" target="_blank" rel="noopener" class="flex min-h-[52px] items-center justify-center gap-1.5 rounded-2xl bg-[#1C69D4] text-[16px] font-bold text-white">💬 카톡 문의</a>
       </div>
     </div>
 
