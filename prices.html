@@ -309,21 +309,40 @@
           });
           list.innerHTML = html;
         }
-        segWrap.addEventListener("click", function (e) {
-          var btn = e.target.closest("button");
-          if (!btn) return;
-          seg = btn.getAttribute("data-seg");
-          drawSegs();
-          render();
-        });
-        q.addEventListener("input", render);
         var filterNote = document.getElementById("filter-note");
-        if (prefix) {
+        function showGuideNote() {
+          if (!prefix) {
+            filterNote.classList.add("hidden");
+            filterNote.innerHTML = "";
+            return;
+          }
           filterNote.classList.remove("hidden");
           filterNote.innerHTML =
             "차량 가이드에서 <b>" + esc(prefix.trim()) + "</b>만 보고 있습니다. " +
             '<a class="font-bold text-[#1C69D4]" href="prices.html#finder">전체 차종 보기</a>';
         }
+        function clearGuide() {
+          if (!prefix && !hasPart && !notPart) return;
+          prefix = "";
+          kind = "all";
+          hasPart = "";
+          notPart = "";
+          showGuideNote();
+          if (location.search) history.replaceState(null, "", "prices.html" + (location.hash || ""));
+        }
+        segWrap.addEventListener("click", function (e) {
+          var btn = e.target.closest("button");
+          if (!btn) return;
+          seg = btn.getAttribute("data-seg");
+          clearGuide();
+          drawSegs();
+          render();
+        });
+        q.addEventListener("input", function () {
+          if (q.value.trim()) clearGuide();
+          render();
+        });
+        showGuideNote();
         drawHighlights();
         drawSegs();
         render();
