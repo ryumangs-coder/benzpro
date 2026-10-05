@@ -43,49 +43,8 @@
       .jump {
         scroll-margin-top: 7.5rem;
       }
-      .table-wrap {
-        overflow-x: auto;
-        border-radius: 1.25rem;
-        background: #fff;
-        box-shadow: 0 1px 2px rgba(28, 25, 23, 0.06);
-      }
-      table.detail {
-        width: max-content;
-        min-width: 100%;
-        border-collapse: collapse;
-        font-size: 15px;
-      }
-      table.detail th,
-      table.detail td {
-        padding: 0.9rem 0.85rem;
-        text-align: left;
-        border-bottom: 1px solid #e7e5e4;
-        vertical-align: top;
-        white-space: nowrap;
-      }
-      table.detail th {
-        background: #1c1917;
-        color: #fff;
-        font-weight: 700;
-      }
-      table.detail td:first-child,
-      table.detail th:first-child {
-        position: sticky;
-        left: 0;
-        min-width: 11.5rem;
-        white-space: normal;
-      }
-      table.detail td:first-child {
-        background: #fff;
-        z-index: 1;
-      }
-      table.detail th:first-child {
-        z-index: 2;
-      }
-      table.detail td.wrap {
-        white-space: normal;
-        min-width: 9rem;
-        max-width: 14rem;
+      .price-row {
+        overflow: hidden;
       }
     </style>
   </head>
@@ -321,12 +280,12 @@
       <section id="finder" class="jump mt-10" aria-labelledby="finder-title">
         <h2 id="finder-title" class="text-[26px] font-bold">차종별 가격과 프로모션</h2>
         <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">
-          권장가, 현금 할인, 금융 할인, 할인 후 금액, 재구매, 다른 브랜드, 신한카드를 모델마다 나눠 적었습니다. 위쪽 카드는 이번 달 먼저 볼 요약입니다.
+          모델마다 권장가, 기본 할인, 파이낸셜 할인, 할인 후 금액만 적었습니다. 위쪽 카드는 이번 달 먼저 볼 요약입니다.
         </p>
         <ul class="mt-3 space-y-1 text-[16px] leading-relaxed text-[#57534E]">
-          <li>할인 후 금액은 현금과, 숫자로 적힌 금융 할인을 더한 값입니다.</li>
-          <li>할부·리스·렌트처럼 방식이 나뉘는 금융 할인은 금액에 넣지 않고 글자로 적습니다.</li>
-          <li>재구매, 다른 브랜드, 회사, 카드는 서류를 확인한 뒤에 더해집니다. 이 표의 할인 후 금액에는 아직 없습니다.</li>
+          <li>할인 후 금액은 기본 할인과, 숫자로 적힌 파이낸셜 할인을 더한 값입니다.</li>
+          <li>할부·리스·렌트처럼 방식이 나뉘는 파이낸셜 할인은 금액에 넣지 않고 글자로 적습니다.</li>
+          <li>지금 타는 차, 회사, 카드 할인은 위 안내에서 따로 확인합니다. 이 금액에는 아직 없습니다.</li>
         </ul>
         <p id="filter-note" class="mt-4 hidden rounded-2xl bg-white px-4 py-3 text-[16px] leading-relaxed shadow-sm"></p>
         <label class="mt-4 block text-[16px] font-semibold text-[#57534E]" for="q">모델 이름</label>
@@ -466,19 +425,9 @@
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;");
         }
-        function dash(s) {
-          return s ? esc(s) : "—";
-        }
         function publicNote(note) {
           if (!note || note.indexOf("표기") !== -1) return "";
           return note;
-        }
-        function financeCell(row, d) {
-          var text = d.finance ? d.finance + "%" : row.mbm ? row.mbm : "—";
-          var extra = "";
-          if (row.jc && String(row.jc).indexOf("사전계약") !== -1) extra = "사전계약 고객 조건";
-          else if (row.jc) extra = "벤츠 금융과 함께하는 조건";
-          return esc(text) + (extra ? '<p class="mt-1 text-[13px] leading-snug text-[#78716C]">' + extra + "</p>" : "");
         }
         function consultHref(row) {
           var car = "상담 후 결정";
@@ -508,53 +457,67 @@
           if (kind === "maybach" && !may) return false;
           return true;
         }
+        function financeText(row, d) {
+          if (d.finance) return d.finance + "%";
+          if (row.mbm) return row.mbm;
+          return "없음";
+        }
         function tableHtml(group) {
-          var body = group
-            .map(function (row) {
-              var d = deal(row);
-              var note = publicNote(row.note);
-              var cashOnly = d.cash != null && row.mbm && !d.finance;
-              var after;
-              if (d.finalMan != null) {
-                after =
-                  '<p class="text-[18px] font-bold">' + wonMan(d.finalMan) + "</p>" +
-                  (d.savedMan != null ? '<p class="mt-1 text-[14px] font-semibold text-[#B45309]">' + wonMan(d.savedMan) + " 감소</p>" : "") +
-                  (cashOnly ? '<p class="mt-1 text-[13px] leading-snug text-[#78716C]">현금 할인만 반영</p>' : "");
-              } else if (d.priceMan == null) {
-                after =
-                  '<p class="text-[16px] font-bold">상담 시 확인</p>' +
-                  (d.cash != null
-                    ? '<p class="mt-1 text-[13px] leading-snug text-[#78716C]">현금 ' + d.cash + "%는 권장가가 정해지면 적용됩니다</p>"
-                    : '<p class="mt-1 text-[13px] text-[#78716C]">금액은 상담에서 확인합니다</p>');
-              } else {
-                after =
-                  '<p class="text-[16px] font-bold">' + wonMan(d.priceMan) + "</p>" +
-                  '<p class="mt-1 text-[13px] text-[#78716C]">현금 할인 없음</p>';
-              }
-              var month = d.month ? '<p class="mt-1 text-[13px] font-semibold text-[#1C1917]">월 ' + d.month + "만원 × 6</p>" : "";
-              return (
-                "<tr>" +
-                '<th scope="row"><p class="text-[16px] font-bold leading-snug">' + esc(row.name) + "</p>" +
-                '<p class="mt-1 text-[13px] text-[#78716C]">' + esc(row.my) + "</p>" +
-                (note ? '<p class="mt-1 text-[13px] leading-snug text-[#57534E]">' + esc(note) + "</p>" : "") +
-                month + "</th>" +
-                "<td>" + (d.priceMan != null ? wonMan(d.priceMan) : "상담 시 확인") + "</td>" +
-                "<td>" + (d.cash == null ? "없음" : d.cash + "%") + "</td>" +
-                '<td class="wrap">' + financeCell(row, d) + "</td>" +
-                "<td>" + after + "</td>" +
-                "<td>" + dash(row.retain) + "</td>" +
-                "<td>" + dash(row.conquest) + "</td>" +
-                "<td>" + dash(row.shinhan) + "</td>" +
-                '<td><a class="inline-flex rounded-full bg-[#1C1917] px-3 py-2 text-[14px] font-bold text-white" href="' +
-                consultHref(row) + '">문의</a></td>' +
-                "</tr>"
-              );
-            })
-            .join("");
           return (
-            '<div class="table-wrap"><table class="detail"><thead><tr>' +
-            "<th>모델</th><th>권장가</th><th>현금</th><th>금융</th><th>할인 후</th><th>재구매</th><th>다른 브랜드</th><th>신한카드</th><th></th>" +
-            "</tr></thead><tbody>" + body + "</tbody></table></div>"
+            '<div class="space-y-3">' +
+            group
+              .map(function (row) {
+                var d = deal(row);
+                var note = publicNote(row.note);
+                var cashOnly = d.cash != null && row.mbm && !d.finance;
+                var priceLine;
+                if (d.finalMan != null) {
+                  priceLine =
+                    '<p class="mt-3 text-[22px] font-bold leading-tight">' +
+                    '<span class="text-[16px] font-medium text-[#A8A29E] line-through">' + wonMan(d.priceMan) + "</span>" +
+                    '<span class="mx-1 text-[#A8A29E]">→</span>' + wonMan(d.finalMan) + "</p>" +
+                    (d.savedMan != null ? '<p class="mt-1 text-[16px] font-bold text-[#B45309]">' + wonMan(d.savedMan) + " 감소</p>" : "") +
+                    (cashOnly ? '<p class="mt-1 text-[14px] leading-snug text-[#78716C]">기본 할인만 반영</p>' : "");
+                } else if (d.priceMan == null) {
+                  priceLine =
+                    '<p class="mt-3 text-[20px] font-bold">상담 시 확인</p>' +
+                    (d.cash != null
+                      ? '<p class="mt-1 text-[14px] leading-snug text-[#78716C]">기본 ' + d.cash + "%는 권장가가 정해지면 적용됩니다</p>"
+                      : "");
+                } else {
+                  priceLine =
+                    '<p class="mt-3 text-[22px] font-bold">' + wonMan(d.priceMan) + "</p>" +
+                    '<p class="mt-1 text-[14px] text-[#78716C]">기본 할인 없음</p>';
+                }
+                var fin = financeText(row, d);
+                var finSize = fin.length > 6 ? "text-[16px] leading-snug" : "text-[20px]";
+                var month = d.month
+                  ? '<p class="mt-3 text-[15px] font-semibold text-[#1C1917]">월 ' + d.month + "만원 × 6개월 지원</p>"
+                  : "";
+                return (
+                  '<article class="price-row rounded-3xl bg-white p-4 shadow-sm">' +
+                  '<div class="flex items-start justify-between gap-3">' +
+                  '<div class="min-w-0">' +
+                  '<h4 class="text-[18px] font-bold leading-snug">' + esc(row.name) + "</h4>" +
+                  '<p class="mt-1 text-[14px] text-[#78716C]">' + esc(row.my) + "</p>" +
+                  (note ? '<p class="mt-1 text-[14px] leading-snug text-[#57534E]">' + esc(note) + "</p>" : "") +
+                  "</div>" +
+                  '<a class="shrink-0 rounded-full bg-[#1C1917] px-3.5 py-2 text-[15px] font-bold text-white" href="' +
+                  consultHref(row) + '">문의</a>' +
+                  "</div>" +
+                  priceLine +
+                  '<div class="mt-3 grid grid-cols-2 gap-2">' +
+                  '<p class="rounded-2xl bg-[#F6F3EE] px-3 py-2"><span class="block text-[13px] font-semibold text-[#78716C]">기본 할인</span><span class="mt-0.5 block text-[20px] font-bold">' +
+                  (d.cash == null ? "없음" : d.cash + "%") + "</span></p>" +
+                  '<p class="min-w-0 rounded-2xl bg-[#F6F3EE] px-3 py-2"><span class="block text-[13px] font-semibold text-[#78716C]">파이낸셜</span><span class="mt-0.5 block break-words font-bold ' +
+                  finSize + '">' + esc(fin) + "</span></p>" +
+                  "</div>" +
+                  month +
+                  "</article>"
+                );
+              })
+              .join("") +
+            "</div>"
           );
         }
         function card(row, big) {
