@@ -1,208 +1,302 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" /> <meta name="theme-color" content="#0F0F0F" /> <meta
-      name="description"
-      content="메르세데스-벤츠 차종 가이드. 세단, SUV, 전기차, AMG, 마이바흐에서 10월 가격과 구매 문의로 이어집니다. 벤츠프로."
-    /> <title>차량 가이드 | 벤츠프로</title> <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-    /> <link rel="stylesheet" href="site.css" /> <script src="https://cdn.tailwindcss.com"></script> <style> body {
-        font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
-      }
-      .field {
-        width: 100%;
-        border-radius: 1rem;
-        border: 2px solid #d6d3d1;
-        background: #fff;
-        padding: 1rem 1.1rem;
-        font-size: 18px;
-        color: #1c1917;
-      }
-      .field:focus {
-        outline: none;
-        border-color: #1c69d4;
-      }
-      .seg-on {
-        background: #1c1917;
-        border-color: #1c1917;
-        color: #fff;
-      }
-      .jump {
-        scroll-margin-top: 7.5rem;
-      }
-    </style> </head> <body class="bg-[#F6F3EE] text-[#1C1917] antialiased"> <header class="sticky top-0 z-50 border-b border-white/10 bg-[#0F0F0F]"> <div class="mx-auto max-w-6xl px-4 pt-3 lg:pr-[20rem]"> <div class="flex items-center justify-between gap-3"> <a href="index.html" class="flex items-center gap-3" aria-label="벤츠프로 홈"> <svg class="h-9 w-9 shrink-0" viewBox="0 0 64 64" aria-hidden="true"> <circle cx="32" cy="32" r="30" fill="#0A0A0A" stroke="#F5F5F5" stroke-width="1.75" /> <path fill="#F5F5F5" d="M32 7 36.8 29.2 53.7 44.5 32 37.5 10.3 44.5 27.2 29.2Z" /> </svg> <span class="leading-tight"> <span class="block text-[15px] font-semibold tracking-[0.14em] text-white">BENZ <span class="text-[#D8B65F]">PRO</span></span> <span class="mt-0.5 block text-[9px] font-medium leading-snug text-zinc-400 sm:text-[10px]">메르세데스-벤츠 코리아 공식 파트너 김민구 차장</span> </span> </a> <a href="https://www.youtube.com/@benzpro.official" target="_blank" rel="noopener noreferrer" class="shrink-0 rounded-full border border-white/10 bg-[#1A1A1A] px-2.5 py-1.5 text-[10px] font-semibold text-zinc-300">YouTube</a> </div> <nav class="-mx-4 mt-3 overflow-x-auto pb-3" aria-label="주요 메뉴"> <ul class="flex w-max gap-2 px-4"> <li><a href="preorder.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">사전예약</a></li> <li><a href="models.html" aria-current="page" class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]">차량 가이드</a></li> <li><a href="prices.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">프로모션</a></li> <li><a href="index.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">구매전략</a></li> <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠 인사이트</a></li> </ul> </nav> </div> </header> <main class="mx-auto max-w-6xl px-4 pb-36 pt-8 lg:pr-[20rem]"> <div class="max-w-3xl"> <p class="text-[15px] font-semibold text-[#8A6A22]">차종을 고르는 자리</p> <h1 class="mt-2 text-[2rem] font-bold leading-tight tracking-tight sm:text-[2.4rem]">어떤 벤츠인지<br />먼저 보고 고르세요</h1> <p class="mt-4 text-[18px] leading-relaxed text-[#44403C]"> 차종을 누르면 10월 가격과 프로모션 표로 이어집니다. 그 표에서 다시 구매 문의로 들어옵니다. 제원 숫자는 그 차에 공개된 것만 적습니다.
-        </p> <label class="mt-5 block text-[16px] font-semibold text-[#57534E]" for="q">차종 이름</label> <input id="q" class="field mt-2" type="search" placeholder="예: E클래스, GLC, 마이바흐" /> <div id="segs" class="mt-3 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="차종 묶음"></div> <div id="list" class="mt-6 space-y-10"></div> <section id="ask" class="jump mt-10 rounded-3xl bg-[#1C1917] p-5 text-white"> <h2 class="text-[24px] font-bold leading-snug">차종을 고르셨다면 구매 문의로</h2> <p class="mt-2 text-[17px] leading-relaxed text-zinc-300">표의 금액은 기본 모델입니다. 지금 타는 차, 회사, 카드는 상담에서 더합니다.</p> <a href="index.html#consulting" class="mt-4 flex items-center justify-center rounded-2xl bg-[#1C69D4] py-4 text-[18px] font-bold text-white">구매 문의</a> </section> </div> </main> <aside class="fixed right-4 top-28 z-40 hidden max-h-[calc(100vh-8rem)] w-[18.5rem] flex-col overflow-y-auto rounded-3xl bg-white p-3 shadow-lg lg:flex" aria-label="이 페이지 바로가기"> <p class="px-2 pb-2 text-[13px] font-bold text-[#8A6A22]">이 페이지에서</p> <nav class="space-y-1"> <a href="#sedan" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold">세단</a> <a href="#suv" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold">SUV</a> <a href="#ev" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold">전기차</a> <a href="#coupe" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold">쿠페</a> <a href="#amg" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold">AMG</a> <a href="#maybach" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold">마이바흐</a> </nav> <div class="mt-3 space-y-2 border-t border-[#E7E5E4] pt-3"> <a href="index.html#consulting" class="flex min-h-[52px] items-center gap-3 rounded-2xl bg-[#1C1917] px-3 text-[16px] font-bold text-white">구매 문의</a> <a href="https://open.kakao.com/o/skdA6cZc" class="flex min-h-[52px] items-center gap-3 rounded-2xl bg-[#1C69D4] px-3 text-[16px] font-bold text-white">카톡 문의</a> <a href="tel:01091649639" class="flex min-h-[52px] items-center gap-3 rounded-2xl border-2 border-[#1C1917] px-3 text-[16px] font-bold">전화 문의</a> </div> </aside> <div class="fixed inset-x-0 bottom-0 z-50 border-t border-[#E7E5E4] bg-[#F6F3EE]/95 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:hidden"> <div class="mx-auto grid max-w-lg grid-cols-3 gap-2"> <a href="index.html#consulting" class="flex min-h-[48px] items-center justify-center rounded-2xl bg-[#1C1917] text-[15px] font-bold text-white">문의</a> <a href="https://open.kakao.com/o/skdA6cZc" class="flex min-h-[48px] items-center justify-center rounded-2xl bg-[#1C69D4] text-[15px] font-bold text-white">카톡</a> <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border-2 border-[#1C1917] text-[15px] font-bold">전화</a> </div> </div> <script src="october-2026.js"></script> <script> (function () {
-        var groups = [
-          { id: "sedan", label: "세단·해치백" },
-          { id: "suv", label: "SUV" },
-          { id: "ev", label: "전기차" },
-          { id: "coupe", label: "쿠페·오픈" },
-          { id: "amg", label: "AMG" },
-          { id: "maybach", label: "마이바흐" }
-        ];
-        var families = [
-          { group: "sedan", name: "A클래스", line: "도심에서 쓰기 좋은 작은 세단과 해치백입니다.", prefix: "A ", car: "A, CLA, GLA, GLB" },
-          { group: "sedan", name: "CLA", line: "지붕이 낮은 쿠페형 세단입니다.", prefix: "CLA ", car: "A, CLA, GLA, GLB" },
-          { group: "sedan", name: "C클래스", line: "가장 많이 비교하는 중형 세단입니다.", prefix: "C ", car: "C-Class" },
-          { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
-          { group: "sedan", name: "S클래스", line: "플래그십 세단입니다. 2027년형은 사전예약으로 이어집니다.", prefix: "S ", car: "S-Class", extraHref: "preorder.html#sclass", extraLabel: "사전예약 설명" },
-          { group: "suv", name: "GLA", line: "가장 작은 SUV입니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
-          { group: "suv", name: "GLB", line: "2열과 3열을 고를 수 있는 컴팩트 SUV입니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
-          { group: "suv", name: "GLC", line: "가장 많이 찾는 중형 SUV입니다.", prefix: "GLC ", not: "Coup", car: "GLC" },
-          { group: "suv", name: "GLC 쿠페", line: "지붕선이 내려가는 GLC입니다.", prefix: "GLC ", has: "Coup", car: "GLC" },
-          { group: "suv", name: "GLE", line: "공간이 더 필요한 중대형 SUV입니다.", prefix: "GLE ", not: "Coup", car: "GLE" },
-          { group: "suv", name: "GLE 쿠페", line: "GLE의 쿠페형입니다.", prefix: "GLE ", has: "Coup", car: "GLE" },
-          { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
-          { group: "suv", name: "G클래스", line: "각진 오프로더입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 450", car: "상담 후 결정" },
-          { group: "ev", name: "일렉트릭 GLC", line: "지금 사전예약 중인 전기 SUV입니다. 국내 인증 상온 복합 448km입니다.", staticPrice: "9,000만원부터", countLabel: "국내 4개 트림", priceHref: "preorder.html#glc", priceLabel: "차 설명과 제원", extraHref: "preorder.html#reserve", extraLabel: "사전예약 접수", car: "GLC", consultNote: "일렉트릭 GLC" },
-          { group: "ev", name: "EQA", line: "작은 전기 SUV입니다.", prefix: "EQA", car: "상담 후 결정" },
-          { group: "ev", name: "EQB", line: "3열을 볼 수 있는 전기 컴팩트입니다.", prefix: "EQB", car: "상담 후 결정" },
-          { group: "ev", name: "EQE", line: "전기 세단과 SUV가 있습니다.", prefix: "EQE", car: "상담 후 결정" },
-          { group: "ev", name: "EQS", line: "큰 전기 SUV입니다.", prefix: "EQS", car: "상담 후 결정" },
-          { group: "ev", name: "G 580", line: "전기 G클래스입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 580", car: "상담 후 결정" },
-          { group: "coupe", name: "CLE 쿠페", line: "2도어 쿠페입니다.", prefix: "CLE ", has: "Coup", not: "Cabriolet", car: "상담 후 결정" },
-          { group: "coupe", name: "CLE 카브리올레", line: "지붕이 열리는 CLE입니다.", prefix: "CLE ", has: "Cabriolet", car: "상담 후 결정" },
-          { group: "amg", name: "AMG A클래스", line: "A클래스의 고성능입니다. 재구매는 2%입니다.", prefix: "AMG A", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG CLA", line: "CLA의 고성능입니다.", prefix: "AMG CLA", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG GLB", line: "GLB의 고성능입니다. 6개월 월 납입 지원 대상입니다.", prefix: "AMG GLB", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG E클래스", line: "E클래스의 고성능입니다. F1 패독 투어 초대 대상입니다.", prefix: "AMG E", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG S클래스", line: "S클래스의 고성능입니다. F1 패독 투어 초대 대상입니다.", prefix: "AMG S ", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG GLC", line: "GLC의 고성능입니다.", prefix: "AMG GLC", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG GLE", line: "GLE의 고성능입니다. F1 패독 투어 초대 대상입니다.", prefix: "AMG GLE", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG GLS", line: "GLS의 고성능입니다. F1 패독 투어 초대 대상입니다.", prefix: "AMG GLS", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG CLE", line: "CLE의 고성능입니다.", prefix: "AMG CLE", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG GT", line: "2도어 스포츠카입니다.", prefix: "AMG GT", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG SL", line: "지붕이 열리는 스포츠카입니다.", prefix: "AMG SL", kind: "amg", car: "AMG" },
-          { group: "amg", name: "AMG G클래스", line: "G클래스의 고성능입니다. 이번 달 현금 할인은 없습니다.", prefix: "AMG G ", kind: "amg", car: "AMG" },
-          { group: "maybach", name: "마이바흐 S클래스", line: "뒷좌석이 중심인 플래그십입니다. S 680은 이번 달 재구매 9%입니다.", prefix: "Maybach S ", kind: "maybach", car: "MAYBACH", extraHref: "preorder.html#sclass", extraLabel: "2027년식 설명" },
-          { group: "maybach", name: "마이바흐 GLS", line: "3열 마이바흐입니다. 이번 달 재구매 9%, 다른 브랜드는 7%입니다.", prefix: "Maybach GLS", kind: "maybach", car: "MAYBACH" },
-          { group: "maybach", name: "마이바흐 EQS", line: "전기 마이바흐 SUV입니다.", prefix: "Maybach EQS", kind: "maybach", car: "MAYBACH" },
-          { group: "maybach", name: "마이바흐 SL", line: "오픈 마이바흐입니다.", prefix: "Maybach SL", kind: "maybach", car: "MAYBACH" }
-        ];
-        var group = "전체";
-        var segWrap = document.getElementById("segs");
-        var list = document.getElementById("list");
-        var q = document.getElementById("q");
+<html lang="ko" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0F0F0F" />
+    <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
+    <title>차량 가이드 | 벤츠프로</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="site.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
+    </style>
+  </head>
+  <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#0F0F0F]">
+      <div class="mx-auto max-w-6xl px-4 pt-3 lg:pr-[20rem]">
+        <div class="flex items-center justify-between gap-3">
+          <a href="index.html" class="flex items-center gap-3" aria-label="벤츠프로 홈">
+            <svg class="h-9 w-9 shrink-0" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0A0A0A" stroke="#F5F5F5" stroke-width="1.75"/><path fill="#F5F5F5" d="M32 7 36.8 29.2 53.7 44.5 32 37.5 10.3 44.5 27.2 29.2Z"/></svg>
+            <span class="leading-tight">
+              <span class="block text-[15px] font-semibold tracking-[0.14em] text-white">BENZ <span class="text-[#D8B65F]">PRO</span></span>
+              <span class="mt-0.5 block text-[9px] font-medium leading-snug text-zinc-400 sm:text-[10px]">메르세데스-벤츠 코리아 공식 파트너 김민구 차장</span>
+            </span>
+          </a>
+          <a href="https://www.youtube.com/@benzpro.official" target="_blank" rel="noopener noreferrer" class="shrink-0 rounded-full px-2.5 py-1.5 text-[10px] font-semibold">YouTube</a>
+        </div>
+        <nav class="-mx-4 mt-3 overflow-x-auto pb-3" aria-label="주요 메뉴">
+          <ul class="flex w-max gap-2 px-4">
+            <li><a href="preorder.html" class="block px-3.5 py-2 text-[13px] font-medium">사전예약</a></li>
+            <li><a href="models.html" aria-current="page" class="block px-3.5 py-2 text-[13px] font-semibold">차량 가이드</a></li>
+            <li><a href="prices.html" class="block px-3.5 py-2 text-[13px] font-medium">프로모션</a></li>
+            <li><a href="index.html" class="block px-3.5 py-2 text-[13px] font-medium">구매전략</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block px-3.5 py-2 text-[13px] font-medium">벤츠 인사이트</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-        function cashPct(s) {
-          if (!s || s === "—") return null;
-          var m = String(s).match(/(\d+(?:\.\d+)?)%/);
-          return m ? parseFloat(m[1]) : null;
-        }
-        function mbmPct(s) {
+    <main class="mx-auto max-w-6xl px-4 pb-36 pt-8 lg:pr-[20rem]">
+      <p class="text-[15px] font-semibold text-[#E4CB86]">전 트림 비교</p>
+      <h1 class="mt-2 text-[2rem] font-bold leading-tight tracking-tight sm:text-[2.4rem]">두 차를 나란히 두고<br />실구매가를 보세요</h1>
+      <p class="mt-4 max-w-3xl text-[18px] leading-relaxed text-[#C5CED3]">정상가격은 권장가입니다. 최대 프로모션 적용 실구매가는 이번 달 기본 할인에 재구매·인증 중고·신한카드가 모두 맞을 때의 금액입니다. 출력과 크기 같은 제원은 차종마다 공식 수치가 달라, 고르신 트림으로 상담하면 그 차의 제원으로 맞춰 드립니다.</p>
+
+      <div class="mt-6 grid items-end gap-3 md:grid-cols-[1fr_auto_1fr]">
+        <label class="block">
+          <span class="mb-2 flex items-center gap-2 text-[14px] font-bold text-[#7EB6FF]">왼쪽 차</span>
+          <select id="left" class="guide-pick"></select>
+        </label>
+        <button id="swap" type="button" class="mb-1 hidden h-12 w-12 items-center justify-center rounded-full border border-white/20 text-[18px] md:flex" aria-label="왼쪽과 오른쪽 바꾸기">↔</button>
+        <label class="block">
+          <span class="mb-2 flex items-center gap-2 text-[14px] font-bold text-[#E4CB86]">오른쪽 차</span>
+          <select id="right" class="guide-pick"></select>
+        </label>
+      </div>
+
+      <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
+
+      <section class="mt-10">
+        <h2 class="text-[26px] font-bold">전 차종</h2>
+        <p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">트림을 누르면 위 비교의 왼쪽에 올라갑니다.</p>
+        <label class="mt-4 block text-[16px] font-semibold" for="q">차종 이름</label>
+        <input id="q" class="guide-pick mt-2" type="search" placeholder="예: E 200, GLC, 마이바흐" />
+        <div id="segs" class="promo-tabs mt-3" role="tablist" aria-label="차종 묶음"></div>
+        <div id="list" class="mt-6 space-y-8"></div>
+      </section>
+    </main>
+
+    <aside class="fixed right-4 top-28 z-40 hidden max-h-[calc(100vh-8rem)] w-[18.5rem] flex-col overflow-y-auto rounded-3xl bg-white p-3 shadow-lg lg:flex" aria-label="상담">
+      <p class="px-2 pb-2 text-[13px] font-bold text-[#E4CB86]">비교한 차로 문의</p>
+      <div class="space-y-2">
+        <a id="ask-left" href="index.html#consulting" class="flex min-h-[52px] items-center justify-center rounded-2xl bg-[#E4CB86] px-3 text-center text-[16px] font-bold text-[#0B1F2A]">왼쪽 차로 상담</a>
+        <a id="ask-right" href="index.html#consulting" class="flex min-h-[52px] items-center justify-center rounded-2xl border border-[#E4CB86] px-3 text-center text-[16px] font-bold text-[#E4CB86]">오른쪽 차로 상담</a>
+        <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[52px] items-center justify-center rounded-2xl px-3 text-[16px] font-bold">카톡 문의</a>
+        <a href="tel:01091649639" class="flex min-h-[52px] items-center justify-center rounded-2xl border border-white/30 px-3 text-[16px] font-bold">전화 문의</a>
+      </div>
+    </aside>
+
+    <div class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0b1f2a]/95 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:hidden">
+      <div class="mx-auto grid max-w-lg grid-cols-3 gap-2">
+        <a id="ask-mobile" href="index.html#consulting" class="flex min-h-[48px] items-center justify-center rounded-2xl bg-[#E4CB86] text-[15px] font-bold text-[#0B1F2A]">상담</a>
+        <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[15px] font-bold">카톡</a>
+        <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 text-[15px] font-bold">전화</a>
+      </div>
+    </div>
+
+    <script src="october-2026.js"></script>
+    <script>
+      (function () {
+        var rows = window.OCTOBER_2026.models.map(function (r, i) {
+          return { i: i, seg: r[0], my: r[1], name: r[2], price: r[3], cash: r[4], mbm: r[5], retain: r[7], conquest: r[8], shinhan: r[9] };
+        });
+        function simplePct(s) {
           if (!s) return 0;
           var m = String(s).match(/^\+(\d+(?:\.\d+)?)%/);
           return m ? parseFloat(m[1]) : 0;
         }
-        function rowsOf(f) {
-          if (f.staticPrice) return [];
-          var kind = f.kind || "base";
-          return window.OCTOBER_2026.models.filter(function (r) {
-            var n = r[2];
-            if (n.toLowerCase().indexOf(f.prefix.toLowerCase()) !== 0) return false;
-            if (f.has && n.toLowerCase().indexOf(f.has.toLowerCase()) === -1) return false;
-            if (f.not && n.toLowerCase().indexOf(f.not.toLowerCase()) !== -1) return false;
-            var amg = n.indexOf("AMG ") === 0;
-            var may = n.indexOf("Maybach") !== -1;
-            if (kind === "base" && (amg || may)) return false;
-            if (kind === "amg" && !amg) return false;
-            if (kind === "maybach" && !may) return false;
-            return true;
-          });
+        function anyPct(s) {
+          if (!s || s === "—") return 0;
+          var m = String(s).match(/(\d+(?:\.\d+)?)%/);
+          return m ? parseFloat(m[1]) : 0;
         }
-        function fromLabel(rows) {
-          var best = null;
-          var fallback = null;
-          rows.forEach(function (r) {
-            if (r[3] == null) return;
-            var priceMan = Math.round(r[3] / 10000);
-            if (fallback == null || priceMan < fallback) fallback = priceMan;
-            var cash = cashPct(r[4]);
-            if (cash == null) return;
-            var total = cash + mbmPct(r[5]);
-            var finalMan = priceMan - Math.round((r[3] * total) / 100 / 10000);
-            if (best == null || finalMan < best) best = finalMan;
-          });
-          if (best != null) return { text: best.toLocaleString("ko-KR") + "만원부터", discounted: true };
-          if (fallback != null) return { text: fallback.toLocaleString("ko-KR") + "만원부터", discounted: false };
-          return { text: "상담 시 확인", discounted: false };
+        function won(n) {
+          return n.toLocaleString("ko-KR") + "만원";
         }
-        function priceHref(f) {
-          if (f.priceHref) return f.priceHref;
+        function pack(row) {
+          var priceMan = row.price == null ? null : Math.round(row.price / 10000);
+          var cash = anyPct(row.cash);
+          var fin = simplePct(row.mbm);
+          var basic = cash + fin;
+          var retain = anyPct(row.retain);
+          var conquest = anyPct(row.conquest);
+          var card = anyPct(row.shinhan);
+          var loyalty = Math.max(retain > 0 ? retain + 1 : 0, conquest);
+          var maxPct = basic + loyalty + card;
+          var basicMan = priceMan == null ? null : priceMan - Math.round((row.price * basic) / 100 / 10000);
+          var maxMan = priceMan == null ? null : priceMan - Math.round((row.price * maxPct) / 100 / 10000);
+          return { priceMan: priceMan, basicMan: basicMan, maxMan: maxMan, cash: cash, fin: fin, retain: retain, conquest: conquest, card: card };
+        }
+        function carValue(row) {
+          var n = row.name;
+          if (n.indexOf("Maybach") !== -1) return "MAYBACH";
+          if (n.indexOf("AMG ") === 0) return "AMG";
+          if (n.indexOf("GLC") !== -1) return "GLC";
+          if (n.indexOf("GLE") !== -1) return "GLE";
+          if (n.indexOf("GLS") !== -1) return "GLS";
+          if (row.seg === "C") return "C-Class";
+          if (row.seg === "E") return "E-Class";
+          if (row.seg === "S") return "S-Class";
+          if (row.seg === "Compact") return "A, CLA, GLA, GLB";
+          return "상담 후 결정";
+        }
+        function ask(row) {
           var params = new URLSearchParams();
-          params.set("prefix", f.prefix);
-          params.set("kind", f.kind || "base");
-          if (f.has) params.set("has", f.has);
-          if (f.not) params.set("not", f.not);
-          return "prices.html?" + params.toString() + "#finder";
-        }
-        function consultHref(f) {
-          var params = new URLSearchParams();
-          params.set("car", f.car);
-          params.set("note", f.consultNote || f.name);
+          params.set("car", carValue(row));
+          params.set("note", row.name + " " + row.my);
           return "index.html?" + params.toString() + "#consulting";
         }
-        function card(f) {
-          var rows = rowsOf(f);
-          if (!f.staticPrice && !rows.length) return "";
-          var years = {};
-          rows.forEach(function (r) { years[r[1]] = true; });
-          var yearText = Object.keys(years).sort().join(" · ");
-          var count = f.countLabel || rows.length + "개 트림";
-          var info = f.staticPrice ? null : fromLabel(rows);
-          var priceLine = f.staticPrice ? f.staticPrice : (info.discounted ? "10월 할인 후 " : "권장가 ") + info.text;
-          var extra = f.extraHref
-            ? '<a class="text-[16px] font-bold text-[#1C1917]" href="' + f.extraHref + '">' + f.extraLabel + "</a>"
-            : "";
-          return (
-            '<article class="rounded-3xl bg-white p-5 shadow-sm">' +
-            '<p class="text-[14px] font-semibold text-[#1C69D4]">' + (yearText ? yearText + " · " : "") + count + "</p>" +
-            '<h3 class="mt-1 text-[24px] font-bold leading-snug">' + f.name + "</h3>" +
-            '<p class="mt-2 text-[17px] leading-relaxed text-[#44403C]">' + f.line + "</p>" +
-            '<p class="mt-3 text-[22px] font-bold">' + priceLine + "</p>" +
-            '<div class="mt-4 flex flex-wrap gap-2">' +
-            '<a class="inline-flex rounded-full bg-[#1C69D4] px-4 py-2.5 text-[15px] font-bold text-white" href="' + priceHref(f) + '">' + (f.priceLabel || "10월 가격·프로모션") + "</a>" +
-            '<a class="inline-flex rounded-full bg-[#1C1917] px-4 py-2.5 text-[15px] font-bold text-white" href="' + consultHref(f) + '">구매 문의</a>' +
-            extra +
-            "</div></article>"
-          );
+        function groupOf(row) {
+          var n = row.name;
+          if (n.indexOf("Maybach") === 0) return "maybach";
+          if (n.indexOf("AMG ") === 0) return "amg";
+          if (row.seg === "EQ" || n.indexOf("G 580") === 0) return "ev";
+          if (row.seg === "Dream" || n.indexOf("CLE") === 0) return "coupe";
+          if (row.seg === "SUV" || n.indexOf("G ") === 0) return "suv";
+          return "sedan";
         }
+        var groups = [
+          { id: "all", label: "전체" },
+          { id: "sedan", label: "세단" },
+          { id: "suv", label: "SUV" },
+          { id: "ev", label: "전기차" },
+          { id: "coupe", label: "쿠페" },
+          { id: "amg", label: "AMG" },
+          { id: "maybach", label: "마이바흐" }
+        ];
+        var icons = {
+          all: "M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z",
+          sedan: "M4 15l2-4h12l2 4v3h-2v-1H6v1H4v-3z",
+          suv: "M3 14l2-5h14l2 5v4h-2v-2H5v2H3v-4z",
+          ev: "M13 2 6 13h5l-1 9 8-12h-5l0-8z",
+          coupe: "M3 16l3-5h9l4 3v3H3v-1z",
+          amg: "M12 2l2.2 6.8H21l-5.5 4 2.1 6.7L12 16.8 6.4 19.5 8.5 12.8 3 8.8h6.8L12 2z",
+          maybach: "M12 3l2 5h5l-4 3 1.5 5L12 13l-4.5 3L9 11 5 8h5l2-5z"
+        };
+        function icon(id) {
+          return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="' + icons[id] + '"/></svg>';
+        }
+
+        var left = document.getElementById("left");
+        var right = document.getElementById("right");
+        var options = rows
+          .map(function (row) {
+            return '<option value="' + row.i + '">' + row.name + " · " + row.my + "</option>";
+          })
+          .join("");
+        left.innerHTML = options;
+        right.innerHTML = options;
+        function findIndex(part) {
+          var hit = rows.filter(function (row) { return row.name.indexOf(part) !== -1; })[0];
+          return hit ? hit.i : 0;
+        }
+        left.value = String(findIndex("E 200 Exclusive"));
+        right.value = String(findIndex("GLC 300"));
+
+        function line(label, a, b, hot) {
+          var diff = a !== b;
+          var cls = diff && hot ? " diff" : "";
+          return '<div class="guide-row"><b class="text-right' + cls + '">' + a + '</b><span class="k">' + label + '</span><b class="' + cls + '">' + b + "</b></div>";
+        }
+        function money(v) {
+          return v == null ? "상담 시 확인" : won(v);
+        }
+        function pct(n) {
+          return n ? n + "%" : "없음";
+        }
+        function drawCompare() {
+          var a = rows[Number(left.value)];
+          var b = rows[Number(right.value)];
+          var da = pack(a);
+          var db = pack(b);
+          var sentence = function (row, d) {
+            if (d.priceMan == null) return row.name + "은 권장가가 정해지면 할인이 적용됩니다.";
+            var base = "정상가격은 " + won(d.priceMan) + "인데, 최대 프로모션 적용 실구매가격은 " + won(d.maxMan) + "입니다.";
+            if (d.maxMan !== d.basicMan) base += " 기본 할인만 적용하면 " + won(d.basicMan) + "입니다.";
+            return base;
+          };
+          document.getElementById("compare").innerHTML =
+            '<div class="grid gap-4 sm:grid-cols-2">' +
+            '<div><p class="text-[20px] font-bold">' + a.name + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">이 차종으로 상담 받기</a></div>' +
+            '<div><p class="text-[20px] font-bold">' + b.name + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(b) + '">이 차종으로 상담 받기</a></div>' +
+            "</div>" +
+            '<div class="mt-4">' +
+            line("연식", a.my, b.my, false) +
+            line("정상가격", money(da.priceMan), money(db.priceMan), true) +
+            line("기본 할인", pct(da.cash), pct(db.cash), false) +
+            line("파이낸셜", pct(da.fin), pct(db.fin), false) +
+            line("기본 할인 후", money(da.basicMan), money(db.basicMan), true) +
+            line("재구매", pct(da.retain), pct(db.retain), false) +
+            line("다른 브랜드", pct(da.conquest), pct(db.conquest), false) +
+            line("신한카드", pct(da.card), pct(db.card), false) +
+            line("최대 실구매", money(da.maxMan), money(db.maxMan), true) +
+            "</div>";
+          document.getElementById("ask-left").setAttribute("href", ask(a));
+          document.getElementById("ask-right").setAttribute("href", ask(b));
+          document.getElementById("ask-mobile").setAttribute("href", ask(a));
+        }
+
+        var seg = "all";
+        var segWrap = document.getElementById("segs");
+        var list = document.getElementById("list");
+        var q = document.getElementById("q");
         function drawSegs() {
-          var keys = [{ id: "전체", label: "전체" }].concat(groups);
-          segWrap.innerHTML = keys
+          segWrap.innerHTML = groups
             .map(function (item) {
-              var on = item.id === group ? " seg-on" : "";
-              return '<button type="button" data-seg="' + item.id + '" class="shrink-0 rounded-full border-2 border-[#D6D3D1] bg-white px-4 py-3 text-[16px] font-bold text-[#44403C]' + on + '">' + item.label + "</button>";
+              var on = item.id === seg ? ' aria-selected="true"' : ' aria-selected="false"';
+              return '<button type="button" data-seg="' + item.id + '"' + on + ">" + icon(item.id) + item.label + "</button>";
             })
             .join("");
         }
-        function render() {
+        function renderList() {
           var query = q.value.trim().toLowerCase().replace(/\s+/g, "");
           var html = "";
           groups.forEach(function (item) {
-            if (group !== "전체" && group !== item.id) return;
-            var cards = families
-              .filter(function (f) { return f.group === item.id; })
-              .filter(function (f) {
-                if (!query) return true;
-                return (f.name + f.line).toLowerCase().replace(/\s+/g, "").indexOf(query) !== -1;
-              })
-              .map(card)
-              .filter(Boolean);
-            if (!cards.length) return;
-            html += '<section id="' + item.id + '" class="jump"><h2 class="text-[26px] font-bold">' + item.label + '</h2><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div></section>";
+            if (item.id === "all") return;
+            if (seg !== "all" && seg !== item.id) return;
+            var items = rows.filter(function (row) {
+              if (groupOf(row) !== item.id) return false;
+              if (!query) return true;
+              return (row.name + row.my).toLowerCase().replace(/\s+/g, "").indexOf(query) !== -1;
+            });
+            if (!items.length) return;
+            html += '<section><h3 class="flex items-center gap-2 text-[22px] font-bold">' + icon(item.id) + item.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">';
+            items.forEach(function (row) {
+              var d = pack(row);
+              var price = d.priceMan == null
+                ? "권장가는 상담 시 확인합니다."
+                : "정상가격은 " + won(d.priceMan) + "인데, 최대 프로모션 적용 실구매가격은 " + won(d.maxMan) + "입니다.";
+              html +=
+                '<article class="rounded-3xl bg-white p-4">' +
+                '<button type="button" class="text-left" data-pick="' + row.i + '">' +
+                '<p class="text-[13px] font-semibold text-[#E4CB86]">' + row.my + "</p>" +
+                '<h4 class="mt-1 text-[18px] font-bold">' + row.name + "</h4>" +
+                '<p class="mt-2 text-[16px] leading-snug">' + price + "</p></button>" +
+                '<a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2 text-[14px] font-bold text-[#0B1F2A]" href="' + ask(row) + '">이 차종으로 상담 받기</a>' +
+                "</article>";
+            });
+            html += "</div></section>";
           });
-          list.innerHTML = html || '<p class="rounded-3xl bg-white p-5 text-[18px]">찾는 차종이 없습니다. 이름을 짧게 다시 입력해 보세요.</p>';
+          list.innerHTML = html || '<p class="rounded-3xl bg-white p-5 text-[18px]">찾는 트림이 없습니다.</p>';
         }
         segWrap.addEventListener("click", function (e) {
           var btn = e.target.closest("button");
           if (!btn) return;
-          group = btn.getAttribute("data-seg");
+          seg = btn.getAttribute("data-seg");
           drawSegs();
-          render();
+          renderList();
         });
-        q.addEventListener("input", render);
+        q.addEventListener("input", renderList);
+        list.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-pick]");
+          if (!btn) return;
+          left.value = btn.getAttribute("data-pick");
+          drawCompare();
+          document.getElementById("compare").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        left.addEventListener("change", drawCompare);
+        right.addEventListener("change", drawCompare);
+        document.getElementById("swap").addEventListener("click", function () {
+          var keep = left.value;
+          left.value = right.value;
+          right.value = keep;
+          drawCompare();
+        });
         drawSegs();
-        render();
+        renderList();
+        drawCompare();
       })();
-    </script> </body>
+    </script>
+  </body>
 </html>
