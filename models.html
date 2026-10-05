@@ -41,7 +41,7 @@
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8 lg:pr-[20rem]">
       <p class="text-[15px] font-semibold text-[#E4CB86]">전 트림 비교</p>
       <h1 class="mt-2 text-[2rem] font-bold leading-tight tracking-tight sm:text-[2.4rem]">두 차를 나란히 두고<br />실구매가를 보세요</h1>
-      <p class="mt-4 max-w-3xl text-[18px] leading-relaxed text-[#C5CED3]">정상가격은 권장가입니다. 최대 프로모션 적용 실구매가는 이번 달 기본 할인에 재구매·인증 중고·신한카드가 모두 맞을 때의 금액입니다. 출력과 크기 같은 제원은 차종마다 공식 수치가 달라, 고르신 트림으로 상담하면 그 차의 제원으로 맞춰 드립니다.</p>
+      <p class="mt-4 max-w-3xl text-[18px] leading-relaxed text-[#C5CED3]">정상가격은 권장가입니다. 최대 프로모션 적용 실구매가는 이번 달 기본 할인에 재구매와 인증 중고가 맞을 때의 금액입니다. 가격 아래에는 공개된 제원과 트림 사양을 나란히 둡니다.</p>
 
       <div class="mt-6 grid items-end gap-3 md:grid-cols-[1fr_auto_1fr]">
         <label class="block">
@@ -86,6 +86,7 @@
     </div>
 
     <script src="october-2026.js"></script>
+    <script src="guide-data.js"></script>
     <script>
       (function () {
         var rows = window.OCTOBER_2026.models.map(function (r, i) {
@@ -111,12 +112,11 @@
           var basic = cash + fin;
           var retain = anyPct(row.retain);
           var conquest = anyPct(row.conquest);
-          var card = anyPct(row.shinhan);
           var loyalty = Math.max(retain > 0 ? retain + 1 : 0, conquest);
-          var maxPct = basic + loyalty + card;
+          var maxPct = basic + loyalty;
           var basicMan = priceMan == null ? null : priceMan - Math.round((row.price * basic) / 100 / 10000);
           var maxMan = priceMan == null ? null : priceMan - Math.round((row.price * maxPct) / 100 / 10000);
-          return { priceMan: priceMan, basicMan: basicMan, maxMan: maxMan, cash: cash, fin: fin, retain: retain, conquest: conquest, card: card };
+          return { priceMan: priceMan, basicMan: basicMan, maxMan: maxMan, cash: cash, fin: fin, retain: retain, conquest: conquest };
         }
         function carValue(row) {
           var n = row.name;
@@ -165,7 +165,43 @@
           maybach: "M12 3l2 5h5l-4 3 1.5 5L12 13l-4.5 3L9 11 5 8h5l2-5z"
         };
         function icon(id) {
-          return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="' + icons[id] + '"/></svg>';
+          return '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="' + icons[id] + '"/></svg>';
+        }
+        function normName(s) {
+          return String(s || "")
+            .toUpperCase()
+            .replace(/\([^)]*\)/g, "")
+            .replace(/É/g, "E")
+            .replace(/4MATIC\+/g, "4MATICPLUS")
+            .replace(/[^A-Z0-9가-힣]/g, "");
+        }
+        function coreName(s) {
+          return s.replace(/HYBRID|WITHEQTECHNOLOGY|LONG|HATCHBACK|HATCH|SEDAN|COUPE|CABRIOLET|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
+        }
+        function guideOf(row) {
+          var book = window.GUIDE_DATA || {};
+          var n = normName(row.name);
+          var exact = book[row.my + "|" + n];
+          if (exact) return exact;
+          var best = null;
+          var score = 0;
+          Object.keys(book).forEach(function (key) {
+            if (key.indexOf(row.my + "|") !== 0) return;
+            var g = key.split("|")[1];
+            var s = 0;
+            if (g === n) s = 1000 + g.length;
+            else if (g.indexOf(n) === 0 || n.indexOf(g) === 0) s = Math.min(g.length, n.length);
+            else if (coreName(g) && coreName(g) === coreName(n)) s = 40 + coreName(n).length;
+            if (s > score) {
+              score = s;
+              best = book[key];
+            }
+          });
+          return best;
+        }
+        function pairVal(list, label) {
+          var hit = (list || []).filter(function (pair) { return pair[0] === label; })[0];
+          return hit ? hit[1] : "—";
         }
 
         var left = document.getElementById("left");
@@ -195,6 +231,52 @@
         function pct(n) {
           return n ? n + "%" : "없음";
         }
+        function specBlock(a, b) {
+          var ga = guideOf(a);
+          var gb = guideOf(b);
+          function rowsFor(listA, listB) {
+            var labels = [];
+            (listA || []).concat(listB || []).forEach(function (pair) {
+              if (labels.indexOf(pair[0]) === -1) labels.push(pair[0]);
+            });
+            return labels
+              .map(function (label) {
+                return line(label, pairVal(listA, label), pairVal(listB, label), true);
+              })
+              .join("");
+          }
+          var specHtml = rowsFor(ga && ga.specs, gb && gb.specs);
+          var optHtml = rowsFor(ga && ga.options, gb && gb.options);
+          if (!optHtml) {
+            function gearMap(g) {
+              var map = {};
+              ((g && g.gear) || []).forEach(function (row) {
+                map[row[1]] = row[2] || "기본";
+              });
+              return map;
+            }
+            var ma = gearMap(ga);
+            var mb = gearMap(gb);
+            var labels = [];
+            Object.keys(ma).concat(Object.keys(mb)).forEach(function (label) {
+              if (labels.indexOf(label) !== -1) return;
+              if ((ma[label] || "없음") !== (mb[label] || "없음")) labels.push(label);
+            });
+            optHtml = labels
+              .slice(0, 18)
+              .map(function (label) {
+                return line(label, ma[label] || "없음", mb[label] || "없음", true);
+              })
+              .join("");
+          }
+          var specSection = specHtml
+            ? '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">같은 차종 안에서는 수치가 같고, 트림·휠에 따라 달라질 수 있습니다.</p><div class="mt-3">' + specHtml + "</div>"
+            : '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다.</p>';
+          var optSection = optHtml
+            ? '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">트림마다 기본으로 들어 있는 사양입니다. 값이 다르면 그 줄이 차이입니다.</p><div class="mt-3">' + optHtml + "</div>"
+            : '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 사양 차이가 없습니다.</p>';
+          return specSection + optSection;
+        }
         function drawCompare() {
           var a = rows[Number(left.value)];
           var b = rows[Number(right.value)];
@@ -219,9 +301,9 @@
             line("기본 할인 후", money(da.basicMan), money(db.basicMan), true) +
             line("재구매", pct(da.retain), pct(db.retain), false) +
             line("다른 브랜드", pct(da.conquest), pct(db.conquest), false) +
-            line("신한카드", pct(da.card), pct(db.card), false) +
             line("최대 실구매", money(da.maxMan), money(db.maxMan), true) +
-            "</div>";
+            "</div>" +
+            specBlock(a, b);
           document.getElementById("ask-left").setAttribute("href", ask(a));
           document.getElementById("ask-right").setAttribute("href", ask(b));
           document.getElementById("ask-mobile").setAttribute("href", ask(a));
@@ -251,7 +333,7 @@
               return (row.name + row.my).toLowerCase().replace(/\s+/g, "").indexOf(query) !== -1;
             });
             if (!items.length) return;
-            html += '<section><h3 class="flex items-center gap-2 text-[22px] font-bold">' + icon(item.id) + item.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">';
+            html += '<section><h3 class="text-[22px] font-bold">' + item.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">';
             items.forEach(function (row) {
               var d = pack(row);
               var price = d.priceMan == null

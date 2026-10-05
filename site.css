@@ -242,24 +242,29 @@ input:checked + .pick {
 }
 
 .promo-tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.2rem, 1fr));
   gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.35rem;
+  overflow: visible;
 }
 .promo-tabs button,
 .promo-tabs a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  flex: none;
+  width: 100%;
+  min-width: 0;
   border-radius: 999px;
   border: 1px solid rgba(164, 170, 174, 0.35);
   background: #10222c;
   color: #f4f7f8;
-  padding: 0.7rem 0.95rem;
+  padding: 0.75rem 0.7rem;
   font-size: 15px;
   font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
 }
 .promo-tabs button[aria-selected="true"] {
   background: #e4cb86;

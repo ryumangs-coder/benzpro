@@ -41,12 +41,17 @@
   board.className = "jump mt-6";
   highlights.parentNode.insertBefore(board, highlights);
 
+  var tire = document.getElementById("tire-card");
+  var programs = document.getElementById("programs");
+  if (tire && programs && programs.contains(tire)) {
+    tire.classList.add("mt-6");
+    programs.parentNode.insertBefore(tire, programs.nextSibling);
+  }
+
   var slot = document.createElement("section");
   slot.id = "benefit-slot";
-  slot.className = "jump mt-8";
-  var owned = document.getElementById("owned");
-  if (owned && owned.nextSibling) owned.parentNode.insertBefore(slot, owned.nextSibling);
-  else highlights.parentNode.appendChild(slot);
+  slot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(slot, highlights);
 
   var bar = document.createElement("div");
   bar.className = "promo-tabs mt-6";
