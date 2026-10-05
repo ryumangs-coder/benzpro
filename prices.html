@@ -43,6 +43,50 @@
       .jump {
         scroll-margin-top: 7.5rem;
       }
+      .table-wrap {
+        overflow-x: auto;
+        border-radius: 1.25rem;
+        background: #fff;
+        box-shadow: 0 1px 2px rgba(28, 25, 23, 0.06);
+      }
+      table.detail {
+        width: max-content;
+        min-width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+      }
+      table.detail th,
+      table.detail td {
+        padding: 0.9rem 0.85rem;
+        text-align: left;
+        border-bottom: 1px solid #e7e5e4;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+      table.detail th {
+        background: #1c1917;
+        color: #fff;
+        font-weight: 700;
+      }
+      table.detail td:first-child,
+      table.detail th:first-child {
+        position: sticky;
+        left: 0;
+        min-width: 11.5rem;
+        white-space: normal;
+      }
+      table.detail td:first-child {
+        background: #fff;
+        z-index: 1;
+      }
+      table.detail th:first-child {
+        z-index: 2;
+      }
+      table.detail td.wrap {
+        white-space: normal;
+        min-width: 9rem;
+        max-width: 14rem;
+      }
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
@@ -63,10 +107,11 @@
         </div>
         <nav class="-mx-4 mt-3 overflow-x-auto pb-2.5" aria-label="주요 메뉴">
           <ul class="flex w-max gap-2 px-4">
-            <li><a href="prices.html" aria-current="page" class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]">프로모션</a></li>
-            <li><a href="preorder.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">사전계약</a></li>
-            <li><a href="index.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">구매 전략</a></li>
-            <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠 인사이트 &amp; 팁</a></li>
+          <li><a href="preorder.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">사전예약</a></li>
+          <li><a href="models.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">차량 가이드</a></li>
+          <li><a href="prices.html" aria-current="page" class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]">프로모션</a></li>
+          <li><a href="index.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">구매전략</a></li>
+          <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠 인사이트</a></li>
           </ul>
         </nav>
       </div>
@@ -81,6 +126,10 @@
       <p class="mt-4 text-[18px] leading-relaxed text-[#44403C]">
         왼쪽이 제값, 오른쪽이 할인 후 금액입니다. 현금 할인은 누구나 빠지고, 벤츠 금융을 쓰면 금융 할인이 더 붙습니다. 아래 금액은 그 둘을 더한 값입니다.
       </p>
+      <p class="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-[18px] font-bold">
+        <a href="#finder" class="text-[#1C69D4]">차종별 조건을 표로 보기 →</a>
+        <a href="models.html" class="text-[#1C69D4]">차종 설명은 차량 가이드 →</a>
+      </p>
       <nav class="mt-5 flex gap-2 overflow-x-auto pb-1 lg:hidden" aria-label="이 페이지 바로가기">
         <a href="#highlights" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">🏷️ 차값</a>
         <a href="#support" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">💰 6개월</a>
@@ -89,7 +138,7 @@
         <a href="#owned" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">🔑 지금 타는 차</a>
         <a href="#company" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">🏢 회사</a>
         <a href="#paycard" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">💳 카드</a>
-        <a href="#finder" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">🔍 내 차</a>
+        <a href="#finder" class="shrink-0 rounded-full bg-white px-3 py-2 text-[15px] font-bold shadow-sm">🔍 차종별 조건</a>
       </nav>
 
       <section id="highlights" class="jump mt-6 space-y-3" aria-label="이번 달 먼저 볼 차"></section>
@@ -270,7 +319,16 @@
       </section>
 
       <section id="finder" class="jump mt-10" aria-labelledby="finder-title">
-        <h2 id="finder-title" class="text-[26px] font-bold">내 차 찾아보기</h2>
+        <h2 id="finder-title" class="text-[26px] font-bold">차종별 가격과 프로모션</h2>
+        <p class="mt-2 text-[18px] leading-relaxed text-[#44403C]">
+          권장가, 현금 할인, 금융 할인, 할인 후 금액, 재구매, 다른 브랜드, 신한카드를 모델마다 나눠 적었습니다. 위쪽 카드는 이번 달 먼저 볼 요약입니다.
+        </p>
+        <ul class="mt-3 space-y-1 text-[16px] leading-relaxed text-[#57534E]">
+          <li>할인 후 금액은 현금과, 숫자로 적힌 금융 할인을 더한 값입니다.</li>
+          <li>할부·리스·렌트처럼 방식이 나뉘는 금융 할인은 금액에 넣지 않고 글자로 적습니다.</li>
+          <li>재구매, 다른 브랜드, 회사, 카드는 서류를 확인한 뒤에 더해집니다. 이 표의 할인 후 금액에는 아직 없습니다.</li>
+        </ul>
+        <p id="filter-note" class="mt-4 hidden rounded-2xl bg-white px-4 py-3 text-[16px] leading-relaxed shadow-sm"></p>
         <label class="mt-4 block text-[16px] font-semibold text-[#57534E]" for="q">모델 이름</label>
         <input id="q" class="field mt-2" type="search" placeholder="예: E 200, GLC, S 450" />
         <div id="segs" class="mt-3 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="차종"></div>
@@ -296,7 +354,7 @@
         <a data-spy href="#owned" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold text-[#1C1917]"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F6F3EE] text-[22px]" aria-hidden="true">🔑</span>지금 타는 차</a>
         <a data-spy href="#company" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold text-[#1C1917]"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F6F3EE] text-[22px]" aria-hidden="true">🏢</span>회사 할인</a>
         <a data-spy href="#paycard" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold text-[#1C1917]"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F6F3EE] text-[22px]" aria-hidden="true">💳</span>카드 결제</a>
-        <a data-spy href="#finder" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold text-[#1C1917]"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F6F3EE] text-[22px]" aria-hidden="true">🔍</span>내 차 찾기</a>
+        <a data-spy href="#finder" class="flex items-center gap-3 rounded-2xl px-2 py-2.5 text-[16px] font-bold text-[#1C1917]"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F6F3EE] text-[22px]" aria-hidden="true">🔍</span>차종별 조건</a>
       </nav>
       <div class="mt-3 space-y-2 border-t border-[#E7E5E4] pt-3">
         <a href="index.html#consulting" class="flex min-h-[52px] items-center gap-3 rounded-2xl bg-[#1C1917] px-3 text-[16px] font-bold text-white"><span aria-hidden="true">📝</span>상담 문의</a>
@@ -333,10 +391,26 @@
             price: r[3],
             cash: r[4],
             mbm: r[5],
+            jc: r[6],
+            retain: r[7],
+            conquest: r[8],
+            shinhan: r[9],
             note: r[10]
           };
         });
         var seg = "전체";
+        var prefix = "";
+        var kind = "all";
+        var hasPart = "";
+        var notPart = "";
+        (function readGuide() {
+          var params = new URLSearchParams(location.search);
+          if (!params.get("prefix")) return;
+          prefix = params.get("prefix");
+          kind = params.get("kind") || "base";
+          hasPart = params.get("has") || "";
+          notPart = params.get("not") || "";
+        })();
         var segWrap = document.getElementById("segs");
         var list = document.getElementById("list");
         var q = document.getElementById("q");
@@ -384,6 +458,104 @@
           if (d.finance) return "현금 " + d.cash + "% + 금융 " + d.finance + "% = " + d.total + "%";
           if (row.mbm && !d.finance) return "현금 " + d.cash + "% · " + row.mbm;
           return "현금 " + d.cash + "%";
+        }
+        function esc(s) {
+          return String(s == null ? "" : s)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        }
+        function dash(s) {
+          return s ? esc(s) : "—";
+        }
+        function publicNote(note) {
+          if (!note || note.indexOf("표기") !== -1) return "";
+          return note;
+        }
+        function financeCell(row, d) {
+          var text = d.finance ? d.finance + "%" : row.mbm ? row.mbm : "—";
+          var extra = "";
+          if (row.jc && String(row.jc).indexOf("사전계약") !== -1) extra = "사전계약 고객 조건";
+          else if (row.jc) extra = "벤츠 금융과 함께하는 조건";
+          return esc(text) + (extra ? '<p class="mt-1 text-[13px] leading-snug text-[#78716C]">' + extra + "</p>" : "");
+        }
+        function consultHref(row) {
+          var car = "상담 후 결정";
+          var n = row.name;
+          if (n.indexOf("Maybach") !== -1) car = "MAYBACH";
+          else if (n.indexOf("AMG ") === 0) car = "AMG";
+          else if (n.indexOf("GLC") !== -1) car = "GLC";
+          else if (n.indexOf("GLE") !== -1) car = "GLE";
+          else if (n.indexOf("GLS") !== -1) car = "GLS";
+          else if (row.seg === "C") car = "C-Class";
+          else if (row.seg === "E") car = "E-Class";
+          else if (row.seg === "S") car = "S-Class";
+          else if (row.seg === "Compact") car = "A, CLA, GLA, GLB";
+          var params = new URLSearchParams();
+          params.set("car", car);
+          params.set("note", n + " " + row.my);
+          return "index.html?" + params.toString() + "#consulting";
+        }
+        function matchesGuide(row) {
+          if (prefix && row.name.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return false;
+          if (hasPart && row.name.toLowerCase().indexOf(hasPart.toLowerCase()) === -1) return false;
+          if (notPart && row.name.toLowerCase().indexOf(notPart.toLowerCase()) !== -1) return false;
+          var amg = row.name.indexOf("AMG ") === 0;
+          var may = row.name.indexOf("Maybach") !== -1;
+          if (kind === "base" && (amg || may)) return false;
+          if (kind === "amg" && !amg) return false;
+          if (kind === "maybach" && !may) return false;
+          return true;
+        }
+        function tableHtml(group) {
+          var body = group
+            .map(function (row) {
+              var d = deal(row);
+              var note = publicNote(row.note);
+              var cashOnly = d.cash != null && row.mbm && !d.finance;
+              var after;
+              if (d.finalMan != null) {
+                after =
+                  '<p class="text-[18px] font-bold">' + wonMan(d.finalMan) + "</p>" +
+                  (d.savedMan != null ? '<p class="mt-1 text-[14px] font-semibold text-[#B45309]">' + wonMan(d.savedMan) + " 감소</p>" : "") +
+                  (cashOnly ? '<p class="mt-1 text-[13px] leading-snug text-[#78716C]">현금 할인만 반영</p>' : "");
+              } else if (d.priceMan == null) {
+                after =
+                  '<p class="text-[16px] font-bold">상담 시 확인</p>' +
+                  (d.cash != null
+                    ? '<p class="mt-1 text-[13px] leading-snug text-[#78716C]">현금 ' + d.cash + "%는 권장가가 정해지면 적용됩니다</p>"
+                    : '<p class="mt-1 text-[13px] text-[#78716C]">금액은 상담에서 확인합니다</p>');
+              } else {
+                after =
+                  '<p class="text-[16px] font-bold">' + wonMan(d.priceMan) + "</p>" +
+                  '<p class="mt-1 text-[13px] text-[#78716C]">현금 할인 없음</p>';
+              }
+              var month = d.month ? '<p class="mt-1 text-[13px] font-semibold text-[#1C1917]">월 ' + d.month + "만원 × 6</p>" : "";
+              return (
+                "<tr>" +
+                '<th scope="row"><p class="text-[16px] font-bold leading-snug">' + esc(row.name) + "</p>" +
+                '<p class="mt-1 text-[13px] text-[#78716C]">' + esc(row.my) + "</p>" +
+                (note ? '<p class="mt-1 text-[13px] leading-snug text-[#57534E]">' + esc(note) + "</p>" : "") +
+                month + "</th>" +
+                "<td>" + (d.priceMan != null ? wonMan(d.priceMan) : "상담 시 확인") + "</td>" +
+                "<td>" + (d.cash == null ? "없음" : d.cash + "%") + "</td>" +
+                '<td class="wrap">' + financeCell(row, d) + "</td>" +
+                "<td>" + after + "</td>" +
+                "<td>" + dash(row.retain) + "</td>" +
+                "<td>" + dash(row.conquest) + "</td>" +
+                "<td>" + dash(row.shinhan) + "</td>" +
+                '<td><a class="inline-flex rounded-full bg-[#1C1917] px-3 py-2 text-[14px] font-bold text-white" href="' +
+                consultHref(row) + '">문의</a></td>' +
+                "</tr>"
+              );
+            })
+            .join("");
+          return (
+            '<div class="table-wrap"><table class="detail"><thead><tr>' +
+            "<th>모델</th><th>권장가</th><th>현금</th><th>금융</th><th>할인 후</th><th>재구매</th><th>다른 브랜드</th><th>신한카드</th><th></th>" +
+            "</tr></thead><tbody>" + body + "</tbody></table></div>"
+          );
         }
         function card(row, big) {
           var d = deal(row);
@@ -445,6 +617,7 @@
         function render() {
           var query = q.value.trim().toLowerCase().replace(/\s+/g, "");
           var shown = rows.filter(function (row) {
+            if (!matchesGuide(row)) return false;
             if (seg !== "전체" && row.seg !== seg) return false;
             if (!query) return true;
             return (row.name + row.my + (segName[row.seg] || "")).toLowerCase().replace(/\s+/g, "").indexOf(query) !== -1;
@@ -454,18 +627,13 @@
             list.innerHTML = '<p class="rounded-3xl bg-white p-5 text-[18px]">찾는 차가 없습니다. 이름을 짧게 다시 입력해 보세요.</p>';
             return;
           }
-          if (query || seg !== "전체") {
-            list.innerHTML = '<div class="space-y-3">' + shown.map(function (row) { return card(row, false); }).join("") + "</div>";
-            return;
-          }
           var html = "";
           segOrder.forEach(function (key) {
             if (key === "전체") return;
             var group = shown.filter(function (row) { return row.seg === key; });
             if (!group.length) return;
-            html += '<section><h3 class="text-[22px] font-bold">' + segName[key] + '</h3><div class="mt-3 space-y-3">';
-            html += group.map(function (row) { return card(row, false); }).join("");
-            html += "</div></section>";
+            html += '<section id="price-' + key + '" class="jump"><h3 class="text-[22px] font-bold">' + segName[key] + "</h3>";
+            html += '<div class="mt-3">' + tableHtml(group) + "</div></section>";
           });
           list.innerHTML = html;
         }
@@ -477,6 +645,13 @@
           render();
         });
         q.addEventListener("input", render);
+        var filterNote = document.getElementById("filter-note");
+        if (prefix) {
+          filterNote.classList.remove("hidden");
+          filterNote.innerHTML =
+            "차량 가이드에서 <b>" + esc(prefix.trim()) + "</b>만 보고 있습니다. " +
+            '<a class="font-bold text-[#1C69D4]" href="prices.html#finder">전체 차종 보기</a>';
+        }
         drawHighlights();
         drawSegs();
         render();

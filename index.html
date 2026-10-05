@@ -173,14 +173,11 @@
         </div>
         <nav class="-mx-4 mt-3 overflow-x-auto pb-2.5" aria-label="주요 메뉴">
           <ul class="flex w-max gap-2 px-4">
-            <li><a href="prices.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">프로모션</a></li>
-            <li><a href="preorder.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">사전계약</a></li>
-            <li><a href="index.html" aria-current="page" class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]">구매 전략</a></li>
-            <li>
-              <a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠 인사이트 &amp; 팁
-                <svg class="h-3 w-3 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
-              </a>
-            </li>
+          <li><a href="preorder.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">사전예약</a></li>
+          <li><a href="models.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">차량 가이드</a></li>
+          <li><a href="prices.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">프로모션</a></li>
+          <li><a href="index.html" aria-current="page" class="block rounded-full border border-[#C9A24A]/55 bg-[#C9A24A]/15 px-3.5 py-2 text-[13px] font-semibold text-[#E4CB86]">구매전략</a></li>
+          <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠 인사이트</a></li>
           </ul>
         </nav>
       </div>
@@ -208,6 +205,13 @@
           <span class="mt-1 text-[16px] leading-snug text-zinc-300">9,000만원부터. 먼저 접수하신 분이 먼저 받습니다.</span>
           <span class="mt-2 text-[16px] font-bold text-[#E4CB86]">차 설명과 접수 →</span>
         </span>
+      </a>
+
+      <a href="models.html" class="mt-3 block rounded-3xl bg-white p-5 shadow-sm">
+        <p class="text-[14px] font-semibold text-[#1C69D4]">차종을 아직 고르지 않으셨다면</p>
+        <p class="mt-1 text-[22px] font-bold">차량 가이드</p>
+        <p class="mt-2 text-[16px] leading-relaxed text-[#44403C]">세단, SUV, 전기차, AMG, 마이바흐를 고르면 10월 가격으로 이어지고, 이어서 구매 문의로 들어옵니다.</p>
+        <p class="mt-3 text-[16px] font-bold text-[#1C69D4]">차종부터 보기 →</p>
       </a>
 
       <a href="preorder.html#sclass" class="mt-3 flex gap-4 overflow-hidden rounded-3xl bg-white text-[#1C1917] shadow-sm">
@@ -630,6 +634,23 @@
           "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
 
         var form = document.getElementById("consult-form");
+        (function prefillFromGuide() {
+          var params = new URLSearchParams(location.search);
+          var car = params.get("car");
+          var note = params.get("note");
+          if (car) {
+            var radio = form.querySelector('input[name="carModel"][value="' + car.replace(/"/g, "") + '"]');
+            if (radio) radio.checked = true;
+          }
+          if (note) {
+            var inquiry = form.querySelector("[name='inquiry']");
+            if (inquiry && !inquiry.value) inquiry.value = note + " 가격과 프로모션 문의";
+            var banner = document.createElement("p");
+            banner.className = "mt-4 rounded-2xl bg-[#E8F1FC] px-4 py-3 text-[16px] leading-relaxed";
+            banner.textContent = note + " 문의로 들어왔습니다. 관심 차종이 선택되어 있습니다.";
+            form.parentNode.insertBefore(banner, form);
+          }
+        })();
         var submitBtn = document.getElementById("consult-submit");
         var spinner = document.getElementById("consult-spinner");
         var submitLabel = document.getElementById("consult-submit-label");
