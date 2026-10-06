@@ -58,42 +58,9 @@
       <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
 
       <section class="mt-10" id="faq">
-        <h2 class="text-[26px] font-bold">출고 전에 많이 묻는 질문</h2>
-        <p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">계약한 뒤 차를 받기 전까지, 상담에서 가장 자주 확인하는 내용입니다.</p>
-        <div class="faq-list mt-4 space-y-3">
-          <details class="rounded-3xl bg-white p-4" open>
-            <summary>비교에 나온 금액은 언제 확정되나요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">화면에 있는 금액은 10월 조건으로 계산한 안내 가격입니다. 실제 금액은 그 차의 인도 일정, 통관일, 금융 상품을 보고 상담에서 다시 맞춥니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>금융을 쓰지 않으면 할인이 줄어드나요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">금융 추가 할인은 대상 상품을 이용할 때만 붙습니다. 현금으로만 사면 기본 할인만 적용됩니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>재구매나 다른 브랜드 할인도 이 가격에 들어 있나요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">들어 있지 않습니다. 재구매, 다른 브랜드, 카드 혜택은 추가 혜택에서 조건과 서류를 따로 확인합니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>이전 통관 가격은 계약일 기준인가요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">아닙니다. 그 차가 2026년 6월 30일까지 통관된 재고일 때만 이전 통관 가격이 됩니다. 계약일이 아니라 그 차의 통관일을 봅니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>색과 옵션은 출고 전에 바꿀 수 있나요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">생산이 시작된 차는 바꾸기 어렵습니다. 재고 차와 주문 차는 가능한 시점이 다릅니다. 상담에서 그 차의 변경 가능일을 확인하면 됩니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>탁송비와 등록비는 실구매가에 포함되나요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">포함되지 않습니다. 실구매가는 차량 가격에서 할인을 뺀 금액입니다. 탁송, 등록, 보험은 출고 전에 따로 안내합니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>출고 전에 무엇을 준비하면 되나요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">계약자 명의, 금융 심사, 보험, 탁송받을 장소를 미리 맞춰 두면 잔금과 출고가 짧아집니다.</p>
-          </details>
-          <details class="rounded-3xl bg-white p-4">
-            <summary>시승차나 전시차도 같은 할인인가요?</summary>
-            <p class="mt-2 text-[16px] leading-relaxed">일부 조건은 시승차와 전시차를 빼는 경우가 있습니다. 그 차는 상담에서 적용 여부를 따로 확인합니다.</p>
-          </details>
-        </div>
+        <h2 class="text-[26px] font-bold">이 두 차에서 많이 묻는 질문</h2>
+        <p id="faq-lead" class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]"></p>
+        <div id="faq-list" class="faq-list mt-4 space-y-6"></div>
         <p class="mt-8 text-[16px] leading-relaxed text-[#A4AAAE]">정상가격은 2026년 9월 17일 가격표입니다. 부가세가 포함되어 있고, 내연기관과 하이브리드는 개별소비세 5% 기준입니다. 2026년 7월 1일부터 통관되는 차는 개별소비세가 3.5%에서 5%로 돌아왔습니다. 비교의 정상 통관은 개소세 5%이고, 이전 통관은 6월 30일까지 통관된 재고에만 해당합니다. 차이 한도는 세금까지 포함해 약 143만원입니다. 전기차는 2026년 12월 31일까지 개별소비세 300만원 한도 감면이 가격표에 이미 반영되어 있습니다.</p>
       </section>
     </main>
@@ -122,7 +89,7 @@
     <script>
       (function () {
         var rows = window.OCTOBER_2026.models.map(function (r, i) {
-          return { i: i, seg: r[0], my: r[1], name: r[2], price: r[3], cash: r[4], mbm: r[5], retain: r[7], conquest: r[8], shinhan: r[9] };
+          return { i: i, seg: r[0], my: r[1], name: r[2], price: r[3], cash: r[4], mbm: r[5], retain: r[7], conquest: r[8], shinhan: r[9], note: r[10] || "" };
         });
         function simplePct(s) {
           if (!s) return 0;
@@ -135,6 +102,7 @@
           return m ? parseFloat(m[1]) : 0;
         }
         function won(n) {
+          if (n == null || !isFinite(n)) return "상담 시 확인";
           return n.toLocaleString("ko-KR") + "만원";
         }
         function pack(row) {
@@ -474,6 +442,421 @@
           var same = lineupKey(a) && lineupKey(a) === lineupKey(b);
           return intro + lineupTable(a) + (same ? "" : lineupTable(b));
         }
+        function specText(row, label) {
+          var g = featureRecord(row).spec;
+          var hit = ((g && g.specs) || []).filter(function (pair) { return pair[0] === label; })[0];
+          if (!hit || !hit[1]) return "";
+          var v = String(hit[1]).trim();
+          if (/[가-힣a-zA-Z]/.test(v)) return v;
+          if (label === "길이" || label === "너비" || label === "높이" || label === "휠베이스") return Number(v).toLocaleString("ko-KR") + "mm";
+          if (label === "최고출력") return v + "ps";
+          if (label === "배기량") return Number(v).toLocaleString("ko-KR") + "cc";
+          if (label === "복합연비") return v + " km/L";
+          return v;
+        }
+        function familyStem(name) {
+          return String(name)
+            .replace(/\(.*?\)/g, "")
+            .replace(/Avantgarde|Exclusive|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Final Edition|Cabriolet|Coupé|Coupe|Long/gi, "")
+            .replace(/\s+/g, " ")
+            .trim();
+        }
+        function twinYear(row) {
+          var year = row.my === "MY26" ? "MY27" : "MY26";
+          return rows.filter(function (item) { return item.name === row.name && item.my === year; })[0] || null;
+        }
+        function familyMates(row) {
+          var stem = familyStem(row.name);
+          return rows.filter(function (item) {
+            return item.i !== row.i && item.my === row.my && familyStem(item.name) === stem;
+          });
+        }
+        function isDiesel(name) {
+          return /\d d\b|\bd 4MATIC/.test(name);
+        }
+        function isPerfAmg(name) {
+          return name.indexOf("AMG ") === 0;
+        }
+        function isEqCar(row) {
+          return row.seg === "EQ" || row.name.indexOf("G 580") === 0;
+        }
+        function isGClass(name) {
+          return name.indexOf("G 450") === 0 || name.indexOf("AMG G ") === 0 || name.indexOf("G 580") === 0;
+        }
+        function seriesOf(name) {
+          if (name.indexOf("Maybach EQS") !== -1) return "Maybach EQS";
+          if (name.indexOf("Maybach GLS") !== -1) return "Maybach GLS";
+          if (name.indexOf("Maybach S") !== -1) return "Maybach S";
+          if (name.indexOf("Maybach SL") !== -1) return "Maybach SL";
+          if (name.indexOf("EQA") !== -1) return "EQA";
+          if (name.indexOf("EQB") !== -1) return "EQB";
+          if (name.indexOf("EQE") !== -1) return "EQE";
+          if (name.indexOf("EQS") !== -1) return "EQS";
+          if (name.indexOf("GLA") !== -1) return "GLA";
+          if (name.indexOf("GLB") !== -1) return "GLB";
+          if (name.indexOf("GLC") !== -1) return "GLC";
+          if (name.indexOf("GLE") !== -1) return "GLE";
+          if (name.indexOf("GLS") !== -1) return "GLS";
+          if (name.indexOf("CLA") !== -1) return "CLA";
+          if (name.indexOf("CLE") !== -1) return "CLE";
+          if (name.indexOf("GT") !== -1) return "GT";
+          if (name.indexOf("SL") !== -1) return "SL";
+          if (isGClass(name)) return "G";
+          if (/^AMG S |^S \d/.test(name)) return "S";
+          if (/^AMG E |^E \d/.test(name)) return "E";
+          if (/^AMG C |^C \d/.test(name)) return "C";
+          if (/^AMG A |^A \d/.test(name)) return "A";
+          return name.split(" ")[0];
+        }
+        function lineupAdds(row) {
+          var feat = featureRecord(row).feat;
+          if (!feat || !feat.gear || !feat.gear.length) return { here: [], next: [], nextLabel: "" };
+          var book = window.GUIDE_DATA || {};
+          var core = lineupCore(normName(feat.name));
+          var byLabel = {};
+          Object.keys(book).forEach(function (key) {
+            var parts = key.split("|");
+            if (parts[0] !== feat.year || lineupCore(parts[1]) !== core) return;
+            var g = book[key];
+            if (!g.gear || !g.gear.length) return;
+            var label = lineupLabel(g.name);
+            if (!byLabel[label] || g.gear.length > byLabel[label].gear.length) byLabel[label] = g;
+          });
+          var cols = Object.keys(byLabel)
+            .map(function (label) { return { label: label, gear: byLabel[label].gear, rank: lineupRank(label) }; })
+            .sort(function (x, y) { return x.rank - y.rank; });
+          var idx = -1;
+          cols.forEach(function (col, i) { if (col.label === lineupLabel(feat.name)) idx = i; });
+          if (idx < 0) return { here: [], next: [], nextLabel: "" };
+          var maps = cols.map(function (col) {
+            var map = {};
+            col.gear.forEach(function (item) { map[item[1]] = item[2]; });
+            return map;
+          });
+          var here = [];
+          var next = [];
+          var seen = {};
+          cols.forEach(function (col) {
+            col.gear.forEach(function (item) {
+              if (seen[item[1]]) return;
+              seen[item[1]] = true;
+              var raw = maps.map(function (map) { return map[item[1]] === "기본"; });
+              var first = raw.indexOf(true);
+              if (first === idx && idx > 0 && here.length < 3) here.push(item[1]);
+              if (first === idx + 1 && next.length < 3) next.push(item[1]);
+            });
+          });
+          return { here: here, next: next, nextLabel: cols[idx + 1] ? cols[idx + 1].label : "" };
+        }
+        function faqItem(item, open) {
+          return '<details class="rounded-3xl bg-white p-4"' + (open ? " open" : "") + "><summary>" + esc(item.q) + '</summary><p class="mt-2 text-[16px] leading-relaxed">' + esc(item.a) + "</p></details>";
+        }
+        function carQuestions(row, other) {
+          var name = showName(row.name);
+          var q = window.BenzQuote.of(row);
+          var man = window.BenzQuote.man;
+          var mates = familyMates(row);
+          var list = [];
+          function add(key, question, answer) {
+            if (!question || !answer) return;
+            if (list.some(function (item) { return item.key === key; })) return;
+            list.push({ key: key, q: question, a: answer });
+          }
+          if (q.option) {
+            add(
+              "edition",
+              name + "의 " + q.optionLabel + "은 할인 전에 포함되나요?",
+              "차량 " + won(man(q.vehicle)) + "에 " + q.optionLabel + " " + won(man(q.option)) + "을 더한 " + won(man(q.basis)) + "이 할인 기준입니다." +
+                (q.extra ? " 할인을 적용한 뒤 옵션 추가 할인 " + won(man(q.extra)) + "을 한 번 더 뺍니다." : "") +
+                (q.rate != null ? " 지금 비교의 적용 할인은 " + q.rate + "%입니다." : "")
+            );
+          }
+          if (q.altAdd) {
+            add(
+              "split-fin",
+              name + "는 할부와 장기렌트 할인이 다른가요?",
+              "할부는 금융 추가 " + q.finAdd + "%입니다. 운용리스와 장기렌트는 금융 추가 " + q.altAdd + "%입니다. 위 비교의 정상 통관 " + won(man(q.normal)) + "은 할부 기준이고, 장기렌트 기준은 " + won(man(q.altNormal)) + "입니다."
+            );
+          }
+          var twin = twinYear(row);
+          if (twin && (twin.cash !== row.cash || String(twin.mbm || "") !== String(row.mbm || ""))) {
+            var tq = window.BenzQuote.of(twin);
+            add(
+              "year",
+              name + "는 " + row.my + "과 " + twin.my + "의 할인이 다른가요?",
+              "이 " + row.my + " 적용 할인은 " + (q.rate == null ? "비어 있습니다" : q.rate + "%입니다") + ". 같은 이름 " + twin.my + " 할인은 " + (tq.rate == null ? "비어 있습니다" : tq.rate + "%입니다") + "."
+            );
+          }
+          if (row.note.indexOf("사전계약") !== -1 || (row.my === "MY27" && row.seg === "S" && (!row.cash || row.cash === "—"))) {
+            add(
+              "preorder",
+              name + "는 왜 기본 할인이 비어 있나요?",
+              name + " " + row.my + "는 사전계약으로 안내된 차입니다. 10월 기본 할인율은 이 비교에 들어가 있지 않습니다. 사전계약 재구매 조건은 상담에서 이 차 기준으로 확인합니다."
+            );
+          }
+          if (isGClass(row.name) && (!row.cash || row.cash === "—")) {
+            add(
+              "g-cash",
+              name + "는 왜 현금 할인이 없나요?",
+              "10월 " + name + "는 기본 현금 할인이 없습니다. 골든타임 선물도 G클래스는 대상에서 빠져 있습니다."
+            );
+          }
+          if (isEqCar(row)) {
+            add(
+              "voucher",
+              name + " 충전 바우처는 차값 할인과 같이 들어오나요?",
+              name + "를 벤츠 금융으로 사면 충전 바우처 100만원이 따로 있습니다. SK일렉링크에서 쓰고, 차값에 적힌 할인율과는 별개입니다." +
+                (row.note.indexOf("보증") !== -1 ? " 이 트림은 보증이 늘어나는 대상으로도 안내되어 있습니다." : "")
+            );
+          }
+          var longMate = mates.filter(function (item) { return /Long/.test(item.name); })[0];
+          var shortMate = mates.filter(function (item) { return /\(SWB\)/.test(item.name) || item.name === "S 450 4MATIC"; })[0];
+          if (/\(SWB\)/.test(row.name) || row.name === "S 450 4MATIC") {
+            var longText = longMate ? " " + showName(longMate.name) + " 정상가격은 " + won(window.BenzQuote.man(longMate.price)) + "입니다." : "";
+            add(
+              "body",
+              name + "와 롱바디는 얼마나 다른가요?",
+              "이 차는 숏바디입니다." + longText + " 뒷좌석을 주로 쓰면 롱바디를 같이 보면 됩니다."
+            );
+          } else if (/Long/.test(row.name) && shortMate) {
+            add(
+              "body",
+              name + "는 숏바디보다 무엇이 긴가요?",
+              "롱바디는 실내 길이가 더 긴 S클래스입니다. 숏바디 " + showName(shortMate.name) + " 정상가격은 " + won(window.BenzQuote.man(shortMate.price)) + "이고, 이 롱바디는 " + (q.vehicle == null ? "권장가를 상담에서 확인합니다" : won(man(q.vehicle)) + "입니다") + "."
+            );
+          }
+          var coupeMate = mates.filter(function (item) { return /Coupé|Coupe/.test(item.name); })[0];
+          var openMate = mates.filter(function (item) { return /Cabriolet/.test(item.name); })[0];
+          if (/Cabriolet/.test(row.name) && coupeMate) {
+            add(
+              "cabrio",
+              name + "는 쿠페와 할인이 같나요?",
+              "지붕을 여는 " + name + "의 기본 할인은 " + (row.cash && row.cash !== "—" ? row.cash : "비어 있습니다") + ". 쿠페 " + showName(coupeMate.name) + "의 기본 할인은 " + (coupeMate.cash && coupeMate.cash !== "—" ? coupeMate.cash : "비어 있습니다") + "입니다. 정상가격은 카브리올레 " + won(man(q.vehicle)) + ", 쿠페 " + won(window.BenzQuote.man(coupeMate.price)) + "입니다."
+            );
+          } else if (/Coupé|Coupe/.test(row.name) && openMate) {
+            add(
+              "cabrio",
+              name + " 대신 지붕이 열리는 모델이 있나요?",
+              showName(openMate.name) + "이 카브리올레입니다. 정상가격은 " + won(window.BenzQuote.man(openMate.price)) + "이고, 기본 할인은 " + (openMate.cash && openMate.cash !== "—" ? openMate.cash : "비어 있습니다") + "입니다."
+            );
+          }
+          if (/Hatch/.test(row.name)) {
+            var sedan = rows.filter(function (item) { return item.my === row.my && item.name.indexOf("Sedan") !== -1 && item.name.indexOf("A 220") !== -1; })[0];
+            if (sedan) {
+              add(
+                "hatch",
+                "A 220 해치와 세단은 할인이 왜 다른가요?",
+                "해치 " + name + " 기본 할인은 " + row.cash + "입니다. 세단은 " + sedan.cash + "이고 정상가격은 " + won(window.BenzQuote.man(sedan.price)) + "입니다."
+              );
+            }
+          }
+          if (/Sedan/.test(row.name) && row.name.indexOf("A 220") !== -1) {
+            var hatch = rows.filter(function (item) { return item.my === row.my && /Hatch/.test(item.name); })[0];
+            if (hatch) {
+              add(
+                "hatch",
+                "A 220 세단은 해치보다 무엇이 다른가요?",
+                "세단 정상가격은 " + won(man(q.vehicle)) + "이고 기본 할인은 " + row.cash + "입니다. 해치는 정상가격 " + won(window.BenzQuote.man(hatch.price)) + ", 기본 할인 " + hatch.cash + "입니다."
+              );
+            }
+          }
+          if (/Final Edition/.test(row.name)) {
+            var baseC = mates.filter(function (item) { return /Avantgarde/.test(item.name); })[0];
+            add(
+              "final",
+              name + "는 아방가르드와 구성이 다른가요?",
+              "파이널 에디션은 C 200에 별도 구성이 더해진 트림입니다. 정상가격은 " + won(man(q.vehicle)) + "입니다." +
+                (baseC ? " 아방가르드는 " + won(window.BenzQuote.man(baseC.price)) + "이고, 기본 할인 " + baseC.cash + "에 금융 추가가 있으면 그 비율이 같이 붙습니다." : "")
+            );
+          }
+          var seriesRows = rows.filter(function (item) {
+            return item.my === row.my && item.i !== row.i && seriesOf(item.name) === seriesOf(row.name) && !isEqCar(item);
+          });
+          var dieselMate = seriesRows.filter(function (item) { return isDiesel(item.name); })[0];
+          var gasMate = seriesRows.filter(function (item) { return !isDiesel(item.name) && !isPerfAmg(item.name); })[0];
+          if (isDiesel(row.name) && gasMate) {
+            add(
+              "diesel",
+              name + " 디젤은 같은 이름의 가솔린과 할인이 다른가요?",
+              "이 차는 디젤입니다. 기본 할인은 " + (row.cash && row.cash !== "—" ? row.cash : "없습니다") + ". 가솔린 " + showName(gasMate.name) + " 기본 할인은 " + (gasMate.cash && gasMate.cash !== "—" ? gasMate.cash : "없습니다") + "입니다."
+            );
+          } else if (!isDiesel(row.name) && dieselMate && !isEqCar(row)) {
+            add(
+              "diesel",
+              name + " 대신 같은 차종 디젤이 있나요?",
+              "디젤 트림은 " + showName(dieselMate.name) + "입니다. 정상가격은 " + won(window.BenzQuote.man(dieselMate.price)) + "이고, 기본 할인은 " + (dieselMate.cash && dieselMate.cash !== "—" ? dieselMate.cash : "없습니다") + "입니다. " + name + "는 가솔린입니다."
+            );
+          }
+          var plainSuv = rows.filter(function (item) {
+            return item.my === row.my && item.i !== row.i && familyStem(item.name.replace(/Coupé|Coupe/g, "")) === familyStem(row.name).replace(/Coupé|Coupe/g, "").trim() && !/Coupé|Coupe/.test(item.name);
+          })[0];
+          var coupeSuv = rows.filter(function (item) {
+            return item.my === row.my && item.i !== row.i && /Coupé|Coupe/.test(item.name) && familyStem(item.name.replace(/Coupé|Coupe/g, " ")) === familyStem(row.name);
+          })[0];
+          if (/Coupé|Coupe/.test(row.name) && plainSuv && row.seg === "SUV") {
+            add(
+              "coupe-suv",
+              name + "는 일반형보다 가격이 얼마나 다른가요?",
+              "쿠페 정상가격은 " + won(man(q.vehicle)) + "입니다. 일반형 " + showName(plainSuv.name) + "는 " + won(window.BenzQuote.man(plainSuv.price)) + "이고, 기본 할인은 " + (plainSuv.cash && plainSuv.cash !== "—" ? plainSuv.cash : "없습니다") + "입니다."
+            );
+          } else if (!/Coupé|Coupe|Cabriolet/.test(row.name) && coupeSuv) {
+            add(
+              "coupe-suv",
+              name + "를 쿠페 지붕으로도 볼 수 있나요?",
+              "쿠페는 " + showName(coupeSuv.name) + "입니다. 정상가격은 " + won(window.BenzQuote.man(coupeSuv.price)) + "이고, 기본 할인은 " + (coupeSuv.cash && coupeSuv.cash !== "—" ? coupeSuv.cash : "없습니다") + "입니다."
+            );
+          }
+          var adds = /\(RoF|140주년/.test(row.name) ? { here: [], next: [], nextLabel: "" } : lineupAdds(row);
+          if (adds.here.length) {
+            add(
+              "lineup",
+              name + "부터 기본으로 붙는 사양은 무엇인가요?",
+              "아래 라인업에는 없고 이 트림에서 처음 기본이 되는 항목은 " + adds.here.join(", ") + "입니다. 위 표의 청록색과 같은 칸입니다."
+            );
+          } else if (adds.next.length) {
+            add(
+              "lineup",
+              name + "에서 한 단계 위로 가면 뭐가 기본이 되나요?",
+              "다음 단계인 " + (adds.nextLabel || "위 라인업") + "에서 처음 기본이 되는 항목은 " + adds.next.join(", ") + "입니다. 위 표의 청록색 칸과 같습니다."
+            );
+          }
+          var samePrice = mates.filter(function (item) { return item.price && item.price === row.price && item.cash !== row.cash; })[0];
+          if (samePrice) {
+            var sq = window.BenzQuote.of(samePrice);
+            add(
+              "same-price",
+              name + "는 " + showName(samePrice.name) + "와 정상가격이 같은데 실구매가는 다른가요?",
+              "정상가격은 둘 다 " + won(man(q.vehicle)) + "입니다. " + name + " 적용 할인은 " + (q.rate == null ? "없고" : q.rate + "%이고") + ", " + showName(samePrice.name) + "는 " + (sq.rate == null ? "할인이 비어 있습니다" : sq.rate + "%입니다") + "."
+            );
+          }
+          if (isPerfAmg(row.name)) {
+            add(
+              "amg",
+              name + "는 AMG 라인과 같은 차인가요?",
+              "AMG 라인은 디자인과 서스펜션이 더해진 트림이고, " + name + "는 고성능 AMG입니다. 이 차의 기본 할인은 " + (row.cash && row.cash !== "—" ? row.cash : "없습니다") + "."
+            );
+          }
+          var retainN = anyPct(row.retain);
+          var conquestN = anyPct(row.conquest);
+          if (row.name.indexOf("Maybach") !== -1 && (retainN >= 2 || conquestN >= 2)) {
+            add(
+              "maybach",
+              name + " 재구매 할인은 위 실구매가에 들어 있나요?",
+              "위 금액은 기본 할인 " + (row.cash && row.cash !== "—" ? row.cash : "없음") + "만 반영합니다. 이 트림은 재구매 " + row.retain + (conquestN ? ", 다른 브랜드 " + row.conquest : "") + " 조건이 추가 혜택에 따로 있습니다."
+            );
+          }
+          var raised = String(row.note).match(/(\d+(?:\.\d+)?)%에서 (\d+(?:\.\d+)?)%로 상향/);
+          if (raised) {
+            add(
+              "raised",
+              name + "는 이번 달 기본 할인이 올랐나요?",
+              "10월 " + name + " 기본 할인은 " + raised[1] + "%에서 " + raised[2] + "%로 올랐습니다. 위 비교에는 " + raised[2] + "%가 들어가 있습니다."
+            );
+          }
+          if (row.note.indexOf("패독") !== -1) {
+            add(
+              "f1",
+              name + "는 F1 패독 투어 대상인가요?",
+              name + "는 F1 패독 투어 초대 대상으로 안내된 모델입니다. 참가 조건과 일정은 상담에서 이 차 기준으로 확인합니다."
+            );
+          }
+          var manuBase = mates.filter(function (item) { return item.name.indexOf("MANUFAKTUR") === -1 && row.name.indexOf("MANUFAKTUR") !== -1; })[0];
+          if (row.name.indexOf("MANUFAKTUR") !== -1 && manuBase && manuBase.price && q.vehicle) {
+            add(
+              "manu",
+              name + "는 기본형보다 무엇이 더해지나요?",
+              "마누팍투어는 색과 소재 구성이 더해진 트림입니다. 정상가격은 " + won(man(q.vehicle)) + "이고, 기본형 " + showName(manuBase.name) + "는 " + won(window.BenzQuote.man(manuBase.price)) + "입니다."
+            );
+          }
+          if (/350 e|E Performance/.test(row.name)) {
+            add(
+              "phev",
+              name + "는 충전하는 하이브리드인가요?",
+              name + "는 충전해서 전기로도 가고, 엔진으로도 가는 하이브리드입니다. 전기만으로 가는 거리는 차와 운전 방식에 따라 달라지니 시승에서 확인하면 됩니다."
+            );
+          }
+          if (/4MATIC/.test(row.name) && other && !/4MATIC/.test(other.name) && !isGClass(other.name)) {
+            add(
+              "awd",
+              name + "의 4MATIC은 네 바퀴로 가나요?",
+              "4MATIC은 네 바퀴로 구동하는 방식입니다. 지금 옆에 둔 " + showName(other.name) + "에는 4MATIC 표기가 없습니다."
+            );
+          }
+          if (!q.early && (isEqCar(row) || isGClass(row.name) || row.my !== "MY26")) {
+            add(
+              "tax",
+              name + "도 7월 이전 통관이면 더 빠지나요?",
+              isEqCar(row)
+                ? "이 전기차는 개소세 감면이 가격표에 이미 들어 있습니다. 내연기관처럼 이전 통관 금액을 한 번 더 빼는 칸은 이 차의 비교에 없습니다."
+                : isGClass(row.name)
+                  ? "G클래스는 이전 통관 개소세 인하를 이 비교 금액에서 빼지 않습니다."
+                  : name + " " + row.my + "는 이전 통관 인하 칸이 없습니다. 그 인하는 MY26 재고에만 해당합니다."
+            );
+          }
+          var lenSelf = specText(row, "길이");
+          var power = specText(row, "최고출력");
+          if (lenSelf || power) {
+            add(
+              "spec",
+              name + " 길이와 출력은 어느 정도인가요?",
+              (lenSelf ? "공개된 길이는 " + lenSelf + "입니다. " : "") + (power ? "최고출력은 " + power + "입니다." : "")
+            );
+          }
+          return list.slice(0, 3);
+        }
+        function pairQuestions(a, b, da, db) {
+          var out = [];
+          if (da.normalMan != null && db.normalMan != null && da.normalMan !== db.normalMan) {
+            var gap = Math.abs(da.normalMan - db.normalMan);
+            var low = da.normalMan < db.normalMan ? a : b;
+            var high = low === a ? b : a;
+            out.push({
+              q: showName(a.name) + "와 " + showName(b.name) + ", 지금 조건으로 얼마나 차이 나나요?",
+              a: "정상 통관 기준으로 " + showName(low.name) + "가 " + won(Math.min(da.normalMan, db.normalMan)) + ", " + showName(high.name) + "가 " + won(Math.max(da.normalMan, db.normalMan)) + "입니다. 차이는 " + won(gap) + "입니다."
+            });
+          }
+          if (isEqCar(a) !== isEqCar(b)) {
+            var ev = isEqCar(a) ? a : b;
+            var ice = ev === a ? b : a;
+            out.push({
+              q: showName(ev.name) + "만 충전 혜택이 있나요?",
+              a: showName(ev.name) + "는 벤츠 금융으로 사면 충전 바우처 100만원이 있습니다. " + showName(ice.name) + "는 그 바우처 대상이 아닙니다."
+            });
+          } else if (isDiesel(a.name) !== isDiesel(b.name) && !isEqCar(a) && !isEqCar(b)) {
+            var d = isDiesel(a.name) ? a : b;
+            var g = d === a ? b : a;
+            out.push({
+              q: "한쪽은 디젤인데, 할인 방식이 같은가요?",
+              a: showName(d.name) + "는 디젤이고 기본 할인은 " + (d.cash && d.cash !== "—" ? d.cash : "없습니다") + ". " + showName(g.name) + "는 가솔린이고 기본 할인은 " + (g.cash && g.cash !== "—" ? g.cash : "없습니다") + "입니다."
+            });
+          }
+          return out.slice(0, 2);
+        }
+        function renderFaq(a, b, da, db) {
+          var lead = document.getElementById("faq-lead");
+          var box = document.getElementById("faq-list");
+          var leftQs = carQuestions(a, b);
+          var rightQs = a.i === b.i ? [] : carQuestions(b, a);
+          var pair = a.i === b.i ? [] : pairQuestions(a, b, da, db);
+          lead.textContent = a.i === b.i
+            ? showName(a.name) + "를 양쪽에 두었습니다. 아래는 이 차에서 나오는 질문입니다."
+            : showName(a.name) + "와 " + showName(b.name) + "를 두고 보는 질문입니다. 차를 바꾸면 질문도 바뀝니다.";
+          var html = "";
+          function block(row, items) {
+            if (!items.length) return "";
+            return '<div><h3 class="text-[20px] font-bold">' + esc(showName(row.name) + " · " + row.my) + '</h3><div class="mt-3 space-y-3">' +
+              items.map(function (item, i) { return faqItem(item, i === 0); }).join("") +
+              "</div></div>";
+          }
+          html += block(a, leftQs);
+          html += block(b, rightQs);
+          if (pair.length) {
+            html += '<div><h3 class="text-[20px] font-bold">둘을 같이 보면</h3><div class="mt-3 space-y-3">' +
+              pair.map(function (item) { return faqItem(item, false); }).join("") +
+              "</div></div>";
+          }
+          box.innerHTML = html;
+        }
         function drawCompare() {
           var a = rows[Number(left.value)];
           var b = rows[Number(right.value)];
@@ -510,6 +893,7 @@
           document.getElementById("ask-left").setAttribute("href", ask(a));
           document.getElementById("ask-right").setAttribute("href", ask(b));
           document.getElementById("ask-mobile").setAttribute("href", ask(a));
+          renderFaq(a, b, da, db);
         }
 
         left.addEventListener("change", drawCompare);
