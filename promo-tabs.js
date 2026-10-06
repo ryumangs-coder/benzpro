@@ -5,12 +5,18 @@
     cal: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10z"/></svg>',
     swap: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 7h11l-2.2-2.2 1.4-1.4L22 8l-4.8 4.6-1.4-1.4L18 9H7V7zm10 10H6l2.2 2.2-1.4 1.4L2 16l4.8-4.6 1.4 1.4L6 15h11v2z"/></svg>',
     tire: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>',
+    gift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 10h16v10H4V10zm8-6l2.2 3H20v3H4V7h5.8L12 4zM11 12v6h2v-6h-2z"/></svg>',
+    fleet: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20V8l6-4h6l6 4v12h-6v-5H9v5H3zm2-2h2v-3h4v3h6V9.2L15 6H9L5 9.2V18z"/></svg>',
+    key: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 4a6 6 0 0 1 1.2 11.9L14 17v3h-3v2H8v-2H6v-3l1.8-1.1A6 6 0 0 1 14 4zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>',
     mou: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V9l8-5 8 5v11h-6v-6H10v6H4z"/></svg>',
     card: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v12H3V6zm2 4h14V8H5v2z"/></svg>'
   };
   var tabs = [
     { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["promo-board", "highlights", "raised", "finder", "how", "examples"] },
     { id: "extra", label: "추가 혜택", icon: icons.plus, ids: ["owned", "benefit-slot"] },
+    { id: "golden", label: "골든타임", icon: icons.gift, ids: ["golden-slot"] },
+    { id: "fleet", label: "법인 할인", icon: icons.fleet, ids: ["fleet-slot"] },
+    { id: "rental", label: "렌터카", icon: icons.key, ids: ["rental-slot"] },
     { id: "support", label: "6개월 지원", icon: icons.cal, ids: ["support"] },
     { id: "care", label: "신차교환", icon: icons.swap, ids: ["programs", "care-card"] },
     { id: "tire", label: "타이어", icon: icons.tire, ids: ["tire-card"] },
@@ -25,6 +31,9 @@
     examples: "cars",
     owned: "extra",
     extra: "extra",
+    fleet: "fleet",
+    golden: "golden",
+    rental: "rental",
     support: "support",
     programs: "care",
     "care-card": "care",
@@ -52,6 +61,21 @@
   slot.id = "benefit-slot";
   slot.className = "jump mt-6";
   highlights.parentNode.insertBefore(slot, highlights);
+
+  var fleetSlot = document.createElement("section");
+  fleetSlot.id = "fleet-slot";
+  fleetSlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(fleetSlot, highlights);
+
+  var goldenSlot = document.createElement("section");
+  goldenSlot.id = "golden-slot";
+  goldenSlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(goldenSlot, highlights);
+
+  var rentalSlot = document.createElement("section");
+  rentalSlot.id = "rental-slot";
+  rentalSlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(rentalSlot, highlights);
 
   var bar = document.createElement("div");
   bar.className = "promo-tabs mt-6";
@@ -158,6 +182,11 @@
   function won(n) {
     return n.toLocaleString("ko-KR") + "만원";
   }
+  function showName(name) {
+    var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디");
+    if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
+    return s;
+  }
   function consultHref(f) {
     var params = new URLSearchParams();
     params.set("car", f.car);
@@ -182,10 +211,13 @@
         won(best.maxMan) +
         "</b>입니다.</p>" +
         '<p class="mt-1 text-[15px] text-[#A4AAAE]">' +
-        best.name +
+        showName(best.name) +
         " 기준 · 기본 할인만 적용하면 " +
         won(best.basicMan) +
         "</p>";
+    var voucher = (f.group === "ev" && !f.staticPrice) || f.name === "마이바흐 EQS"
+      ? '<p class="mt-2 text-[16px] font-semibold text-[#E4CB86]">벤츠 금융으로 사면 충전 바우처 100만원</p>'
+      : "";
     var seeHref = f.href || (function () {
       var params = new URLSearchParams();
       params.set("prefix", f.prefix);
@@ -206,6 +238,7 @@
       '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">' +
       f.line +
       "</p>" +
+      voucher +
       priceHtml +
       '<div class="mt-4 flex flex-wrap gap-2">' +
       see +
@@ -220,7 +253,11 @@
   groupMeta.forEach(function (g) {
     var cards = families.filter(function (f) { return f.group === g.id; }).map(card).filter(Boolean);
     if (!cards.length) return;
-    html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div></section>";
+    html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
+    if (g.id === "ev") {
+      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">EQA, EQB, EQE, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다. 일렉트릭 GLC 사전예약에는 이 바우처가 아직 없습니다.</p>';
+    }
+    html += "</section>";
   });
   html += '<p class="mt-4 text-[16px]"><a class="font-bold text-[#E4CB86] underline" href="models.html">전 트림을 나란히 비교하려면 차량 가이드</a></p>';
   board.innerHTML = html;
@@ -242,8 +279,43 @@
       });
   }
 
+  var loadedFleet = false;
+  function loadFleet() {
+    if (loadedFleet) return;
+    loadedFleet = true;
+    fleetSlot.innerHTML = '<p class="text-[17px] text-[#C5CED3]">법인 할인을 불러오는 중입니다.</p>';
+    fetch("fleet.html")
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var main = doc.querySelector("main");
+        fleetSlot.innerHTML = main ? main.innerHTML : "";
+      })
+      .catch(function () {
+        fleetSlot.innerHTML = '<p class="text-[17px]"><a class="font-bold text-[#E4CB86] underline" href="fleet.html">법인 구매 특별 할인 보기</a></p>';
+      });
+  }
+
+  function loadPage(flag, el, url, loading, failHref, failLabel) {
+    if (flag.done) return;
+    flag.done = true;
+    el.innerHTML = '<p class="text-[17px] text-[#C5CED3]">' + loading + "</p>";
+    fetch(url)
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var main = doc.querySelector("main");
+        el.innerHTML = main ? main.innerHTML : "";
+      })
+      .catch(function () {
+        el.innerHTML = '<p class="text-[17px]"><a class="font-bold text-[#E4CB86] underline" href="' + failHref + '">' + failLabel + "</a></p>";
+      });
+  }
+  var goldenFlag = { done: false };
+  var rentalFlag = { done: false };
+
   function allIds() {
-    var ids = ["promo-board", "benefit-slot"];
+    var ids = ["promo-board", "benefit-slot", "fleet-slot", "golden-slot", "rental-slot"];
     tabs.forEach(function (tab) {
       tab.ids.forEach(function (id) {
         if (ids.indexOf(id) === -1) ids.push(id);
@@ -267,6 +339,9 @@
       else node.classList.remove("promo-off");
     });
     if (tab.id === "extra") loadBenefit();
+    if (tab.id === "fleet") loadFleet();
+    if (tab.id === "golden") loadPage(goldenFlag, goldenSlot, "golden.html", "골든타임을 불러오는 중입니다.", "golden.html", "골든타임 보기");
+    if (tab.id === "rental") loadPage(rentalFlag, rentalSlot, "rental.html", "렌터카 조건을 불러오는 중입니다.", "rental.html", "렌터카·장기렌트 보기");
     if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + (scrollId || tab.id));
     if (scrollId && document.getElementById(scrollId)) {
       document.getElementById(scrollId).scrollIntoView({ behavior: "smooth", block: "start" });

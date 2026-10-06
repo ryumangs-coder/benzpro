@@ -64,6 +64,7 @@
         <input id="q" class="guide-pick mt-2" type="search" placeholder="예: E 200, GLC, 마이바흐" />
         <div id="segs" class="promo-tabs mt-3" role="tablist" aria-label="차종 묶음"></div>
         <div id="list" class="mt-6 space-y-8"></div>
+        <p class="mt-8 text-[16px] leading-relaxed text-[#A4AAAE]">정상가격은 2026년 9월 17일 가격표입니다. 부가세가 포함되어 있고, 내연기관과 하이브리드는 개별소비세 5% 기준입니다. 2026년 7월 1일부터 통관되는 차는 개별소비세가 3.5%에서 5%로 돌아왔습니다. 기준은 계약일이 아니라 그 차의 통관일입니다. 6월 30일까지 통관된 재고는 같은 트림이라도 더 낮을 수 있고, 차이 한도는 세금까지 포함해 약 143만원입니다. 이 페이지는 통관일마다 가격을 나누지 않았습니다. 전기차는 2026년 12월 31일까지 개별소비세 300만원 한도 감면이 가격표에 이미 반영되어 있습니다.</p>
       </section>
     </main>
 
@@ -85,7 +86,7 @@
       </div>
     </div>
 
-    <script src="october-2026.js"></script>
+    <script src="october-2026.js?v=20261006"></script>
     <script src="guide-data.js"></script>
     <script>
       (function () {
@@ -134,7 +135,7 @@
         function ask(row) {
           var params = new URLSearchParams();
           params.set("car", carValue(row));
-          params.set("note", row.name + " " + row.my);
+          params.set("note", showName(row.name) + " " + row.my);
           return "index.html?" + params.toString() + "#consulting";
         }
         function groupOf(row) {
@@ -164,6 +165,14 @@
           amg: "M12 2l2.2 6.8H21l-5.5 4 2.1 6.7L12 16.8 6.4 19.5 8.5 12.8 3 8.8h6.8L12 2z",
           maybach: "M12 3l2 5h5l-4 3 1.5 5L12 13l-4.5 3L9 11 5 8h5l2-5z"
         };
+        function showName(name) {
+          var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디");
+          if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
+          return s;
+        }
+        function eqMemo(row) {
+          return row.seg === "EQ" ? " 벤츠 금융으로 사면 충전 바우처 100만원입니다." : "";
+        }
         function icon(id) {
           return '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="' + icons[id] + '"/></svg>';
         }
@@ -208,7 +217,7 @@
         var right = document.getElementById("right");
         var options = rows
           .map(function (row) {
-            return '<option value="' + row.i + '">' + row.name + " · " + row.my + "</option>";
+            return '<option value="' + row.i + '">' + showName(row.name) + " · " + row.my + "</option>";
           })
           .join("");
         left.innerHTML = options;
@@ -283,15 +292,15 @@
           var da = pack(a);
           var db = pack(b);
           var sentence = function (row, d) {
-            if (d.priceMan == null) return row.name + "은 권장가가 정해지면 할인이 적용됩니다.";
+            if (d.priceMan == null) return showName(row.name) + "은 권장가가 정해지면 할인이 적용됩니다." + eqMemo(row);
             var base = "정상가격은 " + won(d.priceMan) + "인데, 최대 프로모션 적용 실구매가격은 " + won(d.maxMan) + "입니다.";
             if (d.maxMan !== d.basicMan) base += " 기본 할인만 적용하면 " + won(d.basicMan) + "입니다.";
-            return base;
+            return base + eqMemo(row);
           };
           document.getElementById("compare").innerHTML =
             '<div class="grid gap-4 sm:grid-cols-2">' +
-            '<div><p class="text-[20px] font-bold">' + a.name + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">이 차종으로 상담 받기</a></div>' +
-            '<div><p class="text-[20px] font-bold">' + b.name + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(b) + '">이 차종으로 상담 받기</a></div>' +
+            '<div><p class="text-[20px] font-bold">' + showName(a.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">이 차종으로 상담 받기</a></div>' +
+            '<div><p class="text-[20px] font-bold">' + showName(b.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(b) + '">이 차종으로 상담 받기</a></div>' +
             "</div>" +
             '<div class="mt-4">' +
             line("연식", a.my, b.my, false) +
@@ -330,7 +339,7 @@
             var items = rows.filter(function (row) {
               if (groupOf(row) !== item.id) return false;
               if (!query) return true;
-              return (row.name + row.my).toLowerCase().replace(/\s+/g, "").indexOf(query) !== -1;
+              return (row.name + showName(row.name) + row.my).toLowerCase().replace(/\s+/g, "").indexOf(query) !== -1;
             });
             if (!items.length) return;
             html += '<section><h3 class="text-[22px] font-bold">' + item.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">';
@@ -338,12 +347,12 @@
               var d = pack(row);
               var price = d.priceMan == null
                 ? "권장가는 상담 시 확인합니다."
-                : "정상가격은 " + won(d.priceMan) + "인데, 최대 프로모션 적용 실구매가격은 " + won(d.maxMan) + "입니다.";
+                : "정상가격은 " + won(d.priceMan) + "인데, 최대 프로모션 적용 실구매가격은 " + won(d.maxMan) + "입니다." + eqMemo(row);
               html +=
                 '<article class="rounded-3xl bg-white p-4">' +
                 '<button type="button" class="text-left" data-pick="' + row.i + '">' +
                 '<p class="text-[13px] font-semibold text-[#E4CB86]">' + row.my + "</p>" +
-                '<h4 class="mt-1 text-[18px] font-bold">' + row.name + "</h4>" +
+                '<h4 class="mt-1 text-[18px] font-bold">' + showName(row.name) + "</h4>" +
                 '<p class="mt-2 text-[16px] leading-snug">' + price + "</p></button>" +
                 '<a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2 text-[14px] font-bold text-[#0B1F2A]" href="' + ask(row) + '">이 차종으로 상담 받기</a>' +
                 "</article>";
