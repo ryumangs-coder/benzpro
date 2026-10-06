@@ -331,6 +331,47 @@ input:checked + .pick {
 .guide-row .diff {
   color: #e4cb86;
 }
+.guide-row .opt-diff {
+  color: #5eead4;
+}
+.lineup-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.lineup-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.lineup-table th,
+.lineup-table td {
+  padding: 0.75rem 0.4rem;
+  text-align: center;
+  font-size: 15px;
+  border-bottom: 1px solid rgba(164, 170, 174, 0.2);
+}
+.lineup-table th:first-child,
+.lineup-table td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+.lineup-table .delta {
+  color: #5eead4;
+  font-weight: 800;
+}
+.lineup-table .miss {
+  color: #8b9499;
+}
+.lineup-table .cat td {
+  padding-top: 1.05rem;
+  color: #e4cb86;
+  font-weight: 800;
+  text-align: left;
+}
+.faq-list details summary {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+}
 a.kakao {
   background: #fee500 !important;
   color: #191600 !important;
