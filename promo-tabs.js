@@ -102,17 +102,10 @@
     return m ? parseFloat(m[1]) : 0;
   }
   function deal(row) {
-    if (row[3] == null) return null;
-    var priceMan = Math.round(row[3] / 10000);
-    var basic = anyPct(row[4]) + simplePct(row[5]);
-    var retain = anyPct(row[7]);
-    var conquest = anyPct(row[8]);
-    var card = anyPct(row[9]);
-    var loyalty = Math.max(retain > 0 ? retain + 1 : 0, conquest);
-    var maxPct = basic + loyalty + card;
-    var basicMan = priceMan - Math.round((row[3] * basic) / 100 / 10000);
-    var maxMan = priceMan - Math.round((row[3] * maxPct) / 100 / 10000);
-    return { priceMan: priceMan, basicMan: basicMan, maxMan: maxMan, name: row[2] };
+    if (!window.BenzQuote || row[3] == null) return null;
+    var q = window.BenzQuote.of({ seg: row[0], my: row[1], name: row[2], price: row[3], cash: row[4], mbm: row[5] });
+    var man = window.BenzQuote.man;
+    return { priceMan: man(q.basis), basicMan: man(q.normal), maxMan: man(q.normal), earlyMan: q.early == null ? null : man(q.early), rate: q.rate, name: row[2] };
   }
 
   var families = [
@@ -207,13 +200,14 @@
       ? '<p class="mt-3 text-[20px] font-bold">정상가격 ' + f.staticPrice + "</p>"
       : '<p class="mt-3 text-[18px] leading-snug">정상가격은 <b>' +
         won(best.priceMan) +
-        "</b>인데, 최대 프로모션 적용 실구매가격은 <b class=\"text-[#E4CB86]\">" +
+        "</b>인데, 기본 할인과 금융 할인을 더한 실구매가격은 <b class=\"text-[#E4CB86]\">" +
         won(best.maxMan) +
         "</b>입니다.</p>" +
         '<p class="mt-1 text-[15px] text-[#A4AAAE]">' +
         showName(best.name) +
-        " 기준 · 기본 할인만 적용하면 " +
-        won(best.basicMan) +
+        " 기준" +
+        (best.rate ? " · " + best.rate + "%" : "") +
+        (best.earlyMan != null ? " · 7월 1일 이전 통관 " + won(best.earlyMan) : "") +
         "</p>";
     var voucher = (f.group === "ev" && !f.staticPrice) || f.name === "마이바흐 EQS"
       ? '<p class="mt-2 text-[16px] font-semibold text-[#E4CB86]">벤츠 금융으로 사면 충전 바우처 100만원</p>'
