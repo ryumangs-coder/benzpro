@@ -91,7 +91,7 @@
     <script src="october-2026.js?v=20261006b"></script>
     <script src="quote.js?v=20261006b"></script>
     <script src="guide-data.js"></script>
-    <script src="approach-specs.js?v=20261007c"></script>
+    <script src="approach-specs.js?v=20261007i"></script>
     <script src="option-words.js?v=20261007c"></script>
     <script src="colors.js?v=20261007c"></script>
     <script>
@@ -262,20 +262,25 @@
           }
           return false;
         }
-        function bookSpecs(row) {
+        function bookHit(row) {
           var list = window.APPROACH_SPECS || [];
           var best = null;
           var score = -1;
           list.forEach(function (item) {
+            if (item.year && item.year !== row.my) return;
             var ok = (item.need || []).every(function (token) { return nameHas(row.name, token); });
             if (!ok) return;
             if ((item.not || []).some(function (token) { return nameHas(row.name, token); })) return;
-            var s = (item.need || []).join("").length;
+            var s = (item.need || []).join("").length + (item.year ? 20 : 0);
             if (s > score) {
               score = s;
               best = item;
             }
           });
+          return best;
+        }
+        function bookSpecs(row) {
+          var best = bookHit(row);
           return best ? best.specs : [];
         }
         function canonSpec(label) {
@@ -352,15 +357,21 @@
           return { a: pick, b: pick };
         }
         function mergedSpecs(guideList, row) {
+          var book = bookHit(row) || { specs: [], replace: [] };
+          var replace = {};
+          (book.replace || []).forEach(function (label) { replace[label] = true; });
+          var bookMap = {};
+          (book.specs || []).forEach(function (pair) { bookMap[pair[0]] = pair[1]; });
           var have = {};
           var rows = [];
           (guideList || []).forEach(function (pair) {
             var label = canonSpec(pair[0]);
             if (!pair[1] || have[label]) return;
+            if (replace[label] && bookMap[label]) return;
             have[label] = true;
             rows.push([label, tidySpec(label, pair[1])]);
           });
-          var extra = bookSpecs(row).filter(function (pair) { return !have[pair[0]]; }).map(function (pair) {
+          var extra = (book.specs || []).filter(function (pair) { return !have[pair[0]]; }).map(function (pair) {
             return [pair[0], tidySpec(pair[0], pair[1])];
           });
           var order = ["길이", "너비", "높이", "휠베이스", "배기량", "연료", "변속기", "구동", "최고출력", "최대토크", "0-100km/h", "복합연비", "트렁크", "공차중량", "타이어"];
@@ -629,15 +640,9 @@
         }
         function specText(row, label) {
           var g = featureRecord(row).spec;
-          var hit = ((g && g.specs) || []).filter(function (pair) { return pair[0] === label; })[0];
-          if (!hit || !hit[1]) return "";
-          var v = String(hit[1]).trim();
-          if (/[가-힣a-zA-Z]/.test(v)) return v;
-          if (label === "길이" || label === "너비" || label === "높이" || label === "휠베이스") return Number(v).toLocaleString("ko-KR") + "mm";
-          if (label === "최고출력") return v + "ps";
-          if (label === "배기량") return Number(v).toLocaleString("ko-KR") + "cc";
-          if (label === "복합연비") return v + " km/L";
-          return v;
+          var hit = mergedSpecs((g && g.specs) || [], row).rows.filter(function (pair) { return pair[0] === label; })[0];
+          if (!hit || !hit[1] || hit[1] === "—") return "";
+          return hit[1];
         }
         function familyStem(name) {
           return String(name)
