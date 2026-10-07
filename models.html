@@ -86,6 +86,9 @@
     <script src="october-2026.js?v=20261006b"></script>
     <script src="quote.js?v=20261006b"></script>
     <script src="guide-data.js"></script>
+    <script src="approach-specs.js?v=20261007c"></script>
+    <script src="option-words.js?v=20261007c"></script>
+    <script src="colors.js?v=20261007c"></script>
     <script>
       (function () {
         var rows = window.OCTOBER_2026.models.map(function (r, i) {
@@ -243,6 +246,74 @@
             borrowed: !!(best && (!same || best.year !== same.year))
           };
         }
+        function nameHas(name, token) {
+          var from = 0;
+          while (from <= name.length) {
+            var at = name.indexOf(token, from);
+            if (at === -1) return false;
+            var prev = at === 0 ? "" : name.charAt(at - 1);
+            if (!/[A-Za-z0-9]/.test(prev)) return true;
+            from = at + 1;
+          }
+          return false;
+        }
+        function bookSpecs(row) {
+          var list = window.APPROACH_SPECS || [];
+          var best = null;
+          var score = -1;
+          list.forEach(function (item) {
+            var ok = (item.need || []).every(function (token) { return nameHas(row.name, token); });
+            if (!ok) return;
+            if ((item.not || []).some(function (token) { return nameHas(row.name, token); })) return;
+            var s = (item.need || []).join("").length;
+            if (s > score) {
+              score = s;
+              best = item;
+            }
+          });
+          return best ? best.specs : [];
+        }
+        function canonSpec(label) {
+          if (label === "구동 방식" || label === "구동방식") return "구동";
+          if (label === "가속력") return "0-100km/h";
+          if (label === "공차 중량") return "공차중량";
+          return label;
+        }
+        function tidySpec(label, value) {
+          var v = String(value || "");
+          if (label === "구동") return v.replace(/\s/g, "");
+          return v;
+        }
+        function mergedSpecs(guideList, row) {
+          var have = {};
+          var rows = [];
+          (guideList || []).forEach(function (pair) {
+            var label = canonSpec(pair[0]);
+            if (!pair[1] || have[label]) return;
+            have[label] = true;
+            rows.push([label, tidySpec(label, pair[1])]);
+          });
+          var extra = bookSpecs(row).filter(function (pair) { return !have[pair[0]]; }).map(function (pair) {
+            return [pair[0], tidySpec(pair[0], pair[1])];
+          });
+          var order = ["길이", "너비", "높이", "휠베이스", "배기량", "연료", "변속기", "구동", "최고출력", "최대토크", "0-100km/h", "복합연비", "트렁크", "공차중량", "타이어"];
+          var all = rows.concat(extra);
+          all.sort(function (a, b) {
+            var ia = order.indexOf(a[0]);
+            var ib = order.indexOf(b[0]);
+            if (ia < 0) ia = 99;
+            if (ib < 0) ib = 99;
+            return ia - ib;
+          });
+          return { rows: all, filled: extra.length > 0 };
+        }
+        function gearState(v) {
+          var s = String(v || "").trim();
+          if (!s || s === "—" || s === "-" || s === "없음" || s === "미적용" || s === "미포함" || s === "해당 없음") return { k: "no", t: "—" };
+          if (s === "기본" || s === "기본 적용" || s === "적용" || s === "포함") return { k: "yes", t: "●" };
+          if (s === "선택" || s === "유료 선택") return { k: "opt", t: "선택" };
+          return { k: "text", t: s };
+        }
         function esc(s) {
           return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
@@ -258,32 +329,53 @@
           var cls = leftCell !== rightCell ? " opt-diff" : "";
           return '<div class="guide-row"><b class="text-right' + cls + '">' + esc(leftCell) + '</b><span class="k">' + esc(label) + '</span><b class="' + cls + '">' + esc(rightCell) + "</b></div>";
         }
-        function gearDiffHtml(ga, gb) {
-          function gearMap(g) {
-            var map = {};
-            ((g && g.gear) || []).forEach(function (item) {
-              map[item[1]] = item[2] || "기본";
-            });
-            return map;
-          }
-          var ma = gearMap(ga);
-          var mb = gearMap(gb);
-          var labels = [];
-          Object.keys(ma).concat(Object.keys(mb)).forEach(function (label) {
-            if (labels.indexOf(label) !== -1) return;
-            if (optMark(ma[label]) !== optMark(mb[label])) labels.push(label);
+        function optionItem(label, left, right, differ) {
+          var help = window.optionPlain ? window.optionPlain(label) : "";
+          var mark = differ ? " opt-diff" : "";
+          return '<div class="opt-item' + (differ ? " diff" : "") + '"><div class="opt-name"><strong>' + esc(label) + "</strong>" +
+            (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") +
+            '</div><b class="' + mark + '">' + esc(left) + '</b><b class="' + mark + '">' + esc(right) + "</b></div>";
+        }
+        function optionBuckets(items) {
+          var groups = [];
+          items.forEach(function (item) {
+            var bucket = groups.filter(function (group) { return group.cat === item.cat; })[0];
+            if (!bucket) {
+              bucket = { cat: item.cat, items: [] };
+              groups.push(bucket);
+            }
+            bucket.items.push(item);
           });
-          return labels
-            .map(function (label) {
-              return optLine(label, ma[label] || "없음", mb[label] || "없음");
-            })
-            .join("");
+          return groups;
+        }
+        function optionGroups(items) {
+          return optionBuckets(items).map(function (group) {
+            return '<h4 class="opt-cat">' + esc(group.cat) + "</h4>" + group.items.map(function (item) {
+              return optionItem(item.label, item.left, item.right, item.differ);
+            }).join("");
+          }).join("");
+        }
+        function sharedGroups(items) {
+          return optionBuckets(items).map(function (group) {
+            return '<h4 class="opt-cat">' + esc(group.cat) + "</h4>" + group.items.map(function (item) {
+              var help = window.optionPlain ? window.optionPlain(item.label) : "";
+              return '<div class="opt-shared"><strong>' + esc(item.label) + "</strong>" +
+                (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") + "</div>";
+            }).join("");
+          }).join("");
+        }
+        function askBox(a, b, title, body) {
+          return '<div class="opt-ask"><p class="text-[18px] font-bold">' + title + '</p><p class="mt-2 text-[16px] leading-relaxed">' + body + '</p><div class="opt-ask-row">' +
+            '<a class="inline-flex min-h-[48px] items-center rounded-full bg-[#E4CB86] px-4 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">' + esc(showName(a.name)) + " 상담</a>" +
+            '<a class="inline-flex min-h-[48px] items-center rounded-full border border-[#E4CB86] px-4 text-[15px] font-bold text-[#E4CB86]" href="' + ask(b) + '">' + esc(showName(b.name)) + " 상담</a>" +
+            '<a class="kakao inline-flex min-h-[48px] items-center rounded-full px-4 text-[15px] font-bold" href="https://open.kakao.com/o/skdA6cZc">카톡으로 물어보기</a>' +
+            "</div></div>";
         }
         function specBlock(a, b) {
           var pa = featureRecord(a);
           var pb = featureRecord(b);
-          var ga = pa.spec;
-          var gb = pb.spec;
+          var leftSpecs = mergedSpecs(pa.spec && pa.spec.specs, a);
+          var rightSpecs = mergedSpecs(pb.spec && pb.spec.specs, b);
           function rowsFor(listA, listB) {
             var labels = [];
             (listA || []).concat(listB || []).forEach(function (pair) {
@@ -295,41 +387,65 @@
               })
               .join("");
           }
-          var specHtml = rowsFor(ga && ga.specs, gb && gb.specs);
-          var listA = usefulOptions(pa.feat && pa.feat.options);
-          var listB = usefulOptions(pb.feat && pb.feat.options);
-          var optHtml = "";
-          var differ = false;
-          if (listA.length || listB.length) {
-            var labels = [];
-            listA.concat(listB).forEach(function (pair) {
-              if (labels.indexOf(pair[0]) === -1) labels.push(pair[0]);
+          var specHtml = rowsFor(leftSpecs.rows, rightSpecs.rows);
+          var filledNote = leftSpecs.filled || rightSpecs.filled
+            ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">비어 있던 칸은 같은 차의 제원표에서 채웠습니다. 휠과 연식에 따라 숫자가 달라질 수 있습니다.</p>'
+            : "";
+          var specSection = specHtml
+            ? '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 다른 칸은 금색입니다.</p>' + filledNote + '<div class="mt-3">' + specHtml + "</div>"
+            : '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다. 상담에서 카탈로그 숫자로 같이 보겠습니다.</p>' + askBox(a, b, "제원부터 같이 보겠습니다", "길이, 힘, 연비가 집에 맞는지 두 차 기준으로 짚어 드립니다.");
+          var gearA = {};
+          var gearB = {};
+          var gearOrder = [];
+          function takeGear(g, box) {
+            ((g && g.gear) || []).forEach(function (item) {
+              if (box[item[1]]) return;
+              box[item[1]] = { cat: item[0] || "사양", state: item[2] || "기본" };
+              if (!gearOrder.some(function (row) { return row.label === item[1]; })) gearOrder.push({ cat: item[0] || "사양", label: item[1] });
             });
-            optHtml = labels
-              .filter(function (label) {
-                return !(optMark(pairVal(listA, label)) === "—" && optMark(pairVal(listB, label)) === "—");
-              })
-              .map(function (label) {
-                var av = pairVal(listA, label);
-                var bv = pairVal(listB, label);
-                if (optMark(av) !== optMark(bv)) differ = true;
-                return optLine(label, av, bv);
-              })
-              .join("");
           }
-          if (!optHtml || !differ) {
-            var gearHtml = gearDiffHtml(pa.feat, pb.feat);
-            optHtml = optHtml && gearHtml ? optHtml + gearHtml : optHtml || gearHtml;
-          }
+          takeGear(pa.feat, gearA);
+          takeGear(pb.feat, gearB);
+          var summary = [];
+          var seenSummary = {};
+          usefulOptions(pa.feat && pa.feat.options).concat(usefulOptions(pb.feat && pb.feat.options)).forEach(function (pair) {
+            if (seenSummary[pair[0]] || gearA[pair[0]] || gearB[pair[0]]) return;
+            seenSummary[pair[0]] = true;
+            var left = gearState(pairVal(pa.feat && pa.feat.options, pair[0]));
+            var right = gearState(pairVal(pb.feat && pb.feat.options, pair[0]));
+            if (left.k === "no" && right.k === "no") return;
+            if (left.k !== "text" && right.k !== "text" && left.t === right.t) return;
+            summary.push({ cat: "겉으로 보이는 차이", label: pair[0], left: left.t, right: right.t, differ: left.t !== right.t });
+          });
+          var diffs = summary.filter(function (item) { return item.differ; });
+          var shared = [];
+          var picks = [];
+          gearOrder.forEach(function (row) {
+            var left = gearState(gearA[row.label] && gearA[row.label].state);
+            var right = gearState(gearB[row.label] && gearB[row.label].state);
+            if (left.k === "no" && right.k === "no") return;
+            var item = { cat: row.cat, label: row.label, left: left.t, right: right.t, differ: left.t !== right.t };
+            if (item.differ) diffs.push(item);
+            else if (left.k === "yes" && right.k === "yes") shared.push(item);
+            else if (left.k === "opt" && right.k === "opt") picks.push(item);
+          });
           var borrowed = pa.borrowed || pb.borrowed
             ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">같은 이름 트림 중, 사양이 공개된 연식 표를 가져왔습니다.</p>'
             : "";
-          var specSection = specHtml
-            ? '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">같은 차종 안에서는 수치가 같고, 트림과 휠에 따라 달라질 수 있습니다.</p><div class="mt-3">' + specHtml + "</div>"
-            : '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다.</p>';
-          var optSection = optHtml
-            ? '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">트림에 기본으로 들어 있는 사양입니다. 다른 칸은 청록색입니다.</p><p class="mt-1 text-[15px] font-bold text-[#C5CED3]">● 적용 · — 미적용</p>' + borrowed + '<div class="mt-3">' + optHtml + "</div>"
-            : '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 사양 차이가 없습니다.</p>';
+          var head = '<p class="mt-2 text-[15px] font-bold leading-relaxed">왼쪽 ' + esc(showName(a.name)) + " · 오른쪽 " + esc(showName(b.name)) + '</p><div class="opt-item opt-head"><span>사양</span><b>왼쪽</b><b>오른쪽</b></div>';
+          var diffHtml = diffs.length
+            ? '<h4 class="mt-4 text-[18px] font-bold">트림이 다른 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">청록색 칸이 두 차의 차이입니다. 이름 아래 문장은 그 기능이 하는 일입니다.</p><div class="opt-board">' + head + optionGroups(diffs) + "</div>"
+            : '<p class="mt-3 text-[16px] leading-relaxed">공개된 기본 사양에서는 두 차의 차이가 없습니다.</p>';
+          var sharedHtml = shared.length
+            ? '<h4 class="mt-6 text-[18px] font-bold">두 차 모두 기본으로 들어 있는 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">아래는 어느 쪽을 골라도 처음부터 들어 있는 항목입니다.</p><div class="opt-board">' + sharedGroups(shared) + "</div>"
+            : "";
+          var pickHtml = picks.length
+            ? '<h4 class="mt-6 text-[18px] font-bold">두 차 모두 선택해서 넣는 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">기본에는 없고, 돈을 내고 더하는 항목입니다.</p><div class="opt-board">' + sharedGroups(picks) + "</div>"
+            : "";
+          var optSection = '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3>' +
+            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">● 기본으로 들어 있음 · 선택 돈을 내고 추가 · — 없음</p>' +
+            borrowed + diffHtml + sharedHtml + pickHtml +
+            askBox(a, b, "이 차이가 우리 집에 맞는지", "표는 기본으로 들어 있는 사양입니다. 돈을 내고 더하는 선택 옵션, 색 조합, 지금 나온 차의 실제 사양은 차마다 다릅니다. 보고 있는 두 차 기준으로 짧게 짚어 드립니다.");
           return specSection + optSection;
         }
         function lineupCore(s) {
@@ -419,7 +535,8 @@
               });
               if (!cum.some(Boolean) || cum.every(Boolean)) return;
               var first = cum.indexOf(true);
-              rows += "<tr><td>" + esc(f.label) + "</td>";
+              var plain = window.optionPlain ? window.optionPlain(f.label) : "";
+              rows += "<tr><td>" + esc(f.label) + (plain ? '<span class="plain">' + esc(plain) + "</span>" : "") + "</td>";
               cum.forEach(function (cell, i) {
                 if (!cell) rows += '<td class="miss">—</td>';
                 else if (i === first) rows += '<td class="delta">●</td>';
@@ -857,6 +974,52 @@
           }
           box.innerHTML = html;
         }
+        function colorPack(row) {
+          var rec = featureRecord(row);
+          var guide = rec.feat || rec.spec || {};
+          var family = guide.family || "";
+          var book = window.BENZ_COLORS || {};
+          var fallback = {
+            "Mercedes-AMG S-Class": "S-Class",
+            "Mercedes-AMG GLS": "GLS",
+            "Mercedes-AMG CLE Coupé": "CLE Coupé",
+            "Mercedes-AMG CLE Cabriolet": "CLE Cabriolet"
+          };
+          function ready(key) {
+            var pack = book[key];
+            return pack && ((pack.exterior && pack.exterior.length) || (pack.interior && pack.interior.length));
+          }
+          if (ready(family)) return { pack: book[family], loose: false };
+          if (fallback[family] && ready(fallback[family])) return { pack: book[fallback[family]], loose: true };
+          return null;
+        }
+        function colorCards(list) {
+          return '<div class="color-grid">' + list.map(function (item) {
+            return "<figure><img src=\"" + esc(item.image) + "\" alt=\"" + esc(item.name) + "\" loading=\"lazy\" decoding=\"async\"><figcaption>" + esc(item.name) + "</figcaption></figure>";
+          }).join("") + "</div>";
+        }
+        function colorBoard(row) {
+          var found = colorPack(row);
+          var title = '<h4 class="mt-5 text-[18px] font-bold">' + esc(showName(row.name)) + "</h4>";
+          if (!found) return title + '<p class="mt-2 text-[16px] leading-relaxed">이 차의 색 사진은 상담에서 카탈로그로 같이 봅니다.</p>';
+          var note = found.loose ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">고성능 트림은 고를 수 있는 색이 더 적을 수 있습니다. 아래는 같은 차종에서 확인된 색입니다.</p>' : "";
+          var exterior = found.pack.exterior || [];
+          var interior = found.pack.interior || [];
+          return title + note +
+            (exterior.length ? '<p class="mt-3 text-[16px] font-bold">외장</p>' + colorCards(exterior) : "") +
+            (interior.length ? '<p class="mt-4 text-[16px] font-bold">내장</p>' + colorCards(interior) : '<p class="mt-3 text-[15px] leading-relaxed text-[#A4AAAE]">내장 색 사진은 상담에서 같이 봅니다.</p>');
+        }
+        function colorSection(a, b) {
+          var same = colorPack(a) && colorPack(b) && (featureRecord(a).feat || {}).family && (featureRecord(a).feat || {}).family === (featureRecord(b).feat || {}).family;
+          var boards = same
+            ? colorBoard(a)
+            : colorBoard(a) + (a.i === b.i ? "" : colorBoard(b));
+          var sameNote = same ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">두 차가 같은 차종이라 고를 수 있는 색 목록이 같습니다. 트림마다 실제 선택지는 달라집니다.</p>' : "";
+          return '<h3 class="mt-8 text-[22px] font-bold">외장·내장 색</h3>' +
+            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">화면의 색은 실제 도장과 다를 수 있습니다. 트림마다 고를 수 있는 색이 다릅니다.</p>' +
+            sameNote + boards +
+            askBox(a, b, "이 색으로 나오는 차가 있는지", "색은 재고마다 다릅니다. 보고 있는 두 차 중에서 원하는 외장과 내장이 있는지를 확인해 드립니다.");
+        }
         function drawCompare() {
           var a = rows[Number(left.value)];
           var b = rows[Number(right.value)];
@@ -889,6 +1052,7 @@
             "</div>" +
             '<p class="mt-3 text-[15px] leading-relaxed text-[#A4AAAE]">이 금액은 기본 할인과 금융 추가 할인만 반영합니다. 재구매·다른 브랜드·카드는 추가 혜택에서 따로 봅니다.</p>' +
             specBlock(a, b) +
+            colorSection(a, b) +
             lineupSection(a, b);
           document.getElementById("ask-left").setAttribute("href", ask(a));
           document.getElementById("ask-right").setAttribute("href", ask(b));
