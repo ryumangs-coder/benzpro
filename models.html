@@ -56,6 +56,11 @@
       </div>
 
       <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
+      <div id="color-lightbox" class="color-lightbox" hidden>
+        <button type="button" class="color-lightbox-close" aria-label="닫기">닫기</button>
+        <img alt="">
+        <p></p>
+      </div>
 
       <section class="mt-10" id="faq">
         <h2 class="text-[26px] font-bold">이 두 차에서 많이 묻는 질문</h2>
@@ -279,10 +284,72 @@
           if (label === "공차 중량") return "공차중량";
           return label;
         }
-        function tidySpec(label, value) {
+        function specNumber(value) {
+          var hit = String(value || "").replace(/,/g, "").match(/(\d+(?:\.\d+)?)/);
+          return hit ? String(parseFloat(hit[1])) : "";
+        }
+        function tidyGearbox(value) {
+          var s = String(value || "").replace(/\s/g, "").toUpperCase();
+          if (s.indexOf("SPEEDSHIFT") !== -1 || s.indexOf("MCT") !== -1) return "AMG SPEEDSHIFT MCT 9G";
+          if (s.indexOf("8G") !== -1 || s.indexOf("DCT8") !== -1 || s.indexOf("8DCT") !== -1) return "8G-DCT";
+          if (s.indexOf("7G") !== -1 || s.indexOf("7단") !== -1) return "7G-TRONIC";
+          if (s.indexOf("9G") !== -1 || s.indexOf("9단") !== -1 || s.indexOf("TRONIC") !== -1) return "9G-TRONIC";
+          return String(value || "").trim();
+        }
+        function tidyEconomy(value) {
           var v = String(value || "");
+          var kwh = v.match(/(\d+(?:\.\d+)?)\s*km\/kWh/i);
+          var liter = v.match(/(\d+(?:\.\d+)?)\s*km\/L/i);
+          if (kwh && liter) return specNumber(kwh[1]) + "km/kWh · " + specNumber(liter[1]) + "km/L";
+          if (kwh) return specNumber(kwh[1]) + "km/kWh";
+          if (liter || /\d등급/.test(v)) {
+            var n = liter ? liter[1] : specNumber(v);
+            return n ? specNumber(n) + "km/L" : v.trim();
+          }
+          if (/^\d+(?:\.\d+)?$/.test(v.trim())) return specNumber(v) + "km/kWh";
+          return v.trim();
+        }
+        function tidyMeasure(value, unit) {
+          var n = specNumber(value);
+          if (!n) return String(value || "").trim();
+          return Number(n).toLocaleString("ko-KR") + unit;
+        }
+        function tidyRange(value, unit) {
+          var parts = String(value || "").match(/\d{1,3}(?:,\d{3})+|\d+/g) || [];
+          var nums = parts.map(function (part) { return parseInt(part.replace(/,/g, ""), 10); }).filter(function (n) { return n >= 50; });
+          if (!nums.length) return String(value || "").trim();
+          if (nums.length >= 2) return nums[0].toLocaleString("ko-KR") + "–" + nums[1].toLocaleString("ko-KR") + unit;
+          return nums[0].toLocaleString("ko-KR") + unit;
+        }
+        function tidySpec(label, value) {
+          var v = String(value || "").trim();
+          if (!v || v === "—" || v === "-") return "—";
+          if (label === "길이" || label === "너비" || label === "높이" || label === "휠베이스") return tidyMeasure(v, "mm");
+          if (label === "공차중량") return tidyMeasure(v, "kg");
+          if (label === "배기량") return tidyMeasure(v, "cc");
+          if (label === "트렁크") return tidyRange(v, "L");
+          if (label === "최고출력") return specNumber(v) ? specNumber(v) + "ps" : v;
+          if (label === "최대토크") return specNumber(v) ? specNumber(v) + "kg·m" : v;
+          if (label === "0-100km/h") return specNumber(v) ? specNumber(v) + "초" : v;
+          if (label === "복합연비") return tidyEconomy(v);
           if (label === "구동") return v.replace(/\s/g, "");
+          if (label === "변속기") return tidyGearbox(v);
+          if (label === "타이어") return v.replace(/\s+/g, " ").replace(/R\s*(\d{2})/g, "R $1").trim();
           return v;
+        }
+        function specKey(label, value) {
+          var shown = tidySpec(label, value);
+          if (shown === "—") return "";
+          if (label === "복합연비") return shown;
+          if (label === "변속기" || label === "구동" || label === "연료" || label === "타이어") return shown;
+          return specNumber(shown) || shown;
+        }
+        function harmonize(label, a, b) {
+          var da = tidySpec(label, a);
+          var db = tidySpec(label, b);
+          if (da === "—" || db === "—" || specKey(label, da) !== specKey(label, db)) return { a: da, b: db };
+          var pick = /km\/|ps|초|mm|kg|cc|L|TRONIC|DCT|구동/.test(da) && da.length >= db.length ? da : db;
+          return { a: pick, b: pick };
         }
         function mergedSpecs(guideList, row) {
           var have = {};
@@ -383,7 +450,8 @@
             });
             return labels
               .map(function (label) {
-                return line(label, pairVal(listA, label), pairVal(listB, label), true);
+                var view = harmonize(label, pairVal(listA, label), pairVal(listB, label));
+                return line(label, view.a, view.b, true);
               })
               .join("");
           }
@@ -995,7 +1063,8 @@
         }
         function colorCards(list) {
           return '<div class="color-grid">' + list.map(function (item) {
-            return "<figure><img src=\"" + esc(item.image) + "\" alt=\"" + esc(item.name) + "\" loading=\"lazy\" decoding=\"async\"><figcaption>" + esc(item.name) + "</figcaption></figure>";
+            var src = esc(item.image) + "?v=20261007g";
+            return '<button type="button" class="color-shot" data-src="' + src + '" data-name="' + esc(item.name) + '"><img src="' + src + '" alt="' + esc(item.name) + '" loading="lazy" decoding="async"><span>' + esc(item.name) + "</span></button>";
           }).join("") + "</div>";
         }
         function colorBoard(row) {
@@ -1016,7 +1085,7 @@
             : colorBoard(a) + (a.i === b.i ? "" : colorBoard(b));
           var sameNote = same ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">두 차가 같은 차종이라 고를 수 있는 색 목록이 같습니다. 트림마다 실제 선택지는 달라집니다.</p>' : "";
           return '<h3 class="mt-8 text-[22px] font-bold">외장·내장 색</h3>' +
-            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">화면의 색은 실제 도장과 다를 수 있습니다. 트림마다 고를 수 있는 색이 다릅니다.</p>' +
+            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">화면의 색은 실제 도장과 다를 수 있습니다. 트림마다 고를 수 있는 색이 다릅니다. 사진을 누르면 크게 볼 수 있습니다.</p>' +
             sameNote + boards +
             askBox(a, b, "이 색으로 나오는 차가 있는지", "색은 재고마다 다릅니다. 보고 있는 두 차 중에서 원하는 외장과 내장이 있는지를 확인해 드립니다.");
         }
@@ -1069,6 +1138,29 @@
           drawCompare();
         });
         drawCompare();
+        var colorLight = document.getElementById("color-lightbox");
+        var colorLightImg = colorLight.querySelector("img");
+        var colorLightName = colorLight.querySelector("p");
+        function closeColor() {
+          colorLight.hidden = true;
+          colorLightImg.removeAttribute("src");
+          document.body.style.overflow = "";
+        }
+        document.getElementById("compare").addEventListener("click", function (event) {
+          var shot = event.target.closest(".color-shot");
+          if (!shot) return;
+          colorLightImg.src = shot.getAttribute("data-src");
+          colorLightImg.alt = shot.getAttribute("data-name");
+          colorLightName.textContent = shot.getAttribute("data-name");
+          colorLight.hidden = false;
+          document.body.style.overflow = "hidden";
+        });
+        colorLight.addEventListener("click", function (event) {
+          if (event.target === colorLight || event.target.classList.contains("color-lightbox-close")) closeColor();
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !colorLight.hidden) closeColor();
+        });
       })();
     </script>
   </body>
