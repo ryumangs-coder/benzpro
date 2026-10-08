@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/brand/icon-192.png" />
+    <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png" />
+    <link rel="canonical" href="https://benzpro.co.kr/quote" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0F0F0F" />
+    <meta name="description" content="2026년 10월 벤츠 견적. 재구매, MOU, 전시차 조건을 체크하면 최종 차량가가 바로 바뀝니다. 벤츠프로, 김민구 차장." />
+    <title>견적 확인 | 벤츠프로</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="벤츠프로" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:url" content="https://benzpro.co.kr/quote" />
+    <meta property="og:title" content="견적 확인 | 벤츠프로" />
+    <meta property="og:description" content="조건을 체크하면 최종 차량가가 바로 바뀝니다. 벤츠프로, 김민구 차장." />
+    <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
+    <meta property="og:image:alt" content="벤츠프로" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="site.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
+      .sheet {
+        border-radius: 1.4rem;
+        border: 1px solid rgba(228, 203, 134, 0.28);
+        background: #10222c;
+        padding: 1.1rem 1.15rem 1.2rem;
+      }
+      .sheet-kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #e4cb86; }
+      .rowline {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.35rem 0;
+        font-size: 16px;
+        color: #c5ced3;
+      }
+      .rowline b { color: #f4f7f8; font-size: 18px; font-weight: 750; }
+      .cut b { color: #ffb4ae !important; }
+      .rate-pill {
+        margin-left: 0.4rem;
+        border-radius: 999px;
+        background: rgba(255, 138, 128, 0.16);
+        color: #ffb4ae !important;
+        padding: 0.08rem 0.45rem;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 800;
+      }
+      .final {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 0.45rem;
+        padding-top: 0.7rem;
+        border-top: 1px solid rgba(228, 203, 134, 0.4);
+      }
+      .final span { color: #e4cb86; font-size: 16px; font-weight: 800; }
+      .final strong { color: #e4cb86; font-size: 36px; line-height: 1; letter-spacing: -0.04em; }
+      .fine { margin-top: 0.35rem; font-size: 13px; line-height: 1.5; color: #8b969c; }
+      .pay {
+        min-height: 48px;
+        border-radius: 999px;
+        border: 1px solid rgba(164, 170, 174, 0.28);
+        background: #0c1a24;
+        color: #f4f7f8;
+        padding: 0.4rem 0.9rem;
+        font-size: 16px;
+        font-weight: 750;
+      }
+      .pay.on {
+        background: #e4cb86 !important;
+        color: #0b1f2a !important;
+        border-color: #e4cb86 !important;
+      }
+      .opt {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(164, 170, 174, 0.2);
+        background: #10222c;
+        padding: 0.85rem 0.9rem;
+      }
+      .opt input { width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; flex: none; accent-color: #e4cb86; }
+      .opt b { display: block; font-size: 17px; line-height: 1.35; }
+      .opt small { display: block; margin-top: 0.2rem; font-size: 14px; line-height: 1.45; color: #8b969c; }
+      .opt em {
+        margin-left: auto;
+        flex: none;
+        font-style: normal;
+        font-weight: 800;
+        color: #e4cb86;
+        font-size: 16px;
+      }
+      .opt.off { opacity: 0.55; }
+      .field {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid rgba(164, 170, 174, 0.28);
+        background: #0c1a24 !important;
+        color: #f4f7f8 !important;
+        padding: 0.95rem 1rem;
+        font-size: 18px;
+      }
+      .field:focus { outline: none; border-color: #e4cb86; }
+      .field-error { border-color: #f87171 !important; }
+      select.field { appearance: none; }
+    </style>
+  </head>
+  <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#0F0F0F]">
+      <div class="mx-auto max-w-6xl px-4 pt-3">
+        <div class="flex items-center justify-between gap-3">
+          <a href="index.html" class="flex items-center gap-3" aria-label="벤츠프로 홈">
+            <svg class="h-9 w-9 shrink-0" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0A0A0A" stroke="#F5F5F5" stroke-width="1.75"/><path fill="#F5F5F5" d="M32 7 36.8 29.2 53.7 44.5 32 37.5 10.3 44.5 27.2 29.2Z"/></svg>
+            <span class="leading-tight">
+              <span class="block text-[15px] font-semibold tracking-[0.14em] text-white">BENZ <span class="text-[#D8B65F]">PRO</span></span>
+              <span class="mt-0.5 block text-[9px] font-medium leading-snug text-zinc-400 sm:text-[10px]">메르세데스-벤츠 코리아 공식 파트너 김민구 차장</span>
+            </span>
+          </a>
+          <a href="https://www.youtube.com/@benzpro.official" target="_blank" rel="noopener noreferrer" class="shrink-0 rounded-full border border-white/10 bg-[#1A1A1A] px-2.5 py-1.5 text-[10px] font-semibold text-zinc-300">YouTube</a>
+        </div>
+        <nav class="-mx-4 mt-3 overflow-x-auto pb-2.5" aria-label="주요 메뉴">
+          <ul class="flex w-max gap-2 px-4">
+            <li><a href="index.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">구매전략</a></li>
+            <li><a href="prices.html" aria-current="page" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">프로모션</a></li>
+            <li><a href="models.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">벤츠비교</a></li>
+            <li><a href="preorder.html" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">사전예약</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block rounded-full border border-[#27272A] bg-[#161616] px-3.5 py-2 text-[13px] font-medium text-zinc-300">인사이트</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
+      <p class="text-[15px] font-semibold text-[#E4CB86]">2026년 10월 · 견적 확인</p>
+      <h1 class="mt-2 text-[2rem] font-bold leading-tight">조건을 체크하면<br />금액이 바로 바뀝니다</h1>
+      <p class="mt-3 max-w-2xl text-[18px] leading-relaxed text-[#C5CED3]">기본 할인과 금융 할인이 먼저 빠져 있습니다. 해당하는 항목만 켜 보세요. 재고와 심사에 따라 최종 금액은 달라질 수 있습니다.</p>
+
+      <div class="mt-6 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <section class="order-2 space-y-6 lg:order-1">
+          <div>
+            <label for="car" class="text-[16px] font-bold">차종</label>
+            <select id="car" class="field mt-2"></select>
+            <div id="family" class="mt-3 flex flex-wrap gap-2"></div>
+          </div>
+
+          <section>
+            <h2 class="text-[22px] font-bold">어떻게 사실지</h2>
+            <div id="pays" class="mt-3 flex flex-wrap gap-2"></div>
+            <p id="pay-note" class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]"></p>
+          </section>
+
+          <section>
+            <h2 class="text-[22px] font-bold">해당하는 혜택</h2>
+            <p class="mt-1 text-[15px] leading-relaxed text-[#8b969c]">지금 벤츠를 타는 혜택과 다른 브랜드 혜택은 둘 중 하나입니다. 전시·수리·주행거리는 그 차일 때만 빠지고, 상담에서 확인합니다.</p>
+            <div id="opts" class="mt-3 space-y-2"></div>
+          </section>
+
+          <form id="lead" class="rounded-3xl border border-white/10 bg-[#10222c] p-5" novalidate>
+            <h2 class="text-[22px] font-bold">이 견적으로 상담 받기</h2>
+            <p class="mt-1 text-[15px] leading-relaxed text-[#8b969c]">성함과 연락처만 있으면 됩니다. 이메일은 있으시면 적어 주세요.</p>
+            <div class="mt-4 space-y-3">
+              <div data-q="name">
+                <label for="name" class="text-[15px] font-bold">성함</label>
+                <input id="name" name="name" class="field mt-1" autocomplete="name" placeholder="성함" />
+                <p class="error mt-1 hidden text-[13px] text-[#F87171]">성함을 적어 주세요.</p>
+              </div>
+              <div data-q="phone">
+                <label for="phone" class="text-[15px] font-bold">연락처</label>
+                <input id="phone" name="phone" class="field mt-1" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" />
+                <p class="error mt-1 hidden text-[13px] text-[#F87171]">연락처를 적어 주세요.</p>
+              </div>
+              <div data-q="email">
+                <label for="email" class="text-[15px] font-bold">이메일</label>
+                <input id="email" name="email" type="email" class="field mt-1" autocomplete="email" placeholder="있으시면 적어 주세요" />
+                <p class="error mt-1 hidden text-[13px] text-[#F87171]">이메일 형식을 확인해 주세요.</p>
+              </div>
+              <div data-q="privacy" class="rounded-xl border border-white/15 px-3 py-3">
+                <label class="flex items-start gap-2 text-[12px] leading-relaxed text-[#A4AAAE]">
+                  <input id="privacy" name="privacyAgree" type="checkbox" value="동의" class="mt-0.5 h-4 w-4 shrink-0" />
+                  <span><b class="font-semibold text-white">개인정보 수집 및 이용 동의 (필수)</b><br />수집 항목: 성함, 연락처, 이메일, 희망 차종과 견적 조건 · 수집 목적: 견적 안내 및 상담 · 보유 기간: 상담 종료 후 1년 이내 파기. 동의를 거부하실 수 있으나, 동의하지 않으면 견적 안내가 어렵습니다.</span>
+                </label>
+                <p class="error mt-2 hidden text-[13px] text-[#F87171]">개인정보 수집 및 이용에 동의해 주세요.</p>
+              </div>
+            </div>
+            <button id="send" type="submit" class="mt-4 flex min-h-[56px] w-full items-center justify-center rounded-2xl bg-[#1C69D4] text-[18px] font-bold">견적 상담 받기</button>
+            <p id="net-err" class="mt-2 hidden text-[14px] text-[#F87171]">전송되지 않았습니다. 전화나 카톡으로 남겨 주세요.</p>
+            <div class="mt-3 grid grid-cols-2 gap-2">
+              <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 text-[16px] font-bold">전화 문의</a>
+              <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[16px] font-bold">카톡 문의</a>
+            </div>
+          </form>
+
+          <div id="done" class="hidden rounded-3xl border border-[#E4CB86]/40 bg-[#10222c] p-6">
+            <h2 class="text-[24px] font-bold">상담 신청이 접수되었습니다</h2>
+            <p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">김민구 차장이 적어 주신 조건으로 재고를 확인한 뒤 연락드립니다.</p>
+            <a href="prices.html" class="mt-4 inline-flex min-h-[48px] items-center font-bold text-[#E4CB86]">프로모션으로 돌아가기</a>
+          </div>
+        </section>
+
+        <aside class="order-1 lg:sticky lg:top-24 lg:order-2">
+          <div id="sheet" class="sheet" aria-live="polite"></div>
+        </aside>
+      </div>
+    </main>
+
+    <div class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0b1f2a]/95 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:hidden">
+      <div class="mx-auto grid max-w-lg grid-cols-2 gap-2">
+        <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 text-[15px] font-bold">전화 문의</a>
+        <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[15px] font-bold">카톡 문의</a>
+      </div>
+    </div>
+
+    <script src="october-2026.js"></script>
+    <script src="quote.js"></script>
+    <script>
+      (function () {
+        var WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
+        var segName = { Compact: "소형", C: "C클래스", E: "E클래스", S: "S클래스", Dream: "쿠페", SUV: "SUV", EQ: "전기차" };
+        var rows = (window.OCTOBER_2026.models || []).map(function (r) {
+          return { seg: r[0], my: r[1], name: r[2], price: r[3], cash: r[4], mbm: r[5], jc: r[6], retain: r[7], conquest: r[8], shinhan: r[9], note: r[10] || "" };
+        });
+        var state = { pay: "install", retain: false, trade: false, conquest: false, mou: false, repair: false, mile: false, showcar: false, early: false };
+        var current = null;
+
+        function showName(name) {
+          var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디");
+          if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
+          return s;
+        }
+        function pct(s) {
+          if (!s || s === "—") return 0;
+          var m = String(s).match(/(\d+(?:\.\d+)?)%/);
+          return m ? parseFloat(m[1]) : 0;
+        }
+        function man(n) {
+          if (n == null || !isFinite(n)) return null;
+          return Math.round(n / 10000);
+        }
+        function won(n) {
+          var v = man(n);
+          if (v == null) return "상담 시 확인";
+          return v.toLocaleString("ko-KR") + "만원";
+        }
+        function floorWon(n) {
+          return Math.floor(n / 10000) * 10000;
+        }
+        function support(name) {
+          if (name.indexOf("S 63") !== -1) return 200;
+          if (name.indexOf("GLS 63") !== -1) return 145;
+          if (name.indexOf("GLE 53") !== -1) return 115;
+          if (name.indexOf("E 53") !== -1) return 100;
+          if (name.indexOf("GLB 35") !== -1) return 50;
+          if (name.indexOf("GLE 450") !== -1) return 60;
+          if (name.indexOf("GLC 300") !== -1 && name.indexOf("AMG") !== -1) return 45;
+          if (name.indexOf("GLC 300") !== -1 && name.toLowerCase().indexOf("avant") !== -1) return 40;
+          if (name.indexOf("E 300") !== -1) return 45;
+          if (name.indexOf("E 200") !== -1 && name.indexOf("AMG") !== -1) return 37;
+          if (name.indexOf("E 200") !== -1 && name.indexOf("Exclusive") !== -1) return 35;
+          if (name.indexOf("C 200") !== -1) return 30;
+          return 0;
+        }
+        function leaseOnly(row) {
+          var s = String(row.mbm || "");
+          return s.indexOf("운용리스") !== -1 && s.indexOf("할부") === -1;
+        }
+        function financeAdd(row, pay, q) {
+          if (pay === "cash") return { add: 0, label: "현금 구매" };
+          if (pay === "lease") {
+            var add = q.altAdd || (leaseOnly(row) ? q.finAdd : 0);
+            return { add: add || 0, label: "운용리스·장기렌트" };
+          }
+          if (leaseOnly(row)) return { add: 0, label: pay === "care" ? "안심보장할부" : "할부" };
+          return { add: q.finAdd || 0, label: pay === "care" ? "안심보장할부" : "할부" };
+        }
+        function defaultPay(row) {
+          var q = window.BenzQuote.of(row);
+          if (leaseOnly(row) && (q.finAdd || q.altAdd)) return "lease";
+          if (q.finAdd) return "install";
+          return "cash";
+        }
+        function compute(row) {
+          var q = window.BenzQuote.of(row);
+          var fin = financeAdd(row, state.pay, q);
+          var lines = [];
+          if (q.cash) lines.push({ label: "기본 할인", pct: q.cash });
+          if (fin.add) lines.push({ label: fin.label, pct: fin.add });
+          var extra = 0;
+          function add(on, label, rate) {
+            if (!on || !rate) return;
+            extra += rate;
+            lines.push({ label: label, pct: rate });
+          }
+          var retainRate = pct(row.retain);
+          var conqRate = pct(row.conquest);
+          add(state.retain && retainRate, "지금 타는 벤츠", retainRate);
+          add(state.trade && state.retain && retainRate, "인증 중고로 매각", 1);
+          add(state.conquest && conqRate && !(state.retain && retainRate), "다른 브랜드", conqRate);
+          add(state.mou, "MOU 제휴", 2);
+          add(state.repair, "수리 이력 공개", 1);
+          add(state.mile, "도착 주행거리", 1);
+          add(state.showcar, "오래 전시된 차", 1);
+          var rate = (q.cash || 0) + fin.add + extra;
+          var has = q.cash != null || fin.add || extra;
+          var after = q.basis;
+          if (after != null && has) after = floorWon(q.basis * (1 - rate / 100));
+          if (after != null && q.extra) after -= q.extra;
+          var tax = state.early && q.tax ? q.tax : 0;
+          if (after != null && tax) after -= tax;
+          var saved = q.basis != null && after != null ? q.basis - after : null;
+          var month = state.pay === "care" ? support(row.name) : 0;
+          return { q: q, fin: fin, lines: lines, rate: has ? rate : 0, after: after, saved: saved, tax: tax, month: month, retainRate: retainRate, conqRate: conqRate };
+        }
+        function carKey(row) { return row.my + "|" + row.name; }
+        function findCar(name, my) {
+          var hit = rows.filter(function (r) { return r.name === name && (!my || r.my === my); })[0];
+          return hit || rows.filter(function (r) { return r.name === "E 200 AMG Line" && r.my === "MY26"; })[0] || rows[0];
+        }
+        function paintCarList() {
+          var html = "";
+          var seg = "";
+          rows.forEach(function (row) {
+            if (row.seg !== seg) {
+              if (seg) html += "</optgroup>";
+              seg = row.seg;
+              html += '<optgroup label="' + (segName[seg] || seg) + '">';
+            }
+            html += '<option value="' + carKey(row).replace(/"/g, "&quot;") + '"' + (row === current ? " selected" : "") + ">" + showName(row.name) + " · " + row.my + "</option>";
+          });
+          if (seg) html += "</optgroup>";
+          document.getElementById("car").innerHTML = html;
+        }
+        function paintFamily() {
+          var mates = rows.filter(function (r) { return r.seg === current.seg; }).slice(0, 12);
+          document.getElementById("family").innerHTML = mates.map(function (row) {
+            var on = row === current ? " pay on" : " pay";
+            return '<button type="button" class="' + on + '" data-car="' + carKey(row).replace(/"/g, "&quot;") + '">' + showName(row.name) + "</button>";
+          }).join("");
+        }
+        function paintPays(view) {
+          var items = [
+            ["cash", "현금"],
+            ["install", "할부"],
+            ["care", "안심보장할부"],
+            ["lease", "운용리스·장기렌트"]
+          ];
+          document.getElementById("pays").innerHTML = items.map(function (item) {
+            return '<button type="button" class="pay' + (state.pay === item[0] ? " on" : "") + '" data-pay="' + item[0] + '">' + item[1] + "</button>";
+          }).join("");
+          var month = support(current.name);
+          var note = "현금은 기본 할인만 적용됩니다. 할부와 안심보장할부는 금융 할인이 더 붙습니다.";
+          if (view.q.altAdd) note = "운용리스·장기렌트는 " + view.q.altRate + "%입니다. 할부는 " + ((view.q.cash || 0) + (leaseOnly(current) ? 0 : view.q.finAdd || 0)) + "%입니다.";
+          if (month && state.pay !== "care") note += " 안심보장할부를 고르면 월 " + month + "만원 × 6개월 지원과 신차교환 3년, 타이어 교환이 따라옵니다.";
+          if (state.pay === "care") note = "안심보장할부에는 신차교환 3년과 타이어 교환이 포함됩니다." + (month ? " 월 " + month + "만원 × 6개월이 따로 지원됩니다." : " 이 차종은 이번 달 월납 지원 목록에 없습니다.");
+          document.getElementById("pay-note").textContent = note;
+        }
+        function opt(key, title, detail, tag, enabled) {
+          var on = enabled && state[key];
+          return (
+            '<label class="opt' + (enabled ? "" : " off") + '">' +
+            '<input type="checkbox" data-opt="' + key + '"' + (on ? " checked" : "") + (enabled ? "" : " disabled") + " />" +
+            "<span><b>" + title + "</b><small>" + detail + "</small></span>" +
+            "<em>" + tag + "</em></label>"
+          );
+        }
+        function paintOpts(view) {
+          var q = view.q;
+          var earlyOn = q.tax > 0;
+          document.getElementById("opts").innerHTML =
+            opt("early", "7월 1일 이전 통관 재고", earlyOn ? "개소세 인하 " + won(q.tax) + "이 할인 뒤에 한 번 더 빠집니다." : "이 차는 개소세 인하 재고 금액이 없습니다.", earlyOn ? "−" + won(q.tax) : "없음", earlyOn) +
+            opt("retain", "지금 벤츠를 타고 계시면", view.retainRate ? "사는 달에서 거꾸로 세 달 안에 보유한 기록이 있으면 됩니다." : "이 차는 이번 달 재구매 안내가 없습니다.", view.retainRate ? "+" + view.retainRate + "%" : "없음", !!view.retainRate) +
+            opt("trade", "타던 벤츠를 인증 중고로 넘기면", "지금 벤츠를 타는 혜택과 같이 켜집니다. 다른 브랜드 혜택과는 같이 안 됩니다.", "+1%", !!view.retainRate) +
+            opt("conquest", "다른 고급 브랜드를 타고 계시면", view.conqRate ? "BMW, 아우디, 제네시스, 볼보, 포르쉐, 랜드로버, 렉서스입니다. 미니는 빠집니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.", view.conqRate ? "+" + view.conqRate + "%" : "없음", !!view.conqRate) +
+            opt("mou", "MOU 제휴사 임직원이시면", "본인, 배우자, 부모, 자녀까지 됩니다. 회사 이름은 상담에서 확인합니다.", "+2%", true) +
+            opt("repair", "수리 이력이 공개되는 차", "계약 전에 수리 이력을 알려야 하는 차만 1%입니다.", "+1%", true) +
+            opt("mile", "도착 주행거리가 100km 이상", "전시장 시승차와 데모 차는 빠집니다.", "+1%", true) +
+            opt("showcar", "전시장에 오래 있던 차", "해당 차인지는 상담에서 확인합니다.", "+1%", true);
+        }
+        function paintSheet(view) {
+          var q = view.q;
+          if (q.basis == null) {
+            document.getElementById("sheet").innerHTML = '<p class="sheet-kicker">' + showName(current.name) + "</p><p class=\"mt-3 text-[22px] font-bold\">권장가는 상담에서 확인합니다</p>";
+            return;
+          }
+          var breakdown = view.lines.map(function (line) {
+            return '<div class="rowline"><span>' + line.label + "</span><b>" + line.pct + "%</b></div>";
+          }).join("");
+          if (q.option) breakdown = '<p class="fine">차량 ' + won(q.vehicle) + " + " + q.optionLabel + " " + won(q.option) + "</p>" + breakdown;
+          if (q.extra) breakdown += '<div class="rowline cut"><span>옵션 추가 할인</span><b>−' + won(q.extra) + "</b></div>";
+          if (view.tax) breakdown += '<div class="rowline cut"><span>개소세 인하</span><b>−' + won(view.tax) + "</b></div>";
+          var monthLine = "";
+          if (view.month) monthLine = '<div class="rowline"><span>월납 지원</span><b>월 ' + view.month + "만원 × 6개월</b></div>";
+          var benefit = view.saved || 0;
+          if (view.month) benefit += view.month * 6 * 10000;
+          document.getElementById("sheet").innerHTML =
+            '<p class="sheet-kicker">선택한 조건</p>' +
+            '<h2 class="mt-1 text-[22px] font-bold leading-snug">' + showName(current.name) + "</h2>" +
+            '<p class="fine">' + current.my + "</p>" +
+            '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
+            '<div class="rowline cut"><span>할인 합계<em class="rate-pill">' + (view.rate || 0) + "%</em></span><b>" + ((view.saved || view.tax) ? "−" + won((view.saved || 0) - (view.tax || 0)) : "0만원") + "</b></div>" +
+            breakdown +
+            '<div class="final"><span>최종 차량가</span><strong>' + won(view.after) + "</strong></div>" +
+            '<p class="fine">할인율 ' + (view.rate || 0) + "%. 선택한 조건의 예상 금액입니다.</p>" +
+            monthLine +
+            (view.month ? '<div class="rowline"><span>지원까지 더한 혜택</span><b>' + won(benefit) + "</b></div>" : "");
+        }
+        function syncRules() {
+          if (!state.retain) state.trade = false;
+          if (!pct(current.retain)) {
+            state.retain = false;
+            state.trade = false;
+          }
+          if (!pct(current.conquest)) state.conquest = false;
+          if (!window.BenzQuote.of(current).tax) state.early = false;
+        }
+        function draw() {
+          syncRules();
+          var view = compute(current);
+          paintCarList();
+          paintFamily();
+          paintPays(view);
+          paintOpts(view);
+          paintSheet(view);
+        }
+        function pick(name, my, push) {
+          current = findCar(name, my);
+          if (!state.pay) state.pay = defaultPay(current);
+          draw();
+          if (push) {
+            var params = new URLSearchParams();
+            params.set("name", current.name);
+            params.set("my", current.my);
+            history.replaceState(null, "", "quote.html?" + params.toString());
+          }
+        }
+
+        var params = new URLSearchParams(location.search);
+        current = findCar(params.get("name") || "", params.get("my") || "");
+        state.pay = defaultPay(current);
+        draw();
+
+        function splitKey(value) {
+          var cut = value.indexOf("|");
+          return { my: value.slice(0, cut), name: value.slice(cut + 1) };
+        }
+        document.getElementById("car").addEventListener("change", function (e) {
+          var key = splitKey(e.target.value);
+          state.pay = "";
+          pick(key.name, key.my, true);
+        });
+        document.getElementById("family").addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-car]");
+          if (!btn) return;
+          var key = splitKey(btn.getAttribute("data-car"));
+          pick(key.name, key.my, true);
+        });
+        document.getElementById("pays").addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-pay]");
+          if (!btn) return;
+          state.pay = btn.getAttribute("data-pay");
+          draw();
+        });
+        document.getElementById("opts").addEventListener("change", function (e) {
+          var input = e.target.closest("[data-opt]");
+          if (!input) return;
+          var key = input.getAttribute("data-opt");
+          state[key] = input.checked;
+          if (key === "retain" && input.checked) state.conquest = false;
+          if (key === "conquest" && input.checked) {
+            state.retain = false;
+            state.trade = false;
+          }
+          if (key === "trade" && input.checked) {
+            state.retain = true;
+            state.conquest = false;
+          }
+          draw();
+        });
+
+        function carModel(row) {
+          var n = row.name;
+          if (n.indexOf("Maybach") !== -1) return "MAYBACH";
+          if (n.indexOf("AMG ") === 0) return "AMG";
+          if (n.indexOf("GLC") !== -1) return "GLC";
+          if (n.indexOf("GLE") !== -1) return "GLE";
+          if (n.indexOf("GLS") !== -1) return "GLS";
+          if (row.seg === "C") return "C-Class";
+          if (row.seg === "E") return "E-Class";
+          if (row.seg === "S") return "S-Class";
+          if (row.seg === "Compact") return "A, CLA, GLA, GLB";
+          return "상담 후 결정";
+        }
+        function payLabel() {
+          return { cash: "현금", install: "할부", care: "할부", lease: "운용리스" }[state.pay] || "아직 미정";
+        }
+        function currentCar() {
+          if (state.retain) return "벤츠 보유";
+          if (state.conquest) return "타 브랜드 보유";
+          return "없음";
+        }
+        var form = document.getElementById("lead");
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          form.querySelectorAll(".error").forEach(function (el) { el.classList.add("hidden"); });
+          form.querySelectorAll(".field").forEach(function (el) { el.classList.remove("field-error"); });
+          var name = form.name.value.trim();
+          var phone = form.phone.value.trim();
+          var email = form.email.value.trim();
+          var ok = true;
+          function bad(key) {
+            ok = false;
+            var box = form.querySelector('[data-q="' + key + '"]');
+            box.querySelector(".error").classList.remove("hidden");
+            var field = box.querySelector(".field");
+            if (field) field.classList.add("field-error");
+          }
+          if (!name) bad("name");
+          if (!phone) bad("phone");
+          if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) bad("email");
+          if (!form.privacy.checked) {
+            ok = false;
+            form.querySelector('[data-q="privacy"] .error').classList.remove("hidden");
+          }
+          if (!ok) return;
+          var view = compute(current);
+          var picked = view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(", ");
+          var inquiry = [
+            "견적 확인",
+            showName(current.name) + " " + current.my,
+            "차량가 " + won(view.q.basis),
+            "조건 " + (picked || "추가 없음"),
+            "할인율 " + (view.rate || 0) + "%",
+            "최종 차량가 " + won(view.after),
+            view.month ? "월납 지원 월 " + view.month + "만원 × 6개월" : "월납 지원 없음",
+            state.pay === "care" ? "안심보장할부" : "",
+            email ? "이메일 " + email : ""
+          ].filter(Boolean).join(" · ");
+          var body = new URLSearchParams();
+          body.append("carModel", carModel(current));
+          body.append("purchaseTiming", "정보 확인 단계");
+          body.append("purchaseMethod", payLabel());
+          body.append("currentCar", currentCar());
+          body.append("region", "");
+          body.append("name", name);
+          body.append("phone", phone);
+          body.append("inquiry", inquiry);
+          body.append("email", email);
+          body.append("privacyAgree", "동의");
+          var button = document.getElementById("send");
+          button.disabled = true;
+          button.textContent = "전송 중...";
+          fetch(WEBHOOK_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body: body.toString()
+          }).then(function () {
+            form.classList.add("hidden");
+            document.getElementById("done").classList.remove("hidden");
+          }).catch(function () {
+            document.getElementById("net-err").classList.remove("hidden");
+            button.disabled = false;
+            button.textContent = "견적 상담 받기";
+          });
+        });
+      })();
+    </script>
+    <script src="site-ui.js"></script>
+  </body>
+</html>
