@@ -88,6 +88,35 @@
         letter-spacing: -0.03em;
       }
       .q-note { margin-top: 0.2rem; font-size: 13px; line-height: 1.45; color: #8b969c; }
+      .promo-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .promo-actions a {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        min-height: 44px;
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      .promo-actions svg { width: 16px; height: 16px; flex: none; }
+      .promo-actions a.act-gold {
+        background: #e4cb86 !important;
+        color: #0b1f2a !important;
+      }
+      .promo-actions a.act-line {
+        background: transparent !important;
+        color: #e4cb86 !important;
+        border: 1px solid rgba(228, 203, 134, 0.75) !important;
+      }
       a.q-open {
         display: flex;
         margin-top: 0.75rem;
@@ -465,5 +494,5 @@
           });
         }
       })();
-    </script> <script src="promo-tabs.js?v=20261006b"></script> <script src="site-ui.js"></script></body>
+    </script> <script src="promo-tabs.js?v=20261008b"></script> <script src="site-ui.js"></script></body>
 </html>

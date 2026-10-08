@@ -190,10 +190,14 @@
     var rows = rowsOf(f);
     if (!f.staticPrice && !rows.length) return "";
     var best = null;
+    var bestRow = null;
     rows.forEach(function (r) {
       var d = deal(r);
       if (!d) return;
-      if (!best || d.maxMan < best.maxMan) best = d;
+      if (!best || d.maxMan < best.maxMan) {
+        best = d;
+        bestRow = r;
+      }
     });
     if (!f.staticPrice && !best) return "";
     var priceHtml = f.staticPrice
@@ -220,7 +224,15 @@
       if (f.not) params.set("not", f.not);
       return "prices.html?" + params.toString() + "#finder";
     })();
-    var see = '<a class="inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + seeHref + '">' + (f.href ? "차 설명 보기" : "이 차종 할인 보기") + "</a>";
+    var quoteHref = bestRow
+      ? "quote.html?name=" + encodeURIComponent(bestRow[2]) + "&my=" + encodeURIComponent(bestRow[1])
+      : "preorder.html#reserve";
+    var ico =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 3 4 12.5V20h7.5L21 10.5 13.5 3zM8.8 16.2a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8z"/></svg>';
+    var icoQuote =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 3h10l4 4v14H5V3zm2 2v14h10V8h-3V5H7zm1 6h8v2H8v-2zm0 4h6v2H8v-2z"/></svg>';
+    var icoAsk =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H5z"/></svg>';
     return (
       '<article class="rounded-3xl bg-white p-5">' +
       '<p class="text-[14px] font-semibold text-[#E4CB86]">' +
@@ -234,11 +246,11 @@
       "</p>" +
       voucher +
       priceHtml +
-      '<div class="mt-4 flex flex-wrap gap-2">' +
-      see +
-      '<a class="inline-flex rounded-full border border-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#E4CB86]" href="' +
-      consultHref(f) +
-      '">구매 문의</a></div></article>'
+      '<div class="promo-actions">' +
+      '<a class="act-gold" href="' + seeHref + '">' + ico + "<span>" + (f.href ? "차 설명 보기" : "할인 확인") + "</span></a>" +
+      '<a class="act-line" href="' + quoteHref + '">' + icoQuote + "<span>견적 확인</span></a>" +
+      '<a class="act-line" href="' + consultHref(f) + '">' + icoAsk + "<span>구매 문의</span></a>" +
+      "</div></article>"
     );
   }
 

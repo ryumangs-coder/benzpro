@@ -115,6 +115,29 @@
       .field:focus { outline: none; border-color: #e4cb86; }
       .field-error { border-color: #f87171 !important; }
       select.field { appearance: none; }
+      a.more-link {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        min-height: 52px;
+        margin-top: 0.55rem;
+        padding: 0.65rem 0.95rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(228, 203, 134, 0.45);
+        background: transparent !important;
+        color: #e4cb86 !important;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+      a.more-link svg { width: 20px; height: 20px; flex: none; }
+      a.more-link small {
+        display: block;
+        margin-top: 0.1rem;
+        font-size: 13px;
+        font-weight: 600;
+        color: #c5ced3;
+      }
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
@@ -159,6 +182,10 @@
             <h2 class="text-[22px] font-bold">어떻게 사실지</h2>
             <div id="pays" class="mt-3 flex flex-wrap gap-2"></div>
             <p id="pay-note" class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]"></p>
+            <div class="mt-3 grid gap-2 sm:grid-cols-2">
+              <a class="more-link" href="care.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 7h11l-2.2-2.2 1.4-1.4L22 8l-4.8 4.6-1.4-1.4L18 9H7V7zm10 10H6l2.2 2.2-1.4 1.4L2 16l4.8-4.6 1.4 1.4L6 15h11v2z"/></svg><span>신차교환 조건 보기<small>사고 나면 새 차로 바꾸는 기준</small></span></a>
+              <a class="more-link" href="tire.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg><span>타이어 교환 조건 보기<small>손상된 타이어를 바꾸는 기준</small></span></a>
+            </div>
           </section>
 
           <section>
@@ -382,7 +409,8 @@
             opt("retain", "지금 벤츠를 타고 계시면", view.retainRate ? "사는 달에서 거꾸로 세 달 안에 보유한 기록이 있으면 됩니다." : "이 차는 이번 달 재구매 안내가 없습니다.", view.retainRate ? "+" + view.retainRate + "%" : "없음", !!view.retainRate) +
             opt("trade", "타던 벤츠를 인증 중고로 넘기면", "지금 벤츠를 타는 혜택과 같이 켜집니다. 다른 브랜드 혜택과는 같이 안 됩니다.", "+1%", !!view.retainRate) +
             opt("conquest", "다른 고급 브랜드를 타고 계시면", view.conqRate ? "BMW, 아우디, 제네시스, 볼보, 포르쉐, 랜드로버, 렉서스입니다. 미니는 빠집니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.", view.conqRate ? "+" + view.conqRate + "%" : "없음", !!view.conqRate) +
-            opt("mou", "MOU 제휴사 임직원이시면", "본인, 배우자, 부모, 자녀까지 됩니다. 회사 이름은 상담에서 확인합니다.", "+2%", true) +
+            opt("mou", "MOU 제휴사 임직원이시면", "본인, 배우자, 부모, 자녀까지 됩니다.", "+2%", true) +
+            '<a class="more-link" href="mou.html#search"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V9l8-5 8 5v11h-6v-6H10v6H4z"/></svg><span>회사 이름으로 찾아보기<small>제휴사인지 이 페이지에서 바로 검색합니다</small></span></a>' +
             opt("repair", "수리 이력이 공개되는 차", "계약 전에 수리 이력을 알려야 하는 차만 1%입니다.", "+1%", true) +
             opt("mile", "도착 주행거리가 100km 이상", "전시장 시승차와 데모 차는 빠집니다.", "+1%", true) +
             opt("showcar", "전시장에 오래 있던 차", "해당 차인지는 상담에서 확인합니다.", "+1%", true);
