@@ -29,9 +29,9 @@
         <nav class="-mx-4 mt-3 overflow-x-auto pb-3" aria-label="주요 메뉴">
           <ul class="flex w-max gap-2 px-4">
             <li><a href="index.html" class="block px-3.5 py-2 text-[13px] font-medium">구매전략</a></li>
-            <li><a href="preorder.html" class="block px-3.5 py-2 text-[13px] font-medium">사전예약</a></li>
             <li><a href="prices.html" class="block px-3.5 py-2 text-[13px] font-medium">프로모션</a></li>
             <li><a href="models.html" aria-current="page" class="block px-3.5 py-2 text-[13px] font-semibold">벤츠비교</a></li>
+            <li><a href="preorder.html" class="block px-3.5 py-2 text-[13px] font-medium">사전예약</a></li>
             <li><a href="https://mercedes.benzpro.co.kr" target="_blank" rel="noopener noreferrer" class="block px-3.5 py-2 text-[13px] font-medium">인사이트</a></li>
           </ul>
         </nav>
@@ -205,6 +205,16 @@
         }
         left.value = String(findIndex("E 200 Exclusive"));
         right.value = String(findIndex("GLC 300"));
+        (function openFromPromo() {
+          var query = new URLSearchParams(location.search);
+          var pickName = query.get("pick");
+          var pickYear = query.get("my");
+          if (!pickName) return;
+          var picked = rows.filter(function (row) {
+            return row.name === pickName && (!pickYear || row.my === pickYear);
+          })[0];
+          if (picked) left.value = String(picked.i);
+        })();
 
         function line(label, a, b, hot) {
           var diff = a !== b;
@@ -1168,5 +1178,5 @@
         });
       })();
     </script>
-  </body>
+  <script src="site-ui.js"></script></body>
 </html>

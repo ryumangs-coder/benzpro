@@ -513,3 +513,59 @@ a.kakao {
   background: #fee500 !important;
   color: #191600 !important;
 }
+
+a[href*="open.kakao.com"]::before,
+a[href^="tel:"]::before,
+aside a[data-spy]::before,
+aside a[href*="#consulting"]::before {
+  content: "";
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--mark) center / contain no-repeat;
+  mask: var(--mark) center / contain no-repeat;
+}
+a[href*="open.kakao.com"] {
+  --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 3.5C6.7 3.5 2.5 6.8 2.5 10.8c0 2.6 1.7 4.9 4.3 6.2l-.8 3 3.4-1.8c.8.1 1.6.2 2.6.2 5.3 0 9.5-3.3 9.5-7.3S17.3 3.5 12 3.5z'/%3E%3C/svg%3E");
+}
+a[href^="tel:"] {
+  --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M6.6 3.2h2.4l1.3 3.2-1.8 1.1a12.5 12.5 0 0 0 5.9 5.9l1.1-1.8 3.2 1.3v2.4a1.6 1.6 0 0 1-1.7 1.6A16.2 16.2 0 0 1 5 4.9a1.6 1.6 0 0 1 1.6-1.7z'/%3E%3C/svg%3E");
+}
+aside a[href="#highlights"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M13.5 3 4 12.5V20h7.5L21 10.5 13.5 3zM8.8 16.2a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8z'/%3E%3C/svg%3E"); }
+aside a[href="#how"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 5h16v2H4V5zm0 6h10v2H4v-2zm0 6h16v2H4v-2z'/%3E%3C/svg%3E"); }
+aside a[href="#support"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10z'/%3E%3C/svg%3E"); }
+aside a[href="#care-card"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 7h11l-2.2-2.2 1.4-1.4L22 8l-4.8 4.6-1.4-1.4L18 9H7V7zm10 10H6l2.2 2.2-1.4 1.4L2 16l4.8-4.6 1.4 1.4L6 15h11v2z'/%3E%3C/svg%3E"); }
+aside a[href="#tire-card"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z'/%3E%3C/svg%3E"); }
+aside a[href="#owned"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M14 4a6 6 0 0 1 1.2 11.9L14 17v3h-3v2H8v-2H6v-3l1.8-1.1A6 6 0 0 1 14 4zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z'/%3E%3C/svg%3E"); }
+aside a[href="#company"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 20V9l8-5 8 5v11h-6v-6H10v6H4z'/%3E%3C/svg%3E"); }
+aside a[href="#paycard"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 6h18v12H3V6zm2 4h14V8H5v2z'/%3E%3C/svg%3E"); }
+aside a[href="#finder"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M5 16l1.5-4.5A2 2 0 0 1 8.4 10h7.2a2 2 0 0 1 1.9 1.5L19 16v4h-2v-2H7v2H5v-4zm2.2-1h9.6l-1-3H8.2l-1 3z'/%3E%3C/svg%3E"); }
+aside a[href*="#consulting"] {
+  --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H5z'/%3E%3C/svg%3E");
+}
+a.spec-jump {
+  background: transparent !important;
+  color: #f4f7f8 !important;
+  border: 1px solid rgba(228, 203, 134, 0.75) !important;
+}
+
+.site-legal {
+  margin: 2.5rem auto 0;
+  max-width: 72rem;
+  padding: 0 1rem 6.5rem;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #8b969c;
+}
+.site-legal strong {
+  display: block;
+  margin-top: 0.45rem;
+  color: #c5ced3;
+  font-weight: 650;
+}
+@media (min-width: 1024px) {
+  .site-legal {
+    padding-bottom: 2rem;
+  }
+}
