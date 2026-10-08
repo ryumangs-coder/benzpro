@@ -146,13 +146,6 @@ aside.fixed {
   border: 1px solid rgba(164, 170, 174, 0.16) !important;
   box-shadow: none !important;
 }
-aside.fixed.w-max {
-  width: max-content;
-}
-aside.fixed.w-max a,
-aside.fixed.w-max p {
-  white-space: nowrap;
-}
 aside nav a,
 aside .text-\[\#1C1917\] {
   color: #f4f7f8 !important;
