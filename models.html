@@ -96,6 +96,41 @@
     <script src="colors.js?v=20261007c"></script>
     <script>
       (function () {
+        var specs = [
+          ["길이", "4,955mm"],
+          ["너비", "1,880mm"],
+          ["높이", "1,475mm"],
+          ["휠베이스", "2,960mm"],
+          ["배기량", "1,999cc"],
+          ["연료", "가솔린 · 25.4kWh"],
+          ["최고출력", "313ps"],
+          ["최대토크", "56.1kg·m"],
+          ["0-100km/h", "6.4초"],
+          ["복합연비", "3.1 km/kWh; 11.1 km/L"],
+          ["트렁크", "370L"],
+          ["구동", "사륜구동"],
+          ["타이어", "245/45 R 19 · 245/40 R 19"]
+        ];
+        var book = window.GUIDE_DATA || {};
+        ["MY26|E350E4MATICEXCLUSIVE", "MY27|E350E4MATICEXCLUSIVE"].forEach(function (key) {
+          if (!book[key]) return;
+          book[key].specs = specs.map(function (pair) { return pair.slice(); });
+        });
+        var list = window.APPROACH_SPECS || (window.APPROACH_SPECS = []);
+        var rule = null;
+        list.forEach(function (item) {
+          if ((item.need || []).join("|") === "E 350 e") rule = item;
+        });
+        if (!rule) {
+          rule = { need: ["E 350 e"], not: [] };
+          list.push(rule);
+        }
+        rule.replace = ["높이", "최고출력", "최대토크", "트렁크", "타이어"];
+        rule.specs = specs.map(function (pair) { return pair.slice(); });
+      })();
+    </script>
+    <script>
+      (function () {
         var rows = window.OCTOBER_2026.models.map(function (r, i) {
           return { i: i, seg: r[0], my: r[1], name: r[2], price: r[3], cash: r[4], mbm: r[5], retain: r[7], conquest: r[8], shinhan: r[9], note: r[10] || "" };
         });
