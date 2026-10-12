@@ -7,7 +7,7 @@
     <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="site.css" />
+    <link rel="stylesheet" href="site.css?v=20261012d" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -91,8 +91,8 @@
     <script src="october-2026.js?v=20261012b"></script>
     <script src="quote.js?v=20261012b"></script>
     <script src="guide-data.js"></script>
-    <script src="approach-specs.js?v=20261007i"></script>
-    <script src="option-words.js?v=20261012a"></script>
+    <script src="approach-specs.js?v=20261012d"></script>
+    <script src="option-words.js?v=20261012c"></script>
     <script src="colors.js?v=20261007c"></script>
     <script>
       (function () {
@@ -417,10 +417,14 @@
           var cls = leftCell !== rightCell ? " opt-diff" : "";
           return '<div class="guide-row"><b class="text-right' + cls + '">' + esc(leftCell) + '</b><span class="k">' + esc(label) + '</span><b class="' + cls + '">' + esc(rightCell) + "</b></div>";
         }
+        function isSuperScreen() {
+          return Array.prototype.join.call(arguments, " ").indexOf("슈퍼스크린") !== -1;
+        }
         function optionItem(label, left, right, differ) {
           var help = window.optionPlain ? window.optionPlain(label) : "";
           var mark = differ ? " opt-diff" : "";
-          return '<div class="opt-item' + (differ ? " diff" : "") + '"><div class="opt-name"><strong>' + esc(label) + "</strong>" +
+          var superCls = isSuperScreen(label, left, right) ? " super" : "";
+          return '<div class="opt-item' + (differ ? " diff" : "") + superCls + '"><div class="opt-name"><strong>' + esc(label) + "</strong>" +
             (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") +
             '</div><b class="' + mark + '">' + esc(left) + '</b><b class="' + mark + '">' + esc(right) + "</b></div>";
         }
@@ -447,7 +451,8 @@
           return optionBuckets(items).map(function (group) {
             return '<h4 class="opt-cat">' + esc(group.cat) + "</h4>" + group.items.map(function (item) {
               var help = window.optionPlain ? window.optionPlain(item.label) : "";
-              return '<div class="opt-shared"><strong>' + esc(item.label) + "</strong>" +
+              var superCls = isSuperScreen(item.label, item.left, item.right) ? " super" : "";
+              return '<div class="opt-shared' + superCls + '"><strong>' + esc(item.label) + "</strong>" +
                 (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") + "</div>";
             }).join("");
           }).join("");
@@ -523,7 +528,7 @@
             : "";
           var head = '<p class="mt-2 text-[15px] font-bold leading-relaxed">왼쪽 ' + esc(showName(a.name)) + " · 오른쪽 " + esc(showName(b.name)) + '</p><div class="opt-item opt-head"><span>사양</span><b>왼쪽</b><b>오른쪽</b></div>';
           var diffHtml = diffs.length
-            ? '<h4 class="mt-4 text-[18px] font-bold">트림이 다른 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">청록색 칸이 두 차의 차이입니다. 이름 아래 문장은 그 기능이 하는 일입니다.</p><div class="opt-board">' + head + optionGroups(diffs) + "</div>"
+            ? '<h4 class="mt-4 text-[18px] font-bold">트림이 다른 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">청록색 칸이 두 차의 차이입니다. 슈퍼스크린이 있는 줄은 금색입니다. 이름 아래 문장은 그 기능이 하는 일입니다.</p><div class="opt-board">' + head + optionGroups(diffs) + "</div>"
             : '<p class="mt-3 text-[16px] leading-relaxed">공개된 기본 사양에서는 두 차의 차이가 없습니다.</p>';
           var sharedHtml = shared.length
             ? '<h4 class="mt-6 text-[18px] font-bold">두 차 모두 기본으로 들어 있는 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">아래는 어느 쪽을 골라도 처음부터 들어 있는 항목입니다.</p><div class="opt-board">' + sharedGroups(shared) + "</div>"
@@ -696,7 +701,8 @@
               if (!cum.some(Boolean) || cum.every(Boolean)) return;
               var first = cum.indexOf(true);
               var plain = window.optionPlain ? window.optionPlain(f.label) : "";
-              rows += "<tr><td>" + esc(f.label) + (plain ? '<span class="plain">' + esc(plain) + "</span>" : "") + "</td>";
+              var superCls = isSuperScreen(f.label) ? ' class="super"' : "";
+              rows += "<tr" + superCls + "><td>" + esc(f.label) + (plain ? '<span class="plain">' + esc(plain) + "</span>" : "") + "</td>";
               cum.forEach(function (cell, i) {
                 if (!cell) rows += '<td class="miss">—</td>';
                 else if (i === first) rows += '<td class="delta">●</td>';

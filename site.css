@@ -397,6 +397,24 @@ input:checked + .pick {
   padding-left: 0.55rem;
   padding-right: 0.35rem;
 }
+.opt-item.super,
+.opt-shared.super {
+  background: rgba(228, 203, 134, 0.16) !important;
+  border-radius: 0.7rem;
+  box-shadow: inset 4px 0 0 #e4cb86;
+  padding-left: 0.7rem;
+  padding-right: 0.35rem;
+}
+.opt-item.super strong,
+.opt-shared.super strong {
+  color: #e4cb86 !important;
+}
+.lineup-table tr.super td {
+  background: rgba(228, 203, 134, 0.12);
+}
+.lineup-table tr.super td:first-child {
+  color: #e4cb86 !important;
+}
 .opt-item strong {
   font-size: 16px;
 }
