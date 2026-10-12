@@ -92,7 +92,7 @@
     <script src="quote.js?v=20261006b"></script>
     <script src="guide-data.js"></script>
     <script src="approach-specs.js?v=20261007i"></script>
-    <script src="option-words.js?v=20261007c"></script>
+    <script src="option-words.js?v=20261012a"></script>
     <script src="colors.js?v=20261007c"></script>
     <script>
       (function () {
@@ -538,7 +538,71 @@
           return specSection + optSection;
         }
         function lineupCore(s) {
-          return s.replace(/HYBRID|WITHEQTECHNOLOGY|LONG|HATCHBACK|HATCH|SEDAN|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|PROGRESSIVE|ESSENTIAL|ADVANCED|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
+          return s.replace(/HYBRID|WITHEQTECHNOLOGY|HATCHBACK|HATCH|SEDAN|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|PROGRESSIVE|ESSENTIAL|ADVANCED|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
+        }
+        function bodySide(name) {
+          var raw = String(name || "");
+          if (/\bLong\b/.test(raw) || showName(raw).indexOf("롱바디") !== -1) return "long";
+          var n = normName(raw);
+          if (n === "S350D4MATIC" || n === "S4504MATIC") return "short";
+          return "";
+        }
+        function basisName(name) {
+          var shown = showName(name)
+            .replace(/Avantgarde|Exclusive|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Manufaktur|Final Edition/gi, "")
+            .replace(/\(\s*\)/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+          if (bodySide(name) === "short" && shown.indexOf("숏바디") === -1) shown += " 숏바디";
+          return shown;
+        }
+        function basisHead(name) {
+          var side = bodySide(name);
+          if (!side) return "";
+          var base = basisName(name);
+          var word = side === "long" ? "롱바디" : "숏바디";
+          var model = base.replace(" " + word, "").trim();
+          return '<span class="plain">' + esc(model) + "<br>" + word + "</span>";
+        }
+        function lineupNote(cols) {
+          var shortBases = [];
+          var longBases = [];
+          cols.forEach(function (col) {
+            var base = basisName(col.name);
+            var side = bodySide(col.name);
+            if (side === "short" && shortBases.indexOf(base) === -1) shortBases.push(base);
+            if (side === "long" && longBases.indexOf(base) === -1) longBases.push(base);
+          });
+          var lines = [];
+          if (shortBases.length) lines.push("숏바디 기준은 " + shortBases.join(", ") + "입니다.");
+          if (longBases.length) lines.push("롱바디 기준은 " + longBases.join(", ") + "입니다.");
+          var year = cols[0] && cols[0].year;
+          if (year && shortBases.length && !longBases.length) {
+            siblingBasis(year, cols[0].name, "long").forEach(function (base) {
+              lines.push("롱바디 기준은 " + base + "입니다.");
+            });
+          }
+          if (year && longBases.length && !shortBases.length) {
+            siblingBasis(year, cols[0].name, "short").forEach(function (base) {
+              lines.push("숏바디 기준은 " + base + "입니다.");
+            });
+          }
+          return lines.join(" ");
+        }
+        function siblingBasis(year, name, want) {
+          var book = window.GUIDE_DATA || {};
+          var engine = normName(name).replace(/LONG|EXCLUSIVE|AMGLINE|AVANTGARDE|MANUFAKTUR|PREMIUM/g, "");
+          var bases = [];
+          Object.keys(book).forEach(function (key) {
+            var parts = key.split("|");
+            if (parts[0] !== year) return;
+            var g = book[key];
+            if (bodySide(g.name) !== want) return;
+            if (normName(g.name).replace(/LONG|EXCLUSIVE|AMGLINE|AVANTGARDE|MANUFAKTUR|PREMIUM/g, "") !== engine) return;
+            var base = basisName(g.name);
+            if (bases.indexOf(base) === -1) bases.push(base);
+          });
+          return bases;
         }
         function lineupLabel(name) {
           var n = String(name || "").toUpperCase();
@@ -563,11 +627,13 @@
           return (feat.year || "") + "|" + lineupCore(normName(feat.name));
         }
         function lineupTitle(row) {
-          return showName(row.name)
+          var shown = showName(row.name)
             .replace(/Avantgarde|AVANTGARDE|Exclusive|EXCLUSIVE|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Manufaktur|Final Edition/gi, "")
             .replace(/\(\s*\)/g, "")
             .replace(/\s+/g, " ")
             .trim();
+          if (bodySide(row.name) === "short" && shown.indexOf("숏바디") === -1) shown += " 숏바디";
+          return shown;
         }
         function lineupTable(row) {
           var feat = featureRecord(row).feat;
@@ -588,10 +654,15 @@
           });
           var cols = Object.keys(byLabel)
             .map(function (label) {
-              return { label: label, gear: byLabel[label].gear, rank: lineupRank(label) };
+              return { label: label, name: byLabel[label].name, year: byLabel[label].year, gear: byLabel[label].gear, rank: lineupRank(label) };
             })
             .sort(function (x, y) { return x.rank - y.rank; });
-          if (cols.length < 2) return title + '<p class="mt-2 text-[16px] leading-relaxed">이 차는 공개된 라인업이 하나라, 위아래 트림을 나란히 두지 못했습니다.</p>';
+          var note = lineupNote(cols);
+          var noteHtml = note ? '<p class="mt-2 text-[16px] leading-relaxed">' + esc(note) + "</p>" : "";
+          if (cols.length < 2) {
+            return title + (noteHtml || '<p class="mt-2 text-[16px] leading-relaxed">이 차는 공개된 라인업이 하나라, 위아래 트림을 나란히 두지 못했습니다.</p>') +
+              (noteHtml ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">같은 차체는 공개된 라인업이 하나라, 위아래 트림을 나란히 두지 않았습니다.</p>' : "");
+          }
           var maps = cols.map(function (col) {
             var map = {};
             col.gear.forEach(function (item) { map[item[1]] = item[2]; });
@@ -636,9 +707,11 @@
             });
             if (rows) body += '<tr class="cat"><td colspan="' + (cols.length + 1) + '">' + esc(bucket.cat) + "</td></tr>" + rows;
           });
-          if (!shown) return title + '<p class="mt-2 text-[16px] leading-relaxed">이 라인업들은 기본으로 들어가는 항목이 같습니다.</p>';
-          var head = "<tr><th>사양</th>" + cols.map(function (col) { return "<th>" + esc(col.label) + "</th>"; }).join("") + "</tr>";
-          return title + '<div class="lineup-scroll mt-3"><table class="lineup-table"><thead>' + head + "</thead><tbody>" + body + "</tbody></table></div>";
+          if (!shown) return title + noteHtml + '<p class="mt-2 text-[16px] leading-relaxed">이 라인업들은 기본으로 들어가는 항목이 같습니다.</p>';
+          var head = "<tr><th>사양</th>" + cols.map(function (col) {
+            return "<th>" + esc(col.label) + basisHead(col.name) + "</th>";
+          }).join("") + "</tr>";
+          return title + noteHtml + '<div class="lineup-scroll mt-3"><table class="lineup-table"><thead>' + head + "</thead><tbody>" + body + "</tbody></table></div>";
         }
         function lineupSection(a, b) {
           var intro =

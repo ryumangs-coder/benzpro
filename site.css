@@ -409,6 +409,9 @@ input:checked + .pick {
   font-weight: 500;
   line-height: 1.45;
 }
+.lineup-table th .plain {
+  white-space: nowrap;
+}
 .opt-item b,
 .opt-head b {
   text-align: center;
