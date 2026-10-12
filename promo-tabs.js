@@ -123,7 +123,7 @@
     { group: "suv", name: "GLE 쿠페", line: "GLE의 쿠페형입니다.", prefix: "GLE ", has: "Coup", car: "GLE" },
     { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
     { group: "suv", name: "G클래스", line: "각진 오프로더입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 450", car: "상담 후 결정" },
-    { group: "ev", name: "일렉트릭 CLA", line: "800V 전기 세단입니다. 외장 6색, 실내 색과 트림을 카탈로그로 고릅니다.", staticPrice: "상담에서 확인합니다", priceLead: "국내 가격은 ", car: "A, CLA, GLA, GLB", href: "preorder.html#cla" },
+    { group: "ev", name: "일렉트릭 CLA", line: "800V 전기 세단입니다. 다섯 트림의 제원과 옵션 비교, 외장·실내 색을 보고 예약합니다.", staticPrice: "상담에서 확인합니다", priceLead: "국내 가격은 ", car: "A, CLA, GLA, GLB", href: "preorder.html#cla" },
     { group: "ev", name: "일렉트릭 GLC", line: "지금 사전예약 중인 전기 SUV입니다. 외장과 실내 색을 카탈로그로 고릅니다.", staticPrice: "9,000만원부터", car: "GLC", href: "preorder.html#glc" },
     { group: "ev", name: "EQA", line: "작은 전기 SUV입니다.", prefix: "EQA", car: "상담 후 결정" },
     { group: "ev", name: "EQB", line: "3열을 볼 수 있는 전기 컴팩트입니다.", prefix: "EQB", car: "상담 후 결정" },
@@ -260,7 +260,7 @@
   html += '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">정상가격과, 재구매·인증 중고·신한카드까지 맞을 때의 최대 실구매가입니다. 트림별 조건은 같은 화면 아래에서 이어집니다.</p>';
   html +=
     '<div class="mt-4 grid gap-3 sm:grid-cols-3">' +
-    '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#cla"><img class="h-36 w-full bg-[#0B1F2A] object-contain" src="images/preorder/cla-side.webp" alt="아쿠아 민트 일렉트릭 CLA" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">일렉트릭 CLA</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">800V 전기 세단. 색과 트림을 카탈로그로 확인합니다.</span></span></a>' +
+    '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#cla"><img class="h-36 w-full bg-[#0B1F2A] object-contain" src="images/preorder/cla-side.webp" alt="아쿠아 민트 일렉트릭 CLA" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">일렉트릭 CLA</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">800V 전기 세단. 제원과 옵션 비교 후 예약합니다.</span></span></a>' +
     '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#glc"><img class="h-36 w-full object-cover" src="images/preorder/glc-hero.webp" alt="실버 일렉트릭 GLC" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">일렉트릭 GLC</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">전기 SUV. 9,000만원부터, 색은 카탈로그에서 고릅니다.</span></span></a>' +
     '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#sclass"><img class="h-36 w-full bg-[#F4F7F8] object-contain" src="images/preorder/s-front.webp" alt="남색 2027년식 S클래스" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">2027년식 S클래스</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">숏바디와 롱바디. <span class="whitespace-nowrap">1억 5,400만원부터</span>. 계약금 500만원.</span></span></a>' +
     "</div>";
