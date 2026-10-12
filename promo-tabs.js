@@ -201,15 +201,15 @@
     if (!f.staticPrice && !best) return "";
     var priceHtml = f.staticPrice
       ? '<p class="mt-3 text-[20px] font-bold">' + (f.priceLead == null ? "정상가격 " : f.priceLead) + f.staticPrice + "</p>"
-      : '<p class="mt-3 text-[18px] leading-snug">정상가격은 <b>' +
-        won(best.priceMan) +
-        "</b>인데, 기본 할인과 금융 할인을 더한 실구매가격은 <b class=\"text-[#E4CB86]\">" +
-        won(best.maxMan) +
-        "</b>입니다.</p>" +
-        '<p class="mt-1 text-[15px] text-[#A4AAAE]">' +
+      : '<div class="price-hit">' +
+        '<div><span class="k">정상가격</span><b class="was">' + won(best.priceMan) + "</b></div>" +
+        '<span class="arrow" aria-hidden="true">→</span>' +
+        '<div><span class="k">할인 적용 실구매</span><b class="now">' + won(best.maxMan) + "</b>" +
+        (best.rate ? '<span class="save">' + best.rate + "% 할인</span>" : "") +
+        "</div></div>" +
+        '<p class="mt-2 text-[15px] leading-snug text-[#A4AAAE]">' +
         showName(best.name) +
         " 기준" +
-        (best.rate ? " · " + best.rate + "%" : "") +
         (best.earlyMan != null ? " · 7월 1일 이전 통관 " + won(best.earlyMan) : "") +
         "</p>";
     var voucher = (f.group === "ev" && !f.staticPrice) || f.name === "마이바흐 EQS"
