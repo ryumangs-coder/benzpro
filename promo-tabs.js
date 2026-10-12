@@ -114,7 +114,6 @@
     { group: "sedan", name: "C클래스", line: "가장 많이 비교하는 중형 세단입니다.", prefix: "C ", car: "C-Class" },
     { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
     { group: "sedan", name: "S클래스", line: "플래그십 세단입니다. 2026년식은 아래 할인으로 바로 견적이 나옵니다.", prefix: "S ", car: "S-Class" },
-    { group: "sedan", name: "2027년식 S클래스", line: "숏바디와 롱바디, 마이바흐까지 사전예약 중입니다. 계약금은 500만원입니다.", staticPrice: "1억 5,400만원부터", car: "S-Class", href: "preorder.html#sclass" },
     { group: "suv", name: "GLA", line: "가장 작은 SUV입니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
     { group: "suv", name: "GLB", line: "2열과 3열을 고를 수 있는 컴팩트 SUV입니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
     { group: "suv", name: "GLC", line: "가장 많이 찾는 중형 SUV입니다.", prefix: "GLC ", not: "Coup", car: "GLC" },
@@ -123,8 +122,6 @@
     { group: "suv", name: "GLE 쿠페", line: "GLE의 쿠페형입니다.", prefix: "GLE ", has: "Coup", car: "GLE" },
     { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
     { group: "suv", name: "G클래스", line: "각진 오프로더입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 450", car: "상담 후 결정" },
-    { group: "ev", name: "일렉트릭 CLA", line: "800V 전기 세단입니다. 다섯 트림의 제원과 옵션 비교, 외장·실내 색을 보고 예약합니다.", staticPrice: "상담에서 확인합니다", priceLead: "국내 가격은 ", car: "A, CLA, GLA, GLB", href: "preorder.html#cla" },
-    { group: "ev", name: "일렉트릭 GLC", line: "지금 사전예약 중인 전기 SUV입니다. 외장과 실내 색을 카탈로그로 고릅니다.", staticPrice: "9,000만원부터", car: "GLC", href: "preorder.html#glc" },
     { group: "ev", name: "EQA", line: "작은 전기 SUV입니다.", prefix: "EQA", car: "상담 후 결정" },
     { group: "ev", name: "EQB", line: "3열을 볼 수 있는 전기 컴팩트입니다.", prefix: "EQB", car: "상담 후 결정" },
     { group: "ev", name: "EQE", line: "전기 세단과 SUV가 있습니다.", prefix: "EQE", car: "상담 후 결정" },
@@ -258,18 +255,12 @@
 
   var html = '<h2 class="text-[26px] font-bold">차종을 고르면 실구매가가 보입니다</h2>';
   html += '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">정상가격과, 재구매·인증 중고·신한카드까지 맞을 때의 최대 실구매가입니다. 트림별 조건은 같은 화면 아래에서 이어집니다.</p>';
-  html +=
-    '<div class="mt-4 grid gap-3 sm:grid-cols-3">' +
-    '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#cla"><img class="h-36 w-full bg-[#0B1F2A] object-contain" src="images/preorder/cla-side.webp" alt="아쿠아 민트 일렉트릭 CLA" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">일렉트릭 CLA</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">800V 전기 세단. 제원과 옵션 비교 후 예약합니다.</span></span></a>' +
-    '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#glc"><img class="h-36 w-full object-cover" src="images/preorder/glc-hero.webp" alt="실버 일렉트릭 GLC" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">일렉트릭 GLC</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">전기 SUV. 9,000만원부터, 색은 카탈로그에서 고릅니다.</span></span></a>' +
-    '<a class="overflow-hidden rounded-3xl bg-white" href="preorder.html#sclass"><img class="h-36 w-full bg-[#F4F7F8] object-contain" src="images/preorder/s-front.webp" alt="남색 2027년식 S클래스" /><span class="block p-4"><span class="block text-[14px] font-semibold text-[#E4CB86]">사전예약</span><span class="mt-1 block text-[20px] font-bold">2027년식 S클래스</span><span class="mt-1 block text-[16px] leading-relaxed text-[#C5CED3]">숏바디와 롱바디. <span class="whitespace-nowrap">1억 5,400만원부터</span>. 계약금 500만원.</span></span></a>' +
-    "</div>";
   groupMeta.forEach(function (g) {
     var cards = families.filter(function (f) { return f.group === g.id; }).map(card).filter(Boolean);
     if (!cards.length) return;
     html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
     if (g.id === "ev") {
-      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">EQA, EQB, EQE, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다. 일렉트릭 CLA와 일렉트릭 GLC 사전예약에는 이 바우처가 아직 없습니다.</p>';
+      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">EQA, EQB, EQE, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다.</p>';
     }
     html += "</section>";
   });
