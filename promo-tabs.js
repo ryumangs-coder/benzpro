@@ -202,11 +202,13 @@
     var priceHtml = f.staticPrice
       ? '<p class="mt-3 text-[20px] font-bold">' + (f.priceLead == null ? "정상가격 " : f.priceLead) + f.staticPrice + "</p>"
       : '<div class="price-hit">' +
-        '<div><span class="k">정상가격</span><b class="was">' + won(best.priceMan) + "</b></div>" +
+        (best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
+        '<span class="k was-k">정상가격</span>' +
+        '<span class="k now-k">할인 적용 실구매</span>' +
+        '<b class="was">' + won(best.priceMan) + "</b>" +
         '<span class="arrow" aria-hidden="true">→</span>' +
-        '<div><span class="k">할인 적용 실구매</span><b class="now">' + won(best.maxMan) + "</b>" +
-        (best.rate ? '<span class="save">' + best.rate + "% 할인</span>" : "") +
-        "</div></div>" +
+        '<b class="now">' + won(best.maxMan) + "</b>" +
+        "</div>" +
         '<p class="mt-2 text-[15px] leading-snug text-[#A4AAAE]">' +
         showName(best.name) +
         " 기준" +
