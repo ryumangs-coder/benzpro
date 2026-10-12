@@ -67,6 +67,22 @@
       .final span { color: #e4cb86; font-size: 16px; font-weight: 800; }
       .final strong { color: #e4cb86; font-size: 36px; line-height: 1; letter-spacing: -0.04em; }
       .fine { margin-top: 0.35rem; font-size: 13px; line-height: 1.5; color: #8b969c; }
+      .q-perks {
+        margin-top: 0.7rem;
+        padding: 0.75rem 0.9rem 0.8rem;
+        border-radius: 0.9rem;
+        background: rgba(228, 203, 134, 0.12);
+      }
+      .q-perks b { display: block; color: #e4cb86; font-size: 15px; }
+      .q-perks ul {
+        margin: 0.4rem 0 0;
+        padding-left: 1.15rem;
+        color: #f4f7f8;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      .q-perks li { margin: 0.25rem 0; }
+      .q-perks li::marker { color: #e4cb86; }
       .pay {
         min-height: 48px;
         border-radius: 999px;
@@ -249,8 +265,8 @@
       </div>
     </div>
 
-    <script src="october-2026.js"></script>
-    <script src="quote.js"></script>
+    <script src="october-2026.js?v=20261012b"></script>
+    <script src="quote.js?v=20261012b"></script>
     <script>
       (function () {
         var WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
@@ -425,6 +441,13 @@
             return '<div class="rowline"><span>' + line.label + "</span><b>" + line.pct + "%</b></div>";
           }).join("");
           if (q.option) breakdown = '<p class="fine">차량 ' + won(q.vehicle) + " + " + q.optionLabel + " " + won(q.option) + "</p>" + breakdown;
+          var perkHtml = "";
+          if (q.points && q.points.length) {
+            perkHtml =
+              '<div class="q-perks"><b>140주년 에디션에 더 들어간 사양</b><ul>' +
+              q.points.map(function (line) { return "<li>" + line + "</li>"; }).join("") +
+              "</ul></div>";
+          }
           if (q.extra) breakdown += '<div class="rowline cut"><span>옵션 추가 할인</span><b>−' + won(q.extra) + "</b></div>";
           if (view.tax) breakdown += '<div class="rowline cut"><span>개소세 인하</span><b>−' + won(view.tax) + "</b></div>";
           var monthLine = "";
@@ -435,6 +458,7 @@
             '<p class="sheet-kicker">선택한 조건</p>' +
             '<h2 class="mt-1 text-[22px] font-bold leading-snug">' + showName(current.name) + "</h2>" +
             '<p class="fine">' + current.my + "</p>" +
+            perkHtml +
             '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
             '<div class="rowline cut"><span>할인 합계<em class="rate-pill">' + (view.rate || 0) + "%</em></span><b>" + ((view.saved || view.tax) ? "−" + won((view.saved || 0) - (view.tax || 0)) : "0만원") + "</b></div>" +
             breakdown +

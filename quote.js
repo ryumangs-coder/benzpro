@@ -10,11 +10,86 @@
     "MY26|E 200 AMG Line (RoF Edition)": { option: 930000, extra: 220000, optionLabel: "RoF 옵션" },
     "MY26|GLC 300 4MATIC AMG Line (RoF)": { option: 1260000, extra: 0, optionLabel: "RoF 옵션" },
     "MY26|GLC 300 4MATIC Coupé AMG Line (RoF)": { option: 1260000, extra: 0, optionLabel: "RoF 옵션" },
-    "MY26|E 300 AMG Line (140주년)": { option: 5700000, extra: 0, optionLabel: "140주년 옵션" },
-    "MY26|GLC 300 4MATIC AMG Line (140주년)": { option: 5400000, extra: 0, optionLabel: "140주년 옵션" },
-    "MY26|GLC 300 4MATIC Coupé AMG Line (140주년)": { option: 5400000, extra: 0, optionLabel: "140주년 옵션" },
-    "MY26|CLE 200 Coupé (140주년)": { option: 4500000, extra: 0, optionLabel: "140주년 옵션" },
-    "MY26|CLE 200 Cabriolet (140주년)": { option: 4300000, extra: 0, optionLabel: "140주년 옵션" }
+    "MY26|E 300 AMG Line (140주년)": {
+      option: 5700000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "에어매틱이 들어 있습니다. 공기 스프링이라 승차감이 부드럽고 높낮이도 바뀝니다.",
+        "후륜 조향이 최대 2.5°까지 돌아, 주차와 유턴이 수월합니다.",
+        "외장은 마누팍투어 알파인 그레이, 바퀴는 블랙 AMG 휠입니다. 140대입니다."
+      ]
+    },
+    "MY26|GLC 300 4MATIC AMG Line (140주년)": {
+      option: 5400000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "에어매틱이 들어 있습니다. 공기 스프링이라 승차감이 부드럽고 높낮이도 바뀝니다.",
+        "후륜 조향이 최대 4.5°까지 돌아, 골목 회전과 유턴이 수월합니다.",
+        "외장은 마누팍투어 알파인 그레이, 바퀴는 블랙 AMG 휠입니다. 140대입니다."
+      ]
+    },
+    "MY26|GLC 300 4MATIC Coupé AMG Line (140주년)": {
+      option: 5400000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "에어매틱이 들어 있습니다. 공기 스프링이라 승차감이 부드럽고 높낮이도 바뀝니다.",
+        "후륜 조향이 최대 4.5°까지 돌아, 골목 회전과 유턴이 수월합니다.",
+        "외장은 마누팍투어 알파인 그레이, 바퀴는 블랙 AMG 휠입니다. 140대입니다."
+      ]
+    },
+    "MY26|CLE 200 Coupé (140주년)": {
+      option: 4500000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "부메스터 3D 사운드가 들어 있습니다. 스피커 17개로 음악을 둘러 들려 줍니다.",
+        "헤드업 디스플레이가 있어, 앞유리에 속도와 길 안내가 뜹니다.",
+        "70대입니다."
+      ]
+    },
+    "MY26|CLE 200 Cabriolet (140주년)": {
+      option: 4300000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "부메스터 3D 사운드가 들어 있습니다. 스피커 17개로 음악을 둘러 들려 줍니다.",
+        "헤드업 디스플레이가 있어, 앞유리에 속도와 길 안내가 뜹니다.",
+        "70대입니다."
+      ]
+    },
+    "MY26|GLE 450 4MATIC AMG Line (140주년)": {
+      option: 2400000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "나이트 패키지입니다. 그릴과 문 손잡이는 다크 크롬, 거울과 창틀은 블랙입니다.",
+        "22인치 AMG 휠, 블랙 나파 가죽, 앤트러사이트 나무 장식이 들어 있습니다.",
+        "외장은 알파인 그레이 175대, 옵시디안 블랙 175대입니다."
+      ]
+    },
+    "MY26|GLE 450 4MATIC Coupé (140주년)": {
+      option: 2900000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "나이트 패키지입니다. 그릴과 문 손잡이는 다크 크롬, 거울과 창틀은 블랙입니다.",
+        "22인치 AMG 휠, 블랙 나파 가죽, 앤트러사이트 나무 장식이 들어 있습니다.",
+        "외장은 알파인 그레이 115대, 옵시디안 블랙 115대입니다."
+      ]
+    },
+    "MY26|GLS 580 4MATIC (140주년)": {
+      option: 5600000,
+      extra: 0,
+      optionLabel: "140주년 옵션",
+      points: [
+        "나이트 패키지와 23인치 AMG 휠, 블랙 나파 가죽이 들어 있습니다.",
+        "E-액티브 바디 컨트롤이 들어 있습니다. 앞 노면을 보고 바퀴를 미리 움직여 울퉁불퉁을 더 걸러 줍니다.",
+        "외장은 알파인 그레이 100대입니다."
+      ]
+    }
   };
 
   function floorWon(n) {
@@ -76,6 +151,7 @@
       option: option,
       extra: extra,
       optionLabel: edition ? edition.optionLabel : "",
+      points: edition && edition.points ? edition.points : [],
       basis: basis,
       cash: cash,
       finAdd: fin.add,
