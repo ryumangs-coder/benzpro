@@ -6,7 +6,7 @@
 (function () {
   var T = window.BENZ_TECH;
   if (!T) return;
-  var VER = "?v=20261016b";
+  var VER = "?v=20261016c";
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -34,7 +34,7 @@
   }
 
   /* ---------- 차 이름으로 알 수 있는 파워트레인 태그 ---------- */
-  var TAG_LABEL = { "4matic": "4MATIC 사륜구동", phev: "플러그인 하이브리드", diesel: "디젤", amg: "AMG 고성능", ev: "전기차" };
+  var TAG_LABEL = { "4matic": "4MATIC 사륜구동", phev: "플러그인 하이브리드", diesel: "디젤", amg: "AMG 고성능", maybach: "마이바흐", ev: "전기차" };
   function tagsFor(row) {
     var name = String(row.name || "");
     var out = [];

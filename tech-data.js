@@ -25,7 +25,7 @@ window.BENZ_TECH = {
         ["dl-road", "앞차와 마주 오는 차를 피해 비추는 모습"],
         ["dl-s", "S-클래스의 디지털 라이트"]
       ],
-      match: ["디지털 라이트", "멀티빔 LED", "LED 고성능", "헤드램프"],
+      match: ["디지털 라이트", "멀티빔 LED", "LED 고성능", "LED 하이퍼", "헤드램프"],
       what: "헤드램프 안에서 아주 작은 LED가 따로따로 켜지고 꺼지는 똑똑한 앞 등입니다. 카메라가 앞차와 마주 오는 차를 알아보면, 그 부분만 빛을 줄이고 나머지 길은 상향등처럼 밝게 비춥니다.",
       easy: "상향등을 켠 채로 달려도, 앞차 운전자는 눈부시지 않습니다. 상향등을 껐다 켰다 하는 일은 차가 대신합니다.",
       why: [
@@ -56,15 +56,15 @@ window.BENZ_TECH = {
         "A·GLA·GLB: LED 고성능 헤드램프로 소개되어 있습니다"
       ],
       versus: {
-        title: "LED 고성능 헤드램프와 디지털 라이트, 무엇이 다른가요",
+        title: "LED 하이퍼포먼스(고성능) 헤드램프와 디지털 라이트, 무엇이 다른가요",
         intro: "E-클래스 헤드램프는 두 종류입니다. 낮에는 거의 같아 보여도, 어두운 밤길에서 차이가 가장 크게 납니다.",
         cols: [
           {
-            label: "LED 고성능 헤드램프",
-            sub: "E 200 전 트림 · E 220 d 기본",
+            label: "LED 하이퍼포먼스 (고성능) 헤드램프",
+            sub: "E 200 전 트림 · E 220 d 기본 (어프로치북: 어댑티브 상향등 어시스트 · 로고 프로젝터 포함)",
             tests: ["^E (200|220 d)"],
             img: "led-head",
-            cap: "LED 고성능 헤드램프 (C-클래스 카탈로그 사진)",
+            cap: "LED 고성능(하이퍼포먼스) 헤드램프 (C-클래스 카탈로그 사진)",
             points: [
               "✓ LED 기술로 기존 램프보다 효율이 높고, 더 정확하고 넓게 도로를 비춥니다",
               "✓ 따뜻한 온백색 빛이 눈의 피로를 줄여 줍니다",
@@ -215,7 +215,7 @@ window.BENZ_TECH = {
       ],
       where: [
         "A-클래스·A-클래스 세단: 컴포트 서스펜션 (카탈로그: 장거리 주행에서도 안락하고 부드러운 코너링)",
-        "E-클래스: 컴포트 또는 어질리티 컨트롤 (트림별), 엔지니어링 패키지의 DYNAMIC BODY CONTROL",
+        "E-클래스: 컴포트(E 200 아방가르드·익스클루시브, E 220 d, E 300·E 350 e 익스클루시브) / 어질리티 컨트롤(E 200·E 300 AMG Line) / 에어매틱 + 리어 액슬 스티어링(E 450)",
         "CLE: 엔지니어링 패키지 (DYNAMIC BODY CONTROL + 리어 액슬 스티어링 최대 2.5°)",
         "GLE·GLS: 에어매틱 서스펜션 (에어매틱 패키지)",
         "S-클래스: 에어매틱, E-액티브 바디 컨트롤",
@@ -227,8 +227,8 @@ window.BENZ_TECH = {
         cols: [
           {
             label: "컴포트 서스펜션",
-            sub: "E 200 · E 300 · E 350 e 익스클루시브 기본",
-            tests: ["^E (200|300 4MATIC|350 e 4MATIC) Exclusive"],
+            sub: "E 200 아방가르드·익스클루시브 · E 220 d · E 300·E 350 e 익스클루시브 기본",
+            tests: ["^E (200 (Avantgarde|Exclusive)|220 d|300 4MATIC Exclusive|350 e 4MATIC Exclusive)"],
             meter: { small: [8, 22], big: [14, 36] },
             points: [
               "✓ 부드럽고 편안한 승차감에 맞춘 기본 하체입니다",
@@ -238,8 +238,8 @@ window.BENZ_TECH = {
           },
           {
             label: "어질리티 컨트롤 서스펜션",
-            sub: "E 200 아방가르드 · E 200 / E 300 AMG Line 기본",
-            tests: ["^E 200 (Avantgarde|AMG Line)", "^E 300 4MATIC AMG Line"],
+            sub: "E 200 · E 300 AMG Line 기본 (26년식 어프로치북 기준)",
+            tests: ["^E (200|300 4MATIC) AMG Line", "^E 300 AMG Line"],
             meter: { small: [14, 30], big: [58, 84] },
             points: [
               "✓ 노면과 주행 상황에 따라 충격 흡수 강도가 달라지는 서스펜션입니다 (선택적 댐핑 방식)",
@@ -248,22 +248,23 @@ window.BENZ_TECH = {
             ]
           },
           {
-            label: "DYNAMIC BODY CONTROL",
-            sub: "엔지니어링 패키지 · E 450 기본 / 그 외 트림 유료 옵션",
+            label: "에어매틱 + 리어 액슬 스티어링",
+            sub: "E 450 익스클루시브 · AMG Line 기본 (엔지니어링 패키지)",
             tests: ["^E 450 4MATIC"],
             img: "rear-steer",
             cap: "엔지니어링 패키지 (리어 액슬 스티어링)",
             meter: { small: [10, 60], big: [30, 90], range: true },
             points: [
-              "✓ 서스펜션 댐핑(충격 흡수 강도)을 조절할 수 있는 서스펜션입니다",
-              "✓ 리어 액슬 스티어링(최대 4.5°)이 함께 구성됩니다",
-              "✓ 뛰어난 승차감과 역동적인 드라이빙을 함께 얻는 최상위 구성입니다"
+              "✓ 에어 스프링(에어매틱) 서스펜션이 기본으로 들어갑니다 (26년식 어프로치북 기준)",
+              "✓ 카탈로그는 이 구성을 엔지니어링 패키지로 소개합니다: 댐핑을 조절하는 DYNAMIC BODY CONTROL 서스펜션과 리어 액슬 스티어링",
+              "✓ 리어 액슬 스티어링(최대 4.5°)이 함께 구성되어, 좁은 곳에서는 작게 돌고 고속에서는 안정적입니다",
+              "✓ 뛰어난 승차감과 역동적인 드라이빙을 함께 얻는 E-클래스 최상위 구성입니다"
             ]
           }
         ],
         meterNote: "개념도입니다. 느낌을 이해하기 쉽게 그린 그림이며 실제 측정값이 아닙니다.",
-        summary: "한 줄로 말씀드리면, 컴포트는 '편안함이 먼저', 어질리티 컨트롤은 '편안함과 안정감의 균형', DYNAMIC BODY CONTROL은 '상황에 맞춰 조절하는 최상위 구성'입니다.",
-        note: "컴포트·어질리티 컨트롤의 세부 방식은 E-클래스 카탈로그에 자세히 나와 있지 않아 메르세데스-벤츠의 일반적인 기술 설명을 바탕으로 정리했습니다. DYNAMIC BODY CONTROL과 리어 액슬 스티어링은 2026.04 카탈로그 기준입니다."
+        summary: "한 줄로 말씀드리면, 컴포트는 '편안함이 먼저', 어질리티 컨트롤은 '편안함과 안정감의 균형', 에어매틱 + 리어 액슬 스티어링은 '상황에 맞춰 조절하는 최상위 구성'입니다.",
+        note: "컴포트·어질리티 컨트롤의 세부 방식은 E-클래스 카탈로그에 자세히 나와 있지 않아 메르세데스-벤츠의 일반적인 기술 설명을 바탕으로 정리했습니다. 트림별 서스펜션 배정은 송파 어프로치북(26년식)을 기준으로 확인했고, 엔지니어링 패키지와 리어 액슬 스티어링 설명은 2026.04 카탈로그 기준입니다. 27년식은 구성이 달라질 수 있어 계약 전에 확인합니다."
       }
     },
     {
@@ -274,7 +275,7 @@ window.BENZ_TECH = {
       line: "큰 세단을 작은 차처럼 돌립니다",
       imgs: [
         ["rear-steer", "E-클래스의 리어 액슬 스티어링 (최대 4.5°)"],
-        ["rear-steer-s", "S-클래스의 리어 액슬 스티어링 (최대 10°)"]
+        ["rear-steer-s", "S-클래스의 리어 액슬 스티어링 (4.5° 또는 10°)"]
       ],
       match: ["후륜 조향", "리어 액슬", "엔지니어링 패키지"],
       what: "앞바퀴만이 아니라 뒷바퀴도 같이 방향을 꺾습니다. 저속에서는 앞바퀴와 반대로 꺾여 차가 더 짧게 돌고, 고속에서는 같은 방향으로 꺾여 차선 변경이 안정적입니다.",
@@ -287,11 +288,11 @@ window.BENZ_TECH = {
       pride: {
         year: "",
         head: "크기와 민첩함, 둘 다 포기하지 않습니다",
-        body: "큰 세단은 편하지만 다루기 어렵다는 상식을 기술로 바꾼 장치입니다. S-클래스는 조향각 10°로 회전 반경이 약 2m 줄어들고, E-클래스는 최대 4.5°로 민첩한 핸들링을 만듭니다."
+        body: "큰 세단은 편하지만 다루기 어렵다는 상식을 기술로 바꾼 장치입니다. S-클래스는 조향각 4.5°와 10° 두 가지가 있고, 10°는 회전 반경이 약 2m 줄어듭니다. E-클래스는 최대 4.5°로 민첩한 핸들링을 만듭니다."
       },
       facts: [
         "E-클래스: 최대 4.5° 조향, 회전 반경 감소 (엔지니어링 패키지)",
-        "S-클래스: 10° 조향, 회전 반경 약 2m 감소 (카탈로그 기준)",
+        "S-클래스: 4.5° 또는 10° 조향, 10°는 회전 반경 약 2m 감소 (카탈로그 기준). S 450은 어프로치북 기준 4.5°입니다",
         "고속 주행 시 주행 안정성 향상"
       ],
       where: [
@@ -456,7 +457,86 @@ window.BENZ_TECH = {
         body: "AMG는 1967년 한스 베르너 아우프레히트와 에르하르트 멜허가 세웠고, 이름은 두 사람과 아우프레히트의 고향 그로사스파흐의 머리글자에서 왔습니다. AMG 엔진은 지금도 장인 한 사람이 한 대를 처음부터 끝까지 조립하고 서명을 남기는 'One Man, One Engine' 방식을 이어 갑니다."
       },
       facts: ["AMG 라인(외관·실내 스타일)과 AMG(고성능 차)는 다른 등급입니다"],
-      where: ["차명이 'AMG'로 시작하는 모델"]
+      where: ["차명이 'AMG'로 시작하는 모델"],
+      versus: {
+        title: "AMG 라인, AMG, 마이바흐는 무엇이 다른가요",
+        intro: "이름에 AMG가 들어가도 같은 차가 아닙니다. 같은 모델이라도 스타일이 다른 차, 성능이 다른 차, 격이 다른 차로 나뉩니다.",
+        cols: [
+          {
+            label: "AMG 라인",
+            sub: "예) C 200 AMG Line · E 300 AMG Line · GLC 300 AMG Line",
+            tests: ["AMG Line"],
+            points: [
+              "✓ 겉모습과 실내를 스포티하게 꾸민 스타일 패키지입니다 (AMG 라인 외장 · 내장 패키지)",
+              "✓ 스포츠 스티어링 휠과 AMG 휠, 스포티한 범퍼와 시트가 들어갑니다",
+              "– 엔진과 변속기는 같은 모델의 일반 트림과 같습니다. 성능을 올린 차는 아닙니다"
+            ]
+          },
+          {
+            label: "메르세데스-AMG",
+            sub: "예) AMG A 45 S · AMG GLC 43 · AMG E 53 · AMG G 63",
+            tests: ["^AMG "],
+            img: "eng-v8",
+            cap: "AMG V8 엔진",
+            points: [
+              "✓ 엔진과 서스펜션, 브레이크까지 AMG가 따로 만든 고성능 차입니다",
+              "✓ 예를 들어 AMG A 45 S 421마력 · AMG GLC 43 421마력 · AMG E 53 449마력 · AMG G 63 585마력입니다 (어프로치북 기준)",
+              "✓ AMG 고성능 브레이크, AMG 전용 서스펜션, AMG 가변식 퍼포먼스 배기가 들어갑니다",
+              "– 같은 모델의 AMG 라인보다 가격과 연료비가 확실히 높습니다"
+            ]
+          },
+          {
+            label: "메르세데스-마이바흐",
+            sub: "예) 마이바흐 S 580 · S 680 · GLS 600 · SL 680 · EQS 680 SUV",
+            tests: ["^Maybach "],
+            img: "my-s-front",
+            cap: "마이바흐 S-클래스 (공식 카탈로그)",
+            points: [
+              "✓ 성능보다 '최상위 고급'에 무게를 둔 브랜드입니다. 마이바흐 전용 그릴·레터링과 특별한 실내를 갖춥니다",
+              "✓ 마이바흐 S 580은 V8 537마력, S 680은 V12 630마력입니다 (어프로치북 기준)",
+              "✓ 마이바흐 GLS 600은 V8 557마력, EQS 680 SUV는 전기 4륜구동입니다",
+              "– 가격은 일반 모델의 몇 배 수준이라, 어떤 쓰임새에 맞는지 먼저 정하는 것이 좋습니다"
+            ]
+          }
+        ],
+        summary: "한 줄로 말씀드리면, AMG 라인은 '스포티한 옷', AMG는 '운동선수의 몸', 마이바흐는 '최고급 호텔 같은 차'입니다.",
+        note: "AMG 라인 설명은 어프로치북의 옵션 목록(AMG 라인 외장·내장 패키지)과 일반적인 기술 정보를 바탕으로 정리했습니다. 마력은 송파 어프로치북(26·27년식) 기준입니다."
+      }
+    },
+    {
+      id: "maybach",
+      group: "digital",
+      name: "메르세데스-마이바흐",
+      en: "MERCEDES-MAYBACH · THE ULTIMATE LUXURY",
+      line: "벤츠가 만들 수 있는 가장 조용하고 가장 고급스러운 차",
+      imgs: [
+        ["my-s-front", "마이바흐 S-클래스"],
+        ["my-s-seat", "마이바흐 S-클래스 뒷좌석"],
+        ["my-gls-front", "마이바흐 GLS 600"],
+        ["my-sl-front", "마이바흐 SL 680"],
+        ["my-eqs-front", "마이바흐 EQS 680 SUV"]
+      ],
+      match: ["마이바흐"],
+      nameMatch: "^Maybach ",
+      what: "마이바흐는 벤츠의 최상위 럭셔리 브랜드입니다. S-클래스, GLS, SL, 전기 SUV까지 같은 차에 마이바흐 전용 외관, 최고급 가죽, 뒷좌석 중심 구성을 더했습니다. 직접 운전하는 차이면서, 뒷좌석에서 모시는 차이기도 합니다.",
+      easy: "S-클래스가 '비즈니스 클래스'라면 마이바흐는 '퍼스트 클래스'입니다.",
+      why: [
+        "뒷좌석이 가장 편한 차를 원하는 분께 맞습니다.",
+        "마이바흐 전용 그릴과 레터링, 투톤 도색 같은 외관이 한눈에 다릅니다.",
+        "S 580은 V8, S 680은 V12 엔진을 고를 수 있습니다."
+      ],
+      pride: {
+        year: "1901",
+        head: "최초의 메르세데스를 설계한 사람, 빌헬름 마이바흐",
+        body: "1901년 '메르세데스 35 PS'를 설계한 사람이 빌헬름 마이바흐입니다. 같은 사람의 이름을 딴 마이바흐는 한때 독립 브랜드였다가, 2014년 메르세데스-마이바흐로 S-클래스 위의 최상위 브랜드가 되었습니다."
+      },
+      facts: [
+        "마이바흐 S 580: V8 537마력 · S 680: V12 630마력 (어프로치북)",
+        "마이바흐 GLS 600: V8 557마력 · 23인치 휠 (어프로치북)",
+        "마이바흐 SL 680: V8 585마력 · 소프트탑 로드스터 (어프로치북)",
+        "마이바흐 EQS 680 SUV: 118kWh 배터리, 에어매틱과 리어 액슬 스티어링 10° (어프로치북)"
+      ],
+      where: ["차명이 'Maybach'로 시작하는 모델: S 580 · S 680 · GLS 600 · SL 680 · EQS 680 SUV"]
     },
     {
       id: "superscreen",
@@ -734,7 +814,7 @@ window.BENZ_TECH = {
           }
         ],
         summary: "아방가르드는 담백한 블랙 우드, 익스클루시브는 따뜻한 우드와 알루미늄 조합, AMG Line은 스포츠 스티어링 휠과 슈퍼스크린이 있는 스포티한 실내라고 기억하시면 쉽습니다.",
-        note: "2026.04 E-클래스 카탈로그 기준입니다. 27년식과 생산 시점에 따라 달라질 수 있습니다. E 300·E 450 AMG Line의 대시보드 트림 종류는 카탈로그에 별도로 표기되어 있지 않습니다."
+        note: "2026.04 E-클래스 카탈로그 기준입니다. 27년식과 생산 시점에 따라 달라질 수 있습니다. E 300·E 450 AMG Line의 대시보드 트림 종류는 카탈로그에 별도로 표기되어 있지 않습니다. 센터콘솔은 카탈로그와 송파 어프로치북 표기가 일부 다릅니다(E 300 AMG Line: 카탈로그는 블랙 오픈 포어, 어프로치북은 브라운 우드 알루미늄 라인). 출고 전 실차로 꼭 확인합니다."
       }
     },
     {
@@ -847,14 +927,17 @@ window.BENZ_TECH = {
   history: [
     { year: "1886", title: "자동차의 시작", line: "카를 벤츠, 세계 최초 자동차 특허", story: "1886년 1월 29일, 카를 벤츠가 가솔린 엔진으로 달리는 3륜 자동차 '파텐트 모토르바겐'의 특허를 출원했습니다(그해 11월 등록). 이 특허가 자동차의 탄생으로 인정받습니다.", topic: "star" },
     { year: "1888", title: "최초의 장거리 드라이브", line: "베르타 벤츠, 106km를 달리다", story: "1888년 카를 벤츠의 아내 베르타 벤츠가 남편 몰래 두 아들과 함께 약 100km를 달렸습니다. 길에서 연료를 구하고, 고장을 직접 고치며 '자동차는 먼 길을 갈 수 있다'는 걸 세상에 보여 준 첫 장거리 주행입니다.", topic: "star" },
+    { year: "1901", title: "최초의 메르세데스", line: "빌헬름 마이바흐가 설계한 35 PS", story: "1901년 다임러 사의 설계자 빌헬름 마이바흐가 만든 '메르세데스 35 PS'는 현대 자동차의 원형으로 불립니다. 같은 사람의 이름이 훗날 최상위 브랜드 마이바흐가 됩니다.", topic: "maybach" },
     { year: "1909", title: "삼각별 등록", line: "땅·바다·하늘을 향한 마크", story: "1909년 다임러 사가 삼각별을 상표로 등록했고, 1910년부터 차에 붙었습니다. 1926년 다임러와 벤츠가 합쳐지며 메르세데스-벤츠가 되었습니다.", topic: "star" },
     { year: "1936", title: "최초의 양산 디젤 승용차", line: "벤츠 260 D", story: "1936년 선보인 260 D는 세계 최초의 양산 디젤 승용차입니다. 디젤을 트럭의 엔진에서 승용차의 엔진으로 끌어올렸습니다.", topic: "diesel" },
     { year: "1959", title: "크럼플 존", line: "충격을 차체가 먼저 받는 구조", story: "벤츠의 엔지니어 벨라 바레니가 1952년 특허를 낸 '변형되는 차체'는 1959년 W111에 처음 양산 적용됐습니다. 지금 모든 자동차가 쓰는 충돌 안전의 기본 개념입니다.", topic: "airbag" },
+    { year: "1967", title: "AMG의 시작", line: "엔진 한 대를 장인 한 사람이", story: "1967년 한스 베르너 아우프레히트와 에르하르트 멜허가 AMG를 세웠습니다. 지금도 AMG 엔진은 장인 한 사람이 처음부터 끝까지 조립해 서명을 남깁니다.", topic: "amg" },
     { year: "1978", title: "ABS 양산 최초", line: "급제동에도 핸들이 말을 듣습니다", story: "1978년 S-클래스(W116)에 보쉬와 함께 개발한 전자식 ABS가 양산차 최초로 들어갔습니다. 급제동에서도 바퀴가 잠기지 않아 핸들로 피할 수 있습니다.", topic: "airbag" },
     { year: "1981", title: "에어백과 벨트 프리텐셔너", line: "S-클래스에 처음 도입", story: "1981년 S-클래스에 운전석 에어백과 안전벨트 프리텐셔너가 함께 들어갔습니다. 안전벨트와 에어백이 함께 보호한다는 지금의 방식이 이때 시작됐습니다.", topic: "airbag" },
     { year: "1985", title: "4MATIC의 시작", line: "벤츠 사륜구동의 이름", story: "1985년 벤츠가 승용차에 4MATIC 사륜구동을 선보였습니다. 이후 세단, SUV, 전기차까지 퍼진 벤츠 사륜구동의 시작입니다.", topic: "4matic" },
     { year: "1995", title: "ESP 도입", line: "미끄러지는 차를 스스로 잡아 줍니다", story: "1995년 S-클래스 쿠페에 ESP(차체 자세 제어 장치)가 처음 들어갔습니다. 빗길과 눈길에서 차가 미끄러지려 하면 바퀴마다 브레이크를 따로 잡아 줍니다.", topic: "assist" },
     { year: "2002", title: "프리-세이프", line: "사고 전에 먼저 보호합니다", story: "2002년 S-클래스에 처음 들어간 프리-세이프는 충돌이 임박하면 안전벨트를 당기고 탑승자를 보호 자세로 준비시킵니다.", topic: "pre-safe" },
+    { year: "2014", title: "메르세데스-마이바흐", line: "S-클래스 위의 최상위 브랜드", story: "2014년 마이바흐가 메르세데스-마이바흐라는 이름으로 S-클래스 위의 최상위 서브 브랜드로 돌아왔습니다. 지금은 S-클래스, GLS, SL, 전기 SUV까지 이어집니다.", topic: "maybach" },
     { year: "2018", title: "MBUX", line: "말을 알아듣는 차", story: "2018년 A-클래스에서 공개된 MBUX는 '헤이 메르세데스'라고 부르면 대답하는 인공지능 인포테인먼트입니다.", topic: "mbux" },
     { year: "2021", title: "디지털 라이트", line: "130만 개의 마이크로 미러", story: "2021년 S-클래스와 EQS에서 처음 선보인 디지털 라이트는 헤드램프 하나마다 130만 개의 아주 작은 거울로 빛을 정밀하게 조절합니다.", topic: "digital-light" }
   ],
@@ -869,7 +952,7 @@ window.BENZ_TECH = {
       id: "e", label: "E-클래스", test: "^E \\d", source: "E-클래스 카탈로그 2026.04 (26년식)",
       trims: [
         { key: "avantgarde", label: "아방가르드", test: "Avantgarde", front: "e-front-avantgarde", rear: "e-rear-avantgarde", int: "e-int-avantgarde",
-          note: "18인치 휠, LED 고성능 헤드램프, 발광 라디에이터 그릴이 기본입니다." },
+          note: "18인치 휠, LED 하이퍼포먼스(고성능) 헤드램프, 발광 라디에이터 그릴이 기본입니다." },
         { key: "exclusive", label: "익스클루시브", test: "Exclusive|^E 220 d 4MATIC$", front: "e-front-exclusive", rear: "e-rear-exclusive", int: "e-int-exclusive",
           note: "3개의 더블 루버가 있는 크롬 라디에이터 그릴이 특징입니다. E 300 이상 엔진은 디지털 라이트가 기본입니다." },
         { key: "amg", label: "AMG Line", test: "AMG Line", front: "e-front-amg", rear: "e-rear-amg", int: "e-int-amg",
@@ -1028,7 +1111,7 @@ window.BENZ_TECH = {
           note: "AMG 라인 익스테리어에 21인치 AMG 멀티 스포크 휠, 멀티빔 LED, 리어 스포일러가 하이라이트입니다." },
         { key: "amg", label: "GLE AMG Line", test: "AMG Line", front: "m-gle-amg-front", int: "m-gle-std-int",
           note: "21인치 AMG 멀티 스포크 휠, AMG 프론트·리어 에이프런, 멀티빔 LED, 에어매틱 패키지가 하이라이트입니다." },
-        { key: "std", label: "GLE (300 d · 350)", test: "^GLE (300 d|350)", front: "m-gle-std-front", int: "m-gle-std-int",
+        { key: "std", label: "GLE (300 d · 350 · 450)", test: "^GLE (300 d|350|450)", front: "m-gle-std-front", int: "m-gle-std-int",
           note: "20인치 5 트윈 스포크 휠, 멀티빔 LED, 에어매틱 패키지, 파노라믹 선루프가 하이라이트입니다." }
       ],
       wheels: [
@@ -1087,7 +1170,7 @@ window.BENZ_TECH = {
       trims: [
         { key: "amg", label: "AMG Line", test: "AMG Line", front: "m-s-amg-front", rear: "m-s-amg-rear", int: "m-s-int",
           note: "큰 공기 흡입구와 크롬 장식의 전면 범퍼, AMG Line 전용 휠, 나파 가죽 스포츠 스티어링 휠과 AMG 스테인리스 스틸 페달이 특징입니다." },
-        { key: "std", label: "스탠다드", test: "Exclusive", front: "m-s-std-front", rear: "m-s-std-rear", int: "m-s-int",
+        { key: "std", label: "스탠다드", test: "Exclusive|^S \\d", front: "m-s-std-front", rear: "m-s-std-rear", int: "m-s-int",
           note: "조명이 들어오는 라디에이터 그릴과 클래식한 라인, 디지털 라이트를 비롯한 최신 기술 사양이 어우러진 구성입니다." }
       ],
       wheels: [
@@ -1102,6 +1185,179 @@ window.BENZ_TECH = {
         { id: "m-s-t-h17", label: "H17 MANUFAKTUR 플로잉 라인 피아노 라커 · 블랙", base: "카탈로그 트림 사양" },
         { id: "m-s-t-h73", label: "H73 하이 글로스 실버 메탈릭 믹스드 화이버", base: "카탈로그 트림 사양" }
       ]
+    },
+    {
+      id: "aa", label: "AMG A 45 S", test: "^AMG A 45", source: "AMG A-클래스 카탈로그 2026.05",
+      trims: [
+        { key: "std", label: "AMG A 45 S 4MATIC+", test: ".", front: "a-aa-front", rear: "a-aa-rear", int: "a-aa-int",
+          note: "421마력 2.0리터 4기통 터보 엔진(M139)과 4MATIC+ 사륜구동, AMG 퍼포먼스 스티어링 휠이 만드는 작은 차 안의 큰 힘입니다." }
+      ],
+      wheels: [
+        { id: "a-aa-w-rsz", label: "19인치 AMG 크로스 스포크 단조 (RSZ)", base: "AMG A 45 S 기본 (어프로치북)", std: ["std"] },
+        { id: "a-aa-w-rtj", label: "19인치 AMG 5 트윈 스포크 경량 알로이 (RTJ)", base: "카탈로그 휠 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "acla", label: "AMG CLA 45 S", test: "^AMG CLA", source: "AMG CLA 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "AMG CLA 45 S 4MATIC+", test: ".", front: "a-acla-front", int: "a-acla-int",
+          note: "421마력, 쿠페처럼 흐르는 4도어 실루엣, 19인치 AMG 크로스 스포크 단조 휠과 AMG 퍼포먼스 스티어링 휠이 특징입니다." }
+      ],
+      wheels: [
+        { id: "a-acla-w-rsz", label: "19인치 AMG 크로스 스포크 단조 (RSZ)", base: "AMG CLA 45 S 기본", std: ["std"] }
+      ],
+      mats: []
+    },
+    {
+      id: "aglb", label: "AMG GLB 35", test: "^AMG GLB", source: "AMG GLB 카탈로그 2026.07",
+      trims: [
+        { key: "std", label: "AMG GLB 35 4MATIC", test: ".", front: "a-aglb-front", int: "a-aglb-int",
+          note: "306마력에 4MATIC 사륜구동을 얹은 AMG 패밀리 SUV입니다. 19인치 AMG 5 트윈 스포크 휠과 AMG 스티어링 휠이 기본입니다." }
+      ],
+      wheels: [
+        { id: "a-aglb-w-rth", label: "19인치 AMG 5 트윈 스포크 경량 알로이", base: "AMG GLB 35 기본", std: ["std"] }
+      ],
+      mats: []
+    },
+    {
+      id: "aglc", label: "AMG GLC 43 · GLC 43 쿠페", test: "^AMG GLC", source: "AMG GLC·GLC 쿠페 카탈로그 2026.04",
+      trims: [
+        { key: "cpe", label: "AMG GLC 43 쿠페", test: "Coup", front: "a-aglc-cpe-front", int: "a-aglc-cpe-int",
+          note: "421마력 2.0리터 엔진에 흐르는 쿠페 지붕선을 더했습니다. 20인치 AMG 10 스포크 휠이 기본입니다." },
+        { key: "suv", label: "AMG GLC 43 SUV", test: ".", front: "a-aglc-suv-front", int: "a-aglc-suv-int",
+          note: "421마력, 4MATIC+ 사륜구동의 AMG 고성능 SUV입니다. 20인치 AMG 10 스포크 휠이 기본입니다." }
+      ],
+      wheels: [
+        { id: "a-aglc-w-rvm", label: "20인치 AMG 10 스포크 경량 알로이 · 탄탈라이트 그레이 (RVM)", base: "AMG GLC 43 · 쿠페 기본", std: ["suv", "cpe"] },
+        { id: "a-aglc-w-rvn", label: "20인치 AMG 10 스포크 경량 알로이 · 매트 블랙 (RVN)", base: "유료 옵션" },
+        { id: "a-aglc-w-rwm", label: "21인치 AMG Y 스포크 경량 알로이 (RWM)", base: "유료 옵션" }
+      ],
+      mats: []
+    },
+    {
+      id: "agle", label: "AMG GLE 53 · GLE 53 쿠페", test: "^AMG GLE", source: "AMG GLE·GLE 쿠페 카탈로그 2026.06",
+      trims: [
+        { key: "cpe", label: "AMG GLE 53 쿠페", test: "Coup", front: "a-agle-cpe-front", int: "a-agle-cpe-int",
+          note: "435마력 3.0리터 직렬 6기통에 쿠페 실루엣, 22인치 AMG 멀티 스포크 휠이 기본입니다." },
+        { key: "suv", label: "AMG GLE 53 SUV", test: ".", front: "a-agle-suv-front", int: "a-agle-suv-int",
+          note: "435마력 3.0리터 직렬 6기통, 4MATIC+ 사륜구동, 22인치 AMG 멀티 스포크 휠이 기본입니다." }
+      ],
+      wheels: [
+        { id: "a-agle-w-rpg", label: "22인치 AMG 멀티 스포크 경량 알로이 (RPG)", base: "AMG GLE 53 · 쿠페 기본", std: ["suv", "cpe"] }
+      ],
+      mats: []
+    },
+    {
+      id: "ag", label: "AMG G 63", test: "^AMG G 63", source: "AMG G-클래스 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "AMG G 63", test: ".", front: "a-ag-front", rear: "a-ag-rear", int: "a-ag-int",
+          note: "585마력 V8 바이터보 엔진, 뒤에 매달린 스페어 휠, 각진 실루엣은 그대로, 성능은 AMG입니다. MANUFAKTUR는 개인 맞춤을 더한 상위 구성입니다." }
+      ],
+      wheels: [],
+      mats: []
+    },
+    {
+      id: "ae", label: "AMG E 53", test: "^AMG E 53", source: "AMG E-클래스 카탈로그 2026.05",
+      trims: [
+        { key: "std", label: "AMG E 53 4MATIC+", test: ".", front: "a-ae-front", rear: "a-ae-rear", int: "a-ae-int",
+          note: "449마력 3.0리터 직렬 6기통에 4MATIC+ 사륜구동, 어프로치북 기준 컴포트 서스펜션·리어 액슬 스티어링·디지털 라이트가 들어갑니다." }
+      ],
+      wheels: [],
+      mats: []
+    },
+    {
+      id: "acle", label: "AMG CLE 53 쿠페 · 카브리올레", test: "^AMG CLE", source: "AMG CLE 쿠페·카브리올레 카탈로그 2026.09",
+      trims: [
+        { key: "cab", label: "AMG CLE 53 카브리올레", test: "Cabriolet", front: "a-acle-cab-front", rear: "a-acle-cab-rear", int: "a-acle-cab-int",
+          note: "449마력에 열린 하늘을 더한 4인승 카브리올레입니다. 소프트탑이라 열고 닫는 즐거움이 있습니다." },
+        { key: "cpe", label: "AMG CLE 53 쿠페", test: "Coup", front: "a-acle-cpe-front", rear: "a-acle-cpe-rear", int: "a-acle-cpe-int",
+          note: "449마력 3.0리터 직렬 6기통, 4MATIC+ 사륜구동의 2도어 쿠페입니다." }
+      ],
+      wheels: [],
+      mats: []
+    },
+    {
+      id: "agt4", label: "AMG GT 43 4도어 쿠페", test: "^AMG GT 43 4MATIC", source: "AMG GT 4도어 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "AMG GT 43 4MATIC+", test: ".", front: "a-agt4-front", int: "a-agt4-int",
+          note: "367마력 3.0리터 직렬 6기통, 4MATIC+, 문이 4개인 AMG 쿠페입니다. 가족과 함께 타는 스포츠카입니다." }
+      ],
+      wheels: [
+        { id: "a-agt4-w-rvo", label: "20인치 AMG 10 트윈 스포크 경량 알로이 (RVO)", base: "AMG GT 43 4MATIC+ 기본", std: ["std"] },
+        { id: "a-agt4-w-rvm", label: "20인치 AMG 멀티 스포크 경량 알로이 (RVM)", base: "선택 사양" },
+        { id: "a-agt4-w-rzu", label: "20인치 AMG 5 트윈 스포크 경량 알로이 (RZU)", base: "선택 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "agt", label: "AMG GT 쿠페 (2도어)", test: "^AMG GT", source: "AMG GT 쿠페 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "AMG GT 43 · 55 · 63 S", test: ".", front: "a-agt-front", rear: "a-agt-rear", int: "a-agt-int",
+          note: "GT 43은 421마력 후륜구동, GT 55는 476마력 V8 4MATIC+, GT 63 S E Performance는 816마력 하이브리드입니다. 모두 2도어 쿠페입니다." }
+      ],
+      wheels: [],
+      mats: []
+    },
+    {
+      id: "asl", label: "AMG SL 43", test: "^AMG SL", source: "AMG SL 카탈로그 2026.07",
+      trims: [
+        { key: "std", label: "AMG SL 43", test: ".", front: "a-asl-front", int: "a-asl-int",
+          note: "421마력 2.0리터 터보에 후륜구동, 소프트탑 로드스터입니다. 1950년대 300 SL부터 이어진 SL의 계보를 잇는 모델입니다." }
+      ],
+      wheels: [
+        { id: "a-asl-w-rvm", label: "20인치 AMG 멀티 스포크 경량 알로이 (RVM)", base: "카탈로그 휠 사양" },
+        { id: "a-asl-w-rrr", label: "20인치 AMG 5 트윈 스포크 경량 알로이 (RRR)", base: "카탈로그 휠 사양" },
+        { id: "a-asl-w-rwf", label: "21인치 AMG 멀티 스포크 경량 알로이 (RWF)", base: "카탈로그 휠 사양 · SL 63 기본" },
+        { id: "a-asl-w-rwd", label: "21인치 AMG 10 트윈 스포크 단조 (RWD)", base: "카탈로그 휠 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "my-s", label: "마이바흐 S-클래스", test: "^Maybach S \\d", source: "마이바흐 S-클래스 카탈로그 2026.08",
+      trims: [
+        { key: "std", label: "마이바흐 S 580 · S 680", test: ".", front: "my-s-front", int: "my-s-int",
+          note: "뒷좌석을 주인공으로 만든 S-클래스입니다. S 580은 V8 537마력, S 680은 V12 630마력이며, 마이바흐 전용 그릴과 레터링, 뒷좌석 중심의 고급 구성이 특징입니다." }
+      ],
+      wheels: [
+        { id: "my-s-w-r61", label: "20인치 마이바흐 5홀 단조 (R61)", base: "마이바흐 S 580 기본 (어프로치북)", rows: ["^Maybach S 580"] },
+        { id: "my-s-w-70r", label: "21인치 마이바흐 멀티 스포크 단조 (70R)", base: "마이바흐 S 680 기본 (어프로치북)", rows: ["^Maybach S 680"] }
+      ],
+      mats: []
+    },
+    {
+      id: "my-sl", label: "마이바흐 SL 680", test: "^Maybach SL", source: "마이바흐 SL 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "마이바흐 SL 680 모노그램 시리즈", test: ".", front: "my-sl-front", rear: "my-sl-rear", int: "my-sl-int",
+          note: "585마력 V8 4MATIC+ 로드스터에 마이바흐 모노그램 패턴과 21인치 단조 휠을 더한 오픈카입니다." }
+      ],
+      wheels: [
+        { id: "my-sl-w-r29", label: "21인치 마이바흐 멀티 스포크 단조 (R29)", base: "마이바흐 SL 680 기본", std: ["std"] },
+        { id: "my-sl-w-r76", label: "21인치 마이바흐 5홀 단조 (R76)", base: "선택 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "my-gls", label: "마이바흐 GLS 600", test: "^Maybach GLS", source: "마이바흐 GLS 카탈로그 2026.06",
+      trims: [
+        { key: "std", label: "마이바흐 GLS 600 4MATIC", test: ".", front: "my-gls-front", rear: "my-gls-rear", int: "my-gls-int",
+          note: "557마력 V8 4MATIC에 뒷좌석 엔터테인먼트와 마이바흐 전용 구성을 갖춘 GLS 최상위 모델입니다." }
+      ],
+      wheels: [
+        { id: "my-gls-w-r65", label: "23인치 마이바흐 멀티 스포크 단조 (R65)", base: "마이바흐 GLS 600 기본 (어프로치북)", std: ["std"] },
+        { id: "my-gls-w-r53", label: "23인치 마이바흐 5 스포크 단조 (R53)", base: "카탈로그 휠 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "my-eqs", label: "마이바흐 EQS 680 SUV", test: "^Maybach EQS", source: "마이바흐 EQS SUV 카탈로그 2026.05",
+      trims: [
+        { key: "std", label: "마이바흐 EQS 680 SUV", test: ".", front: "my-eqs-front", int: "my-eqs-int",
+          note: "118kWh 배터리, 4륜구동, 에어매틱과 리어 액슬 스티어링 10°를 갖춘 전기 마이바흐 SUV입니다. 1회 충전 주행거리는 어프로치북 기준 471km입니다." }
+      ],
+      wheels: [],
+      mats: []
     }
+
   ]
 };
