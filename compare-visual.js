@@ -6,13 +6,14 @@
 (function () {
   var T = window.BENZ_TECH;
   if (!T) return;
-  var VER = "?v=20261017a";
+  var VER = "?v=20261017d";
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
+  /* 배포 용량을 맞추려고 고화질(-lg)은 넣지 않습니다. 카드·모달 모두 -sm 한 장만 씁니다. */
   function src(id, size) {
-    return T.base + id + "-" + (size || "lg") + ".webp" + VER;
+    return T.base + id + "-sm.webp" + VER;
   }
 
   var byId = {};

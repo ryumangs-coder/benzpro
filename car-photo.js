@@ -1,7 +1,7 @@
 /* 차종 대표 사진: 차 이름 → 사진 한 장. 프로모션 목록, 할인 확인, 견적 화면에서 같이 씁니다.
  * 사진은 메르세데스-벤츠 코리아 공식 카탈로그와 색상 사진입니다. */
 (function () {
-  var V = "?v=20261016b";
+  var V = "?v=20261017d";
   var MAP = {
  "A 220 Hatch": "images/tech/m-a-front-sm.webp",
  "A 220 Sedan": "images/tech/m-as-front-sm.webp",
