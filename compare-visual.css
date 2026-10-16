@@ -209,6 +209,8 @@
 .vs-pill.on { background: rgba(94, 234, 212, 0.14); color: #5eead4; }
 .vs-pill.opt { background: rgba(228, 203, 134, 0.14); color: #e4cb86; }
 .vs-pill.off { background: rgba(255, 255, 255, 0.05); color: #8b9499; }
+.vs-pill.na { background: rgba(255, 255, 255, 0.05); color: #c9ced1; border: 1px dashed rgba(255, 255, 255, 0.28); }
+.vs-lead b { color: #e4cb86; }
 .vs-pill.L i { color: #7eb6ff; }
 .vs-pill.R i { color: #e4cb86; }
 .vs-more-n { margin-top: 0.3rem; font-size: 13.5px; color: #a4aaae; }

@@ -9,24 +9,25 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
 (function () {
   var RULES = window.BASIC_OPTIONS || [];
   var FEATURES = [
-    { k: "assist", label: "드라이빙 어시스턴스", cat: "안전·주차", fam: /^드라이빙 어시스턴스 패키지|^MB\.DRIVE 어시스트|^주행 보조$/ },
+    { k: "assist", label: "드라이빙 어시스턴스", cat: "안전·주차", fam: /^드라이빙 어시스턴스 패키지|^MB\.DRIVE 어시스트|^(스탠다드 )?MB\.DRIVE( 스탠다드)?$|^주행 보조$/ },
     { k: "presafe", label: "프리-세이프 (PRE-SAFE®)", cat: "안전·주차", fam: /프리-?세이프|PRE-SAFE/i },
     { k: "airbag", label: "에어백·안전벨트", cat: "안전·주차", fam: null, loose: true },
-    { k: "cam", label: "주차 카메라 (360°·후방)", cat: "안전·주차", fam: /^360° 카메라$|^후방 카메라$/ },
-    { k: "cockpit", label: "MBUX 디지털 콕핏", cat: "디스플레이·오디오", fam: /와이드 ?스크린 콕핏|^MBUX 슈퍼스크린$|^MBUX 하이퍼스크린$|^대형 디스플레이$/ },
+    { k: "cam", label: "주차 카메라 (360°·후방)", cat: "안전·주차", fam: /^360° 카메라|^후방 카메라|주차 패키지$|^MB\.DRIVE 주차 어시스트 360|^주차 보조$/ },
+    { k: "cockpit", label: "MBUX 디지털 콕핏", cat: "디스플레이·오디오", fam: /와이드 ?스크린 콕핏|^MBUX (슈퍼스크린|하이퍼스크린|멀티미디어 시스템)$|^대형 디스플레이$|^(LCD |OLED )?(센트럴|프론트|미디어) 디스플레이$|디지털 계기반|^3D 계기반$|^계기반$|^드라이버 디스플레이$|^디스플레이 패키지$|^스마트폰 통합 패키지$|^애플 카플레이$|^안드로이드 오토$/ },
     { k: "hud", label: "헤드업 디스플레이", cat: "디스플레이·오디오", fam: /헤드업 디스플레이/ },
-    { k: "seatF", label: "앞좌석 열선·통풍 시트", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)/, quiet: true },
-    { k: "seatR", label: "뒷좌석 열선·통풍 시트", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)/, quiet: true },
+    { k: "seatF", label: "앞좌석 열선·통풍 시트", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)|^앞좌석 시트$/, quiet: true },
+    { k: "seatR", label: "뒷좌석 열선·통풍 시트", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)|^뒷좌석 시트$/, quiet: true },
     { k: "air", label: "공기 청정 패키지", cat: "실내 편의", fam: /^공기 청정 패키지/ },
     { k: "balance", label: "에어 밸런스 패키지", cat: "실내 편의", fam: /^에어 밸런스 패키지/ },
-    { k: "amb", label: "앰비언트 라이트", cat: "실내 편의", fam: /^(액티브 )?앰비언트 라이트( 플러스| 프리미엄)?$/ },
+    { k: "amb", label: "앰비언트 라이트", cat: "실내 편의", fam: /^(액티브 )?앰비언트 라이트( 플러스| 프리미엄)?$|로고 프로젝션 앰비언트/ },
     { k: "hl", label: "헤드램프", cat: "외관·생활 편의", fam: /^LED (고성능|하이퍼포먼스) 헤드램프|^디지털 라이트|^헤드램프$|^멀티빔/ },
-    { k: "pano", label: "파노라마 선루프", cat: "외관·생활 편의", fam: /파노라마|슬라이딩 선루프|SKY CONTROL/ }
+    { k: "pano", label: "파노라마 선루프", cat: "외관·생활 편의", fam: /파노라(마|믹)|선루프|SKY CONTROL|^루프$/ }
   ];
 
   /* 같은 단계의 패키지가 두 차 모두 있으면, 그 안에 들어 있는 세부 기능은 같은 것으로 봅니다. */
   var PARTS = [
-    { k: "assist", re: /^액티브 (디스턴스 어시스트|주차 어시스트|차선|스티어링 어시스트|브레이크 어시스트)|충돌 회피|교통 표지판 어시스트|탑승자 유무 알림|^회피 조향|^액티브 비상|^액티브 사각지대|^파크트로닉|^액티브 스톱/ },
+    { k: "assist", both: true, re: /디스트로닉|스티어링 어시스트|차선 (변경|이탈)|사각지대 어시스트|충돌 회피|교통 표지판 어시스트|^회피 조향|^액티브 비상|^액티브 스톱|^액티브 브레이크 어시스트|BAS 플러스/ },
+    { k: "airbag", both: true, re: /에어백|사이드백/ },
     { k: "cockpit", both: true, re: /^스마트폰 통합 패키지|^애플 카플레이|^안드로이드 오토|^드라이버 디스플레이|^MBUX 멀티미디어 시스템|^센트럴 디스플레이|^미디어 디스플레이|^디지털 계기반|^10\.25인치 디지털 계기반|^LCD 센트럴 디스플레이/ }
   ];
 
@@ -89,7 +90,9 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
     var old = legacyState(rec, feat);
     if (v === null || v === undefined) {
       if (old === "opt") return { k: "opt", t: "선택", d: "", old: old };
-      return { k: "no", t: "—", d: "", old: old };
+      /* 어프로치북 기본 사양표에 적혀 있지 않다는 뜻입니다. 없다는 확정이 아니므로 '없음'이라고 쓰지 않습니다. */
+      if (old === "no") return { k: "no", t: "—", d: "", old: old };
+      return { k: "no", t: "기본 아님", d: "", old: old };
     }
     return { k: "yes", t: v || "●", d: v, old: old };
   }
@@ -142,6 +145,9 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
       });
       if (feat.k === "assist" && (/MB\.DRIVE/.test(left.d) !== /MB\.DRIVE/.test(right.d)) && left.k === "yes" && right.k === "yes") {
         notes.push({ who: "", text: "MB.DRIVE 어시스트는 S-클래스·신형 EQ 계열이 쓰는 이름의 드라이빙 어시스턴스입니다. 이름만 다르고 같은 종류의 주행 보조이며, 단계 차이는 어프로치북 표기 그대로 적었습니다. (이름 설명은 일반 안내입니다.)" });
+      }
+      if (feat.k === "assist" && left.k === "yes" && right.k === "yes" && differ && (/MB\.DRIVE/.test(left.d) === /MB\.DRIVE/.test(right.d))) {
+        notes.push({ who: "", text: "드라이빙 어시스턴스는 두 차 모두 들어 있고, 단계(기본형·플러스)만 다릅니다. 세부 기능 이름은 차마다 달라서 하나씩 '있다·없다'로 나누지 않았습니다." });
       }
       if (feat.k === "hl" && left.k === "yes" && right.k === "yes") {
         notes.push({ who: "", text: "헤드램프는 이름이 달라도 모두 LED입니다. LED 고성능 → LED 하이퍼포먼스 → 멀티빔 LED → 디지털 라이트 순으로 밝기와 기능이 올라갑니다. (등급 설명은 일반 안내입니다.)" });

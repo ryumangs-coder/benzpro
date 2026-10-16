@@ -6,7 +6,7 @@
 (function () {
   var T = window.BENZ_TECH;
   if (!T) return;
-  var VER = "?v=20261016c";
+  var VER = "?v=20261017a";
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -93,6 +93,7 @@
     var shown = "없음";
     if (t === "●") { cls = "on"; shown = "기본"; }
     else if (t === "선택") { cls = "opt"; shown = "유료 선택"; }
+    else if (t === "기본 아님") { cls = "na"; shown = "기본 아님"; }
     else if (t && t !== "—") { cls = "on"; shown = t; }
     return '<span class="vs-pill ' + side + " " + cls + '"><i>' + (side === "L" ? "왼쪽" : "오른쪽") + "</i>" + esc(shown) + "</span>";
   }
@@ -171,7 +172,7 @@
       ? '<p class="vs-tail">그림으로 풀지 않은 ' + rest + "개 항목은 아래 옵션 비교표에 있습니다.</p>"
       : "";
     return head +
-      '<p class="vs-lead">두 차의 사양이 다른 부분 중, 그림으로 설명할 수 있는 것만 모았습니다. 카드를 누르면 쉬운 설명과 벤츠의 역사를 볼 수 있습니다.</p>' +
+      '<p class="vs-lead">두 차의 사양이 다른 부분 중, 그림으로 설명할 수 있는 것만 모았습니다. 카드를 누르면 쉬운 설명과 벤츠의 역사를 볼 수 있습니다. <b>기본 아님</b>은 어프로치북 기본 사양표에 적혀 있지 않다는 뜻이며, 없다는 확정이 아닙니다. 선택 옵션이나 다른 이름으로 들어갈 수 있어 상담에서 확인합니다.</p>' +
       '<div class="vs-grid">' + cards + "</div>" + tail + "</div>";
   }
 

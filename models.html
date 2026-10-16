@@ -7,8 +7,8 @@
     <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="site.css?v=20261016c" />
-    <link rel="stylesheet" href="compare-visual.css?v=20261016g" />
+    <link rel="stylesheet" href="site.css?v=20261017a" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261017a" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -103,10 +103,11 @@
     <script src="quote.js?v=20261012b"></script>
     <script src="guide-data.js?v=20261012e"></script>
     <script src="approach-specs.js?v=20261016b"></script>
-    <script src="approach-options.js?v=20261016e"></script>
+    <script src="approach-options.js?v=20261017a"></script>
+    <script src="option-concepts.js?v=20261017c"></script>
     <script src="option-words.js?v=20261016a"></script>
     <script src="tech-data.js?v=20261016e"></script>
-    <script src="compare-visual.js?v=20261016e"></script>
+    <script src="compare-visual.js?v=20261017a"></script>
     <script src="colors.js?v=20261007c"></script>
     <script>
       (function () {
@@ -484,7 +485,7 @@
           var superCls = isSuperScreen(label, left, right) ? " super" : "";
           return '<div class="opt-item' + (differ ? " diff" : "") + superCls + '"><div class="opt-name"><strong>' + esc(label) + "</strong>" + chip(label) +
             (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") +
-            '</div><b class="' + mark + '">' + esc(left) + '</b><b class="' + mark + '">' + esc(right) + "</b></div>";
+            '</div><b class="' + mark + (left === "기본 아님" ? " na" : "") + '">' + esc(left) + '</b><b class="' + mark + (right === "기본 아님" ? " na" : "") + '">' + esc(right) + "</b></div>";
         }
         function optionBuckets(items) {
           var groups = [];
@@ -559,6 +560,7 @@
           function takeGear(g, box) {
             ((g && g.gear) || []).forEach(function (item) {
               if (basicName(item[1])) return;
+              if (window.BenzConcepts && window.BenzConcepts.mapped(item[1])) return;
               if (box[item[1]]) return;
               box[item[1]] = { cat: item[0] || "사양", state: item[2] || "기본" };
               if (!gearOrder.some(function (row) { return row.label === item[1]; })) gearOrder.push({ cat: item[0] || "사양", label: item[1] });
@@ -570,6 +572,7 @@
           var seenSummary = {};
           usefulOptions(pa.feat && pa.feat.options).concat(usefulOptions(pb.feat && pb.feat.options)).forEach(function (pair) {
             if (basicName(pair[0])) return;
+            if (window.BenzConcepts && window.BenzConcepts.pairMapped(pair, basicName)) return;
             if (oneThin && ((thinA && !hasPair(pa.feat && pa.feat.options, pair[0])) || (thinB && !hasPair(pb.feat && pb.feat.options, pair[0])))) return;
             if (seenSummary[pair[0]] || gearA[pair[0]] || gearB[pair[0]]) return;
             seenSummary[pair[0]] = true;
@@ -594,6 +597,17 @@
             else if (left.k === "opt" && right.k === "opt") picks.push(item);
           });
           var basicNotes = "";
+          var cDiffs = [];
+          var cShared = [];
+          if (window.BenzConcepts) {
+            window.BenzConcepts.pair(pa.feat, pb.feat, { skip: basicName, oneThin: oneThin, thinA: thinA, thinB: thinB, nameA: a.name, nameB: b.name }).forEach(function (item) {
+              if (item.differ) cDiffs.push(item);
+              else if (item.kl === "yes" && item.kr === "yes") cShared.push(item);
+              else if (item.kl === "opt" && item.kr === "opt") picks.push(item);
+            });
+          }
+          diffs = cDiffs.concat(diffs);
+          shared = cShared.concat(shared);
           if (basics) {
             var bDiffs = [];
             var bShared = [];
@@ -628,7 +642,7 @@
             ? '<h4 class="mt-6 text-[18px] font-bold">두 차 모두 선택해서 넣는 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">기본에는 없고, 돈을 내고 더하는 항목입니다.</p><div class="opt-board">' + sharedGroups(picks) + "</div>"
             : "";
           var optSection = '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3>' +
-            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">● 기본으로 들어 있음 · 선택 돈을 내고 추가 · — 없음</p>' +
+            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">● 기본으로 들어 있음 · 선택 돈을 내고 추가 · — 없음 · 기본 아님 어프로치북 기본 사양표에 없음(없다는 확정이 아니라 선택 옵션·다른 이름 확인 필요)</p>' +
             borrowed + diffHtml + basicNotes + sharedHtml + pickHtml +
             askBox(a, b, "이 차이가 우리 집에 맞는지", "표는 기본으로 들어 있는 사양입니다. 돈을 내고 더하는 선택 옵션, 색 조합, 지금 나온 차의 실제 사양은 차마다 다릅니다. 보고 있는 두 차 기준으로 짧게 짚어 드립니다.");
           return specSection + optSection;
