@@ -8,6 +8,7 @@
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="site.css?v=20261015a" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261016c" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -55,12 +56,22 @@
         </label>
       </div>
 
+      <nav class="vs-jump" aria-label="이 페이지 바로가기">
+        <a href="#vs-hero">두 차 한눈에</a>
+        <a href="#vs-diff">눈으로 보는 차이</a>
+        <a href="#tech-library">벤츠 기술 이야기</a>
+        <a href="#mb-history">벤츠의 역사</a>
+      </nav>
+
       <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
       <div id="color-lightbox" class="color-lightbox" hidden>
         <button type="button" class="color-lightbox-close" aria-label="닫기">닫기</button>
         <img alt="">
         <p></p>
       </div>
+
+      <section id="mb-history" class="vs-history" aria-label="벤츠의 역사"></section>
+      <section id="tech-library" class="vs-library" aria-label="벤츠 기술 이야기"></section>
 
       <section class="mt-10" id="faq">
         <h2 class="text-[26px] font-bold">이 두 차에서 많이 묻는 질문</h2>
@@ -93,6 +104,8 @@
     <script src="guide-data.js?v=20261012e"></script>
     <script src="approach-specs.js?v=20261012d"></script>
     <script src="option-words.js?v=20261012c"></script>
+    <script src="tech-data.js?v=20261016a"></script>
+    <script src="compare-visual.js?v=20261016a"></script>
     <script src="colors.js?v=20261007c"></script>
     <script>
       (function () {
@@ -440,6 +453,10 @@
         function esc(s) {
           return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
+        function chip(label) {
+          return window.BenzVisual ? window.BenzVisual.chip(label) : "";
+        }
+        var lastDiffs = [];
         function optMark(v) {
           var s = String(v || "").trim();
           if (!s || s === "—" || s === "-" || s === "없음" || s === "미적용" || s === "미포함" || s === "해당 없음" || s === "선택" || s === "유료 선택") return "—";
@@ -459,7 +476,7 @@
           var help = window.optionPlain ? window.optionPlain(label) : "";
           var mark = differ ? " opt-diff" : "";
           var superCls = isSuperScreen(label, left, right) ? " super" : "";
-          return '<div class="opt-item' + (differ ? " diff" : "") + superCls + '"><div class="opt-name"><strong>' + esc(label) + "</strong>" +
+          return '<div class="opt-item' + (differ ? " diff" : "") + superCls + '"><div class="opt-name"><strong>' + esc(label) + "</strong>" + chip(label) +
             (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") +
             '</div><b class="' + mark + '">' + esc(left) + '</b><b class="' + mark + '">' + esc(right) + "</b></div>";
         }
@@ -487,7 +504,7 @@
             return '<h4 class="opt-cat">' + esc(group.cat) + "</h4>" + group.items.map(function (item) {
               var help = window.optionPlain ? window.optionPlain(item.label) : "";
               var superCls = isSuperScreen(item.label, item.left, item.right) ? " super" : "";
-              return '<div class="opt-shared' + superCls + '"><strong>' + esc(item.label) + "</strong>" +
+              return '<div class="opt-shared' + superCls + '"><strong>' + esc(item.label) + "</strong>" + chip(item.label) +
                 (help ? '<span class="opt-help">' + esc(help) + "</span>" : "") + "</div>";
             }).join("");
           }).join("");
@@ -558,6 +575,7 @@
             else if (left.k === "yes" && right.k === "yes") shared.push(item);
             else if (left.k === "opt" && right.k === "opt") picks.push(item);
           });
+          lastDiffs = diffs.slice();
           var borrowed = pa.borrowed || pb.borrowed
             ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">같은 이름 트림 중, 사양이 공개된 연식 표를 가져왔습니다.</p>'
             : "";
@@ -737,7 +755,7 @@
               var first = cum.indexOf(true);
               var plain = window.optionPlain ? window.optionPlain(f.label) : "";
               var superCls = isSuperScreen(f.label) ? ' class="super"' : "";
-              rows += "<tr" + superCls + "><td>" + esc(f.label) + (plain ? '<span class="plain">' + esc(plain) + "</span>" : "") + "</td>";
+              rows += "<tr" + superCls + "><td>" + esc(f.label) + chip(f.label) + (plain ? '<span class="plain">' + esc(plain) + "</span>" : "") + "</td>";
               cum.forEach(function (cell, i) {
                 if (!cell) rows += '<td class="miss">—</td>';
                 else if (i === first) rows += '<td class="delta">●</td>';
@@ -1218,11 +1236,45 @@
             sameNote + boards +
             askBox(a, b, "이 색으로 나오는 차가 있는지", "색은 재고마다 다릅니다. 보고 있는 두 차 중에서 원하는 외장과 내장이 있는지를 확인해 드립니다.");
         }
+        function heroCar(row, d) {
+          var vis = window.BenzVisual;
+          var info = vis.eInfo(row);
+          var photo = "";
+          var rear = "";
+          if (info) {
+            photo = vis.src(info.trim.front, "lg");
+            rear = vis.src(info.trim.rear, "lg");
+          } else {
+            var found = colorPack(row);
+            if (found) {
+              var ex = found.pack.exterior || [];
+              var pick = ex.filter(function (x) { return x.code === "149U"; })[0] || ex[0];
+              if (pick) photo = pick.image + "?v=20261007g";
+            }
+          }
+          var kind = carValue(row);
+          return {
+            name: showName(row.name),
+            sub: (kind === "상담 후 결정" ? "" : kind + " · ") + row.my,
+            normal: money(d.priceMan),
+            buy: d.normalMan == null ? "상담 시 확인" : won(d.normalMan),
+            photo: photo,
+            rear: rear,
+            tags: vis.tagsFor(row),
+            wheel: info ? info.wheel : null
+          };
+        }
         function drawCompare() {
           var a = rows[Number(left.value)];
           var b = rows[Number(right.value)];
           var da = pack(a);
           var db = pack(b);
+          var specHtml = specBlock(a, b);
+          var visual = window.BenzVisual
+            ? window.BenzVisual.hero([heroCar(a, da), heroCar(b, db)]) +
+              window.BenzVisual.diffSection(lastDiffs, a, b) +
+              window.BenzVisual.trimSection([a, b])
+            : "";
           var sentence = function (row, d) {
             if (d.priceMan == null) return showName(row.name) + "은 권장가가 정해지면 할인이 적용됩니다." + eqMemo(row);
             var how = d.rate == null
@@ -1235,7 +1287,8 @@
             return base + eqMemo(row);
           };
           document.getElementById("compare").innerHTML =
-            '<div class="grid gap-4 sm:grid-cols-2">' +
+            visual +
+            '<div class="mt-8 grid gap-4 sm:grid-cols-2">' +
             '<div><p class="text-[20px] font-bold">' + showName(a.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">이 차종으로 상담 받기</a></div>' +
             '<div><p class="text-[20px] font-bold">' + showName(b.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(b) + '">이 차종으로 상담 받기</a></div>' +
             "</div>" +
@@ -1249,7 +1302,7 @@
             line("이전 통관", da.earlyMan == null ? "해당 없음" : money(da.earlyMan), db.earlyMan == null ? "해당 없음" : money(db.earlyMan), true) +
             "</div>" +
             '<p class="mt-3 text-[15px] leading-relaxed text-[#A4AAAE]">이 금액은 기본 할인과 금융 추가 할인만 반영합니다. 재구매·다른 브랜드·카드는 추가 혜택에서 따로 봅니다.</p>' +
-            specBlock(a, b) +
+            specHtml +
             colorSection(a, b) +
             lineupSection(a, b);
           document.getElementById("ask-left").setAttribute("href", ask(a));
