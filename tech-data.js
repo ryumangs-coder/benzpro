@@ -25,7 +25,7 @@ window.BENZ_TECH = {
         ["dl-road", "앞차와 마주 오는 차를 피해 비추는 모습"],
         ["dl-s", "S-클래스의 디지털 라이트"]
       ],
-      match: ["디지털 라이트", "멀티빔 LED"],
+      match: ["디지털 라이트", "멀티빔 LED", "LED 고성능", "헤드램프"],
       what: "헤드램프 안에서 아주 작은 LED가 따로따로 켜지고 꺼지는 똑똑한 앞 등입니다. 카메라가 앞차와 마주 오는 차를 알아보면, 그 부분만 빛을 줄이고 나머지 길은 상향등처럼 밝게 비춥니다.",
       easy: "상향등을 켠 채로 달려도, 앞차 운전자는 눈부시지 않습니다. 상향등을 껐다 켰다 하는 일은 차가 대신합니다.",
       why: [
@@ -48,8 +48,48 @@ window.BENZ_TECH = {
       ],
       where: [
         "E-클래스 기본: E 300 4MATIC, E 350 e 4MATIC, E 450 4MATIC (익스클루시브·AMG Line)",
-        "E-클래스 선택: E 220 d 4MATIC 익스클루시브, E 200 AMG Line"
-      ]
+        "E-클래스 선택: E 220 d 4MATIC 익스클루시브, E 200 AMG Line",
+        "GLC SUV·쿠페: 익스테리어 하이라이트에 디지털 라이트 포함 (카탈로그 2026.04)",
+        "CLE 쿠페·카브리올레: 익스테리어 하이라이트에 디지털 라이트 포함 (카탈로그 2026.09)",
+        "C-클래스: 디지털 라이트 소개. 헤드램프당 100만 화소 이상의 프로젝션 모듈(HD 시스템) (카탈로그 2026.04)",
+        "S-클래스: 대표 기술로 소개 (카탈로그 2026.09)",
+        "A·GLA·GLB: LED 고성능 헤드램프로 소개되어 있습니다"
+      ],
+      versus: {
+        title: "LED 고성능 헤드램프와 디지털 라이트, 무엇이 다른가요",
+        intro: "E-클래스 헤드램프는 두 종류입니다. 낮에는 거의 같아 보여도, 어두운 밤길에서 차이가 가장 크게 납니다.",
+        cols: [
+          {
+            label: "LED 고성능 헤드램프",
+            sub: "E 200 전 트림 · E 220 d 기본",
+            tests: ["^E (200|220 d)"],
+            img: "led-head",
+            cap: "LED 고성능 헤드램프 (C-클래스 카탈로그 사진)",
+            points: [
+              "✓ LED 기술로 기존 램프보다 효율이 높고, 더 정확하고 넓게 도로를 비춥니다",
+              "✓ 따뜻한 온백색 빛이 눈의 피로를 줄여 줍니다",
+              "✓ 로우빔은 LED 프로젝션, 메인빔은 LED 리플렉터 방식입니다",
+              "✓ 어댑티브 상향등 어시스트: 앞차·마주 오는 차가 있으면 일부 모듈을 조정해 피해 비춥니다 (A·C-클래스 카탈로그 기준)"
+            ]
+          },
+          {
+            label: "디지털 라이트",
+            sub: "E 300 · E 350 e · E 450 기본 / E 200 AMG Line · E 220 d 선택",
+            tests: ["^E (300|350 e|450)"],
+            img: "dl-head",
+            cap: "디지털 라이트 (E-클래스 카탈로그 사진)",
+            points: [
+              "✓ HD 시스템이 들어간 프로젝션 모듈과 배경 모듈 멀티빔 LED",
+              "✓ 어댑티브 상향등 어시스트 플러스: LED를 하나하나 따로 제어해, 앞차와 마주 오는 차 부분만 어둡게 합니다",
+              "✓ 울트라 레인지 하이빔: 직선 도로에서 시야를 크게 넓혀 줍니다",
+              "✓ 시골길·도시·악천후·고속도로 모드, 코너링 라이트, 라운드어바웃 기능",
+              "✓ 멀티 레벨 기능이 있는 어댑티브 풀 LED 후미등"
+            ]
+          }
+        ],
+        summary: "한 줄로 말씀드리면, LED 고성능은 '밝고 깨끗한 기본 램프', 디지털 라이트는 '상황을 읽고 빛의 모양을 바꾸는 램프'입니다. 밤 고속도로나 시골길을 자주 달리신다면 이 차이를 가장 크게 느끼십니다.",
+        note: "LED 고성능 헤드램프의 구성 설명은 E-클래스 카탈로그에 상세 표기가 없어 A·C-클래스 카탈로그의 설명을 참고했습니다. 트림별 적용은 2026.04 E-클래스 카탈로그 기준입니다."
+      }
     },
     {
       id: "assist",
@@ -173,7 +213,58 @@ window.BENZ_TECH = {
         "E-액티브 바디 컨트롤: 피칭·롤링·충격 보정, 4가지 DYNAMIC SELECT 주행 프로그램",
         "E-클래스 엔지니어링 패키지: DYNAMIC BODY CONTROL (댐핑 조절)"
       ],
-      where: ["서스펜션 종류는 차종과 트림마다 다릅니다. 아래 옵션 비교표에서 두 차의 차이를 확인하세요."]
+      where: [
+        "A-클래스·A-클래스 세단: 컴포트 서스펜션 (카탈로그: 장거리 주행에서도 안락하고 부드러운 코너링)",
+        "E-클래스: 컴포트 또는 어질리티 컨트롤 (트림별), 엔지니어링 패키지의 DYNAMIC BODY CONTROL",
+        "CLE: 엔지니어링 패키지 (DYNAMIC BODY CONTROL + 리어 액슬 스티어링 최대 2.5°)",
+        "GLE·GLS: 에어매틱 서스펜션 (에어매틱 패키지)",
+        "S-클래스: 에어매틱, E-액티브 바디 컨트롤",
+        "서스펜션 종류는 차종과 트림마다 다릅니다. 아래 옵션 비교표에서 두 차의 차이를 확인하세요."
+      ],
+      versus: {
+        title: "컴포트와 어질리티 컨트롤, 어떻게 다른가요",
+        intro: "같은 E-클래스도 트림마다 하체 세팅이 다릅니다. 방지턱을 넘을 때와 빠르게 달릴 때의 느낌이 달라집니다.",
+        cols: [
+          {
+            label: "컴포트 서스펜션",
+            sub: "E 200 · E 300 · E 350 e 익스클루시브 기본",
+            tests: ["^E (200|300 4MATIC|350 e 4MATIC) Exclusive"],
+            meter: { small: [8, 22], big: [14, 36] },
+            points: [
+              "✓ 부드럽고 편안한 승차감에 맞춘 기본 하체입니다",
+              "✓ 장거리 이동, 뒷좌석에 가족이나 부모님이 타실 때 유리합니다",
+              "– 빠르게 달리거나 급하게 방향을 바꿀 때는 어질리티 쪽이 더 단단하게 잡아 주는 성격입니다"
+            ]
+          },
+          {
+            label: "어질리티 컨트롤 서스펜션",
+            sub: "E 200 아방가르드 · E 200 / E 300 AMG Line 기본",
+            tests: ["^E 200 (Avantgarde|AMG Line)", "^E 300 4MATIC AMG Line"],
+            meter: { small: [14, 30], big: [58, 84] },
+            points: [
+              "✓ 노면과 주행 상황에 따라 충격 흡수 강도가 달라지는 서스펜션입니다 (선택적 댐핑 방식)",
+              "✓ 잔잔한 노면은 부드럽게, 큰 요철이나 빠른 움직임은 단단하게 잡아 줍니다",
+              "✓ 편안함과 안정감 사이의 균형을 맞춘 구성입니다"
+            ]
+          },
+          {
+            label: "DYNAMIC BODY CONTROL",
+            sub: "엔지니어링 패키지 · E 450 기본 / 그 외 트림 유료 옵션",
+            tests: ["^E 450 4MATIC"],
+            img: "rear-steer",
+            cap: "엔지니어링 패키지 (리어 액슬 스티어링)",
+            meter: { small: [10, 60], big: [30, 90], range: true },
+            points: [
+              "✓ 서스펜션 댐핑(충격 흡수 강도)을 조절할 수 있는 서스펜션입니다",
+              "✓ 리어 액슬 스티어링(최대 4.5°)이 함께 구성됩니다",
+              "✓ 뛰어난 승차감과 역동적인 드라이빙을 함께 얻는 최상위 구성입니다"
+            ]
+          }
+        ],
+        meterNote: "개념도입니다. 느낌을 이해하기 쉽게 그린 그림이며 실제 측정값이 아닙니다.",
+        summary: "한 줄로 말씀드리면, 컴포트는 '편안함이 먼저', 어질리티 컨트롤은 '편안함과 안정감의 균형', DYNAMIC BODY CONTROL은 '상황에 맞춰 조절하는 최상위 구성'입니다.",
+        note: "컴포트·어질리티 컨트롤의 세부 방식은 E-클래스 카탈로그에 자세히 나와 있지 않아 메르세데스-벤츠의 일반적인 기술 설명을 바탕으로 정리했습니다. DYNAMIC BODY CONTROL과 리어 액슬 스티어링은 2026.04 카탈로그 기준입니다."
+      }
     },
     {
       id: "rear-steer",
@@ -524,8 +615,127 @@ window.BENZ_TECH = {
       ],
       where: [
         "E-클래스 기본: E 300 4MATIC, E 350 e 4MATIC, E 450 4MATIC (익스클루시브·AMG Line)",
-        "E-클래스 선택: E 200 아방가르드, E 200 AMG Line, E 220 d 4MATIC 익스클루시브"
-      ]
+        "E-클래스 선택: E 200 아방가르드, E 200 AMG Line, E 220 d 4MATIC 익스클루시브",
+        "S-클래스: 액티브 앰비언트 라이트 (카탈로그 2026.09)",
+        "CLE: 앰비언트 라이트 플러스. 64가지 색상 10가지 테마, 밝기 5단계, 주행 보조 시스템과 연동 (카탈로그 2026.09)",
+        "A·GLA·GLB·GLC: 최대 64가지 색상 앰비언트 라이트 (카탈로그 2026.04~08)"
+      ],
+      versus: {
+        title: "앰비언트 라이트와 액티브 앰비언트 라이트, 무엇이 다른가요",
+        intro: "둘 다 실내를 불빛으로 꾸며 주지만, 액티브는 차가 보내는 신호까지 불빛으로 알려 줍니다.",
+        cols: [
+          {
+            label: "앰비언트 라이트",
+            sub: "E 200 · E 220 d 기본 (액티브는 선택 옵션)",
+            tests: ["^E (200|220 d)"],
+            points: [
+              "✓ 실내를 은은하게 밝혀 밤 분위기를 만들어 주는 조명입니다",
+              "– 주행 보조 경고, 음악, 음성 어시스턴트와 연동하는 기능은 '액티브'에서 더해집니다"
+            ]
+          },
+          {
+            label: "액티브 앰비언트 라이트",
+            sub: "E 300 · E 350 e · E 450 기본 / E 200 · E 220 d 선택",
+            tests: ["^E (300|350 e|450)"],
+            img: "ambient",
+            cap: "액티브 앰비언트 라이트 (E-클래스 카탈로그 사진)",
+            points: [
+              "✓ 64가지 색상으로 취향과 기분에 맞춰 실내 분위기를 연출합니다",
+              "✓ 액티브 사각지대 어시스트, 액티브 차선 유지 어시스트가 작동하면 운전자에게 불빛으로 바로 알려 줍니다",
+              "✓ 음악을 재생하면 조명 변화와 애니메이션으로 소리를 눈으로도 보여 줍니다",
+              "✓ MBUX 음성 어시스턴트와 연동해 실시간 스피커 위치 인식, 음성 입력 대기 표시를 제공합니다"
+            ]
+          }
+        ],
+        summary: "한 줄로 말씀드리면, 기본 앰비언트는 '분위기', 액티브 앰비언트는 '분위기 + 안전 알림 + 음악 연출'입니다.",
+        note: "기본 앰비언트 라이트의 세부 기능은 E-클래스 카탈로그에 따로 표기되어 있지 않습니다. 액티브 앰비언트 라이트는 2026.04 카탈로그 기준입니다."
+      }
+    },
+    {
+      id: "interior-trim",
+      group: "digital",
+      name: "실내 장식 (대시보드 · 트림)",
+      en: "INTERIOR TRIM",
+      line: "손이 닿고 눈이 머무는 곳의 소재가 다릅니다",
+      imgs: [
+        ["e-int-exclusive", "E-클래스 익스클루시브 실내"],
+        ["e-int-avantgarde", "E-클래스 아방가르드 실내"],
+        ["e-int-amg", "E-클래스 AMG Line 실내"],
+        ["e-mat-14h", "브라운 오픈 포어 메이플 우드 알루미늄 라인 트림"],
+        ["e-mat-10h", "블랙 오픈 포어 애쉬우드 트림"],
+        ["e-mat-11h", "블랙 오픈 포어 애쉬우드 백릿 트림 (메르세데스-벤츠 패턴)"]
+      ],
+      match: ["실내 장식", "오픈 ?포어", "우드", "라커", "트림$", "인테리어", "대시보드"],
+      what: "대시보드와 도어, 센터 콘솔에 들어가는 트림(우드, 알루미늄, 라커, 카본 등)과 시트 소재 조합입니다. 같은 차종이라도 트림이 다르면 문을 열고 앉았을 때의 첫인상이 달라집니다.",
+      easy: "문을 열고 앉았을 때 눈에 들어오는 분위기가 달라집니다. 숫자보다 사진으로 먼저 비교해 보시는 편이 쉽습니다.",
+      why: [
+        "매일 손이 닿는 곳이라 소재와 마감의 차이가 오래 만족으로 남습니다.",
+        "트림에 따라 우드의 색과 무늬, 알루미늄 라인, 백릿 패턴 같은 개성이 달라집니다.",
+        "차종마다 고를 수 있는 트림 종류가 달라서, 같은 차종 안에서도 선택의 재미가 있습니다."
+      ],
+      pride: {
+        year: "",
+        head: "소재를 고르는 일도 설계의 일부",
+        body: "벤츠는 실내를 눈으로 보고 손으로 만지는 하나의 공간으로 설계합니다. 우드와 알루미늄, 피아노 라커, 카본까지 트림 하나에도 서로 다른 재질과 마감 방식이 쓰입니다."
+      },
+      facts: [
+        "10H 블랙 오픈 포어 애쉬우드 트림: E 200 아방가르드·익스클루시브·AMG Line 기본",
+        "11H 블랙 오픈 포어 애쉬우드 백릿 트림(메르세데스-벤츠 패턴): E 220 d 4MATIC 익스클루시브 기본",
+        "14H 브라운 오픈 포어 메이플 우드 알루미늄 라인 트림: E 300·E 350 e 4MATIC 익스클루시브 기본",
+        "센터콘솔 753 블랙 오픈 포어: E 200 전 트림, E 220 d, E 300·E 450 AMG Line 기본",
+        "센터콘솔 667 브라운 오픈 포어 메이플 우드 알루미늄 라인: E 300·E 350 e·E 450 익스클루시브 기본",
+        "나파 룩 아티코 대시보드: E-클래스 전 트림 기본"
+      ],
+      where: [
+        "차종별 트림 소재 사진은 아래 '트림별 얼굴·실내·휠' 영역에서 A·C·CLA·CLE·GLA·GLB·GLC·GLE·GLS·G·S-클래스까지 볼 수 있습니다."
+      ],
+      versus: {
+        title: "E-클래스 트림별 실내, 이렇게 다릅니다",
+        intro: "아방가르드, 익스클루시브, AMG Line은 대시보드 트림과 스티어링 휠, 화면 구성이 서로 다릅니다.",
+        cols: [
+          {
+            label: "아방가르드",
+            sub: "E 200 아방가르드 기본",
+            tests: ["^E \\d.*Avantgarde"],
+            img: "e-int-avantgarde",
+            cap: "E-클래스 아방가르드 실내",
+            points: [
+              "✓ 블랙 오픈 포어 애쉬우드 트림(10H), 블랙 오픈 포어 센터콘솔",
+              "✓ 나파 룩 아티코 대시보드, 나파 가죽 다기능 열선 스티어링 휠",
+              "✓ 앞좌석 열선·통풍 시트, 운전자 카메라, 메모리·공기 청정 패키지",
+              "✓ 루프라이너는 네바 그레이가 기본"
+            ]
+          },
+          {
+            label: "익스클루시브",
+            sub: "E 200 · E 220 d · E 300 · E 350 e · E 450",
+            tests: ["^E \\d.*Exclusive", "^E 220 d 4MATIC$"],
+            img: "e-int-exclusive",
+            cap: "E-클래스 익스클루시브 실내",
+            points: [
+              "✓ E 300·E 350 e는 브라운 메이플 우드 알루미늄 라인 트림(14H)과 브라운 센터콘솔",
+              "✓ E 200은 블랙 애쉬우드(10H), E 220 d는 백릿 벤츠 패턴(11H)",
+              "✓ 헤드업 디스플레이는 E 200·E 300·E 350 e 기본",
+              "✓ E 450은 3D 계기반과 MBUX 슈퍼스크린이 기본"
+            ]
+          },
+          {
+            label: "AMG Line",
+            sub: "E 200 · E 300 · E 450 AMG Line",
+            tests: ["^E \\d.*AMG Line"],
+            img: "e-int-amg",
+            cap: "E-클래스 AMG Line 실내",
+            points: [
+              "✓ 나파 가죽 다기능 열선 스포츠 스티어링 휠",
+              "✓ 블랙 오픈 포어 센터콘솔(753)",
+              "✓ E 300·E 450은 MBUX 슈퍼스크린이 기본, 시트는 블랙 가죽(221A)이 기본",
+              "✓ 헤드업 디스플레이와 셀피 카메라가 하이라이트에 포함"
+            ]
+          }
+        ],
+        summary: "아방가르드는 담백한 블랙 우드, 익스클루시브는 따뜻한 우드와 알루미늄 조합, AMG Line은 스포츠 스티어링 휠과 슈퍼스크린이 있는 스포티한 실내라고 기억하시면 쉽습니다.",
+        note: "2026.04 E-클래스 카탈로그 기준입니다. 27년식과 생산 시점에 따라 달라질 수 있습니다. E 300·E 450 AMG Line의 대시보드 트림 종류는 카탈로그에 별도로 표기되어 있지 않습니다."
+      }
     },
     {
       id: "comfort",
@@ -648,31 +858,250 @@ window.BENZ_TECH = {
     { year: "2018", title: "MBUX", line: "말을 알아듣는 차", story: "2018년 A-클래스에서 공개된 MBUX는 '헤이 메르세데스'라고 부르면 대답하는 인공지능 인포테인먼트입니다.", topic: "mbux" },
     { year: "2021", title: "디지털 라이트", line: "130만 개의 마이크로 미러", story: "2021년 S-클래스와 EQS에서 처음 선보인 디지털 라이트는 헤드램프 하나마다 130만 개의 아주 작은 거울로 빛을 정밀하게 조절합니다.", topic: "digital-light" }
   ],
-  /* E-클래스 트림 사진과 기본 휠 (공식 카탈로그 2026.04 기준) */
-  eTrims: [
+  /*
+   * 차종별 트림 사진 · 실내 · 휠 · 실내 장식 (공식 고객용 카탈로그 기준)
+   * - test: 비교 목록의 차 이름(row.name)과 맞춰 보는 정규식
+   * - trims[].test: 같은 차종 안에서 트림을 구분. 위에서부터 먼저 맞는 것이 선택됩니다. 없으면 자동 선택하지 않습니다.
+   * - wheels / mats 의 names(정확한 차 이름), rows(정규식), std(트림 키)로 '지금 비교 중인 차의 기본 사양'을 표시합니다.
+   */
+  models: [
     {
-      key: "avantgarde", label: "아방가르드", test: "Avantgarde",
-      front: "e-front-avantgarde", rear: "e-rear-avantgarde",
-      note: "18인치 휠, LED 고성능 헤드램프, 발광 라디에이터 그릴이 기본입니다."
+      id: "e", label: "E-클래스", test: "^E \\d", source: "E-클래스 카탈로그 2026.04 (26년식)",
+      trims: [
+        { key: "avantgarde", label: "아방가르드", test: "Avantgarde", front: "e-front-avantgarde", rear: "e-rear-avantgarde", int: "e-int-avantgarde",
+          note: "18인치 휠, LED 고성능 헤드램프, 발광 라디에이터 그릴이 기본입니다." },
+        { key: "exclusive", label: "익스클루시브", test: "Exclusive|^E 220 d 4MATIC$", front: "e-front-exclusive", rear: "e-rear-exclusive", int: "e-int-exclusive",
+          note: "3개의 더블 루버가 있는 크롬 라디에이터 그릴이 특징입니다. E 300 이상 엔진은 디지털 라이트가 기본입니다." },
+        { key: "amg", label: "AMG Line", test: "AMG Line", front: "e-front-amg", rear: "e-rear-amg", int: "e-int-amg",
+          note: "파워 돔 보닛, AMG 프론트 에이프런, AMG 휠(E 200·E 300은 19인치, E 450은 20인치)로 스포티한 얼굴입니다." }
+      ],
+      wheels: [
+        { id: "wheel-r10", label: "18인치 5 스포크 경량 알로이", names: ["E 200 Avantgarde"], base: "E 200 아방가르드 기본" },
+        { id: "wheel-r31", label: "18인치 5 트윈 스포크 경량 알로이", names: ["E 200 Exclusive"], base: "E 200 익스클루시브 기본 · E 200 아방가르드 선택" },
+        { id: "wheel-r82", label: "19인치 5 스포크 경량 알로이", names: ["E 220 d 4MATIC", "E 350 e 4MATIC Exclusive"], base: "E 220 d 4MATIC · E 350 e 4MATIC 익스클루시브 기본" },
+        { id: "wheel-r97", label: "19인치 10 스포크 경량 알로이", names: ["E 300 4MATIC Exclusive"], base: "E 300 4MATIC 익스클루시브 기본" },
+        { id: "wheel-rte", label: "19인치 AMG 5 트윈 스포크 경량 알로이", names: ["E 200 AMG Line", "E 300 4MATIC AMG Line"], base: "E 200 AMG Line · E 300 4MATIC AMG Line 기본" },
+        { id: "wheel-rvq", label: "20인치 AMG 멀티 스포크 알로이", names: ["E 450 4MATIC Exclusive"], base: "E 450 4MATIC 익스클루시브 기본" },
+        { id: "wheel-rvr", label: "20인치 AMG 멀티 스포크 알로이 · 투톤", names: ["E 450 4MATIC AMG Line"], base: "E 450 4MATIC AMG Line 기본" }
+      ],
+      mats: [
+        { id: "e-mat-10h", label: "10H 블랙 오픈 포어 애쉬우드 트림", names: ["E 200 Avantgarde", "E 200 Exclusive", "E 200 AMG Line"], base: "E 200 아방가르드·익스클루시브·AMG Line 기본" },
+        { id: "e-mat-11h", label: "11H 블랙 애쉬우드 백릿 트림 · 벤츠 패턴", names: ["E 220 d 4MATIC"], base: "E 220 d 4MATIC 익스클루시브 기본" },
+        { id: "e-mat-14h", label: "14H 브라운 메이플 우드 · 알루미늄 라인", names: ["E 300 4MATIC Exclusive", "E 350 e 4MATIC Exclusive"], base: "E 300 · E 350 e 익스클루시브 기본" },
+        { id: "e-mat-c753", label: "센터콘솔 753 블랙 오픈 포어", names: ["E 200 Avantgarde", "E 200 Exclusive", "E 200 AMG Line", "E 220 d 4MATIC", "E 300 4MATIC AMG Line", "E 450 4MATIC AMG Line"], base: "E 200 전 트림 · E 220 d · E 300 · E 450 AMG Line 기본" },
+        { id: "e-mat-c667", label: "센터콘솔 667 브라운 메이플 알루미늄 라인", names: ["E 300 4MATIC Exclusive", "E 350 e 4MATIC Exclusive", "E 450 4MATIC Exclusive"], base: "E 300 · E 350 e · E 450 익스클루시브 기본" }
+      ]
     },
     {
-      key: "exclusive", label: "익스클루시브", test: "Exclusive",
-      front: "e-front-exclusive", rear: "e-rear-exclusive",
-      note: "3개의 더블 루버가 있는 크롬 라디에이터 그릴이 특징입니다. E 300 이상 엔진은 디지털 라이트가 기본입니다."
+      id: "a", label: "A-클래스 (하치백)", test: "^A 220 Hatch", source: "A-클래스 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "A 220", test: ".", front: "m-a-front", rear: "m-a-rear", int: "m-a-int",
+          note: "17인치 5 트윈 스포크 휠, LED 고성능 헤드램프, 10.25인치 디지털 계기반, 컴포트 서스펜션이 기본입니다." }
+      ],
+      wheels: [{ id: "m-a-w-r62", label: "17인치 5 트윈 스포크 경량 알로이 (R62)", base: "기본", std: ["std"] }],
+      mats: [
+        { id: "m-a-t-52h", label: "52H 다크 카본 파이버 룩 트림", base: "기본", std: ["std"] },
+        { id: "m-a-t-h15", label: "H15 블랙 오픈포어 우드 린덴 트림", base: "유료 옵션" },
+        { id: "m-a-t-h44", label: "H44 라이트 그레인 알루미늄 트림", base: "유료 옵션" }
+      ]
     },
     {
-      key: "amg", label: "AMG Line", test: "AMG Line",
-      front: "e-front-amg", rear: "e-rear-amg",
-      note: "파워 돔 보닛, AMG 프론트 에이프런, AMG 휠(E 200·E 300은 19인치, E 450은 20인치)로 스포티한 얼굴입니다."
+      id: "as", label: "A-클래스 세단", test: "^A 220 Sedan", source: "A-클래스 세단 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "A 220 세단", test: ".", front: "m-as-front", int: "m-as-int",
+          note: "18인치 5 트윈 스포크 휠, 윈도우 라인 트림 스트립, LED 고성능 헤드램프, 10.25인치 디지털 계기반이 기본입니다." }
+      ],
+      wheels: [
+        { id: "m-as-w-r31", label: "18인치 5 트윈 스포크 경량 알로이 (R31)", base: "기본", std: ["std"] },
+        { id: "m-as-w-r62", label: "17인치 5 트윈 스포크 경량 알로이 (R62)", base: "선택 사양" }
+      ],
+      mats: [
+        { id: "m-as-t-52h", label: "52H 다크 카본 파이버 룩 트림", base: "기본", std: ["std"] },
+        { id: "m-as-t-h44", label: "H44 라이트 그레인 알루미늄 트림", base: "유료 옵션" },
+        { id: "m-as-t-h15", label: "H15 블랙 오픈포어 우드 린덴 트림", base: "유료 옵션" }
+      ]
+    },
+    {
+      id: "c", label: "C-클래스", test: "^C \\d", source: "C-클래스 카탈로그 2026.04",
+      trims: [
+        { key: "avantgarde", label: "아방가르드", test: "Avantgarde", front: "m-c-avg-front", int: "m-c-avg-int",
+          note: "18인치 멀티 스포크 휠, LED 고성능 헤드램프와 어댑티브 상향등 어시스트, 파노라믹 선루프, 브랜드 프로젝션 로고가 기본입니다." },
+        { key: "amg", label: "AMG Line", test: "AMG Line", front: "m-c-amg-front", int: "m-c-amg-int",
+          note: "벤츠 스타 패턴 라디에이터 그릴, 18인치 AMG 5스포크 휠, 나파 가죽 스포츠 스티어링 휠, LCD 센트럴 디스플레이가 있는 스포티한 구성입니다." }
+      ],
+      wheels: [
+        { id: "m-c-w-r86", label: "18인치 멀티 스포크 경량 알로이 (R86)", base: "C 200 아방가르드 기본", std: ["avantgarde"] },
+        { id: "m-c-w-r32", label: "18인치 5스포크 경량 알로이 (R32)", base: "C 200 아방가르드 선택" },
+        { id: "m-c-w-r87", label: "18인치 5 트윈 스포크 경량 알로이 (R87)", base: "C 200 아방가르드 선택" },
+        { id: "m-c-w-rsj", label: "18인치 AMG 5스포크 경량 알로이 (RSJ)", base: "C 200 AMG Line 기본", std: ["amg"] },
+        { id: "m-c-w-rvc", label: "19인치 AMG 멀티 스포크 경량 알로이 (RVC)", base: "C 200 AMG Line 유료 옵션" },
+        { id: "m-c-w-rvd", label: "19인치 AMG 멀티 스포크 경량 알로이 (RVD)", base: "C 200 AMG Line 유료 옵션" }
+      ],
+      mats: [
+        { id: "m-c-t-h04", label: "H04 블랙 오픈포어 알루미늄 라인 우드 트림", base: "아방가르드 기본 · AMG Line 유료", std: ["avantgarde"] },
+        { id: "m-c-t-h08", label: "H08 안트라사이트 라인스트럭처 라임 우드 트림", base: "아방가르드 선택 · AMG Line 유료" },
+        { id: "m-c-t-h64", label: "H64 메탈 위브 트림", base: "AMG Line 기본 · 아방가르드 선택", std: ["amg"] }
+      ]
+    },
+    {
+      id: "cla", label: "CLA", test: "^CLA \\d", source: "CLA 카탈로그 2026.10 (사진은 CLA 220 기준)",
+      trims: [
+        { key: "std", label: "스탠다드", test: null, front: "m-cla-std-front", int: "m-cla-std-int",
+          note: "일루미네이티드 그릴, LED 고성능 헤드램프, 18인치 5스포크 경량 알로이 휠, 파노라마 루프가 기본으로 소개됩니다." },
+        { key: "amg", label: "AMG Line", test: "AMG Line", front: "m-cla-amg-front", int: "m-cla-amg-int",
+          note: "AMG 전용 범퍼·사이드 패널·프론트 에이프런, 18인치 AMG 5스포크 휠, 벤츠 패턴 애니메이션 프로젝션 라이트가 더해집니다." }
+      ],
+      wheels: [],
+      mats: []
+    },
+    {
+      id: "cle", label: "CLE 쿠페 · 카브리올레", test: "^CLE", source: "CLE 카탈로그 2026.09",
+      trims: [
+        { key: "coupe", label: "쿠페", test: "Coup", front: "m-cle-coupe-front", int: "m-cle-coupe-int",
+          note: "20인치 AMG 멀티 스포크 휠, 디지털 라이트, 액티브 보닛, 파노라믹 선루프, 360° 카메라가 하이라이트입니다." },
+        { key: "cab", label: "카브리올레", test: "Cabriolet", front: "m-cle-cab-front", int: "m-cle-cab-int",
+          note: "19인치 AMG 멀티 스포크 휠, 디지털 라이트, 에어캡·에어스카프, 브랜드 프로젝션 로고가 하이라이트입니다." }
+      ],
+      wheels: [
+        { id: "m-cle-w-rva", label: "19인치 AMG 멀티 스포크 경량 알로이 (RVA)", base: "카브리올레 하이라이트 휠", std: ["cab"] },
+        { id: "m-cle-w-rvm", label: "20인치 AMG 멀티 스포크 경량 알로이 (RVM)", base: "쿠페 하이라이트 휠", std: ["coupe"] }
+      ],
+      mats: [
+        { id: "m-cle-t-h64", label: "H64 메탈 스트럭처 트림", base: "카탈로그 트림 사양" },
+        { id: "m-cle-t-h04", label: "H04 블랙 오픈포어 알루미늄 라인 우드 트림", base: "카탈로그 트림 사양" }
+      ]
+    },
+    {
+      id: "gla", label: "GLA", test: "^GLA \\d", source: "GLA 카탈로그 2026.07",
+      trims: [
+        { key: "std", label: "GLA 250", test: ".", front: "m-gla-front", int: "m-gla-int",
+          note: "19인치 AMG 5트윈 스포크 휠, LED 고성능 헤드램프, 파노라믹 선루프, 전동 트렁크가 하이라이트입니다." }
+      ],
+      wheels: [{ id: "m-gla-w-rtf", label: "19인치 AMG 5트윈 스포크 경량 알로이 (RTF)", base: "카탈로그 하이라이트 휠", std: ["std"] }],
+      mats: [{ id: "m-gla-t-56h", label: "56H 스타 패턴 · 백 발광 트림", base: "카탈로그 트림 사양", std: ["std"] }]
+    },
+    {
+      id: "glb", label: "GLB", test: "^GLB \\d", source: "GLB 카탈로그 2026.08",
+      trims: [
+        { key: "std", label: "GLB 250 (AMG Line)", test: ".", front: "m-glb-front", int: "m-glb-int",
+          note: "19인치 AMG 5트윈 스포크 휠, LED 고성능 헤드램프, 어댑티브 상향등 어시스트, 마일드 하이브리드, 파노라믹 선루프가 하이라이트입니다." }
+      ],
+      wheels: [{ id: "m-glb-w-rtf", label: "19인치 AMG 5트윈 스포크 경량 알로이 (RTF)", base: "카탈로그 하이라이트 휠", std: ["std"] }],
+      mats: [
+        { id: "m-glb-t-56h", label: "56H 스타 패턴 트림", base: "카탈로그 트림 사양" },
+        { id: "m-glb-t-h62", label: "H62 카본 스트럭처 트림", base: "카탈로그 트림 사양" }
+      ]
+    },
+    {
+      id: "glc", label: "GLC · GLC 쿠페", test: "^GLC", source: "GLC·GLC 쿠페 카탈로그 2026.04",
+      trims: [
+        { key: "cpe-avg", label: "쿠페 아방가르드", test: "Coup.*Avantgarde", front: "m-glc-cpe-avg-front", int: "m-glc-cpe-avg-int",
+          note: "쿠페 루프라인에 19인치 10 트윈 스포크 휠, 디지털 라이트, 360° 카메라가 포함된 주차 패키지가 하이라이트입니다." },
+        { key: "cpe-amg", label: "쿠페 AMG Line", test: "Coup.*AMG Line", front: "m-glc-cpe-amg-front", int: "m-glc-cpe-amg-int",
+          note: "20인치 AMG 멀티 스포크 휠, AMG 휠 아치와 사이드 실 패널, 디지털 라이트가 하이라이트입니다." },
+        { key: "suv-amg", label: "SUV AMG Line", test: "AMG Line", front: "m-glc-suv-amg-front", int: "m-glc-suv-amg-int",
+          note: "20인치 AMG 멀티 스포크 휠, AMG 사이드 실 패널, 디지털 라이트, 360° 카메라가 포함된 주차 패키지가 기본입니다." },
+        { key: "suv-avg", label: "SUV 아방가르드", test: "Avantgarde|^GLC 220 d", front: "m-glc-suv-avg-front", int: "m-glc-suv-avg-int",
+          note: "크롬 라디에이터 그릴, 19인치 10 트윈 스포크 휠, 디지털 라이트, 파노라믹 선루프가 하이라이트입니다." }
+      ],
+      wheels: [
+        { id: "m-glc-w-78r", label: "19인치 10 트윈 스포크 경량 알로이 (78R)", base: "GLC 220 d · 300 아방가르드 · 쿠페 아방가르드 기본", std: ["suv-avg", "cpe-avg"] },
+        { id: "m-glc-w-r55", label: "19인치 5 트윈 스포크 경량 알로이 (R55)", base: "SUV 아방가르드 선택 · 쿠페 아방가르드 기본" },
+        { id: "m-glc-w-r42", label: "20인치 멀티 트윈 스포크 경량 알로이 (R42)", base: "아방가르드 유료 옵션" },
+        { id: "m-glc-w-rvu", label: "20인치 AMG 멀티 스포크 알로이 (RVU)", base: "GLC 300 AMG Line 기본", std: ["suv-amg"] },
+        { id: "m-glc-w-rvv", label: "20인치 AMG 멀티 스포크 알로이 (RVV)", base: "GLC 220 d 유료 옵션" },
+        { id: "m-glc-w-rvo", label: "20인치 AMG 멀티 스포크 경량 알로이 (RVO)", base: "GLC 300 쿠페 AMG Line 기본", std: ["cpe-amg"] },
+        { id: "m-glc-w-rrn", label: "20인치 AMG 5 스포크 경량 알로이 (RRN)", base: "GLC 300 쿠페 AMG Line 유료 옵션" },
+        { id: "m-glc-w-rvp", label: "AMG 멀티 스포크 경량 알로이 (RVP)", base: "GLC 300 쿠페 AMG Line 유료 옵션" }
+      ],
+      mats: [
+        { id: "m-glc-t-h08", label: "H08 안트라사이트 라인스트럭처 라임 우드", rows: ["^GLC 220 d"], base: "GLC 220 d 기본 · 그 외 선택" },
+        { id: "m-glc-t-h50", label: "H50 실버 그레이 다이아몬드 패턴", rows: ["^GLC 300 4MATIC (Coup. )?Avantgarde"], base: "GLC 300 아방가르드 (쿠페 포함) 기본" },
+        { id: "m-glc-t-h04", label: "H04 블랙 오픈포어 알루미늄 라인 우드", rows: ["^GLC 300 4MATIC (Coup. )?AMG Line"], base: "GLC 300 AMG Line (쿠페 포함) 기본" },
+        { id: "m-glc-t-h33", label: "H33 월넛 브라운 우드 오픈 포어", base: "선택 사양" }
+      ]
+    },
+    {
+      id: "gle", label: "GLE · GLE 쿠페", test: "^GLE", source: "GLE·GLE 쿠페 카탈로그 2026.06",
+      trims: [
+        { key: "cpe", label: "GLE 쿠페", test: "Coup", front: "m-gle-cpe-front", int: "m-gle-cpe-int",
+          note: "AMG 라인 익스테리어에 21인치 AMG 멀티 스포크 휠, 멀티빔 LED, 리어 스포일러가 하이라이트입니다." },
+        { key: "amg", label: "GLE AMG Line", test: "AMG Line", front: "m-gle-amg-front", int: "m-gle-std-int",
+          note: "21인치 AMG 멀티 스포크 휠, AMG 프론트·리어 에이프런, 멀티빔 LED, 에어매틱 패키지가 하이라이트입니다." },
+        { key: "std", label: "GLE (300 d · 350)", test: "^GLE (300 d|350)", front: "m-gle-std-front", int: "m-gle-std-int",
+          note: "20인치 5 트윈 스포크 휠, 멀티빔 LED, 에어매틱 패키지, 파노라믹 선루프가 하이라이트입니다." }
+      ],
+      wheels: [
+        { id: "m-gle-w-30r", label: "20인치 5 트윈 스포크 알로이 (30R)", base: "GLE 300 d · 350 하이라이트 휠", std: ["std"] },
+        { id: "m-gle-w-rwa", label: "21인치 AMG 멀티 스포크 경량 알로이 (RWA)", base: "GLE AMG Line · 쿠페 하이라이트 휠", std: ["amg", "cpe"] },
+        { id: "m-gle-w-rzv", label: "20인치 AMG 5 트윈 스포크 경량 알로이 (RZV)", base: "카탈로그 휠 사양" }
+      ],
+      mats: [
+        { id: "m-gle-t-h31", label: "H31 앤트러사이트 오픈 포어 오크 우드", base: "카탈로그 트림 사양" },
+        { id: "m-gle-t-04h", label: "04H 하이 글로스 브라운 라인스트럭처 라임 우드", base: "카탈로그 트림 사양" }
+      ]
+    },
+    {
+      id: "gls", label: "GLS", test: "^(AMG )?GLS", source: "GLS 카탈로그 2026.07",
+      trims: [
+        { key: "amg", label: "AMG GLS", test: "^AMG GLS", front: "m-gls-amg-front", int: "m-gls-amg-int",
+          note: "AMG 퍼포먼스 스티어링 휠(나파 가죽)과 22인치 AMG 멀티 스포크 휠, 멀티빔 LED가 하이라이트입니다." },
+        { key: "std", label: "GLS", test: "^GLS", front: "m-gls-std-front", int: "m-gls-std-int",
+          note: "22인치 AMG 멀티 스포크 휠, 크롬 라디에이터 그릴, 에어매틱 패키지, 투명 보닛, 와이드 스크린 콕핏이 하이라이트입니다." }
+      ],
+      wheels: [
+        { id: "m-gls-w-rpa", label: "22인치 AMG 멀티 스포크 경량 알로이 (RPA)", base: "카탈로그 휠 사양" },
+        { id: "m-gls-w-rpb", label: "22인치 AMG 멀티 스포크 경량 알로이 (RPB)", base: "카탈로그 휠 사양" },
+        { id: "m-gls-w-rpc", label: "22인치 AMG 멀티 스포크 경량 알로이 (RPC)", base: "카탈로그 휠 사양" },
+        { id: "m-gls-w-rpq", label: "23인치 AMG 5 트윈 스포크 경량 알로이 (RPQ)", base: "카탈로그 휠 사양" },
+        { id: "m-gls-w-rpk", label: "23인치 AMG 5 트윈 스포크 경량 알로이 (RPK)", base: "카탈로그 휠 사양" },
+        { id: "m-gls-w-rxx", label: "23인치 AMG 멀티 스포크 단조 (RXX)", base: "카탈로그 휠 사양" },
+        { id: "m-gls-w-rxy", label: "23인치 AMG 멀티 스포크 단조 (RXY)", base: "카탈로그 휠 사양" }
+      ],
+      mats: [
+        { id: "m-gls-t-h31", label: "H31 앤트러사이트 오픈 포어 오크 우드", base: "카탈로그 트림 사양" },
+        { id: "m-gls-t-h86", label: "H86 AMG 카본파이버", base: "카탈로그 트림 사양" },
+        { id: "m-gls-t-h11", label: "H11 MANUFAKTUR 플로잉 라인 블랙 피아노 라커", base: "카탈로그 트림 사양" }
+      ]
+    },
+    {
+      id: "g", label: "G-클래스", test: "^G 450 d", source: "G-클래스 카탈로그 2026.09",
+      trims: [
+        { key: "std", label: "G 450 d", test: ".", front: "m-g-front", rear: "m-g-rear", int: "m-g-int",
+          note: "각진 실루엣의 앞모습과 뒷모습, 우드·메탈 트림이 들어간 실내를 카탈로그 사진으로 봅니다." }
+      ],
+      wheels: [
+        { id: "m-g-w-r16", label: "20인치 AMG 5 트윈 스포크 경량 알로이 · 매트 블랙 (R16)", base: "카탈로그 휠 사양" },
+        { id: "m-g-w-r18", label: "20인치 AMG 5 트윈 스포크 경량 알로이 (R18)", base: "카탈로그 휠 사양" },
+        { id: "m-g-w-rn7", label: "20인치 AMG 10 스포크 경량 알로이 (RN7)", base: "카탈로그 휠 사양" },
+        { id: "m-g-w-rn8", label: "20인치 AMG 10 스포크 · 하이 글로스 블랙 (RN8)", base: "카탈로그 휠 사양" }
+      ],
+      mats: [
+        { id: "m-g-t-va1", label: "VA1 MANUFAKTUR 블랙 오픈 포어 우드", base: "카탈로그 트림 사양" },
+        { id: "m-g-t-va2", label: "VA2 오픈 포어 월넛 우드", base: "카탈로그 트림 사양" },
+        { id: "m-g-t-va5", label: "VA5 메탈 위브", base: "카탈로그 트림 사양" }
+      ]
+    },
+    {
+      id: "s", label: "S-클래스", test: "^S \\d", source: "S-클래스 카탈로그 2026.09",
+      trims: [
+        { key: "amg", label: "AMG Line", test: "AMG Line", front: "m-s-amg-front", rear: "m-s-amg-rear", int: "m-s-int",
+          note: "큰 공기 흡입구와 크롬 장식의 전면 범퍼, AMG Line 전용 휠, 나파 가죽 스포츠 스티어링 휠과 AMG 스테인리스 스틸 페달이 특징입니다." },
+        { key: "std", label: "스탠다드", test: "Exclusive", front: "m-s-std-front", rear: "m-s-std-rear", int: "m-s-int",
+          note: "조명이 들어오는 라디에이터 그릴과 클래식한 라인, 디지털 라이트를 비롯한 최신 기술 사양이 어우러진 구성입니다." }
+      ],
+      wheels: [
+        { id: "m-s-w-r60", label: "19인치 멀티 트윈 스포크 경량 알로이 (R60)", base: "카탈로그 휠 사양" },
+        { id: "m-s-w-60r", label: "20인치 멀티 스포크 경량 알로이 (60R)", base: "카탈로그 휠 사양" },
+        { id: "m-s-w-rtm", label: "20인치 AMG 크로스 스포크 경량 알로이 (RTM)", base: "카탈로그 휠 사양" }
+      ],
+      mats: [
+        { id: "m-s-t-22h", label: "22H 앤트러사이트 오픈 포어 우드", base: "카탈로그 트림 사양" },
+        { id: "m-s-t-23h", label: "23H 오픈 포어 브라운 우드 · 피시본 패턴", base: "카탈로그 트림 사양" },
+        { id: "m-s-t-h37", label: "H37 유광 월넛 우드 · 블랙", base: "카탈로그 트림 사양" },
+        { id: "m-s-t-h17", label: "H17 MANUFAKTUR 플로잉 라인 피아노 라커 · 블랙", base: "카탈로그 트림 사양" },
+        { id: "m-s-t-h73", label: "H73 하이 글로스 실버 메탈릭 믹스드 화이버", base: "카탈로그 트림 사양" }
+      ]
     }
-  ],
-  eWheels: [
-    { id: "wheel-r10", label: "18인치 5 스포크 경량 알로이", names: ["E 200 Avantgarde"], base: "E 200 아방가르드 기본" },
-    { id: "wheel-r31", label: "18인치 5 트윈 스포크 경량 알로이", names: ["E 200 Exclusive"], base: "E 200 익스클루시브 기본 · E 200 아방가르드 선택" },
-    { id: "wheel-r82", label: "19인치 5 스포크 경량 알로이", names: ["E 220 d 4MATIC", "E 350 e 4MATIC Exclusive"], base: "E 220 d 4MATIC · E 350 e 4MATIC 익스클루시브 기본" },
-    { id: "wheel-r97", label: "19인치 10 스포크 경량 알로이", names: ["E 300 4MATIC Exclusive"], base: "E 300 4MATIC 익스클루시브 기본" },
-    { id: "wheel-rte", label: "19인치 AMG 5 트윈 스포크 경량 알로이", names: ["E 200 AMG Line", "E 300 4MATIC AMG Line"], base: "E 200 AMG Line · E 300 4MATIC AMG Line 기본" },
-    { id: "wheel-rvq", label: "20인치 AMG 멀티 스포크 알로이", names: ["E 450 4MATIC Exclusive"], base: "E 450 4MATIC 익스클루시브 기본" },
-    { id: "wheel-rvr", label: "20인치 AMG 멀티 스포크 알로이 · 투톤", names: ["E 450 4MATIC AMG Line"], base: "E 450 4MATIC AMG Line 기본" }
   ]
 };
