@@ -595,3 +595,64 @@ a.spec-jump {
     padding-bottom: 2rem;
   }
 }
+
+/* 차종 대표 사진 (프로모션 목록 · 할인 확인 · 견적) */
+.car-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: radial-gradient(ellipse at 50% 85%, #ffffff 0%, #eceff1 55%, #dde2e5 100%);
+}
+.car-photo.dark { background: #000; }
+.car-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+  display: block;
+}
+.car-photo.dark img { object-fit: contain; }
+.car-photo.sm { aspect-ratio: 4 / 3; border-radius: 0.85rem; }
+
+/* 기본 사양 다시 확인 (어프로치북 기준) */
+.opt-det {
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(228, 203, 134, 0.14);
+  color: #e4cb86;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 700;
+}
+.opt-basic {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  background: rgba(94, 234, 212, 0.06);
+}
+.opt-basic-h {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: #5eead4;
+}
+.opt-basic-p {
+  margin-top: 0.4rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+.opt-basic-list {
+  margin-top: 0.6rem;
+  padding-left: 1.1rem;
+  list-style: disc;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+.opt-basic-list li + li {
+  margin-top: 0.4rem;
+}

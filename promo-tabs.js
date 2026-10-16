@@ -236,6 +236,7 @@
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H5z"/></svg>';
     return (
       '<article class="rounded-3xl bg-white p-5">' +
+      (bestRow && window.BenzPhoto ? window.BenzPhoto.html(bestRow[2], "wide mb-3") : "") +
       '<p class="text-[14px] font-semibold text-[#E4CB86]">' +
       (f.staticPrice ? "사전예약" : rows.length + "개 트림") +
       "</p>" +
