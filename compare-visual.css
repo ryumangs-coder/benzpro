@@ -239,7 +239,8 @@
 .vs-trim.on { border-color: #e4cb86; box-shadow: 0 0 0 2px rgba(228, 203, 134, 0.35); }
 .vs-trim-photo { position: relative; aspect-ratio: 4 / 3; background: #e5e8ea; }
 .vs-trim-photo { overflow: hidden; }
-.vs-trim-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transform: scale(1.3); transform-origin: 50% 52%; }
+.vs-trim-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transform-origin: 50% 52%; }
+.vs-trim-photo img[src*="/e-front"], .vs-trim-photo img[src*="/e-rear"] { transform: scale(1.3); }
 .vs-here {
   position: absolute;
   left: 0.55rem;
@@ -520,3 +521,111 @@
   .vs-text h2 { font-size: 26px; }
   .vs-bigyear { font-size: 52px !important; }
 }
+
+/* ---------- 차이점 한눈에 보기 (VS 카드) ---------- */
+.vs-versus {
+  margin-top: 1.4rem;
+  padding: 1rem 0.9rem 1.1rem;
+  border-radius: 1.2rem;
+  background: #0d2230;
+  border: 1px solid rgba(228, 203, 134, 0.38);
+}
+.vs-versus .vs-k { margin: 0; }
+.vs-versus h3 { margin-top: 0.25rem !important; font-size: 22px; line-height: 1.35; color: #fff; }
+.vs-text .vs-vintro { margin-top: 0.4rem; font-size: 16.5px; line-height: 1.65; color: #c5ced3; }
+.vs-vcols { margin-top: 0.9rem; display: grid; gap: 0.8rem; grid-template-columns: 1fr; }
+@media (min-width: 760px) {
+  .vs-vcols.n2 { grid-template-columns: repeat(2, 1fr); }
+  .vs-vcols.n3 { grid-template-columns: repeat(3, 1fr); }
+}
+.vs-vcol {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 0.8rem 0.9rem;
+  border-radius: 1rem;
+  background: #10222c;
+  border: 1px solid rgba(164, 170, 174, 0.25);
+}
+.vs-vcol.mine { border-color: #e4cb86; box-shadow: 0 0 0 2px rgba(228, 203, 134, 0.35); }
+.vs-who {
+  align-self: flex-start;
+  margin-bottom: 0.55rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: #e4cb86;
+  color: #0b1f2a;
+  font-size: 13.5px;
+  font-weight: 800;
+}
+.vs-vimg { margin-bottom: 0.6rem; border-radius: 0.8rem; overflow: hidden; background: #05111a; }
+.vs-vimg img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.vs-vimg small { display: block; padding: 0.35rem 0.6rem; font-size: 12.5px; color: #a4aaae; }
+.vs-text .vs-vcol h4, .vs-vcol h4 { font-size: 19px; font-weight: 800; line-height: 1.3; color: #fff; }
+.vs-text .vs-vsub { margin-top: 0.2rem; font-size: 14.5px; line-height: 1.5; color: #e4cb86; font-weight: 700; }
+.vs-vpoints { margin-top: 0.6rem; display: grid; gap: 0.5rem; }
+.vs-vpoints li { font-size: 16px; line-height: 1.6; color: #e8eef1; }
+.vs-meter { margin-top: 0.7rem; padding: 0.55rem 0.65rem 0.7rem; border-radius: 0.8rem; background: rgba(255, 255, 255, 0.05); }
+.vs-mends { display: flex; justify-content: space-between; font-size: 12.5px; color: #a4aaae; font-style: normal; }
+.vs-mends em { font-style: normal; }
+.vs-meter-row { margin-top: 0.45rem; }
+.vs-meter-row > span { display: block; font-size: 13.5px; font-weight: 700; color: #dfe6ea; }
+.vs-mtrack {
+  position: relative;
+  margin-top: 0.25rem;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2f6f86 0%, #5eead4 30%, #e4cb86 65%, #f08a5d 100%);
+}
+.vs-mtrack i {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 2px #0b1f2a, 0 0 8px rgba(255, 255, 255, 0.6);
+}
+.vs-mtrack::after { content: ""; position: absolute; inset: 0; border-radius: 999px; background: rgba(5, 17, 26, 0.38); }
+.vs-mtrack i { z-index: 1; }
+.vs-mtrack.range i { background: rgba(255, 255, 255, 0.92); }
+.vs-text .vs-vmeter-note { margin-top: 0.7rem; font-size: 13.5px; color: #a4aaae; }
+.vs-text .vs-vsum {
+  margin-top: 0.9rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: 0.9rem;
+  background: rgba(228, 203, 134, 0.14);
+  border: 1px solid rgba(228, 203, 134, 0.5);
+  font-size: 17.5px;
+  line-height: 1.65;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* 모델 구간: 지금 비교 중 표시, 보조 문구 */
+.vs-mine {
+  position: absolute;
+  left: 0.7rem;
+  top: 0.7rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: #e4cb86;
+  color: #0b1f2a;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+.vs-wheel-card { position: relative; }
+.vs-lead.small { font-size: 14.5px; margin-top: 0.25rem; }
+
+/* 카탈로그 사진(E 외 차종, 실내)은 확대하지 않고 그대로 보여 줍니다 */
+.vs-photo-img[src*="/tech/m-"], .vs-photo-img[src*="/tech/e-int"] { transform: none; }
+@media (max-width: 520px) {
+  .vs-view button { min-width: 38px; min-height: 32px; font-size: 13.5px; }
+}
+
+@media (min-width: 720px) {
+  .vs-trims.n1 { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
+  .vs-trims.n2 { grid-template-columns: repeat(2, 1fr); }
+  .vs-trims.n4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) { .vs-trims.n4 { grid-template-columns: repeat(4, 1fr); } }

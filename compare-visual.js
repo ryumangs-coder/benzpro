@@ -6,7 +6,7 @@
 (function () {
   var T = window.BENZ_TECH;
   if (!T) return;
-  var VER = "?v=20261016a";
+  var VER = "?v=20261016b";
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -47,21 +47,44 @@
     return out;
   }
 
-  /* ---------- E-클래스 세단 트림 사진 / 휠 ---------- */
-  function eInfo(row) {
-    var name = String(row.name || "");
-    if (row.seg !== "E") return null;
-    if (/Coup|Cabrio|SUV|AMG E/.test(name)) return null;
-    if (!/^E \d/.test(name)) return null;
-    var trim = null;
-    T.eTrims.forEach(function (t) { if (name.indexOf(t.test) !== -1) trim = t; });
-    if (!trim && /^E 220 d 4MATIC$/.test(name)) trim = T.eTrims[1];
-    if (!trim) return null;
-    var wheel = null;
-    var clean = name.trim();
-    T.eWheels.forEach(function (w) { if (w.names.indexOf(clean) !== -1) wheel = w; });
-    return { trim: trim, wheel: wheel };
+  /* ---------- 차종별 트림 사진 / 휠 / 실내 장식 (카탈로그 기준) ---------- */
+  var MODELS = T.models || [];
+  MODELS.forEach(function (m) {
+    m._t = new RegExp(m.test);
+    m.trims.forEach(function (t) { t._t = t.test ? new RegExp(t.test) : null; });
+  });
+  function cleanName(row) { return String(row.name || "").trim(); }
+  function modelOf(row) {
+    var name = cleanName(row);
+    for (var i = 0; i < MODELS.length; i++) if (MODELS[i]._t.test(name)) return MODELS[i];
+    return null;
   }
+  function trimOf(model, row) {
+    var name = cleanName(row);
+    for (var i = 0; i < model.trims.length; i++) {
+      var t = model.trims[i];
+      if (t._t && t._t.test(name)) return t;
+    }
+    return null;
+  }
+  function isMine(item, row, trim) {
+    var name = cleanName(row);
+    if (item.names && item.names.indexOf(name) !== -1) return true;
+    if (item.rows && item.rows.some(function (r) { return new RegExp(r).test(name); })) return true;
+    if (trim && item.std && item.std.indexOf(trim.key) !== -1) return true;
+    return false;
+  }
+  function modelInfo(row) {
+    var model = modelOf(row);
+    if (!model) return null;
+    var trim = trimOf(model, row);
+    var wheel = null;
+    model.wheels.forEach(function (w) { if (!wheel && isMine(w, row, trim)) wheel = w; });
+    var mat = null;
+    model.mats.forEach(function (m) { if (!mat && isMine(m, row, trim)) mat = m; });
+    return { model: model, trim: trim, wheel: wheel, mat: mat, row: row };
+  }
+  function eInfo(row) { return modelInfo(row); }
 
   /* ---------- 상태 표시 ---------- */
   function pill(side, text) {
@@ -74,15 +97,20 @@
     return '<span class="vs-pill ' + side + " " + cls + '"><i>' + (side === "L" ? "왼쪽" : "오른쪽") + "</i>" + esc(shown) + "</span>";
   }
 
+  function viewButtons(hasRear, hasInt) {
+    return '<div class="vs-view" role="group" aria-label="보는 방향"><button type="button" class="on" data-view="front">앞</button>' +
+      (hasRear ? '<button type="button" data-view="rear">뒤</button>' : "") +
+      (hasInt ? '<button type="button" data-view="int">실내</button>' : "") + "</div>";
+  }
+
   /* ---------- 상단: 두 차 한눈에 ---------- */
   function carHtml(car, side) {
+    var multi = (car.rear ? 1 : 0) + (car.int ? 1 : 0) > 0;
     var photo = car.photo
       ? '<img class="vs-photo-img" src="' + esc(car.photo) + '" alt="' + esc(car.name) + '"' +
-        (car.rear ? ' data-front="' + esc(car.photo) + '" data-rear="' + esc(car.rear) + '"' : "") + ' decoding="async">'
+        (multi ? ' data-front="' + esc(car.photo) + '"' + (car.rear ? ' data-rear="' + esc(car.rear) + '"' : "") + (car.int ? ' data-int="' + esc(car.int) + '"' : "") : "") + ' decoding="async">'
       : '<div class="vs-photo-empty">' + esc(car.name) + "</div>";
-    var view = car.rear
-      ? '<div class="vs-view" role="group" aria-label="보는 방향"><button type="button" class="on" data-view="front">앞</button><button type="button" data-view="rear">뒤</button></div>'
-      : "";
+    var view = multi ? viewButtons(!!car.rear, !!car.int) : "";
     var tags = (car.tags || []).map(function (id) {
       return '<button type="button" class="vs-tag" data-tech="' + id + '">' + esc(TAG_LABEL[id] || byId[id].name) + " ▸</button>";
     }).join("");
@@ -99,7 +127,7 @@
   function hero(cars) {
     return '<div class="vs-hero" id="vs-hero">' +
       '<div class="vs-hero-grid">' + carHtml(cars[0], "L") + '<div class="vs-vs" aria-hidden="true"><span>VS</span></div>' + carHtml(cars[1], "R") + "</div>" +
-      '<p class="vs-foot">사진은 메르세데스-벤츠 공식 카탈로그와 색상 사진입니다. 화면의 색과 구성은 실제 차량과 다를 수 있습니다. 앞·뒤 버튼과 휠 사진은 눌러서 크게 볼 수 있습니다.</p></div>';
+      '<p class="vs-foot">사진은 메르세데스-벤츠 공식 카탈로그와 색상 사진입니다. 화면의 색과 구성은 실제 차량과 다를 수 있습니다. 앞·뒤·실내 버튼과 휠 사진은 눌러서 크게 볼 수 있습니다.</p></div>';
   }
 
   /* ---------- 눈으로 보는 차이 ---------- */
@@ -147,31 +175,49 @@
       '<div class="vs-grid">' + cards + "</div>" + tail + "</div>";
   }
 
-  /* ---------- E-클래스 트림 얼굴 비교 ---------- */
-  function trimSection(rows) {
-    var infos = (rows || []).map(eInfo);
-    if (!infos.some(Boolean)) return "";
-    var chosen = {};
-    infos.forEach(function (info) { if (info) chosen[info.trim.key] = true; });
-    var cards = T.eTrims.map(function (t) {
-      return '<article class="vs-trim' + (chosen[t.key] ? " on" : "") + '">' +
-        '<div class="vs-trim-photo"><img src="' + esc(src(t.front, "sm")) + '" data-front="' + esc(src(t.front, "sm")) + '" data-rear="' + esc(src(t.rear, "sm")) + '" alt="' + esc("E-클래스 " + t.label) + '" loading="lazy" decoding="async">' +
-        '<div class="vs-view" role="group" aria-label="보는 방향"><button type="button" class="on" data-view="front">앞</button><button type="button" data-view="rear">뒤</button></div>' +
-        (chosen[t.key] ? '<span class="vs-here">지금 비교 중</span>' : "") + "</div>" +
-        '<h4>' + esc(t.label) + "</h4><p>" + esc(t.note) + "</p></article>";
+  /* ---------- 차종별 트림 얼굴 · 실내 · 휠 · 실내 장식 ---------- */
+  function modelSection(rows) {
+    var list = rows || [];
+    var infos = list.map(modelInfo);
+    var models = [];
+    infos.forEach(function (info) { if (info && models.indexOf(info.model) === -1) models.push(info.model); });
+    if (!models.length) return "";
+    return models.map(function (model, mi) {
+      var mine = infos.filter(function (info) { return info && info.model === model; });
+      var chosen = {};
+      mine.forEach(function (info) { if (info.trim) chosen[info.trim.key] = true; });
+      var ordered = model.trims.filter(function (t) { return chosen[t.key]; })
+        .concat(model.trims.filter(function (t) { return !chosen[t.key]; }));
+      var cards = ordered.map(function (t) {
+        var views = t.front ? 1 : 0;
+        return '<article class="vs-trim' + (chosen[t.key] ? " on" : "") + '">' +
+          '<div class="vs-trim-photo"><img src="' + esc(src(t.front, "sm")) + '" data-front="' + esc(src(t.front, "sm")) + '"' +
+          (t.rear ? ' data-rear="' + esc(src(t.rear, "sm")) + '"' : "") + (t.int ? ' data-int="' + esc(src(t.int, "sm")) + '"' : "") +
+          ' alt="' + esc(model.label + " " + t.label) + '" loading="lazy" decoding="async">' +
+          (views && (t.rear || t.int) ? viewButtons(!!t.rear, !!t.int) : "") +
+          (chosen[t.key] ? '<span class="vs-here">지금 비교 중</span>' : "") + "</div>" +
+          '<h4>' + esc(t.label) + "</h4><p>" + esc(t.note) + "</p></article>";
+      }).join("");
+      function gal(items) {
+        return items.map(function (w) {
+          var on = mine.some(function (info) { return isMine(w, info.row, info.trim); });
+          return '<button type="button" class="vs-wheel-card color-shot' + (on ? " on" : "") + '" data-src="' + esc(src(w.id, "lg")) + '" data-name="' + esc(w.label + " · " + w.base) + '">' +
+            '<img src="' + esc(src(w.id, "sm")) + '" alt="' + esc(w.label) + '" loading="lazy" decoding="async">' +
+            (on ? '<i class="vs-mine">지금 비교 중인 차</i>' : "") +
+            "<b>" + esc(w.label) + "</b><span>" + esc(w.base) + "</span></button>";
+        }).join("");
+      }
+      var wheels = model.wheels.length
+        ? '<h4 class="vs-sub-h">휠 한눈에 보기</h4><div class="vs-wheels">' + gal(model.wheels) + "</div>" : "";
+      var mats = model.mats.length
+        ? '<h4 class="vs-sub-h">실내 장식(트림) 한눈에 보기</h4><p class="vs-lead small">대시보드와 센터콘솔에 들어가는 우드·메탈 장식입니다. 사진을 누르면 크게 볼 수 있습니다.</p><div class="vs-wheels">' + gal(model.mats) + "</div>" : "";
+      return '<div class="vs-sec" id="vs-trims' + (mi ? "-" + mi : "") + '"><h3>' + esc(model.label) + ' 트림별 얼굴 · 실내 · 휠</h3>' +
+        '<p class="vs-lead">같은 ' + esc(model.label) + '도 트림마다 앞모습과 휠, 실내 장식이 다릅니다. 앞·뒤·실내 버튼으로 돌려 보고, 휠과 장식 사진을 누르면 크게 볼 수 있습니다.</p>' +
+        '<div class="vs-trims n' + model.trims.length + '">' + cards + "</div>" + wheels + mats +
+        '<p class="vs-tail">사진은 메르세데스-벤츠 코리아 공식 고객용 카탈로그(' + esc(model.source) + ') 기준입니다. 연식·생산 시점·옵션에 따라 실제 차량과 달라질 수 있어 계약 전에 확인합니다.</p></div>';
     }).join("");
-    var wheels = T.eWheels.map(function (w) {
-      var mine = infos.some(function (info) { return info && info.wheel && info.wheel.id === w.id; });
-      return '<button type="button" class="vs-wheel-card color-shot' + (mine ? " on" : "") + '" data-src="' + esc(src(w.id, "lg")) + '" data-name="' + esc(w.label + " · " + w.base) + '">' +
-        '<img src="' + esc(src(w.id, "sm")) + '" alt="' + esc(w.label) + '" loading="lazy" decoding="async">' +
-        "<b>" + esc(w.label) + "</b><span>" + esc(w.base) + "</span></button>";
-    }).join("");
-    return '<div class="vs-sec" id="vs-trims"><h3>E-클래스 트림별 얼굴과 휠</h3>' +
-      '<p class="vs-lead">같은 E-클래스도 트림마다 앞모습과 휠이 다릅니다. 앞·뒤 버튼으로 돌려 보고, 휠 사진을 누르면 크게 볼 수 있습니다.</p>' +
-      '<div class="vs-trims">' + cards + "</div>" +
-      '<h4 class="vs-sub-h">기본 휠 한눈에 보기</h4><div class="vs-wheels">' + wheels + "</div>" +
-      '<p class="vs-tail">공식 카탈로그(2026년 4월, 26년식) 기준입니다. 27년식과 생산 시점에 따라 달라질 수 있습니다.</p></div>';
   }
+  function trimSection(rows) { return modelSection(rows); }
 
   /* ---------- 표 안의 작은 '이야기' 버튼 ---------- */
   function chip(label) {
@@ -230,6 +276,40 @@
   function ask(name) {
     return "index.html?note=" + encodeURIComponent(name + " 상담") + "#consulting";
   }
+  var ctxRows = [];
+  function setRows(rows) { ctxRows = (rows || []).filter(Boolean); }
+  function versusHtml(v) {
+    if (!v) return "";
+    var cols = v.cols.map(function (c) {
+      var sides = [];
+      ctxRows.forEach(function (row, i) {
+        var name = cleanName(row);
+        if ((c.tests || []).some(function (x) { return new RegExp(x).test(name); })) sides.push(i === 0 ? "왼쪽" : "오른쪽");
+      });
+      var badge = sides.length
+        ? '<span class="vs-who">지금 비교 중 · ' + (sides.length > 1 ? "두 차 모두" : sides[0] + " 차") + "</span>"
+        : "";
+      var meter = "";
+      if (c.meter) {
+        var bar = function (label, band) {
+          if (!c.meter.range) { var mid = (band[0] + band[1]) / 2; band = [mid - 3, mid + 3]; }
+          return '<div class="vs-meter-row"><span>' + label + '</span><div class="vs-mtrack' + (c.meter.range ? " range" : "") + '"><i style="left:' + band[0] + "%;width:" + Math.max(band[1] - band[0], 4) + '%"></i></div></div>';
+        };
+        meter = '<div class="vs-meter"><div class="vs-mends"><em>부드러움</em><em>단단함</em></div>' +
+          bar("잔잔한 노면", c.meter.small) + bar("큰 요철 · 빠른 주행", c.meter.big) + "</div>";
+      }
+      return '<article class="vs-vcol' + (sides.length ? " mine" : "") + '">' + badge +
+        (c.img ? '<div class="vs-vimg"><img src="' + esc(src(c.img, "sm")) + '" alt="' + esc(c.cap || c.label) + '" loading="lazy" decoding="async">' + (c.cap ? "<small>" + esc(c.cap) + "</small>" : "") + "</div>" : "") +
+        "<h4>" + esc(c.label) + '</h4><p class="vs-vsub">' + esc(c.sub) + "</p>" + meter +
+        '<ul class="vs-vpoints">' + c.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></article>";
+    }).join("");
+    return '<section class="vs-versus"><p class="vs-k">차이점 한눈에 보기</p><h3>' + esc(v.title) + "</h3>" +
+      (v.intro ? '<p class="vs-vintro">' + esc(v.intro) + "</p>" : "") +
+      '<div class="vs-vcols n' + v.cols.length + '">' + cols + "</div>" +
+      (v.meterNote ? '<p class="vs-vmeter-note">' + esc(v.meterNote) + "</p>" : "") +
+      (v.summary ? '<p class="vs-vsum">' + esc(v.summary) + "</p>" : "") +
+      (v.note ? '<p class="vs-note">' + esc(v.note) + "</p>" : "") + "</section>";
+  }
   function topicBody(t) {
     var g = groupById[t.group];
     var idx = T.topics.indexOf(t);
@@ -256,6 +336,7 @@
       '<div class="vs-text"><p class="vs-k">' + esc(g.name) + " · " + esc(t.en) + "</p>" +
       '<h2 id="vs-m-title">' + esc(t.name) + '</h2><p class="vs-m-lead">' + esc(t.line) + "</p>" +
       '<div class="vs-easy"><b>쉽게 말하면</b><p>' + esc(t.easy) + "</p></div>" +
+      versusHtml(t.versus) +
       "<h3>무엇인가요</h3><p>" + esc(t.what) + "</p>" +
       "<h3>이렇게 좋습니다</h3>" + list(t.why, "vs-checks") +
       pride + relHtml +
@@ -323,7 +404,9 @@
       var img = box && box.querySelector("img");
       if (!img) return;
       var want = view.getAttribute("data-view");
-      img.src = img.getAttribute("data-" + want);
+      var to = img.getAttribute("data-" + want);
+      if (!to) return;
+      img.src = to;
       box.querySelectorAll("[data-view]").forEach(function (b) { b.classList.toggle("on", b === view); });
     }
   });
@@ -352,6 +435,9 @@
     hero: hero,
     diffSection: diffSection,
     trimSection: trimSection,
+    modelSection: modelSection,
+    modelInfo: modelInfo,
+    setRows: setRows,
     chip: chip,
     tagsFor: tagsFor,
     eInfo: eInfo,
