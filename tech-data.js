@@ -1357,6 +1357,87 @@ window.BENZ_TECH = {
       ],
       wheels: [],
       mats: []
+    },
+    {
+      id: "eqa", label: "EQA 250", test: "^EQA", source: "EQA 카탈로그 2026.09",
+      trims: [
+        { key: "amg", label: "EQA 250 AMG Line", test: "AMG Line", front: "q-eqa-amg-front", rear: "q-eqa-rear", int: "q-eqa-amg-int",
+          note: "프로그레시브에 18인치 AMG 휠과 스포티한 실내를 더한 구성입니다. 전륜구동, 1회 충전 주행거리 367km(정부 공인 복합)입니다." },
+        { key: "prog", label: "EQA 250 Progressive", test: ".", front: "q-eqa-prog-front", rear: "q-eqa-rear", int: "q-eqa-prog-int",
+          note: "벤츠 전기차의 입문 모델입니다. 전륜구동, 최고출력 140kW, 1회 충전 주행거리 367km(정부 공인 복합)이며, 19인치 5스포크 휠이 기본입니다." }
+      ],
+      wheels: [
+        { id: "q-eqa-w-r39", label: "19인치 5 스포크 경량 알로이 (R39)", base: "카탈로그 휠 사양 · Progressive 기본", rows: ["Progressive"] },
+        { id: "q-eqa-w-rqq", label: "18인치 AMG 5 트윈 스포크 경량 알로이 (RQQ)", base: "카탈로그 휠 사양 · AMG Line", rows: ["AMG Line"] },
+        { id: "q-eqa-w-04r", label: "18인치 멀티 스포크 경량 알로이 (04R)", base: "카탈로그 휠 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "eqb", label: "EQB 300 4MATIC", test: "^EQB", source: "EQB 카탈로그 2026.04",
+      trims: [
+        { key: "amg", label: "EQB 300 4MATIC AMG Line", test: "AMG Line", front: "q-eqb-amg-front", rear: "q-eqb-rear", int: "q-eqb-amg-int",
+          note: "19인치 AMG 10스포크 휠이 기본인 스포티한 구성입니다. 4MATIC 사륜구동, 트렁크 495~1,710L의 소형 전기 SUV입니다." },
+        { key: "prog", label: "EQB 300 4MATIC Progressive", test: ".", front: "q-eqb-prog-front", rear: "q-eqb-rear", int: "q-eqb-prog-int",
+          note: "4MATIC 사륜구동, 트렁크 495~1,710L의 소형 전기 SUV입니다. 19인치 5스포크 휠이 기본입니다." }
+      ],
+      wheels: [
+        { id: "q-eqb-w-r39", label: "19인치 5 스포크 경량 알로이 (R39)", base: "Progressive 기본", rows: ["Progressive"] },
+        { id: "q-eqb-w-rvy", label: "19인치 AMG 10 스포크 경량 알로이 (RVY)", base: "AMG Line 기본", rows: ["AMG Line"] },
+        { id: "q-eqb-w-04r", label: "18인치 멀티 스포크 경량 알로이 (04R)", base: "Progressive 선택 사양" }
+      ],
+      mats: []
+    },
+    {
+      id: "eqe", label: "EQE 350+ (세단)", test: "^EQE 350\\+$", source: "EQE 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "EQE 350+", test: ".", front: "q-eqe-front", rear: "q-eqe-rear", int: "q-eqe-int",
+          note: "벤츠 전기 비즈니스 세단입니다. 후륜구동, 19인치 AMG 5 트윈 스포크 휠이 기본이며, 리어 액슬 스티어링(최대 4.5°)과 190개 LED 액티브 앰비언트 라이트가 카탈로그에 소개되어 있습니다." }
+      ],
+      wheels: [
+        { id: "q-eqe-w-rrh", label: "19인치 AMG 5 트윈 스포크 경량 알로이 (RRH)", base: "카탈로그 기본 사양", std: ["std"] }
+      ],
+      mats: []
+    },
+    {
+      id: "eqes", label: "EQE SUV", test: "^EQE 350\\+ SUV|^EQE 500", source: "EQE SUV 카탈로그 2026.04",
+      trims: [
+        { key: "500", label: "EQE 500 4MATIC SUV", test: "^EQE 500", front: "q-eqes-500-front", rear: "q-eqes-rear", int: "q-eqes-int",
+          note: "4MATIC 사륜구동에 21인치 AMG 멀티 스포크 휠이 기본인 EQE SUV 상위 모델입니다. 최대 5인 탑승, 10° 리어 액슬 스티어링이 카탈로그에 소개되어 있습니다." },
+        { key: "350", label: "EQE 350+ SUV", test: ".", front: "q-eqes-350-front", rear: "q-eqes-rear", int: "q-eqes-int",
+          note: "후륜구동, 20인치 5스포크 휠이 기본인 전기 SUV입니다. 트렁크 520~1,675L, 최대 5인 탑승입니다." }
+      ],
+      wheels: [
+        { id: "q-eqes-w-r61", label: "20인치 5 스포크 경량 알로이 (R61)", base: "EQE 350+ SUV 기본", rows: ["^EQE 350"] },
+        { id: "q-eqes-w-rwx", label: "21인치 AMG 멀티 스포크 경량 알로이 (RWX)", base: "EQE 500 4MATIC SUV 기본", rows: ["^EQE 500"] }
+      ],
+      mats: []
+    },
+    {
+      id: "eqss", label: "EQS 450 · 580 SUV", test: "^EQS \\d+ 4MATIC SUV", source: "EQS SUV 카탈로그 2026.09",
+      trims: [
+        { key: "580", label: "EQS 580 4MATIC SUV", test: "^EQS 580", front: "q-eqss-front", int: "q-eqss-int",
+          note: "최고출력 400kW, 1회 충전 주행거리 483km(정부 공인 복합)의 사륜구동 대형 전기 SUV입니다. 최대 7인까지 탈 수 있는 3열 구성이 소개되어 있습니다." },
+        { key: "450", label: "EQS 450 4MATIC SUV", test: ".", front: "q-eqss-front", int: "q-eqss-int",
+          note: "최고출력 265kW, 1회 충전 주행거리 503km(정부 공인 복합)의 사륜구동 대형 전기 SUV입니다. 최대 7인까지 탈 수 있는 3열 구성이 소개되어 있습니다." }
+      ],
+      wheels: [
+        { id: "q-eqss-w-19r", label: "21인치 5 스포크 경량 알로이 (19R)", base: "카탈로그 휠 사양" },
+        { id: "q-eqss-w-rpe", label: "22인치 AMG 멀티 스포크 경량 알로이 (RPE)", base: "카탈로그 휠 사양 · AMG Line" }
+      ],
+      mats: []
+    },
+    {
+      id: "eg", label: "G 580 (EQ 테크놀로지)", test: "^G 580", source: "G-클래스 with EQ 테크놀로지 카탈로그 2026.04",
+      trims: [
+        { key: "std", label: "G 580 with EQ Technology", test: ".", front: "q-eg-front", rear: "q-eg-rear", int: "q-eg-int",
+          note: "4개의 전기 모터가 바퀴마다 힘을 나눠 주는 전기 G-클래스입니다. 제자리에서 최대 720° 도는 G-턴과 배터리를 지키는 특수 언더가드가 특징이며, 20인치 AMG 10스포크 휠이 기본입니다." }
+      ],
+      wheels: [
+        { id: "q-eg-w-rn7", label: "20인치 AMG 10 스포크 경량 알로이 (RN7)", base: "카탈로그 기본 사양", std: ["std"] },
+        { id: "q-eg-w-rn8", label: "20인치 AMG 10 스포크, 하이 글로스 블랙 (RN8)", base: "유료 옵션" }
+      ],
+      mats: []
     }
 
   ]
