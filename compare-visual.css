@@ -631,3 +631,53 @@
   .vs-trims.n4 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1000px) { .vs-trims.n4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* 26·27년식 차이: 비교를 열자마자 먼저 보이게 */
+.year-change {
+  margin: 1.25rem 0 0;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 1.25rem;
+  border: 2px solid rgba(228, 203, 134, 0.55);
+  background: linear-gradient(180deg, rgba(228, 203, 134, 0.14) 0%, rgba(16, 34, 44, 0.35) 100%);
+}
+.year-kicker {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #e4cb86;
+}
+.year-change h3 {
+  margin-top: 0.35rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #fff;
+}
+.year-pair {
+  margin-top: 0.45rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: #7eb6ff;
+}
+.year-lead,
+.year-price,
+.year-warn,
+.year-src {
+  margin-top: 0.7rem;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #e8eef1;
+}
+.year-warn { color: #e4cb86; font-weight: 700; }
+.year-src { font-size: 15px; color: #a4aaae; }
+.year-stock,
+.year-list {
+  margin-top: 0.75rem;
+  padding-left: 1.15rem;
+  list-style: disc;
+  font-size: 17px;
+  line-height: 1.65;
+}
+.year-stock li + li,
+.year-list li + li { margin-top: 0.45rem; }
+.year-stock { color: #ffb4ae; font-weight: 700; }

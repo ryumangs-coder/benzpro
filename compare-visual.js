@@ -57,7 +57,11 @@
   function cleanName(row) { return String(row.name || "").trim(); }
   function modelOf(row) {
     var name = cleanName(row);
-    for (var i = 0; i < MODELS.length; i++) if (MODELS[i]._t.test(name)) return MODELS[i];
+    var ev = /electric/i.test(name);
+    for (var i = 0; i < MODELS.length; i++) {
+      if (ev && !/electric/i.test(MODELS[i].test || "")) continue;
+      if (MODELS[i]._t.test(name)) return MODELS[i];
+    }
     return null;
   }
   function trimOf(model, row) {

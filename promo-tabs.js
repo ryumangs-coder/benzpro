@@ -110,20 +110,20 @@
 
   var families = [
     { group: "sedan", name: "A클래스", line: "도심에서 쓰기 좋은 작은 세단과 해치백입니다.", prefix: "A ", car: "A, CLA, GLA, GLB" },
-    { group: "sedan", name: "CLA", line: "지붕이 낮은 쿠페형 세단입니다.", prefix: "CLA ", car: "A, CLA, GLA, GLB" },
+    { group: "sedan", name: "CLA", line: "26년식은 재고가 없습니다. 지금 고르는 차는 27년식 체인지 모델입니다.", prefix: "CLA ", car: "A, CLA, GLA, GLB" },
     { group: "sedan", name: "C클래스", line: "가장 많이 비교하는 중형 세단입니다.", prefix: "C ", car: "C-Class" },
     { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
-    { group: "sedan", name: "S클래스", line: "플래그십 세단입니다. 2026년식은 아래 할인으로 바로 견적이 나옵니다.", prefix: "S ", car: "S-Class" },
-    { group: "suv", name: "GLA", line: "가장 작은 SUV입니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
+    { group: "sedan", name: "S클래스", line: "26년식 일반 모델은 판매가 끝났습니다. 지금 고르는 차는 27년식입니다.", prefix: "S ", car: "S-Class" },
+    { group: "suv", name: "GLA", line: "26년식은 재고가 없습니다. 27년식 GLA만 선택할 수 있습니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
     { group: "suv", name: "GLB", line: "2열과 3열을 고를 수 있는 컴팩트 SUV입니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
-    { group: "suv", name: "GLC", line: "가장 많이 찾는 중형 SUV입니다.", prefix: "GLC ", not: "Coup", car: "GLC" },
-    { group: "suv", name: "GLC 쿠페", line: "지붕선이 내려가는 GLC입니다.", prefix: "GLC ", has: "Coup", car: "GLC" },
+    { group: "suv", name: "GLC", line: "26년식 일반 모델은 판매가 끝났습니다. AMG 43만 남아 있고, 일반 GLC는 27년식만 선택할 수 있습니다.", prefix: "GLC ", not: ["Coup", "electric"], car: "GLC" },
+    { group: "suv", name: "GLC 쿠페", line: "26년식 일반 쿠페는 판매가 끝났습니다. AMG 43 쿠페만 남아 있고, 일반 쿠페는 27년식만 선택할 수 있습니다.", prefix: "GLC ", has: "Coup", not: "electric", car: "GLC" },
     { group: "suv", name: "GLE", line: "공간이 더 필요한 중대형 SUV입니다.", prefix: "GLE ", not: "Coup", car: "GLE" },
     { group: "suv", name: "GLE 쿠페", line: "GLE의 쿠페형입니다.", prefix: "GLE ", has: "Coup", car: "GLE" },
     { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
     { group: "suv", name: "G클래스", line: "각진 오프로더입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 450", car: "상담 후 결정" },
     { group: "ev", name: "EQA", line: "작은 전기 SUV입니다.", prefix: "EQA", car: "상담 후 결정" },
-    { group: "ev", name: "EQB", line: "3열을 볼 수 있는 전기 컴팩트입니다.", prefix: "EQB", car: "상담 후 결정" },
+    { group: "ev", name: "EQB", line: "26년식 EQB는 판매가 끝났습니다. 이 할인은 지난 조건입니다.", prefix: "EQB", car: "상담 후 결정" },
     { group: "ev", name: "EQE", line: "전기 세단과 SUV가 있습니다.", prefix: "EQE", car: "상담 후 결정" },
     { group: "ev", name: "EQS", line: "큰 전기 SUV입니다.", prefix: "EQS", car: "상담 후 결정" },
     { group: "ev", name: "G 580", line: "전기 G클래스입니다.", prefix: "G 580", car: "상담 후 결정" },
@@ -141,7 +141,7 @@
     { group: "amg", name: "AMG GT", line: "2도어 스포츠카입니다.", prefix: "AMG GT", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG SL", line: "지붕이 열리는 스포츠카입니다.", prefix: "AMG SL", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG G클래스", line: "G클래스의 고성능입니다.", prefix: "AMG G ", kind: "amg", car: "AMG" },
-    { group: "maybach", name: "마이바흐 S클래스", line: "뒷좌석이 중심인 플래그십입니다.", prefix: "Maybach S ", kind: "maybach", car: "MAYBACH" },
+    { group: "maybach", name: "마이바흐 S클래스", line: "26년식은 S 580과 S 680만 재고가 있습니다. 27년식도 일반 예약입니다.", prefix: "Maybach S ", kind: "maybach", car: "MAYBACH" },
     { group: "maybach", name: "마이바흐 GLS", line: "3열 마이바흐입니다.", prefix: "Maybach GLS", kind: "maybach", car: "MAYBACH" },
     { group: "maybach", name: "마이바흐 EQS", line: "전기 마이바흐 SUV입니다.", prefix: "Maybach EQS", kind: "maybach", car: "MAYBACH" },
     { group: "maybach", name: "마이바흐 SL", line: "오픈 마이바흐입니다.", prefix: "Maybach SL", kind: "maybach", car: "MAYBACH" }
@@ -155,20 +155,29 @@
     { id: "maybach", label: "마이바흐" }
   ];
 
-  function rowsOf(f) {
-    if (!f.prefix) return [];
+  function matchFamily(f, r) {
+    var n = r[2];
+    if (n.toLowerCase().indexOf(f.prefix.toLowerCase()) !== 0) return false;
+    if (f.has && n.toLowerCase().indexOf(f.has.toLowerCase()) === -1) return false;
+    var nots = f.not == null ? [] : Array.isArray(f.not) ? f.not : [f.not];
+    if (nots.some(function (x) { return n.toLowerCase().indexOf(String(x).toLowerCase()) !== -1; })) return false;
+    var amg = n.indexOf("AMG ") === 0;
+    var may = n.indexOf("Maybach") !== -1;
     var kind = f.kind || "base";
+    if (kind === "base" && (amg || may)) return false;
+    if (kind === "amg" && !amg) return false;
+    if (kind === "maybach" && !may) return false;
+    return true;
+  }
+  function stockOf(r) {
+    return window.BenzStock ? window.BenzStock.of({ my: r[1], name: r[2], cash: r[4] }) : { code: "live" };
+  }
+  function rowsOf(f, includeSold) {
+    if (!f.prefix) return [];
     return window.OCTOBER_2026.models.filter(function (r) {
-      var n = r[2];
-      if (n.toLowerCase().indexOf(f.prefix.toLowerCase()) !== 0) return false;
-      if (f.has && n.toLowerCase().indexOf(f.has.toLowerCase()) === -1) return false;
-      if (f.not && n.toLowerCase().indexOf(f.not.toLowerCase()) !== -1) return false;
-      var amg = n.indexOf("AMG ") === 0;
-      var may = n.indexOf("Maybach") !== -1;
-      if (kind === "base" && (amg || may)) return false;
-      if (kind === "amg" && !amg) return false;
-      if (kind === "maybach" && !may) return false;
-      return true;
+      if (!matchFamily(f, r)) return false;
+      if (includeSold) return true;
+      return stockOf(r).code !== "soldout";
     });
   }
   function won(n) {
@@ -186,11 +195,13 @@
     return "index.html?" + params.toString() + "#consulting";
   }
   function card(f) {
-    var rows = rowsOf(f);
-    if (!f.staticPrice && !rows.length) return "";
+    var liveRows = rowsOf(f, false);
+    var allRows = rowsOf(f, true);
+    if (!f.staticPrice && !liveRows.length && !allRows.length) return "";
+    var soldOutOnly = !f.staticPrice && !liveRows.length && allRows.length;
     var best = null;
     var bestRow = null;
-    rows.forEach(function (r) {
+    liveRows.forEach(function (r) {
       var d = deal(r);
       if (!d) return;
       if (!best || d.maxMan < best.maxMan) {
@@ -198,23 +209,51 @@
         bestRow = r;
       }
     });
+    if (soldOutOnly) {
+      var past = allRows[0];
+      var pastHref = "models.html?archive=1&pick=" + encodeURIComponent(past[2]) + "&my=" + encodeURIComponent(past[1]);
+      var finderHref = (function () {
+        var params = new URLSearchParams();
+        params.set("prefix", f.prefix);
+        params.set("kind", f.kind || "base");
+        if (f.has) params.set("has", f.has);
+        if (f.not) params.set("not", Array.isArray(f.not) ? f.not.join(",") : f.not);
+        return "prices.html?" + params.toString() + "#finder";
+      })();
+      return (
+        '<article class="rounded-3xl bg-white p-5 sold-card">' +
+        (window.BenzPhoto ? window.BenzPhoto.html(past[2], "wide mb-3") : "") +
+        '<p class="text-[14px] font-semibold text-[#ffb4ae]">판매 소진</p>' +
+        '<h3 class="mt-1 text-[24px] font-bold leading-snug">' + f.name + "</h3>" +
+        '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">' + f.line + "</p>" +
+        '<p class="mt-3 text-[18px] font-bold text-[#ffb4ae]">이 차종으로 구매 문의는 받지 않습니다.</p>' +
+        '<div class="promo-actions">' +
+        '<a class="act-line" href="' + finderHref + '"><span>지난 프로모션 보기</span></a>' +
+        '<a class="act-line" href="' + pastHref + '"><span>비교에서 지난 재고 보기</span></a>' +
+        "</div></article>"
+      );
+    }
     if (!f.staticPrice && !best) return "";
+    var noDeal = best && !best.rate;
     var priceHtml = f.staticPrice
       ? '<p class="mt-3 text-[20px] font-bold">' + (f.priceLead == null ? "정상가격 " : f.priceLead) + f.staticPrice + "</p>"
-      : '<div class="price-hit">' +
-        (best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
-        '<span class="k was-k">정상가격</span>' +
-        '<span class="k now-k">할인 적용 실구매</span>' +
-        '<b class="was">' + won(best.priceMan) + "</b>" +
-        '<span class="arrow" aria-hidden="true">→</span>' +
-        '<b class="now">' + won(best.maxMan) + "</b>" +
-        "</div>" +
-        '<p class="mt-2 text-[15px] leading-snug text-[#A4AAAE]">' +
-        showName(best.name) +
-        " 기준" +
-        (best.earlyMan != null ? " · 7월 1일 이전 통관 " + won(best.earlyMan) : "") +
-        "</p>";
-    var voucher = (f.group === "ev" && !f.staticPrice) || f.name === "마이바흐 EQS"
+      : noDeal
+        ? '<p class="mt-3 text-[20px] font-bold">정상가격 ' + won(best.priceMan) + "</p>" +
+          '<p class="mt-2 text-[16px] leading-relaxed text-[#C5CED3]">할인 프로모션은 아직 없습니다. ' + showName(best.name) + " 기준입니다.</p>"
+        : '<div class="price-hit">' +
+          (best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
+          '<span class="k was-k">정상가격</span>' +
+          '<span class="k now-k">할인 적용 실구매</span>' +
+          '<b class="was">' + won(best.priceMan) + "</b>" +
+          '<span class="arrow" aria-hidden="true">→</span>' +
+          '<b class="now">' + won(best.maxMan) + "</b>" +
+          "</div>" +
+          '<p class="mt-2 text-[15px] leading-snug text-[#A4AAAE]">' +
+          showName(best.name) +
+          " 기준" +
+          (best.earlyMan != null ? " · 7월 1일 이전 통관 " + won(best.earlyMan) : "") +
+          "</p>";
+    var voucher = (f.group === "ev" && !f.staticPrice && !soldOutOnly) || f.name === "마이바흐 EQS"
       ? '<p class="mt-2 text-[16px] font-semibold text-[#E4CB86]">벤츠 금융으로 사면 충전 바우처 100만원</p>'
       : "";
     var seeHref = f.href || (function () {
@@ -222,23 +261,26 @@
       params.set("prefix", f.prefix);
       params.set("kind", f.kind || "base");
       if (f.has) params.set("has", f.has);
-      if (f.not) params.set("not", f.not);
+      if (f.not) params.set("not", Array.isArray(f.not) ? f.not.join(",") : f.not);
       return "prices.html?" + params.toString() + "#finder";
     })();
     var quoteHref = bestRow
       ? "quote.html?name=" + encodeURIComponent(bestRow[2]) + "&my=" + encodeURIComponent(bestRow[1])
-      : "preorder.html#reserve";
+      : (f.href || "quote.html");
     var ico =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 3 4 12.5V20h7.5L21 10.5 13.5 3zM8.8 16.2a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8z"/></svg>';
     var icoQuote =
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 3h10l4 4v14H5V3zm2 2v14h10V8h-3V5H7zm1 6h8v2H8v-2zm0 4h6v2H8v-2z"/></svg>';
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 3h10l4 4v14H5V3zm2 2v14h10V8h-3V5H7zm1 6h8v2H8v-2z"/></svg>';
     var icoAsk =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H5z"/></svg>';
+    var askHref = consultHref(f);
+    var askLabel = "구매 문의";
+    var quoteLabel = "견적 확인";
     return (
       '<article class="rounded-3xl bg-white p-5">' +
       (bestRow && window.BenzPhoto ? window.BenzPhoto.html(bestRow[2], "wide mb-3") : "") +
       '<p class="text-[14px] font-semibold text-[#E4CB86]">' +
-      (f.staticPrice ? "사전예약" : rows.length + "개 트림") +
+      (noDeal ? "할인 정보가 아직 없습니다" : liveRows.length + "개 트림") +
       "</p>" +
       '<h3 class="mt-1 text-[24px] font-bold leading-snug">' +
       f.name +
@@ -250,8 +292,8 @@
       priceHtml +
       '<div class="promo-actions">' +
       '<a class="act-gold" href="' + seeHref + '">' + ico + "<span>" + (f.href ? "차 설명 보기" : "할인 확인") + "</span></a>" +
-      '<a class="act-line" href="' + quoteHref + '">' + icoQuote + "<span>견적 확인</span></a>" +
-      '<a class="act-line" href="' + consultHref(f) + '">' + icoAsk + "<span>구매 문의</span></a>" +
+      '<a class="act-line" href="' + quoteHref + '">' + icoQuote + "<span>" + quoteLabel + "</span></a>" +
+      '<a class="act-line" href="' + askHref + '">' + icoAsk + "<span>" + askLabel + "</span></a>" +
       "</div></article>"
     );
   }

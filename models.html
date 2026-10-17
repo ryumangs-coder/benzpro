@@ -7,8 +7,8 @@
     <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="site.css?v=20261017a" />
-    <link rel="stylesheet" href="compare-visual.css?v=20261017a" />
+    <link rel="stylesheet" href="site.css?v=20261018a" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261018a" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -55,9 +55,14 @@
           <select id="right" class="guide-pick"></select>
         </label>
       </div>
+      <label class="mt-3 flex items-start gap-3 text-[16px] leading-relaxed text-[#C5CED3]">
+        <input id="show-archive" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#E4CB86]" />
+        <span>지난 재고·지난 프로모션 보기<span class="mt-1 block text-[15px] text-[#A4AAAE]">판매가 끝난 26년식은 처음에 숨깁니다. 예전 할인이 궁금하면 켜 주세요.</span></span>
+      </label>
 
       <nav class="vs-jump" aria-label="이 페이지 바로가기">
         <a href="#vs-hero">두 차 한눈에</a>
+        <a href="#year-change">연식이 바뀐 점</a>
         <a href="#opt-shared">기본으로 들어 있는 사양</a>
         <a href="#vs-diff">눈으로 보는 차이</a>
         <a href="#tech-library">벤츠 기술 이야기</a>
@@ -100,15 +105,17 @@
       </div>
     </div>
 
-    <script src="october-2026.js?v=20261012b"></script>
+    <script src="october-2026.js?v=20261018b"></script>
     <script src="quote.js?v=20261012b"></script>
+    <script src="stock.js?v=20261018b"></script>
     <script src="guide-data.js?v=20261012e"></script>
     <script src="approach-specs.js?v=20261016b"></script>
     <script src="approach-options.js?v=20261017a"></script>
+    <script src="preorder-guides.js?v=20261018b"></script>
     <script src="option-concepts.js?v=20261017c"></script>
     <script src="option-words.js?v=20261016a"></script>
     <script src="tech-data.js?v=20261016e"></script>
-    <script src="compare-visual.js?v=20261017e"></script>
+    <script src="compare-visual.js?v=20261018b"></script>
     <script src="colors.js?v=20261017d"></script>
     <script>
       (function () {
@@ -197,11 +204,12 @@
           return "index.html?" + params.toString() + "#consulting";
         }
         function showName(name) {
-          var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디");
+          var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디").replace(/ electric/g, " 일렉트릭");
           if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
           return s;
         }
         function eqMemo(row) {
+          if (String(row.name || "").indexOf("electric") !== -1) return "";
           return row.seg === "EQ" ? " 벤츠 금융으로 사면 충전 바우처 100만원입니다." : "";
         }
         function normName(s) {
@@ -209,6 +217,7 @@
             .toUpperCase()
             .replace(/\([^)]*\)/g, "")
             .replace(/É/g, "E")
+            .replace(/AMG LINE\+/g, "AMGLINEPLUS")
             .replace(/4MATIC\+/g, "4MATICPLUS")
             .replace(/[^A-Z0-9가-힣]/g, "");
         }
@@ -220,11 +229,13 @@
           var n = normName(row.name);
           var exact = book[row.my + "|" + n];
           if (exact) return exact;
+          var ev = n.indexOf("ELECTRIC") !== -1;
           var best = null;
           var score = 0;
           Object.keys(book).forEach(function (key) {
             if (key.indexOf(row.my + "|") !== 0) return;
             var g = key.split("|")[1];
+            if ((g.indexOf("ELECTRIC") !== -1) !== ev) return;
             var s = 0;
             if (g === n) s = 1000 + g.length;
             else if (g.indexOf(n) === 0 || n.indexOf(g) === 0) s = Math.min(g.length, n.length);
@@ -246,27 +257,84 @@
 
         var left = document.getElementById("left");
         var right = document.getElementById("right");
-        var options = rows
-          .map(function (row) {
-            return '<option value="' + row.i + '">' + showName(row.name) + " · " + row.my + "</option>";
-          })
-          .join("");
-        left.innerHTML = options;
-        right.innerHTML = options;
-        function findIndex(part) {
-          var hit = rows.filter(function (row) { return row.name.indexOf(part) !== -1; })[0];
+        var archiveBox = document.getElementById("show-archive");
+        var showArchive = false;
+        function isLive(row) {
+          return !window.BenzStock || window.BenzStock.live(row);
+        }
+        function optionLabel(row) {
+          var st = window.BenzStock ? window.BenzStock.of(row) : { code: "live" };
+          var tag = st.code === "soldout" ? " · 판매 소진" : "";
+          return showName(row.name) + " · " + row.my + tag;
+        }
+        function sortRows(list) {
+          return list.slice().sort(function (a, b) {
+            var sa = window.BenzStock ? window.BenzStock.seriesOf(a.name) : a.name;
+            var sb = window.BenzStock ? window.BenzStock.seriesOf(b.name) : b.name;
+            var aS = sa === "S" || sa === "Maybach S" ? 0 : 1;
+            var bS = sb === "S" || sb === "Maybach S" ? 0 : 1;
+            if (aS !== bS && (sa === "S" || sb === "S" || sa === "Maybach S" || sb === "Maybach S")) {
+              /* S클래스는 27년식이 먼저 보이게 목록 앞쪽에 둡니다. */
+            }
+            if (a.my !== b.my) return a.my === "MY27" ? -1 : 1;
+            if (sa !== sb) return sa.localeCompare(sb);
+            return a.i - b.i;
+          });
+        }
+        function fillSelects(keep) {
+          var live = sortRows(rows.filter(isLive));
+          var past = sortRows(rows.filter(function (row) { return !isLive(row); }));
+          var html = "";
+          if (live.length) {
+            html += '<optgroup label="지금 고를 수 있는 차">';
+            live.forEach(function (row) {
+              html += '<option value="' + row.i + '">' + optionLabel(row) + "</option>";
+            });
+            html += "</optgroup>";
+          }
+          if (showArchive && past.length) {
+            html += '<optgroup label="지난 재고 · 지난 프로모션">';
+            past.forEach(function (row) {
+              html += '<option value="' + row.i + '">' + optionLabel(row) + "</option>";
+            });
+            html += "</optgroup>";
+          }
+          var leftKeep = keep ? left.value : "";
+          var rightKeep = keep ? right.value : "";
+          left.innerHTML = html;
+          right.innerHTML = html;
+          if (keep) {
+            if ([].some.call(left.options, function (opt) { return opt.value === leftKeep; })) left.value = leftKeep;
+            if ([].some.call(right.options, function (opt) { return opt.value === rightKeep; })) right.value = rightKeep;
+          }
+        }
+        function findIndex(part, year) {
+          var hit = rows.filter(function (row) {
+            return row.name.indexOf(part) !== -1 && (!year || row.my === year);
+          })[0];
           return hit ? hit.i : 0;
         }
-        left.value = String(findIndex("E 200 Exclusive"));
-        right.value = String(findIndex("GLC 300"));
+        fillSelects(false);
+        left.value = String(findIndex("E 200 Exclusive", "MY26"));
+        right.value = String(findIndex("E 200 AMG Line", "MY26"));
         (function openFromPromo() {
           var query = new URLSearchParams(location.search);
           var pickName = query.get("pick");
           var pickYear = query.get("my");
+          if (query.get("archive") === "1") {
+            showArchive = true;
+            archiveBox.checked = true;
+            fillSelects(true);
+          }
           if (!pickName) return;
           var picked = rows.filter(function (row) {
             return row.name === pickName && (!pickYear || row.my === pickYear);
           })[0];
+          if (picked && !isLive(picked) && !showArchive) {
+            showArchive = true;
+            archiveBox.checked = true;
+            fillSelects(true);
+          }
           if (picked) left.value = String(picked.i);
         })();
 
@@ -290,16 +358,20 @@
           if (!g) return 0;
           return usefulOptions(g.options).length * 20 + ((g.gear && g.gear.length) || 0);
         }
-        function featureRecord(row) {
+        function featureRecord(row, allowBorrow) {
           var book = window.GUIDE_DATA || {};
           var n = normName(row.name);
           var same = guideOf(row);
-          if (featureRich(same) > 0) return { spec: same, feat: same, borrowed: false };
+          if (featureRich(same) > 0) return { spec: same, feat: same, borrowed: false, thin: false };
+          if (allowBorrow === false) {
+            return { spec: same, feat: same, borrowed: false, thin: true };
+          }
           var best = null;
           var score = 0;
           Object.keys(book).forEach(function (key) {
             var parts = key.split("|");
             if (parts[1] !== n) return;
+            if ((parts[1].indexOf("ELECTRIC") !== -1) !== (n.indexOf("ELECTRIC") !== -1)) return;
             var s = featureRich(book[key]);
             if (!s) return;
             if (parts[0] === row.my) s += 50;
@@ -312,7 +384,8 @@
           return {
             spec: same && same.specs && same.specs.length ? same : feat,
             feat: feat,
-            borrowed: !!(best && (!same || best.year !== same.year))
+            borrowed: !!(best && (!same || best.year !== same.year)),
+            thin: featureRich(same) === 0
           };
         }
         function nameHas(name, token) {
@@ -392,6 +465,7 @@
         }
         function tidySpec(label, value) {
           var v = String(value || "").trim();
+          if (v === "확인 필요") return "정보가 아직 없습니다";
           if (!v || v === "—" || v === "-") return "—";
           if (label === "길이" || label === "너비" || label === "높이" || label === "휠베이스") return tidyMeasure(v, "mm");
           if (label === "공차중량") return tidyMeasure(v, "kg");
@@ -453,6 +527,7 @@
         }
         function gearState(v) {
           var s = String(v || "").trim();
+          if (s === "확인 필요") return { k: "text", t: "정보가 아직 없습니다" };
           if (!s || s === "—" || s === "-" || s === "없음" || s === "미적용" || s === "미포함" || s === "해당 없음") return { k: "no", t: "—" };
           if (s === "기본" || s === "기본 적용" || s === "적용" || s === "포함") return { k: "yes", t: "●" };
           if (s === "선택" || s === "유료 선택") return { k: "opt", t: "선택" };
@@ -525,8 +600,9 @@
             "</div></div>";
         }
         function specBlock(a, b) {
-          var pa = featureRecord(a);
-          var pb = featureRecord(b);
+          var yearPair = !!(window.BenzStock && window.BenzStock.shouldBanner(a, b) && a.my !== b.my);
+          var pa = featureRecord(a, yearPair ? false : true);
+          var pb = featureRecord(b, yearPair ? false : true);
           var leftSpecs = mergedSpecs(pa.spec && pa.spec.specs, a);
           var rightSpecs = mergedSpecs(pb.spec && pb.spec.specs, b);
           function rowsFor(listA, listB) {
@@ -620,8 +696,7 @@
             diffs = bDiffs.concat(diffs);
             shared = bShared.concat(shared);
             var checked = basics.items.map(function (item) { return item.label.replace(/ · .*$/, ""); });
-            var thinName = thinA && !thinB ? a.name : (thinB && !thinA ? b.name : "");
-            var noteLines = (thinName ? [{ who: thinName, text: "공개된 세부 사양 자료가 적은 트림입니다. 자료가 없는 항목을 '없음'으로 보이게 하지 않으려고, 어프로치북에서 확인된 기본 사양만 비교했습니다. 그 밖의 항목은 상담에서 같이 확인합니다." }] : []).concat(basics.notes).map(function (n) {
+            var noteLines = basics.notes.map(function (n) {
               return "<li>" + (n.who ? "<b>" + esc(showName(n.who)) + "</b> · " : "") + esc(n.text) + "</li>";
             }).join("");
             basicNotes = '<div class="opt-basic"><p class="opt-basic-h">기본 사양 다시 확인 완료 · 어프로치북 기준</p>' +
@@ -629,9 +704,7 @@
               (noteLines ? '<ul class="opt-basic-list">' + noteLines + "</ul>" : '<p class="opt-basic-p">대조 결과, 이름만 다르고 같은 기능인 항목은 따로 없었습니다.</p>') + "</div>";
           }
           lastDiffs = diffs.slice();
-          var borrowed = pa.borrowed || pb.borrowed
-            ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">같은 이름 트림 중, 사양이 공개된 연식 표를 가져왔습니다.</p>'
-            : "";
+            var borrowed = "";
           var head = '<p class="mt-2 text-[15px] font-bold leading-relaxed">왼쪽 ' + esc(showName(a.name)) + " · 오른쪽 " + esc(showName(b.name)) + '</p><div class="opt-item opt-head"><span>사양</span><b>왼쪽</b><b>오른쪽</b></div>';
           var diffHtml = diffs.length
             ? '<h4 class="mt-4 text-[18px] font-bold">트림이 다른 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">청록색 칸이 두 차의 차이입니다. 슈퍼스크린이 있는 줄은 금색입니다. 이름 아래 문장은 그 기능이 하는 일입니다.</p><div class="opt-board">' + head + optionGroups(diffs) + "</div>"
@@ -843,7 +916,7 @@
         function familyStem(name) {
           return String(name)
             .replace(/\(.*?\)/g, "")
-            .replace(/Avantgarde|Exclusive|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Final Edition|Cabriolet|Coupé|Coupe|Long/gi, "")
+            .replace(/Avantgarde|Exclusive|AMG Line\+?|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Final Edition|Cabriolet|Coupé|Coupe|Long/gi, "")
             .replace(/\s+/g, " ")
             .trim();
         }
@@ -973,11 +1046,11 @@
               "이 " + row.my + " 적용 할인은 " + (q.rate == null ? "비어 있습니다" : q.rate + "%입니다") + ". 같은 이름 " + twin.my + " 할인은 " + (tq.rate == null ? "비어 있습니다" : tq.rate + "%입니다") + "."
             );
           }
-          if (row.note.indexOf("사전계약") !== -1 || (row.my === "MY27" && row.seg === "S" && (!row.cash || row.cash === "—"))) {
+          if (row.my === "MY27" && (!row.cash || row.cash === "—") && (row.seg === "S" || /^CLA /.test(row.name))) {
             add(
-              "preorder",
+              "no-cash",
               name + "는 왜 기본 할인이 비어 있나요?",
-              name + " " + row.my + "는 사전계약으로 안내된 차입니다. 10월 기본 할인율은 이 비교에 들어가 있지 않습니다. 사전계약 재구매 조건은 상담에서 이 차 기준으로 확인합니다."
+              name + " " + row.my + "는 일반 예약입니다. 이번 달 기본 할인 정보는 아직 없습니다. 재구매 조건은 상담에서 이 차 기준으로 확인합니다."
             );
           }
           if (isGClass(row.name) && (!row.cash || row.cash === "—")) {
@@ -1328,12 +1401,25 @@
           var db = pack(b);
           var specHtml = specBlock(a, b);
           if (window.BenzVisual) window.BenzVisual.setRows([a, b]);
-          var visual = window.BenzVisual
-            ? window.BenzVisual.hero([heroCar(a, da), heroCar(b, db)]) +
-              window.BenzVisual.modelSection([a, b])
+          var yearHtml = window.BenzStock
+            ? window.BenzStock.yearSection(a, b, { showName: showName, won: won })
             : "";
+          var yearJump = document.querySelector('a[href="#year-change"]');
+          if (yearJump) yearJump.hidden = !yearHtml;
+          var visual = window.BenzVisual
+            ? yearHtml +
+              window.BenzVisual.hero([heroCar(a, da), heroCar(b, db)]) +
+              window.BenzVisual.modelSection([a, b])
+            : yearHtml;
           var sentence = function (row, d) {
-            if (d.priceMan == null) return showName(row.name) + "은 권장가가 정해지면 할인이 적용됩니다." + eqMemo(row);
+            var st = window.BenzStock ? window.BenzStock.of(row) : { code: "live" };
+            if (st.code === "soldout") {
+              return showName(row.name) + " " + row.my + "은 판매가 끝났습니다. " + st.reason + " 아래 숫자는 지난 프로모션입니다.";
+            }
+            if (d.priceMan == null) {
+              var extra = row.note && row.note.indexOf("확인 중") === -1 ? " " + row.note.replace(/\.?$/, ".") : "";
+              return showName(row.name) + "은 정보가 아직 없습니다." + extra + eqMemo(row);
+            }
             var how = d.rate == null
               ? "할인을 적용하기 전"
               : d.fin
@@ -1368,6 +1454,17 @@
           renderFaq(a, b, da, db);
         }
 
+        archiveBox.addEventListener("change", function () {
+          showArchive = archiveBox.checked;
+          fillSelects(true);
+          if (![].some.call(left.options, function (opt) { return opt.value === left.value && opt.value; })) {
+            left.value = String(findIndex("E 200 Exclusive", "MY26"));
+          }
+          if (![].some.call(right.options, function (opt) { return opt.value === right.value && opt.value; })) {
+            right.value = String(findIndex("E 200 AMG Line", "MY26"));
+          }
+          drawCompare();
+        });
         left.addEventListener("change", drawCompare);
         right.addEventListener("change", drawCompare);
         document.getElementById("swap").addEventListener("click", function () {

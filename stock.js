@@ -1,0 +1,202 @@
+/* 재고·연식 규칙. 판매 소진은 비교 첫 목록과 프로모션 문의에서 빼 둡니다.
+ * 지난 프로모션은 비교의 '지난 재고'와 가격표에서만 다시 봅니다.
+ * 연식 배너는 확인된 옵션 차이만 적습니다. 모르면 문장을 만들지 않습니다. */
+(function () {
+  function nameOf(row) {
+    return row && (row.name || row[2] || "");
+  }
+  function yearOf(row) {
+    return row && (row.my || row[1] || "");
+  }
+  function isAmg(name) {
+    return String(name).indexOf("AMG ") === 0;
+  }
+  function isSRegular(name) {
+    return /^(S |AMG S )/.test(name);
+  }
+  function seriesOf(name) {
+    name = String(name || "");
+    if (name.indexOf("Maybach EQS") !== -1) return "Maybach EQS";
+    if (name.indexOf("Maybach GLS") !== -1) return "Maybach GLS";
+    if (name.indexOf("Maybach S") !== -1) return "Maybach S";
+    if (name.indexOf("Maybach SL") !== -1) return "Maybach SL";
+    if (name.indexOf("EQA") !== -1) return "EQA";
+    if (name.indexOf("EQB") !== -1) return "EQB";
+    if (name.indexOf("EQE") !== -1) return "EQE";
+    if (name.indexOf("EQS") !== -1) return "EQS";
+    if (name.indexOf("GLA") !== -1) return "GLA";
+    if (name.indexOf("GLB") !== -1) return "GLB";
+    if (name.indexOf("GLC") !== -1 && name.indexOf("electric") !== -1) return "GLC electric";
+    if (name.indexOf("GLC") !== -1) return "GLC";
+    if (name.indexOf("GLE") !== -1) return "GLE";
+    if (name.indexOf("GLS") !== -1) return "GLS";
+    if (name.indexOf("CLA") !== -1 && name.indexOf("electric") !== -1) return "CLA electric";
+    if (name.indexOf("CLA") !== -1) return "CLA";
+    if (name.indexOf("CLE") !== -1) return "CLE";
+    if (name.indexOf("GT") !== -1) return "GT";
+    if (name.indexOf("SL") !== -1) return "SL";
+    if (/^G 450|^AMG G |^G 580/.test(name)) return "G";
+    if (/^AMG S |^S \d/.test(name)) return "S";
+    if (/^AMG E |^E \d/.test(name)) return "E";
+    if (/^AMG C |^C \d/.test(name)) return "C";
+    if (/^AMG A |^A \d/.test(name)) return "A";
+    return name.split(" ")[0] || "";
+  }
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  /* 26년식 판매 소진: 일반 S, 일반 GLC, 일반 GLA·CLA, EQB.
+   * AMG 브랜드는 빼 달라는 요청대로 AMG는 그대로 둡니다. AMG GLC 43만 26년식 GLC 재고.
+   * 마이바흐 S 580·680만 26년식 S 재고입니다. */
+  function of(row) {
+    var my = yearOf(row);
+    var name = nameOf(row);
+
+    if (my === "MY26") {
+      if (isSRegular(name)) {
+        return {
+          code: "soldout",
+          label: "판매 소진",
+          next: "MY27",
+          reason: "26년식 일반 S클래스는 재고가 없습니다. 지금 고르는 차는 27년식입니다.",
+          blockAsk: true
+        };
+      }
+      if (/^GLC /.test(name) && !isAmg(name)) {
+        return {
+          code: "soldout",
+          label: "판매 소진",
+          next: "MY27",
+          reason: "26년식 일반 GLC는 재고가 없습니다. 27년식만 선택할 수 있습니다.",
+          blockAsk: true
+        };
+      }
+      if (/^GLA /.test(name) && !isAmg(name)) {
+        return {
+          code: "soldout",
+          label: "판매 소진",
+          next: "MY27",
+          reason: "26년식 GLA는 재고가 없습니다. 27년식만 선택할 수 있습니다.",
+          blockAsk: true
+        };
+      }
+      if (/^CLA /.test(name) && !isAmg(name)) {
+        return {
+          code: "soldout",
+          label: "판매 소진",
+          next: "MY27",
+          reason: "26년식 CLA는 재고가 없습니다. 27년식 신형 CLA만 선택할 수 있습니다.",
+          blockAsk: true
+        };
+      }
+      if (/^EQB /.test(name)) {
+        return {
+          code: "soldout",
+          label: "판매 소진",
+          next: "",
+          reason: "26년식 EQB는 재고가 없습니다. 이 할인은 지난 조건입니다.",
+          blockAsk: true
+        };
+      }
+    }
+
+    return { code: "live", label: "", next: "", reason: "", blockAsk: false };
+  }
+
+  function live(row) {
+    return of(row).code !== "soldout";
+  }
+
+  function itemFits(item, a, b) {
+    if (typeof item === "string") return true;
+    var names = nameOf(a) + " " + nameOf(b);
+    if (item.need && item.need.length && !item.need.some(function (key) {
+      return names.indexOf(key) !== -1;
+    })) return false;
+    if (item.require && item.require.length && !item.require.every(function (key) {
+      return names.indexOf(key) !== -1;
+    })) return false;
+    if (item.not && item.not.some(function (key) {
+      return names.indexOf(key) !== -1;
+    })) return false;
+    return true;
+  }
+
+  function itemText(item) {
+    return typeof item === "string" ? item : item.text;
+  }
+
+  function noteItems(pack, a, b) {
+    return ((pack && pack.note && pack.note.items) || []).filter(function (item) {
+      return itemFits(item, a, b);
+    }).map(itemText);
+  }
+
+  /* 연식 배너. 확인된 옵션 차이만. */
+  var SERIES = {
+    E: {
+      title: "E클래스 26년식과 27년식",
+      items: [
+        "사이드 볼스터가 가죽에서 아티코 가죽으로 바뀝니다.",
+        "시트백 맵포켓이 빠집니다.",
+        "컵홀더 모양이 바뀝니다.",
+        "어린이 시트 고정 이름이 ISOFIX에서 I-Size로 바뀝니다."
+      ]
+    },
+    GLC: {
+      title: "GLC 26년식과 27년식",
+      items: [
+        {
+          require: ["GLC 300", "AMG Line"],
+          not: ["electric"],
+          text: "27년식 GLC 300 AMG Line에는 엔지니어링 패키지가 들어갑니다. 에어 서스펜션과 리어 액슬 스티어링입니다."
+        }
+      ]
+    }
+  };
+
+  function seriesNote(a, b) {
+    var sa = seriesOf(nameOf(a));
+    var sb = seriesOf(nameOf(b));
+    if (sa !== sb) return null;
+    if (SERIES[sa]) return { id: sa, note: SERIES[sa] };
+    return null;
+  }
+
+  function shouldBanner(a, b) {
+    if (!a || !b) return false;
+    if (yearOf(a) === yearOf(b)) return false;
+    return noteItems(seriesNote(a, b), a, b).length > 0;
+  }
+
+  function yearSection(a, b, helpers) {
+    helpers = helpers || {};
+    var show = helpers.showName || function (n) { return n; };
+    if (!shouldBanner(a, b)) return "";
+    var pack = seriesNote(a, b);
+    var items = noteItems(pack, a, b);
+    var leftY = yearOf(a) === "MY27" ? "27년식" : "26년식";
+    var rightY = yearOf(b) === "MY27" ? "27년식" : "26년식";
+
+    var html = '<section id="year-change" class="year-change">';
+    html += '<p class="year-kicker">연식이 바뀌면 먼저 보는 차이</p>';
+    html += "<h3>" + esc(pack && pack.note ? pack.note.title : "26년식과 27년식") + "</h3>";
+    html += '<p class="year-pair">' + esc(show(nameOf(a))) + " · " + leftY + "  ↔  " + esc(show(nameOf(b))) + " · " + rightY + "</p>";
+    html += '<ul class="year-list">' + items.map(function (line) { return "<li>" + esc(line) + "</li>"; }).join("") + "</ul>";
+    html += "</section>";
+    return html;
+  }
+
+  window.BenzStock = {
+    of: of,
+    live: live,
+    seriesOf: seriesOf,
+    shouldBanner: shouldBanner,
+    yearSection: yearSection,
+    soldOut: function (row) { return of(row).code === "soldout"; }
+  };
+})();

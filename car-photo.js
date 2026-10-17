@@ -1,11 +1,18 @@
 /* 차종 대표 사진: 차 이름 → 사진 한 장. 프로모션 목록, 할인 확인, 견적 화면에서 같이 씁니다.
  * 사진은 메르세데스-벤츠 코리아 공식 카탈로그와 색상 사진입니다. */
 (function () {
-  var V = "?v=20261017d";
+  var V = "?v=20261018a";
   var MAP = {
  "A 220 Hatch": "images/tech/m-a-front-sm.webp",
  "A 220 Sedan": "images/tech/m-as-front-sm.webp",
  "CLA 250 4MATIC AMG Line": "images/tech/m-cla-amg-front-sm.webp",
+ "CLA 220": "images/tech/m-cla-std-front-sm.webp",
+ "CLA 220 AMG Line": "images/tech/m-cla-amg-front-sm.webp",
+ "CLA 200 electric Essential": "images/preorder/cla-hero.webp",
+ "CLA 200 electric Advanced": "images/preorder/cla-hero.webp",
+ "CLA 200 electric AMG Line": "images/preorder/cla-hero.webp",
+ "CLA 250+ electric": "images/preorder/cla-hero.webp",
+ "CLA 250+ electric AMG Line": "images/preorder/cla-hero.webp",
  "GLA 250 4MATIC": "images/tech/m-gla-front-sm.webp",
  "GLB 250 4MATIC": "images/tech/m-glb-front-sm.webp",
  "AMG GLB 35 4MATIC": "images/tech/a-aglb-front-sm.webp",
@@ -62,6 +69,10 @@
  "GLC 300 4MATIC Coupé AMG Line": "images/tech/m-glc-cpe-amg-front-sm.webp",
  "GLC 300 4MATIC Coupé AMG Line (RoF)": "images/tech/m-glc-cpe-amg-front-sm.webp",
  "GLC 300 4MATIC Coupé AMG Line (140주년)": "images/tech/m-glc-cpe-amg-front-sm.webp",
+ "GLC 300 4MATIC electric": "images/preorder/glc-hero.webp",
+ "GLC 300 4MATIC electric AMG Line": "images/preorder/glc-hero.webp",
+ "GLC 300 4MATIC electric AMG Line+": "images/preorder/glc-hero.webp",
+ "GLC 400 4MATIC electric": "images/preorder/glc-hero.webp",
  "AMG GLC 43 4MATIC": "images/tech/a-aglc-suv-front-sm.webp",
  "AMG GLC 43 4MATIC Coupé": "images/tech/a-aglc-cpe-front-sm.webp",
  "GLE 350 4MATIC": "images/tech/m-gle-std-front-sm.webp",
@@ -126,6 +137,7 @@
     if (/^C /.test(n)) return c + "c-class/149U.webp";
     if (/^E /.test(n)) return c + "e-class/149U.webp";
     if (/^S /.test(n)) return c + "s-class/197U.webp";
+    if (/electric/i.test(n) && /^CLA/.test(n)) return c + "cla-electric/149U.webp";
     if (/^CLA/.test(n)) return c + "cla/149U.webp";
     if (/^CLE.*Cab/.test(n)) return c + "cle-cabriolet/149U.webp";
     if (/^CLE/.test(n)) return c + "cle-coupe/149U.webp";
