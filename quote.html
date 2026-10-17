@@ -266,7 +266,7 @@
       </div>
     </div>
 
-    <script src="october-2026.js?v=20261012b"></script>
+    <script src="october-2026.js?v=20261018c"></script>
     <script src="quote.js?v=20261012b"></script>
     <script src="car-photo.js?v=20261017d"></script>
     <script>
@@ -280,7 +280,7 @@
         var current = null;
 
         function showName(name) {
-          var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디");
+          var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디").replace(/ electric/g, " 일렉트릭");
           if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
           return s;
         }
@@ -388,7 +388,14 @@
           document.getElementById("car").innerHTML = html;
         }
         function paintFamily() {
-          var mates = rows.filter(function (r) { return r.seg === current.seg; }).slice(0, 12);
+          var mates = rows.filter(function (r) {
+            if (current.name.indexOf("electric") !== -1) {
+              var ev = r.name.indexOf("electric") !== -1;
+              if (current.name.indexOf("GLC") !== -1) return ev && r.name.indexOf("GLC") !== -1;
+              if (current.name.indexOf("CLA") !== -1) return ev && r.name.indexOf("CLA") !== -1;
+            }
+            return r.seg === current.seg;
+          }).slice(0, 12);
           document.getElementById("family").innerHTML = mates.map(function (row) {
             var on = row === current ? " pay on" : " pay";
             return '<button type="button" class="' + on + '" data-car="' + carKey(row).replace(/"/g, "&quot;") + '">' + showName(row.name) + "</button>";
