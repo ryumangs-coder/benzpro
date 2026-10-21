@@ -351,6 +351,127 @@
   font-size: 15px;
   font-weight: 800;
 }
+#vs-hero,
+#year-change,
+#price-compare,
+#spec-compare,
+#opt-compare,
+#opt-shared,
+#vs-trims,
+#vs-trims-1,
+#vs-diff,
+#color-board,
+#lineup-board,
+#tech-library,
+#mb-history,
+#faq {
+  scroll-margin-top: 7.5rem;
+}
+.cmp-jump-open {
+  position: fixed;
+  left: 0.75rem;
+  bottom: 5.6rem;
+  z-index: 46;
+  min-height: 44px;
+  padding: 0 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(228, 203, 134, 0.7);
+  background: #10222c;
+  color: #e4cb86;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+.cmp-jump {
+  position: fixed;
+  left: 0.75rem;
+  bottom: 8.4rem;
+  z-index: 46;
+  width: min(16.5rem, calc(100vw - 1.5rem));
+  max-height: min(70vh, 28rem);
+  overflow: auto;
+  padding: 0.85rem 0.75rem;
+  border-radius: 1.1rem;
+  background: #10222c;
+  border: 1px solid rgba(228, 203, 134, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+.cmp-jump[hidden] { display: none !important; }
+.cmp-jump p {
+  margin: 0 0 0.45rem;
+  font-size: 13px;
+  font-weight: 800;
+  color: #e4cb86;
+}
+.cmp-jump a {
+  display: block;
+  padding: 0.45rem 0.35rem;
+  border-radius: 0.55rem;
+  color: #f4f7f8;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.cmp-jump a:hover,
+.cmp-jump a:focus {
+  background: rgba(228, 203, 134, 0.14);
+  color: #e4cb86;
+}
+.quote-nudge {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.15rem 1.15rem;
+  border-radius: 1.2rem;
+  background: rgba(228, 203, 134, 0.12);
+  border: 1px solid rgba(228, 203, 134, 0.4);
+}
+.quote-nudge p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+.quote-nudge span {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 15px;
+  font-weight: 600;
+  color: #c5ced3;
+}
+.quote-nudge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+.quote-nudge-row a {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 800;
+}
+.quote-nudge-row a.gold {
+  background: #e4cb86;
+  color: #0b1f2a;
+}
+.quote-nudge-row a.line {
+  border: 1px solid #e4cb86;
+  color: #e4cb86;
+}
+@media (min-width: 1024px) {
+  .cmp-jump-open {
+    left: 1rem;
+    top: 8.4rem;
+    bottom: auto;
+  }
+  .cmp-jump {
+    left: 1rem;
+    top: 11.4rem;
+    bottom: auto;
+  }
+}
 
 /* 모달 */
 .vs-modal {

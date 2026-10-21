@@ -7,8 +7,8 @@
     <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="site.css?v=20261018a" />
-    <link rel="stylesheet" href="compare-visual.css?v=20261018a" />
+    <link rel="stylesheet" href="site.css?v=20261021a" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261021b" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -62,25 +62,31 @@
 
       <nav class="vs-jump" aria-label="이 페이지 바로가기">
         <a href="#vs-hero">두 차 한눈에</a>
-        <a href="#year-change">연식이 바뀐 점</a>
-        <a href="#opt-shared">기본으로 들어 있는 사양</a>
-        <a href="#vs-diff">눈으로 보는 차이</a>
-        <a href="#tech-library">벤츠 기술 이야기</a>
-        <a href="#mb-history">벤츠의 역사</a>
+        <a href="#price-compare">가격</a>
+        <a href="#spec-compare">제원 비교</a>
+        <a href="#opt-compare">옵션 비교</a>
+        <a href="#color-board">외장·내장 색</a>
+        <a href="#faq">이 두 차에 질문</a>
       </nav>
+      <button type="button" id="cmp-jump-open" class="cmp-jump-open" aria-expanded="false" aria-controls="cmp-jump">바로가기</button>
+      <nav id="cmp-jump" class="cmp-jump" hidden aria-label="소카테고리 바로가기"></nav>
 
       <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
       <div id="color-lightbox" class="color-lightbox" hidden>
         <button type="button" class="color-lightbox-close" aria-label="닫기">닫기</button>
+        <button type="button" class="color-lightbox-prev" aria-label="이전 사진">←</button>
+        <button type="button" class="color-lightbox-next" aria-label="다음 사진">→</button>
         <img alt="">
-        <p></p>
+        <p class="color-lightbox-name"></p>
+        <p class="color-lightbox-code"></p>
+        <p class="color-lightbox-hint">키보드 왼쪽·오른쪽 화살표로 다른 사진을 볼 수 있습니다</p>
       </div>
 
       <section id="mb-history" class="vs-history" aria-label="벤츠의 역사"></section>
       <section id="tech-library" class="vs-library" aria-label="벤츠 기술 이야기"></section>
 
       <section class="mt-10" id="faq">
-        <h2 class="text-[26px] font-bold">이 두 차에서 많이 묻는 질문</h2>
+        <h2 class="text-[26px] font-bold">이 두 차에 들어 있는 벤츠 기술</h2>
         <p id="faq-lead" class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]"></p>
         <div id="faq-list" class="faq-list mt-4 space-y-6"></div>
         <p class="mt-8 text-[16px] leading-relaxed text-[#A4AAAE]">정상가격은 2026년 9월 17일 가격표입니다. 부가세가 포함되어 있고, 내연기관과 하이브리드는 개별소비세 5% 기준입니다. 2026년 7월 1일부터 통관되는 차는 개별소비세가 3.5%에서 5%로 돌아왔습니다. 비교의 정상 통관은 개소세 5%이고, 이전 통관은 6월 30일까지 통관된 재고에만 해당합니다. 차이 한도는 세금까지 포함해 약 143만원입니다. 전기차는 2026년 12월 31일까지 개별소비세 300만원 한도 감면이 가격표에 이미 반영되어 있습니다.</p>
@@ -90,8 +96,10 @@
     <aside class="fixed right-4 top-28 z-40 hidden max-h-[calc(100vh-8rem)] w-[18.5rem] flex-col overflow-y-auto rounded-3xl bg-white p-3 shadow-lg lg:flex" aria-label="상담">
       <p class="px-2 pb-2 text-[13px] font-bold text-[#E4CB86]">비교한 차로 문의</p>
       <div class="space-y-2">
-        <a id="ask-left" href="index.html#consulting" class="flex min-h-[52px] items-center justify-center rounded-2xl bg-[#E4CB86] px-3 text-center text-[16px] font-bold text-[#0B1F2A]">왼쪽 차로 상담</a>
-        <a id="ask-right" href="index.html#consulting" class="flex min-h-[52px] items-center justify-center rounded-2xl border border-[#E4CB86] px-3 text-center text-[16px] font-bold text-[#E4CB86]">오른쪽 차로 상담</a>
+        <a id="quote-left" href="quote.html" class="flex min-h-[52px] items-center justify-center rounded-2xl bg-[#E4CB86] px-3 text-center text-[16px] font-bold text-[#0B1F2A]">왼쪽 차 견적 확인</a>
+        <a id="quote-right" href="quote.html" class="flex min-h-[52px] items-center justify-center rounded-2xl bg-[#E4CB86] px-3 text-center text-[16px] font-bold text-[#0B1F2A]">오른쪽 차 견적 확인</a>
+        <a id="ask-left" href="index.html#consulting" class="flex min-h-[52px] items-center justify-center rounded-2xl border border-white/30 px-3 text-center text-[16px] font-bold">왼쪽 차로 상담</a>
+        <a id="ask-right" href="index.html#consulting" class="flex min-h-[52px] items-center justify-center rounded-2xl border border-white/30 px-3 text-center text-[16px] font-bold">오른쪽 차로 상담</a>
         <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[52px] items-center justify-center rounded-2xl px-3 text-[16px] font-bold">카톡 문의</a>
         <a href="tel:01091649639" class="flex min-h-[52px] items-center justify-center rounded-2xl border border-white/30 px-3 text-[16px] font-bold">전화 문의</a>
       </div>
@@ -99,7 +107,7 @@
 
     <div class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0b1f2a]/95 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:hidden">
       <div class="mx-auto grid max-w-lg grid-cols-3 gap-2">
-        <a id="ask-mobile" href="index.html#consulting" class="flex min-h-[48px] items-center justify-center rounded-2xl bg-[#E4CB86] text-[15px] font-bold text-[#0B1F2A]">상담</a>
+        <a id="quote-mobile" href="quote.html" class="flex min-h-[48px] items-center justify-center rounded-2xl bg-[#E4CB86] text-[15px] font-bold text-[#0B1F2A]">견적</a>
         <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[15px] font-bold">카톡</a>
         <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 text-[15px] font-bold">전화</a>
       </div>
@@ -115,8 +123,8 @@
     <script src="option-concepts.js?v=20261017c"></script>
     <script src="option-words.js?v=20261016a"></script>
     <script src="tech-data.js?v=20261016e"></script>
-    <script src="compare-visual.js?v=20261018b"></script>
-    <script src="colors.js?v=20261017d"></script>
+    <script src="compare-visual.js?v=20261021b"></script>
+    <script src="colors.js?v=20261021a"></script>
     <script>
       (function () {
         var specs = [
@@ -202,6 +210,12 @@
           params.set("car", carValue(row));
           params.set("note", showName(row.name) + " " + row.my);
           return "index.html?" + params.toString() + "#consulting";
+        }
+        function quoteHref(row) {
+          var params = new URLSearchParams();
+          params.set("name", row.name);
+          params.set("my", row.my);
+          return "quote.html?" + params.toString();
         }
         function showName(name) {
           var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디").replace(/ electric/g, " 일렉트릭");
@@ -594,8 +608,9 @@
         }
         function askBox(a, b, title, body) {
           return '<div class="opt-ask"><p class="text-[18px] font-bold">' + title + '</p><p class="mt-2 text-[16px] leading-relaxed">' + body + '</p><div class="opt-ask-row">' +
-            '<a class="inline-flex min-h-[48px] items-center rounded-full bg-[#E4CB86] px-4 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">' + esc(showName(a.name)) + " 상담</a>" +
-            '<a class="inline-flex min-h-[48px] items-center rounded-full border border-[#E4CB86] px-4 text-[15px] font-bold text-[#E4CB86]" href="' + ask(b) + '">' + esc(showName(b.name)) + " 상담</a>" +
+            '<a class="inline-flex min-h-[48px] items-center rounded-full bg-[#E4CB86] px-4 text-[15px] font-bold text-[#0B1F2A]" href="' + quoteHref(a) + '">' + esc(showName(a.name)) + " 견적 확인</a>" +
+            '<a class="inline-flex min-h-[48px] items-center rounded-full bg-[#E4CB86] px-4 text-[15px] font-bold text-[#0B1F2A]" href="' + quoteHref(b) + '">' + esc(showName(b.name)) + " 견적 확인</a>" +
+            '<a class="inline-flex min-h-[48px] items-center rounded-full border border-[#E4CB86] px-4 text-[15px] font-bold text-[#E4CB86]" href="' + ask(a) + '">상담</a>' +
             '<a class="kakao inline-flex min-h-[48px] items-center rounded-full px-4 text-[15px] font-bold" href="https://open.kakao.com/o/skdA6cZc">카톡으로 물어보기</a>' +
             "</div></div>";
         }
@@ -622,8 +637,8 @@
             ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">비어 있던 칸은 같은 차의 제원표에서 채웠습니다. 휠과 연식에 따라 숫자가 달라질 수 있습니다.</p>'
             : "";
           var specSection = specHtml
-            ? '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 다른 칸은 금색입니다.</p>' + filledNote + '<div class="mt-3">' + specHtml + "</div>"
-            : '<h3 class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다. 상담에서 카탈로그 숫자로 같이 보겠습니다.</p>' + askBox(a, b, "제원부터 같이 보겠습니다", "길이, 힘, 연비가 집에 맞는지 두 차 기준으로 짚어 드립니다.");
+            ? '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 다른 칸은 금색입니다.</p>' + filledNote + '<div class="mt-3">' + specHtml + "</div>"
+            : '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다. 상담에서 숫자로 같이 보겠습니다.</p>' + askBox(a, b, "제원부터 같이 보겠습니다", "길이, 힘, 연비가 집에 맞는지 두 차 기준으로 짚어 드립니다.");
           var gearA = {};
           var gearB = {};
           var gearOrder = [];
@@ -716,7 +731,7 @@
             ? '<h4 class="mt-6 text-[18px] font-bold">두 차 모두 선택해서 넣는 사양</h4><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">기본에는 없고, 돈을 내고 더하는 항목입니다.</p><div class="opt-board">' + sharedGroups(picks) + "</div>"
             : "";
           var eyesHtml = window.BenzVisual ? window.BenzVisual.diffSection(lastDiffs, a, b) : "";
-          var optSection = '<h3 class="mt-8 text-[22px] font-bold">옵션 비교</h3>' +
+          var optSection = '<h3 id="opt-compare" class="mt-8 text-[22px] font-bold">옵션 비교</h3>' +
             '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">● 기본으로 들어 있음 · 선택 돈을 내고 추가 · — 없음 · 기본 아님 어프로치북 기본 사양표에 없음(없다는 확정이 아니라 선택 옵션·다른 이름 확인 필요)</p>' +
             borrowed + diffHtml + basicNotes + sharedHtml + eyesHtml + pickHtml +
             askBox(a, b, "이 차이가 우리 집에 맞는지", "표는 기본으로 들어 있는 사양입니다. 돈을 내고 더하는 선택 옵션, 색 조합, 지금 나온 차의 실제 사양은 차마다 다릅니다. 보고 있는 두 차 기준으로 짧게 짚어 드립니다.");
@@ -901,7 +916,7 @@
         }
         function lineupSection(a, b) {
           var intro =
-            '<h3 class="mt-8 text-[22px] font-bold">라인업별 옵션 비교</h3>' +
+            '<h3 id="lineup-board" class="mt-8 text-[22px] font-bold">라인업별 옵션 비교</h3>' +
             '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">표는 왼쪽이 아래 라인업이고, 오른쪽으로 갈수록 위 라인업입니다. 아래 라인업에 기본으로 들어간 항목은 오른쪽에도 들어간 것으로 적었습니다. 그 칸에서 처음 기본이 되는 항목만 청록색입니다. 모든 라인업에 이미 있는 항목은 표에서 뺐습니다.</p>' +
             '<p class="mt-1 text-[15px] font-bold text-[#C5CED3]">● 적용 · — 미적용</p>';
           var same = lineupKey(a) && lineupKey(a) === lineupKey(b);
@@ -1291,29 +1306,84 @@
           }
           return out.slice(0, 2);
         }
+        function eun(word) {
+          var s = String(word || "").replace(/\s*\([^)]*\)\s*$/, "").replace(/[\s·,./]+$/, "");
+          var ch = s.charCodeAt(s.length - 1);
+          if (ch >= 0xAC00 && ch <= 0xD7A3) return ((ch - 0xAC00) % 28) ? "은" : "는";
+          return /[136780]$|[b-df-hj-np-tv-z]$/i.test(s) ? "은" : "는";
+        }
+        function techQuestions(a, b) {
+          var vis = window.BenzVisual;
+          var book = window.BENZ_TECH;
+          if (!vis || !book) return [];
+          var list = [];
+          var seen = {};
+          function speak(t) {
+            var parts = [];
+            if (t.easy) parts.push(t.easy);
+            if (t.what) parts.push(t.what);
+            if (t.why && t.why[0]) parts.push(t.why[0]);
+            if (t.pride && t.pride.head) parts.push(t.pride.year ? t.pride.year + "년, " + t.pride.head + ". " + (t.pride.body || "") : t.pride.body || "");
+            return parts.filter(Boolean).slice(0, 3).join(" ");
+          }
+          function add(t, q) {
+            if (!t || seen[t.id] || list.length >= 6) return;
+            seen[t.id] = true;
+            list.push({ q: q, a: speak(t) });
+          }
+          (lastDiffs || []).forEach(function (item) {
+            var t = vis.topicFor(item.label);
+            if (!t) return;
+            var leftOn = item.left && item.left !== "—" && item.left !== "없음" && item.left !== "기본 아님";
+            var rightOn = item.right && item.right !== "—" && item.right !== "없음" && item.right !== "기본 아님";
+            var who = leftOn && !rightOn ? showName(a.name) : rightOn && !leftOn ? showName(b.name) : "";
+            var q = who
+              ? who + "의 " + t.name + eun(t.name) + " 어떤 기술인가요?"
+              : t.name + eun(t.name) + " 두 차에서 어떻게 다른가요?";
+            add(t, q);
+          });
+          vis.tagsFor(a).concat(a.i === b.i ? [] : vis.tagsFor(b)).forEach(function (id) {
+            var t = (book.topics || []).filter(function (x) { return x.id === id; })[0];
+            if (!t) return;
+            add(t, t.name + eun(t.name) + " " + showName(a.name) + "와 " + showName(b.name) + "에서 무엇을 돕나요?");
+          });
+          if (list.length < 4 && lastDiffs && lastDiffs.length) {
+            lastDiffs.slice(0, 8).forEach(function (item) {
+              if (list.length >= 6) return;
+              var already = vis.topicFor(item.label);
+              if (already && seen[already.id]) return;
+              var help = window.optionPlain ? window.optionPlain(item.label) : "";
+              if (!help) return;
+              var key = "plain-" + item.label;
+              if (seen[key]) return;
+              seen[key] = true;
+              list.push({
+                q: item.label + eun(item.label) + " 운전에 어떻게 들어오나요?",
+                a: help
+              });
+            });
+          }
+          return list;
+        }
         function renderFaq(a, b, da, db) {
           var lead = document.getElementById("faq-lead");
           var box = document.getElementById("faq-list");
-          var leftQs = carQuestions(a, b);
-          var rightQs = a.i === b.i ? [] : carQuestions(b, a);
-          var pair = a.i === b.i ? [] : pairQuestions(a, b, da, db);
+          var tech = techQuestions(a, b);
           lead.textContent = a.i === b.i
-            ? showName(a.name) + "를 양쪽에 두었습니다. 아래는 이 차에서 나오는 질문입니다."
-            : showName(a.name) + "와 " + showName(b.name) + "를 두고 보는 질문입니다. 차를 바꾸면 질문도 바뀝니다.";
+            ? showName(a.name) + "에 들어 있는 벤츠 기술을, 공식 설명 그대로 쉽게 풀어 두었습니다."
+            : showName(a.name) + "와 " + showName(b.name) + "를 비교하면서 보이는 기술을, 벤츠가 설명하는 방식으로 풀어 두었습니다. 차를 바꾸면 질문도 바뀝니다.";
           var html = "";
-          function block(row, items) {
-            if (!items.length) return "";
-            return '<div><h3 class="text-[20px] font-bold">' + esc(showName(row.name) + " · " + row.my) + '</h3><div class="mt-3 space-y-3">' +
-              items.map(function (item, i) { return faqItem(item, i === 0); }).join("") +
+          if (tech.length) {
+            html += '<div><h3 class="text-[20px] font-bold">지금 비교 중인 기술</h3><div class="mt-3 space-y-3">' +
+              tech.map(function (item, i) { return faqItem(item, i === 0); }).join("") +
               "</div></div>";
           }
-          html += block(a, leftQs);
-          html += block(b, rightQs);
-          if (pair.length) {
-            html += '<div><h3 class="text-[20px] font-bold">둘을 같이 보면</h3><div class="mt-3 space-y-3">' +
-              pair.map(function (item) { return faqItem(item, false); }).join("") +
-              "</div></div>";
-          }
+          html += '<div class="quote-nudge mt-6"><p>' + (a.i === b.i
+            ? esc(showName(a.name)) + "의 이번 달 실구매가를 견적에서 바로 확인할 수 있습니다."
+            : esc(showName(a.name)) + "와 " + esc(showName(b.name)) + "의 이번 달 실구매가를 견적에서 바로 확인할 수 있습니다.") + "</p>" +
+            '<span>재구매·MOU·전시차 조건은 견적 화면에서 체크하면 금액이 바뀝니다.</span>' +
+            '<div class="quote-nudge-row"><a class="gold" href="' + quoteHref(a) + '">' + esc(showName(a.name)) + " 견적 확인</a>" +
+            (a.i === b.i ? "" : '<a class="gold" href="' + quoteHref(b) + '">' + esc(showName(b.name)) + " 견적 확인</a>") + "</div></div>";
           box.innerHTML = html;
         }
         function colorPack(row) {
@@ -1337,14 +1407,15 @@
         }
         function colorCards(list) {
           return '<div class="color-grid">' + list.map(function (item) {
-            var src = esc(item.image) + "?v=20261007g";
-            return '<button type="button" class="color-shot" data-src="' + src + '" data-name="' + esc(item.name) + '"><img src="' + src + '" alt="' + esc(item.name) + '" loading="lazy" decoding="async"><span>' + esc(item.name) + "</span></button>";
+            var src = esc(item.image) + "?v=20261021a";
+            var code = item.code ? esc(item.code) : "";
+            return '<button type="button" class="color-shot" data-src="' + src + '" data-name="' + esc(item.name) + '" data-code="' + code + '"><img src="' + src + '" alt="' + esc(item.name) + (code ? " " + code : "") + '" loading="lazy" decoding="async"><span>' + esc(item.name) + (code ? "<em>" + code + "</em>" : "") + "</span></button>";
           }).join("") + "</div>";
         }
         function colorBoard(row) {
           var found = colorPack(row);
           var title = '<h4 class="mt-5 text-[18px] font-bold">' + esc(showName(row.name)) + "</h4>";
-          if (!found) return title + '<p class="mt-2 text-[16px] leading-relaxed">이 차의 색 사진은 상담에서 카탈로그로 같이 봅니다.</p>';
+          if (!found) return title + '<p class="mt-2 text-[16px] leading-relaxed">이 차의 색 사진은 상담에서 같이 봅니다.</p>';
           var note = found.loose ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">고성능 트림은 고를 수 있는 색이 더 적을 수 있습니다. 아래는 같은 차종에서 확인된 색입니다.</p>' : "";
           var exterior = found.pack.exterior || [];
           var interior = found.pack.interior || [];
@@ -1358,8 +1429,8 @@
             ? colorBoard(a)
             : colorBoard(a) + (a.i === b.i ? "" : colorBoard(b));
           var sameNote = same ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">두 차가 같은 차종이라 고를 수 있는 색 목록이 같습니다. 트림마다 실제 선택지는 달라집니다.</p>' : "";
-          return '<h3 class="mt-8 text-[22px] font-bold">외장·내장 색</h3>' +
-            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">화면의 색은 실제 도장과 다를 수 있습니다. 트림마다 고를 수 있는 색이 다릅니다. 사진을 누르면 크게 볼 수 있습니다.</p>' +
+          return '<h3 id="color-board" class="mt-8 text-[22px] font-bold">외장·내장 색</h3>' +
+            '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">화면의 색은 실제 도장과 다를 수 있습니다. 트림마다 고를 수 있는 색이 다릅니다. 사진을 누르면 크게 볼 수 있고, 색 코드도 같이 보입니다. 큰 화면에서 왼쪽·오른쪽 화살표로 넘길 수 있습니다.</p>' +
             sameNote + boards +
             askBox(a, b, "이 색으로 나오는 차가 있는지", "색은 재고마다 다릅니다. 보고 있는 두 차 중에서 원하는 외장과 내장이 있는지를 확인해 드립니다.");
         }
@@ -1431,10 +1502,14 @@
           };
           document.getElementById("compare").innerHTML =
             visual +
-            '<div class="mt-8 grid gap-4 sm:grid-cols-2">' +
-            '<div><p class="text-[20px] font-bold">' + showName(a.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(a) + '">이 차종으로 상담 받기</a></div>' +
-            '<div><p class="text-[20px] font-bold">' + showName(b.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + ask(b) + '">이 차종으로 상담 받기</a></div>' +
+            '<div id="price-compare" class="mt-8 grid gap-4 sm:grid-cols-2">' +
+            '<div><p class="text-[20px] font-bold">' + showName(a.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + quoteHref(a) + '">이 차 견적 확인</a></div>' +
+            '<div><p class="text-[20px] font-bold">' + showName(b.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + quoteHref(b) + '">이 차 견적 확인</a></div>' +
             "</div>" +
+            '<div class="quote-nudge"><p>' + (a.i === b.i ? "비교가 끝났다면, 이번 달 실구매가를 견적에서 바로 열어 보세요." : "두 차를 나란히 보셨다면, 이번 달 실구매가를 견적에서 바로 열어 보세요.") + '</p>' +
+            '<span>기본 할인과 금융 할인이 들어간 금액입니다. 재구매·MOU는 견적 화면에서 체크합니다.</span>' +
+            '<div class="quote-nudge-row"><a class="gold" href="' + quoteHref(a) + '">' + esc(showName(a.name)) + " 견적 확인</a>" +
+            (a.i === b.i ? "" : '<a class="gold" href="' + quoteHref(b) + '">' + esc(showName(b.name)) + " 견적 확인</a>") + "</div></div>" +
             '<div class="mt-4">' +
             line("연식", a.my, b.my, false) +
             line("정상가격", money(da.priceMan), money(db.priceMan), true) +
@@ -1450,7 +1525,13 @@
             lineupSection(a, b);
           document.getElementById("ask-left").setAttribute("href", ask(a));
           document.getElementById("ask-right").setAttribute("href", ask(b));
-          document.getElementById("ask-mobile").setAttribute("href", ask(a));
+          document.getElementById("quote-left").setAttribute("href", quoteHref(a));
+          document.getElementById("quote-left").textContent = showName(a.name) + " 견적 확인";
+          document.getElementById("quote-right").setAttribute("href", quoteHref(b));
+          document.getElementById("quote-right").textContent = showName(b.name) + " 견적 확인";
+          document.getElementById("quote-mobile").setAttribute("href", quoteHref(a));
+          document.getElementById("quote-mobile").textContent = "견적";
+          fillJump();
           renderFaq(a, b, da, db);
         }
 
@@ -1473,29 +1554,98 @@
           right.value = keep;
           drawCompare();
         });
+        function fillJump() {
+          var panel = document.getElementById("cmp-jump");
+          if (!panel) return;
+          var links = [
+            ["#vs-hero", "두 차 한눈에"],
+            ["#year-change", "연식이 바뀐 점"],
+            ["#price-compare", "가격"],
+            ["#spec-compare", "제원 비교"],
+            ["#opt-compare", "옵션 비교"],
+            ["#opt-shared", "기본으로 들어 있는 사양"],
+            ["#vs-trims", "트림·휠·실내"],
+            ["#vs-diff", "눈으로 보는 차이"],
+            ["#color-board", "외장·내장 색"],
+            ["#lineup-board", "라인업별 옵션"],
+            ["#tech-library", "벤츠 기술 이야기"],
+            ["#mb-history", "벤츠의 역사"],
+            ["#faq", "이 두 차에 질문"]
+          ];
+          panel.innerHTML = "<p>이 비교에서</p>" + links.filter(function (item) {
+            return !!document.querySelector(item[0]);
+          }).map(function (item) {
+            return '<a href="' + item[0] + '">' + item[1] + "</a>";
+          }).join("");
+        }
+        var jumpOpen = document.getElementById("cmp-jump-open");
+        var jumpPanel = document.getElementById("cmp-jump");
+        function setJump(open) {
+          jumpPanel.hidden = !open;
+          jumpOpen.setAttribute("aria-expanded", open ? "true" : "false");
+          jumpOpen.textContent = open ? "바로가기 닫기" : "바로가기";
+        }
+        jumpOpen.addEventListener("click", function () {
+          setJump(jumpPanel.hidden);
+        });
+        jumpPanel.addEventListener("click", function (event) {
+          if (event.target.closest("a")) setJump(false);
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !jumpPanel.hidden) setJump(false);
+        });
         drawCompare();
         var colorLight = document.getElementById("color-lightbox");
         var colorLightImg = colorLight.querySelector("img");
-        var colorLightName = colorLight.querySelector("p");
+        var colorLightName = colorLight.querySelector(".color-lightbox-name");
+        var colorLightCode = colorLight.querySelector(".color-lightbox-code");
+        var colorSlides = [];
+        var colorIndex = 0;
         function closeColor() {
           colorLight.hidden = true;
           colorLightImg.removeAttribute("src");
+          colorSlides = [];
           document.body.style.overflow = "";
+        }
+        function showColor() {
+          if (!colorSlides.length) return;
+          if (colorIndex < 0) colorIndex = colorSlides.length - 1;
+          if (colorIndex >= colorSlides.length) colorIndex = 0;
+          var item = colorSlides[colorIndex];
+          colorLightImg.src = item.src;
+          colorLightImg.alt = item.name + (item.code ? " " + item.code : "");
+          colorLightName.textContent = item.name || "";
+          colorLightCode.textContent = item.code ? "색 코드 " + item.code : "";
+          colorLightCode.hidden = !item.code;
+        }
+        function openColor(shot) {
+          colorSlides = [].slice.call(document.querySelectorAll("#compare .color-shot")).map(function (el) {
+            return {
+              src: el.getAttribute("data-src") || "",
+              name: el.getAttribute("data-name") || "",
+              code: el.getAttribute("data-code") || ""
+            };
+          });
+          colorIndex = Math.max(0, [].indexOf.call(document.querySelectorAll("#compare .color-shot"), shot));
+          colorLight.hidden = false;
+          document.body.style.overflow = "hidden";
+          showColor();
         }
         document.getElementById("compare").addEventListener("click", function (event) {
           var shot = event.target.closest(".color-shot");
           if (!shot) return;
-          colorLightImg.src = shot.getAttribute("data-src");
-          colorLightImg.alt = shot.getAttribute("data-name");
-          colorLightName.textContent = shot.getAttribute("data-name");
-          colorLight.hidden = false;
-          document.body.style.overflow = "hidden";
+          openColor(shot);
         });
         colorLight.addEventListener("click", function (event) {
           if (event.target === colorLight || event.target.classList.contains("color-lightbox-close")) closeColor();
+          if (event.target.classList.contains("color-lightbox-prev")) { colorIndex -= 1; showColor(); }
+          if (event.target.classList.contains("color-lightbox-next")) { colorIndex += 1; showColor(); }
         });
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape" && !colorLight.hidden) closeColor();
+          if (colorLight.hidden) return;
+          if (event.key === "Escape") closeColor();
+          if (event.key === "ArrowLeft") { event.preventDefault(); colorIndex -= 1; showColor(); }
+          if (event.key === "ArrowRight") { event.preventDefault(); colorIndex += 1; showColor(); }
         });
       })();
     </script>

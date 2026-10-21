@@ -499,6 +499,14 @@ input:checked + .pick {
   font-weight: 700;
   line-height: 1.35;
 }
+.color-shot em {
+  display: block;
+  margin-top: 0.1rem;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a4aaae;
+}
 .color-lightbox {
   position: fixed;
   inset: 0;
@@ -527,11 +535,23 @@ input:checked + .pick {
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+  margin: 0;
 }
-.color-lightbox-close {
+.color-lightbox-code {
+  color: #e4cb86 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+}
+.color-lightbox-hint {
+  color: #a4aaae !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+.color-lightbox-close,
+.color-lightbox-prev,
+.color-lightbox-next {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
   min-height: 44px;
   padding: 0 1rem;
   border-radius: 999px;
@@ -540,6 +560,19 @@ input:checked + .pick {
   color: #f4f7f8;
   font-weight: 700;
 }
+.color-lightbox-close {
+  top: 1rem;
+  right: 1rem;
+}
+.color-lightbox-prev,
+.color-lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  min-width: 44px;
+}
+.color-lightbox-prev { left: 0.7rem; }
+.color-lightbox-next { right: 0.7rem; }
 a.kakao {
   background: #fee500 !important;
   color: #191600 !important;

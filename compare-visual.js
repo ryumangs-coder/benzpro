@@ -121,7 +121,7 @@
       return '<button type="button" class="vs-tag" data-tech="' + id + '">' + esc(TAG_LABEL[id] || byId[id].name) + " ▸</button>";
     }).join("");
     var wheel = car.wheel
-      ? '<button type="button" class="vs-wheel color-shot" data-src="' + esc(src(car.wheel.id, "lg")) + '" data-name="' + esc(car.wheel.label + " (" + car.name + " 기본 휠)") + '">' +
+      ? '<button type="button" class="vs-wheel color-shot" data-src="' + esc(src(car.wheel.id, "lg")) + '" data-name="' + esc(car.wheel.label + " (" + car.name + " 기본 휠)") + '" data-code="' + esc((String(car.wheel.label || "").match(/\(([A-Z0-9]{2,5})\)/) || String(car.wheel.id || "").match(/-([a-z0-9]+)$/i) || [])[1] || "").toUpperCase() + '">' +
         '<img src="' + esc(src(car.wheel.id, "sm")) + '" alt="' + esc(car.wheel.label) + '" loading="lazy" decoding="async"><span><em>기본 휠</em>' + esc(car.wheel.label) + "</span></button>"
       : "";
     return '<article class="vs-car ' + (side === "L" ? "left" : "right") + '">' +
@@ -133,7 +133,7 @@
   function hero(cars) {
     return '<div class="vs-hero" id="vs-hero">' +
       '<div class="vs-hero-grid">' + carHtml(cars[0], "L") + '<div class="vs-vs" aria-hidden="true"><span>VS</span></div>' + carHtml(cars[1], "R") + "</div>" +
-      '<p class="vs-foot">사진은 메르세데스-벤츠 공식 카탈로그와 색상 사진입니다. 화면의 색과 구성은 실제 차량과 다를 수 있습니다. 앞·뒤·실내 버튼과 휠 사진은 눌러서 크게 볼 수 있습니다.</p></div>';
+      '<p class="vs-foot">사진은 메르세데스-벤츠 공식 자료와 색상 사진입니다. 화면의 색과 구성은 실제 차량과 다를 수 있습니다. 앞·뒤·실내 버튼과 휠 사진은 눌러서 크게 볼 수 있습니다.</p></div>';
   }
 
   /* ---------- 눈으로 보는 차이 ---------- */
@@ -207,7 +207,8 @@
       function gal(items) {
         return items.map(function (w) {
           var on = mine.some(function (info) { return isMine(w, info.row, info.trim); });
-          return '<button type="button" class="vs-wheel-card color-shot' + (on ? " on" : "") + '" data-src="' + esc(src(w.id, "lg")) + '" data-name="' + esc(w.label + " · " + w.base) + '">' +
+          var code = ((String(w.label || "").match(/\(([A-Z0-9]{2,5})\)/) || String(w.id || "").match(/-([a-z0-9]+)$/i) || [])[1] || "").toUpperCase();
+          return '<button type="button" class="vs-wheel-card color-shot' + (on ? " on" : "") + '" data-src="' + esc(src(w.id, "lg")) + '" data-name="' + esc(w.label + " · " + w.base) + '" data-code="' + esc(code) + '">' +
             '<img src="' + esc(src(w.id, "sm")) + '" alt="' + esc(w.label) + '" loading="lazy" decoding="async">' +
             (on ? '<i class="vs-mine">지금 비교 중인 차</i>' : "") +
             "<b>" + esc(w.label) + "</b><span>" + esc(w.base) + "</span></button>";
@@ -220,7 +221,7 @@
       return '<div class="vs-sec" id="vs-trims' + (mi ? "-" + mi : "") + '"><h3>' + esc(model.label) + ' 트림별 얼굴 · 실내 · 휠</h3>' +
         '<p class="vs-lead">같은 ' + esc(model.label) + '도 트림마다 앞모습과 휠, 실내 장식이 다릅니다. 앞·뒤·실내 버튼으로 돌려 보고, 휠과 장식 사진을 누르면 크게 볼 수 있습니다.</p>' +
         '<div class="vs-trims n' + model.trims.length + '">' + cards + "</div>" + wheels + mats +
-        '<p class="vs-tail">사진은 메르세데스-벤츠 코리아 공식 고객용 카탈로그(' + esc(model.source) + ') 기준입니다. 연식·생산 시점·옵션에 따라 실제 차량과 달라질 수 있어 계약 전에 확인합니다.</p></div>';
+        '<p class="vs-tail">사진은 메르세데스-벤츠 코리아 공식 자료(' + esc(model.source) + ') 기준입니다. 연식·생산 시점·옵션에 따라 실제 차량과 달라질 수 있어 계약 전에 확인합니다.</p></div>';
     }).join("");
   }
   function trimSection(rows) { return modelSection(rows); }
@@ -348,7 +349,7 @@
       pride + relHtml +
       (t.facts && t.facts.length ? "<h3>공식 사양</h3>" + list(t.facts, "vs-facts") : "") +
       (t.where && t.where.length ? "<h3>어떤 차에 들어가나요</h3>" + list(t.where, "vs-facts") +
-        '<p class="vs-note">공식 고객용 카탈로그(E-클래스 2026.04, S-클래스 2026.09 등) 기준입니다. 연식, 생산 시점, 옵션에 따라 달라질 수 있어 계약 전에 실제 차량으로 다시 확인합니다.</p>' : "") +
+        '<p class="vs-note">메르세데스-벤츠 코리아 공식 자료(E-클래스 2026.04, S-클래스 2026.09 등) 기준입니다. 연식, 생산 시점, 옵션에 따라 달라질 수 있어 계약 전에 실제 차량으로 다시 확인합니다.</p>' : "") +
       (t.note ? '<p class="vs-note">' + esc(t.note) + "</p>" : "") +
       '<div class="vs-cta-row"><a class="vs-cta gold" href="' + ask(t.name) + '">이 기술, 전시장에서 직접 보기</a>' +
       '<a class="vs-cta kakao" href="https://open.kakao.com/o/skdA6cZc">카톡으로 물어보기</a></div>' +
@@ -417,6 +418,8 @@
     }
   });
   document.addEventListener("keydown", function (e) {
+    var colorLight = document.getElementById("color-lightbox");
+    if (colorLight && !colorLight.hidden) return;
     if (!modal || modal.hidden) return;
     if (e.key === "Escape") close();
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
@@ -448,6 +451,7 @@
     tagsFor: tagsFor,
     eInfo: eInfo,
     src: src,
+    topicFor: topicOfLabel,
     open: open,
     close: close,
     mount: mount
