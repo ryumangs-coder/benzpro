@@ -201,13 +201,16 @@ input:checked + .pick {
 }
 
 .cmp th,
-.cmp td {
+.cmp td,
+.opt th,
+.opt td {
   background: #10222c !important;
   color: #f4f7f8 !important;
   border-bottom-color: rgba(164, 170, 174, 0.2) !important;
 }
 .cmp thead th,
-.cmp thead th:first-child {
+.cmp thead th:first-child,
+.opt thead th {
   background: #08141c !important;
   color: #e4cb86 !important;
 }
@@ -216,7 +219,9 @@ input:checked + .pick {
   background: #0c1a24 !important;
   color: #f4f7f8 !important;
 }
-.cmp .up {
+.cmp .up,
+.opt tr.up th,
+.opt tr.up td {
   background: rgba(228, 203, 134, 0.16) !important;
   color: #f4f7f8 !important;
 }
