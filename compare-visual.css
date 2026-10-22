@@ -51,6 +51,10 @@
   transform: scale(1.32);
   transform-origin: 50% 54%;
 }
+.vs-photo-img[src*="preorder/cla-ev"] {
+  transform: scale(1.12);
+  object-position: center 58%;
+}
 .vs-photo-empty {
   height: 100%;
   display: grid;
@@ -143,6 +147,57 @@
 .vs-sec { margin-top: 2rem; }
 .vs-sec h3 { font-size: 22px; font-weight: 800; }
 .vs-lead { margin-top: 0.4rem; font-size: 16px; line-height: 1.6; color: #c5ced3; }
+.cla-power {
+  margin: 0 0 1.5rem;
+  padding: 1.15rem 1.15rem 1.2rem;
+  border-radius: 1.2rem;
+  background: #10222c;
+  border: 1px solid rgba(164, 170, 174, 0.22);
+  color: #f5f5f4;
+}
+.cla-power h3 { color: #fff; }
+.cla-power-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+}
+@media (min-width: 720px) {
+  .cla-power-grid { grid-template-columns: 1fr 1fr; }
+}
+.cla-power article {
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(164, 170, 174, 0.18);
+}
+.cla-power article .k {
+  font-size: 13px;
+  font-weight: 800;
+  color: #5eead4;
+}
+.cla-power article h4,
+.cla-power .who h4 {
+  margin-top: 0.15rem;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.cla-power article p,
+.cla-power .who p {
+  margin-top: 0.35rem;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #d6d3d1;
+}
+.cla-power .who { margin-top: 0.9rem; }
+.cla-power .who.two {
+  display: grid;
+  gap: 0.75rem;
+}
+@media (min-width: 720px) {
+  .cla-power .who.two { grid-template-columns: 1fr 1fr; }
+}
 .vs-tail { margin-top: 0.8rem; font-size: 14.5px; line-height: 1.55; color: #a4aaae; }
 .vs-sub-h { margin-top: 1.3rem; font-size: 18px; font-weight: 800; }
 .vs-kicker { font-size: 15px; font-weight: 700; color: #e4cb86; }
@@ -352,6 +407,7 @@
   font-weight: 800;
 }
 #vs-hero,
+#cla-power,
 #year-change,
 #price-compare,
 #spec-compare,

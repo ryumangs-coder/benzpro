@@ -219,6 +219,51 @@
     hl: "디지털 라이트",
     amb: "액티브"
   };
+  var cla220 = [
+    ["배기량", "1,496cc"],
+    ["연료", "가솔린 · 48V 하이브리드"],
+    ["변속기", "8단 DCT"],
+    ["구동", "전륜구동"],
+    ["최고출력", "188ps"],
+    ["모터 최고출력", "22"]
+  ];
+  var cla200ev = [
+    ["배기량", "엔진 없음"],
+    ["연료", "전기"],
+    ["구동", "후륜구동"],
+    ["최고출력", "221ps"],
+    ["모터 최고출력", "165"],
+    ["1회 충전 주행거리", "342km"]
+  ];
+  var cla250ev = [
+    ["배기량", "엔진 없음"],
+    ["연료", "전기"],
+    ["구동", "후륜구동"],
+    ["최고출력", "268ps"],
+    ["모터 최고출력", "200"],
+    ["1회 충전 주행거리", "474km"]
+  ];
+  [
+    ["MY27|CLA220", cla220],
+    ["MY27|CLA220AMGLINE", cla220],
+    ["MY27|CLA200ELECTRICESSENTIAL", cla200ev],
+    ["MY27|CLA200ELECTRICADVANCED", cla200ev],
+    ["MY27|CLA200ELECTRICAMGLINE", cla200ev],
+    ["MY27|CLA250ELECTRIC", cla250ev],
+    ["MY27|CLA250ELECTRICAMGLINE", cla250ev]
+  ].forEach(function (pair) {
+    if (book[pair[0]]) book[pair[0]].specs = pair[1].slice();
+  });
+  if (!hasRule(["CLA 220"])) {
+    specs.push({ need: ["CLA 220"], not: ["electric"], year: "MY27", specs: cla220.slice() });
+  }
+  if (!hasRule(["CLA 200", "electric"])) {
+    specs.push({ need: ["CLA 200", "electric"], not: ["CLA 250"], year: "MY27", specs: cla200ev.slice() });
+  }
+  if (!hasRule(["CLA 250+", "electric"])) {
+    specs.push({ need: ["CLA 250+", "electric"], not: [], year: "MY27", specs: cla250ev.slice() });
+  }
+
   if (!hasBasic(["GLC 300", "electric"])) {
     basics.push({
       need: ["GLC 300", "electric"],

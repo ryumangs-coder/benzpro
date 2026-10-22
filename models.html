@@ -8,7 +8,7 @@
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="site.css?v=20261021a" />
-    <link rel="stylesheet" href="compare-visual.css?v=20261021b" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261022c" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -119,11 +119,11 @@
     <script src="guide-data.js?v=20261012e"></script>
     <script src="approach-specs.js?v=20261016b"></script>
     <script src="approach-options.js?v=20261017a"></script>
-    <script src="preorder-guides.js?v=20261018b"></script>
+    <script src="preorder-guides.js?v=20261022c"></script>
     <script src="option-concepts.js?v=20261017c"></script>
     <script src="option-words.js?v=20261016a"></script>
-    <script src="tech-data.js?v=20261016e"></script>
-    <script src="compare-visual.js?v=20261021b"></script>
+    <script src="tech-data.js?v=20261022c"></script>
+    <script src="compare-visual.js?v=20261022c"></script>
     <script src="colors.js?v=20261022a"></script>
     <script>
       (function () {
@@ -1440,6 +1440,81 @@
             sameNote + boards +
             askBox(a, b, "이 색으로 나오는 차가 있는지", "색은 재고마다 다릅니다. 보고 있는 두 차 중에서 원하는 외장과 내장이 있는지를 확인해 드립니다.");
         }
+        function isClaName(name) {
+          return /^CLA \d/.test(String(name || ""));
+        }
+        function isClaHybrid(name) {
+          return isClaName(name) && !/electric/i.test(name);
+        }
+        function isClaEv(name) {
+          return isClaName(name) && /electric/i.test(name);
+        }
+        function claPowerSection(a, b) {
+          if (!isClaName(a.name) || !isClaName(b.name)) return "";
+          var ha = isClaHybrid(a.name);
+          var hb = isClaHybrid(b.name);
+          var ea = isClaEv(a.name);
+          var eb = isClaEv(b.name);
+          if (!ha && !hb && !ea && !eb) return "";
+          var mix = (ha || hb) && (ea || eb);
+          var hybridOnly = (ha || hb) && !ea && !eb;
+          function evLabel(row) {
+            return /250\+/.test(row.name) ? "CLA 250+ 일렉트릭" : "CLA 200 일렉트릭";
+          }
+          function evLine(row) {
+            return /250\+/.test(row.name)
+              ? "엔진이 없습니다. 전기모터 268마력이 네 바퀴가 아니라 뒷바퀴를 밉니다. 상온 복합 474km, 급속은 최대 320kW입니다."
+              : "엔진이 없습니다. 전기모터 221마력이 뒷바퀴를 밉니다. 상온 복합 342km, 급속은 최대 200kW입니다.";
+          }
+          var engine = "";
+          if (mix) {
+            var hy = ha ? a : b;
+            var ev = ea ? a : b;
+            engine =
+              '<div class="cla-power-grid">' +
+                '<article><p class="k">왼쪽이든 오른쪽이든, 기름 넣는 차</p><h4>' + esc(showName(hy.name)) + "</h4>" +
+                "<p>1.5리터 4기통 가솔린 엔진입니다. 엔진 혼자 188마력이고, 48V 모터가 최대 30마력을 보탭니다. 따로 충전하지 않습니다.</p></article>" +
+                '<article><p class="k">전기만으로 가는 차</p><h4>' + esc(showName(ev.name)) + "</h4>" +
+                "<p>" + evLine(ev) + "</p></article>" +
+              "</div>";
+          } else if (hybridOnly) {
+            engine =
+              '<div class="cla-power-grid">' +
+                '<article><p class="k">두 차 모두</p><h4>1.5리터 가솔린 · 48V 하이브리드</h4>' +
+                "<p>엔진 크기는 같습니다. 188마력 엔진에 모터가 최대 30마력을 보탭니다. 차이는 범퍼와 휠, 실내 장식입니다.</p></article>" +
+              "</div>";
+          } else {
+            engine =
+              '<div class="cla-power-grid">' +
+                '<article><p class="k">왼쪽</p><h4>' + esc(showName(a.name)) + "</h4><p>" + evLine(a) + "</p></article>" +
+                '<article><p class="k">오른쪽</p><h4>' + esc(showName(b.name)) + "</h4><p>" + evLine(b) + "</p></article>" +
+              "</div>";
+          }
+          var how = (ha || hb)
+            ? '<div class="who"><h4>CLA 220 하이브리드가 하는 일</h4>' +
+              "<p>주유소에서 기름만 넣으면 됩니다. 작은 배터리는 달리면서 스스로 채웁니다.</p>" +
+              "<p>막히거나 천천히 갈 때는 모터가 엔진을 도와 출발이 부드럽습니다. 속도를 줄이면 그 힘으로 전기를 다시 모읍니다.</p>" +
+              "<p>멀리 가도 충전기를 찾지 않습니다. 엔진이 주인공이고, 모터는 도우미입니다.</p></div>"
+            : "";
+          var who = mix
+            ? '<div class="who two"><article><h4>하이브리드가 편한 분</h4>' +
+              "<p>집이나 회사에 충전기가 없습니다.</p>" +
+              "<p>주말에 멀리 가는 일이 많습니다.</p>" +
+              "<p>주유소가 익숙하고, 충전 줄을 기다리기 싫습니다.</p></article>" +
+              "<article><h4>전기차가 맞는 분</h4>" +
+              "<p>출퇴근이 짧고, 집이나 회사에서 밤새 충전할 수 있습니다.</p>" +
+              "<p>시내를 더 조용하게 타고 싶습니다.</p>" +
+              "<p>" + evLabel(ea ? a : b) + " 시작 가격이 CLA 220보다 낮습니다. 급속으로 장거리도 이어서 갑니다.</p></article></div>"
+            : "";
+          var lead = mix
+            ? "같은 새 CLA라도 심장이 다릅니다. 기름을 넣는 1.5리터 하이브리드와, 엔진이 없는 전기차입니다."
+            : hybridOnly
+              ? "두 차 모두 1.5리터 가솔린에 48V 모터가 힘을 보태는 하이브리드입니다. 충전 케이블은 필요 없습니다."
+              : "두 차 모두 엔진이 없는 전기차입니다. 차이는 힘과 한 번 충전해서 가는 거리입니다.";
+          return '<div class="cla-power vs-sec" id="cla-power"><h3>CLA, 무엇을 넣고 달리나요</h3>' +
+            '<p class="vs-lead">' + lead + "</p>" + engine + how + who +
+            '<p class="vs-tail">숫자는 메르세데스-벤츠 코리아가 공개한 값입니다. 실제 거리와 느낌은 길과 운전 방식에 따라 달라져 시승에서 확인합니다.</p></div>';
+        }
         function heroCar(row, d) {
           var vis = window.BenzVisual;
           var info = vis.modelInfo(row);
@@ -1450,12 +1525,13 @@
             photo = vis.src(info.trim.front, "lg");
             rear = info.trim.rear ? vis.src(info.trim.rear, "lg") : "";
             inside = info.trim.int ? vis.src(info.trim.int, "lg") : "";
-          } else {
+          }
+          if (!photo) {
             var found = colorPack(row);
             if (found) {
               var ex = found.pack.exterior || [];
               var pick = ex.filter(function (x) { return x.code === "149U"; })[0] || ex[0];
-              if (pick) photo = pick.image + "?v=20261007g";
+              if (pick && !/cla-electric\//.test(pick.image)) photo = pick.image + "?v=20261007g";
             }
           }
           var kind = carValue(row);
@@ -1476,8 +1552,8 @@
           var b = rows[Number(right.value)];
           var da = pack(a);
           var db = pack(b);
-          var specHtml = specBlock(a, b);
           if (window.BenzVisual) window.BenzVisual.setRows([a, b]);
+          var specHtml = specBlock(a, b);
           var yearHtml = window.BenzStock
             ? window.BenzStock.yearSection(a, b, { showName: showName, won: won })
             : "";
@@ -1486,8 +1562,9 @@
           var visual = window.BenzVisual
             ? yearHtml +
               window.BenzVisual.hero([heroCar(a, da), heroCar(b, db)]) +
+              claPowerSection(a, b) +
               window.BenzVisual.modelSection([a, b])
-            : yearHtml;
+            : yearHtml + claPowerSection(a, b);
           var sentence = function (row, d) {
             var st = window.BenzStock ? window.BenzStock.of(row) : { code: "live" };
             if (st.code === "soldout") {
@@ -1565,6 +1642,7 @@
           if (!panel) return;
           var links = [
             ["#vs-hero", "두 차 한눈에"],
+            ["#cla-power", "CLA 엔진·전기"],
             ["#year-change", "연식이 바뀐 점"],
             ["#price-compare", "가격"],
             ["#spec-compare", "제원 비교"],

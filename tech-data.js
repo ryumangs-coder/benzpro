@@ -736,6 +736,7 @@ window.BENZ_TECH = {
       group: "digital",
       name: "실내 장식 (대시보드 · 트림)",
       en: "INTERIOR TRIM",
+      only: "^E \\d",
       line: "손이 닿고 눈이 머무는 곳의 소재가 다릅니다",
       imgs: [
         ["e-int-exclusive", "E-클래스 익스클루시브 실내"],
@@ -1027,12 +1028,29 @@ window.BENZ_TECH = {
       ]
     },
     {
-      id: "cla", label: "CLA", test: "^CLA \\d", source: "CLA 카탈로그 2026.10 (사진은 CLA 220 기준)",
+      id: "cla", label: "CLA 하이브리드", test: "^CLA 220", source: "CLA 카탈로그 2026.10 (사진은 CLA 220 기준)",
       trims: [
-        { key: "std", label: "스탠다드", test: null, front: "m-cla-std-front", int: "m-cla-std-int",
-          note: "일루미네이티드 그릴, LED 고성능 헤드램프, 18인치 5스포크 경량 알로이 휠, 파노라마 루프가 기본으로 소개됩니다." },
         { key: "amg", label: "AMG Line", test: "AMG Line", front: "m-cla-amg-front", int: "m-cla-amg-int",
-          note: "AMG 전용 범퍼·사이드 패널·프론트 에이프런, 18인치 AMG 5스포크 휠, 벤츠 패턴 애니메이션 프로젝션 라이트가 더해집니다." }
+          note: "AMG 전용 범퍼·사이드 패널·프론트 에이프런, 18인치 AMG 5스포크 휠, 벤츠 패턴 애니메이션 프로젝션 라이트가 더해집니다." },
+        { key: "std", label: "CLA 220", test: null, front: "m-cla-std-front", int: "m-cla-std-int",
+          note: "1.5리터 가솔린에 48V 모터가 힘을 보탭니다. 일루미네이티드 그릴, LED 고성능 헤드램프, 18인치 휠, 파노라마 루프가 기본입니다." }
+      ],
+      wheels: [],
+      mats: []
+    },
+    {
+      id: "cla-ev", label: "CLA 일렉트릭", test: "^CLA \\d.*electric", source: "메르세데스-벤츠 코리아 일렉트릭 CLA 사전예약",
+      trims: [
+        { key: "amg250", label: "250+ AMG Line", test: "250\\+.*AMG Line", front: "images/preorder/cla-ev-250-amg.jpg", int: "images/preorder/cla-ev-hl-cabin.jpg",
+          note: "268마력 전기모터, 상온 복합 474km. AMG 범퍼와 AMG 휠, 슈퍼스크린이 함께 들어갑니다." },
+        { key: "amg200", label: "AMG Line", test: "AMG Line", front: "images/preorder/cla-ev-200-amg.jpg", int: "images/preorder/cla-ev-hl-cabin.jpg",
+          note: "221마력 전기모터, 상온 복합 342km. AMG 범퍼와 18인치 AMG 휠, 헤드업 디스플레이가 더해집니다." },
+        { key: "p250", label: "250+", test: "250\\+", front: "images/preorder/cla-ev-250.jpg", int: "images/preorder/cla-ev-hl-cabin.jpg",
+          note: "268마력 전기모터, 상온 복합 474km. 급속 320kW, 슈퍼스크린, 전동 트렁크가 기본입니다." },
+        { key: "adv", label: "Advanced", test: "Advanced", front: "images/preorder/cla-ev-advanced.jpg", int: "images/preorder/cla-ev-hl-cabin.jpg",
+          note: "221마력 전기모터, 상온 복합 342km. 18인치 휠, 헤드업 디스플레이가 더해집니다." },
+        { key: "ess", label: "Essential", test: ".", front: "images/preorder/cla-ev-essential.jpg", int: "images/preorder/cla-ev-hl-cabin.jpg",
+          note: "221마력 전기모터, 상온 복합 342km. 17인치 휠, 앞 트렁크, 파노라마 루프가 기본입니다." }
       ],
       wheels: [],
       mats: []

@@ -6,14 +6,17 @@
 (function () {
   var T = window.BENZ_TECH;
   if (!T) return;
-  var VER = "?v=20261017d";
+  var VER = "?v=20261022c";
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
-  /* 배포 용량을 맞추려고 고화질(-lg)은 넣지 않습니다. 카드·모달 모두 -sm 한 장만 씁니다. */
+  /* 배포 용량을 맞추려고 고화질(-lg)은 넣지 않습니다. 카드·모달 모두 -sm 한 장만 씁니다.
+   * images/ 로 시작하는 공식 사진은 받은 경로를 그대로 씁니다. */
   function src(id, size) {
-    return T.base + id + "-sm.webp" + VER;
+    var s = String(id || "");
+    if (/^images\//.test(s)) return s + (s.indexOf("?") >= 0 ? "" : VER);
+    return T.base + s + "-sm.webp" + VER;
   }
 
   var byId = {};
@@ -25,10 +28,24 @@
     t._n = t.nameMatch ? new RegExp(t.nameMatch) : null;
   });
 
+  function topicFits(topic, rows) {
+    var list = rows && rows.length ? rows : ctxRows;
+    if (!topic || !list || !list.length) return !topic || !topic.only;
+    if (topic.only) {
+      var re = topic._only || (topic._only = new RegExp(topic.only));
+      if (!list.some(function (row) { return re.test(cleanName(row)); })) return false;
+    }
+    var first = topic.imgs && topic.imgs[0] && topic.imgs[0][0];
+    if (first && /^(e-int-|e-mat-|e-front-|e-rear-)/.test(first)) {
+      if (!list.some(function (row) { return /^E \d/.test(cleanName(row)); })) return false;
+    }
+    return true;
+  }
   function topicOfLabel(label) {
     var text = String(label || "");
     for (var i = 0; i < T.topics.length; i++) {
       var t = T.topics[i];
+      if (!topicFits(t)) continue;
       for (var k = 0; k < t._m.length; k++) if (t._m[k].test(text)) return t;
     }
     return null;
@@ -66,11 +83,13 @@
   }
   function trimOf(model, row) {
     var name = cleanName(row);
+    var fallback = null;
     for (var i = 0; i < model.trims.length; i++) {
       var t = model.trims[i];
       if (t._t && t._t.test(name)) return t;
+      if (!t._t && !fallback) fallback = t;
     }
-    return null;
+    return fallback;
   }
   function isMine(item, row, trim) {
     var name = cleanName(row);
@@ -141,10 +160,11 @@
     var groups = [];
     var map = {};
     var rest = 0;
+    var cars = [a, b].filter(Boolean);
     (diffs || []).forEach(function (item) {
       if (!item.differ) return;
       var t = topicOfLabel(item.label);
-      if (!t) { rest += 1; return; }
+      if (!t || !topicFits(t, cars)) { rest += 1; return; }
       if (!map[t.id]) { map[t.id] = { topic: t, items: [], score: 0 }; groups.push(map[t.id]); }
       map[t.id].items.push(item);
       var l = item.left === "●" ? 1 : 0;
@@ -157,9 +177,7 @@
     var matchedCount = 0;
     groups.forEach(function (g) { matchedCount += g.items.length; });
     var head = '<div class="vs-sec" id="vs-diff"><h3>눈으로 보는 차이</h3>';
-    if (!shownGroups.length) {
-      return head + '<p class="vs-lead">그림으로 풀어 볼 큰 사양 차이는 없습니다. 가격과 제원, 아래 옵션 표를 같이 보세요.</p></div>';
-    }
+    if (!shownGroups.length) return "";
     var cards = shownGroups.map(function (g) {
       var t = g.topic;
       var rows = g.items.slice(0, 4).map(function (it) {
