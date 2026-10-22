@@ -21,10 +21,10 @@
     { id: "rental", label: "렌터카", icon: icons.key, ids: ["rental-slot"] },
     { id: "support", label: "6개월 지원", icon: icons.cal, ids: ["support"] },
     { id: "care", label: "신차교환·타이어", icon: icons.swap, ids: ["care-switch", "care-slot", "tire-slot"] },
-    { id: "warranty", label: "워런티", icon: icons.shield, ids: ["warranty"] },
+    { id: "warranty", label: "보증연장", icon: icons.shield, ids: ["warranty"] },
     { id: "welcome", label: "출고 기프트", icon: icons.welcome, ids: ["welcome"] },
     { id: "golden", label: "골든타임", icon: icons.gift, ids: ["golden-slot"] },
-    { id: "card", label: "카드", icon: icons.card, ids: ["paycard"] }
+    { id: "card", label: "카드 결제", icon: icons.card, ids: ["paycard"] }
   ];
   var hashTab = {
     finder: "cars",
@@ -458,7 +458,7 @@
     if (tab.id === "rental") loadPage(rentalFlag, rentalSlot, "rental.html", "렌터카 조건을 불러오는 중입니다.", "rental.html", "렌터카·장기렌트 보기");
     if (tab.id === "welcome") loadPage(welcomeFlag, welcomeSlot, "welcome.html", "출고 기프트를 불러오는 중입니다.", "welcome.html", "출고 기프트 보기");
     if (tab.id === "warranty") {
-      loadPage(warrantyFlag, warrantySlot, "warranty.html", "워런티 안내를 불러오는 중입니다.", "warranty.html", "워런티 안내 보기", function (el) {
+      loadPage(warrantyFlag, warrantySlot, "warranty.html", "보증연장 안내를 불러오는 중입니다.", "warranty.html", "보증연장 안내 보기", function (el) {
         if (window.BenzWarrantyPosts) window.BenzWarrantyPosts(el);
       });
     }
