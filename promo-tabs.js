@@ -15,14 +15,14 @@
   var tabs = [
     { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["promo-board", "highlights", "raised", "finder", "how", "examples"] },
     { id: "extra", label: "추가 혜택", icon: icons.plus, ids: ["owned", "benefit-slot"] },
-    { id: "golden", label: "골든타임", icon: icons.gift, ids: ["golden-slot"] },
+    { id: "mou", label: "MOU 할인", icon: icons.mou, ids: ["company"] },
     { id: "fleet", label: "법인 할인", icon: icons.fleet, ids: ["fleet-slot"] },
     { id: "rental", label: "렌터카", icon: icons.key, ids: ["rental-slot"] },
     { id: "support", label: "6개월 지원", icon: icons.cal, ids: ["support"] },
     { id: "care", label: "신차교환", icon: icons.swap, ids: ["programs", "care-card"] },
     { id: "tire", label: "타이어", icon: icons.tire, ids: ["tire-card"] },
     { id: "welcome", label: "출고 기프트", icon: icons.welcome, ids: ["welcome"] },
-    { id: "mou", label: "MOU 할인", icon: icons.mou, ids: ["company"] },
+    { id: "golden", label: "골든타임", icon: icons.gift, ids: ["golden-slot"] },
     { id: "card", label: "카드", icon: icons.card, ids: ["paycard"] }
   ];
   var hashTab = {
@@ -35,6 +35,7 @@
     extra: "extra",
     fleet: "fleet",
     golden: "golden",
+    "golden-slot": "golden",
     rental: "rental",
     support: "support",
     programs: "care",
@@ -414,12 +415,19 @@
     activate(btn.getAttribute("data-tab"));
   });
   document.addEventListener("click", function (e) {
-    var a = e.target.closest('a[href^="#"]');
+    var a = e.target.closest("a[href]");
     if (!a || !document.body.contains(a)) return;
-    var id = a.getAttribute("href").slice(1);
-    if (!hashTab[id]) return;
+    var href = a.getAttribute("href") || "";
+    var id = "";
+    if (href.charAt(0) === "#") id = href.slice(1);
+    else if (/prices\.html(?:\?[^#]*)?#/.test(href)) id = href.split("#")[1] || "";
+    if (!id || !hashTab[id]) return;
     e.preventDefault();
-    activate(hashTab[id], id);
+    var tabId = hashTab[id];
+    var scrollId = id;
+    if (tabId === "golden") scrollId = "golden-slot";
+    if (tabId === "welcome") scrollId = "welcome";
+    activate(tabId, scrollId);
   });
 
   var start = (location.hash || "").replace("#", "");
