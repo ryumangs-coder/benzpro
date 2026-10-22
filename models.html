@@ -124,7 +124,7 @@
     <script src="option-words.js?v=20261016a"></script>
     <script src="tech-data.js?v=20261016e"></script>
     <script src="compare-visual.js?v=20261021b"></script>
-    <script src="colors.js?v=20261021a"></script>
+    <script src="colors.js?v=20261022a"></script>
     <script>
       (function () {
         var specs = [
@@ -1407,7 +1407,7 @@
         }
         function colorCards(list) {
           return '<div class="color-grid">' + list.map(function (item) {
-            var src = esc(item.image) + "?v=20261021a";
+            var src = esc(item.image) + "?v=20261022a";
             var code = item.code ? esc(item.code) : "";
             return '<button type="button" class="color-shot" data-src="' + src + '" data-name="' + esc(item.name) + '" data-code="' + code + '"><img src="' + src + '" alt="' + esc(item.name) + (code ? " " + code : "") + '" loading="lazy" decoding="async"><span>' + esc(item.name) + (code ? "<em>" + code + "</em>" : "") + "</span></button>";
           }).join("") + "</div>";
@@ -1417,6 +1417,12 @@
           var title = '<h4 class="mt-5 text-[18px] font-bold">' + esc(showName(row.name)) + "</h4>";
           if (!found) return title + '<p class="mt-2 text-[16px] leading-relaxed">이 차의 색 사진은 상담에서 같이 봅니다.</p>';
           var note = found.loose ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">고성능 트림은 고를 수 있는 색이 더 적을 수 있습니다. 아래는 같은 차종에서 확인된 색입니다.</p>' : "";
+          var family = (featureRecord(row).feat || {}).family || "";
+          if (family === "CLA (신형 하이브리드)") {
+            note += '<p class="mt-2 text-[15px] leading-relaxed text-[#A4AAAE]">CLA 220은 폴라 화이트, 아쿠아 민트, 제트 블랙입니다. AMG Line은 시어 블루, 하이 테크 실버, 파타고니아 레드입니다. 내장은 CLA 220이 아티코 블랙·마키아토 베이지·가죽 브라운이고, AMG Line은 마이크로컷 투톤입니다.</p>';
+          } else if (family === "CLA electric") {
+            note += '<p class="mt-2 text-[15px] leading-relaxed text-[#A4AAAE]">기본 라인은 폴라 화이트, 아쿠아 민트, 제트 블랙입니다. AMG Line은 시어 블루, 하이 테크 실버, 파타고니아 레드입니다. 내장은 아티코 블랙·마키아토 베이지·가죽 브라운이고, AMG Line은 마이크로컷 투톤입니다.</p>';
+          }
           var exterior = found.pack.exterior || [];
           var interior = found.pack.interior || [];
           return title + note +
