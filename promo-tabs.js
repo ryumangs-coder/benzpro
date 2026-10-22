@@ -10,7 +10,8 @@
     fleet: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20V8l6-4h6l6 4v12h-6v-5H9v5H3zm2-2h2v-3h4v3h6V9.2L15 6H9L5 9.2V18z"/></svg>',
     key: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 4a6 6 0 0 1 1.2 11.9L14 17v3h-3v2H8v-2H6v-3l1.8-1.1A6 6 0 0 1 14 4zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>',
     mou: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V9l8-5 8 5v11h-6v-6H10v6H4z"/></svg>',
-    card: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v12H3V6zm2 4h14V8H5v2z"/></svg>'
+    card: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v12H3V6zm2 4h14V8H5v2z"/></svg>',
+    shield: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 13.6-3.4-3.4 1.4-1.4 2 2 4.6-4.6 1.4 1.4-6 6z"/></svg>'
   };
   var tabs = [
     { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["promo-board", "highlights", "raised", "finder", "how", "examples"] },
@@ -19,8 +20,8 @@
     { id: "fleet", label: "법인 할인", icon: icons.fleet, ids: ["fleet-slot"] },
     { id: "rental", label: "렌터카", icon: icons.key, ids: ["rental-slot"] },
     { id: "support", label: "6개월 지원", icon: icons.cal, ids: ["support"] },
-    { id: "care", label: "신차교환", icon: icons.swap, ids: ["programs", "care-card"] },
-    { id: "tire", label: "타이어", icon: icons.tire, ids: ["tire-card"] },
+    { id: "care", label: "신차교환·타이어", icon: icons.swap, ids: ["care-switch", "care-slot", "tire-slot"] },
+    { id: "warranty", label: "워런티", icon: icons.shield, ids: ["warranty"] },
     { id: "welcome", label: "출고 기프트", icon: icons.welcome, ids: ["welcome"] },
     { id: "golden", label: "골든타임", icon: icons.gift, ids: ["golden-slot"] },
     { id: "card", label: "카드", icon: icons.card, ids: ["paycard"] }
@@ -39,8 +40,13 @@
     rental: "rental",
     support: "support",
     programs: "care",
+    care: "care",
     "care-card": "care",
-    "tire-card": "tire",
+    "care-slot": "care",
+    tire: "care",
+    "tire-card": "care",
+    "tire-slot": "care",
+    warranty: "warranty",
     welcome: "welcome",
     company: "mou",
     paycard: "card"
@@ -85,6 +91,33 @@
   welcomeSlot.id = "welcome";
   welcomeSlot.className = "jump mt-6";
   highlights.parentNode.insertBefore(welcomeSlot, highlights);
+
+  var careSwitch = document.createElement("section");
+  careSwitch.id = "care-switch";
+  careSwitch.className = "jump mt-6";
+  careSwitch.innerHTML =
+    '<h2 class="text-[26px] font-bold">신차교환 · 타이어 교환</h2>' +
+    '<p class="mt-2 text-[18px] leading-relaxed text-[#C5CED3]">벤츠 금융(안심보장할부·운용리스)으로 사면 따라오는 두 가지 보장입니다. 보고 싶은 쪽을 누르세요.</p>' +
+    '<div class="care-pick mt-4" role="tablist" aria-label="보장 고르기">' +
+    '<button type="button" role="tab" data-care="care" aria-selected="true">' + icons.swap + "<b>신차교환 3년</b><span>사고 나면 같은 차종 새 차로 한 번</span></button>" +
+    '<button type="button" role="tab" data-care="tire" aria-selected="false">' + icons.tire + "<b>타이어 교환</b><span>도로 파손 타이어 최대 2개, 200만원</span></button>" +
+    "</div>";
+  highlights.parentNode.insertBefore(careSwitch, highlights);
+
+  var careSlot = document.createElement("section");
+  careSlot.id = "care-slot";
+  careSlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(careSlot, highlights);
+
+  var tireSlot = document.createElement("section");
+  tireSlot.id = "tire-slot";
+  tireSlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(tireSlot, highlights);
+
+  var warrantySlot = document.createElement("section");
+  warrantySlot.id = "warranty";
+  warrantySlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(warrantySlot, highlights);
 
   var bar = document.createElement("div");
   bar.className = "promo-tabs mt-6";
@@ -355,7 +388,7 @@
       });
   }
 
-  function loadPage(flag, el, url, loading, failHref, failLabel) {
+  function loadPage(flag, el, url, loading, failHref, failLabel, done) {
     if (flag.done) return;
     flag.done = true;
     el.innerHTML = '<p class="text-[17px] text-[#C5CED3]">' + loading + "</p>";
@@ -365,6 +398,7 @@
         var doc = new DOMParser().parseFromString(html, "text/html");
         var main = doc.querySelector("main");
         el.innerHTML = main ? main.innerHTML : "";
+        if (done) done(el);
       })
       .catch(function () {
         el.innerHTML = '<p class="text-[17px]"><a class="font-bold text-[#E4CB86] underline" href="' + failHref + '">' + failLabel + "</a></p>";
@@ -373,9 +407,29 @@
   var goldenFlag = { done: false };
   var rentalFlag = { done: false };
   var welcomeFlag = { done: false };
+  var careFlag = { done: false };
+  var tireFlag = { done: false };
+  var warrantyFlag = { done: false };
+  var careSub = "care";
+
+  function showCare(sub) {
+    careSub = sub === "tire" ? "tire" : "care";
+    careSwitch.querySelectorAll("button[data-care]").forEach(function (btn) {
+      btn.setAttribute("aria-selected", btn.getAttribute("data-care") === careSub ? "true" : "false");
+    });
+    careSlot.classList.toggle("promo-off", careSub !== "care");
+    tireSlot.classList.toggle("promo-off", careSub !== "tire");
+    if (careSub === "care") loadPage(careFlag, careSlot, "care.html", "신차교환 조건을 불러오는 중입니다.", "care.html", "신차교환 조건 보기");
+    else loadPage(tireFlag, tireSlot, "tire.html", "타이어 교환 조건을 불러오는 중입니다.", "tire.html", "타이어 교환 조건 보기");
+  }
+  function careSubOf(id) {
+    if (id === "tire" || id === "tire-card" || id === "tire-slot") return "tire";
+    if (id === "care" || id === "care-card" || id === "care-slot" || id === "programs") return "care";
+    return careSub;
+  }
 
   function allIds() {
-    var ids = ["promo-board", "benefit-slot", "fleet-slot", "golden-slot", "rental-slot"];
+    var ids = ["promo-board", "benefit-slot", "fleet-slot", "golden-slot", "rental-slot", "programs", "care-card", "tire-card"];
     tabs.forEach(function (tab) {
       tab.ids.forEach(function (id) {
         if (ids.indexOf(id) === -1) ids.push(id);
@@ -403,9 +457,17 @@
     if (tab.id === "golden") loadPage(goldenFlag, goldenSlot, "golden.html", "골든타임을 불러오는 중입니다.", "golden.html", "골든타임 보기");
     if (tab.id === "rental") loadPage(rentalFlag, rentalSlot, "rental.html", "렌터카 조건을 불러오는 중입니다.", "rental.html", "렌터카·장기렌트 보기");
     if (tab.id === "welcome") loadPage(welcomeFlag, welcomeSlot, "welcome.html", "출고 기프트를 불러오는 중입니다.", "welcome.html", "출고 기프트 보기");
-    if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + (scrollId || tab.id));
-    if (scrollId && document.getElementById(scrollId)) {
-      document.getElementById(scrollId).scrollIntoView({ behavior: "smooth", block: "start" });
+    if (tab.id === "warranty") {
+      loadPage(warrantyFlag, warrantySlot, "warranty.html", "워런티 안내를 불러오는 중입니다.", "warranty.html", "워런티 안내 보기", function (el) {
+        if (window.BenzWarrantyPosts) window.BenzWarrantyPosts(el);
+      });
+    }
+    if (tab.id === "care") showCare(careSubOf(scrollId));
+    var hashId = tab.id === "care" ? (careSub === "tire" ? "tire-card" : "care-card") : (scrollId || tab.id);
+    if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + hashId);
+    var target = tab.id === "care" && scrollId ? "care-switch" : scrollId;
+    if (target && document.getElementById(target)) {
+      document.getElementById(target).scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
@@ -414,6 +476,12 @@
     if (!btn) return;
     activate(btn.getAttribute("data-tab"));
   });
+  careSwitch.addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-care]");
+    if (!btn) return;
+    showCare(btn.getAttribute("data-care"));
+    if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + (careSub === "tire" ? "tire-card" : "care-card"));
+  });
   document.addEventListener("click", function (e) {
     var a = e.target.closest("a[href]");
     if (!a || !document.body.contains(a)) return;
@@ -421,15 +489,17 @@
     var id = "";
     if (href.charAt(0) === "#") id = href.slice(1);
     else if (/prices\.html(?:\?[^#]*)?#/.test(href)) id = href.split("#")[1] || "";
+    else if (href === "care.html" || href === "tire.html" || href === "warranty.html") id = href.replace(".html", "");
     if (!id || !hashTab[id]) return;
     e.preventDefault();
     var tabId = hashTab[id];
     var scrollId = id;
     if (tabId === "golden") scrollId = "golden-slot";
     if (tabId === "welcome") scrollId = "welcome";
+    if (tabId === "warranty") scrollId = "warranty";
     activate(tabId, scrollId);
   });
 
   var start = (location.hash || "").replace("#", "");
-  activate(hashTab[start] || "cars", start && document.getElementById(start) ? start : "");
+  activate(hashTab[start] || "cars", hashTab[start] ? start : "");
 })();

@@ -64,6 +64,7 @@
   function seatMat(t) {
     var s = String(t || "");
     var amg = /AMG/.test(s) ? "AMG " : "";
+    if (/나파 ?룩/.test(s)) return /마이크로컷/.test(s) ? "나파 룩 · 마이크로컷" : "아티코 나파 룩";
     if (/나파/.test(s)) return amg + "나파 가죽";
     if (/마이크로컷/.test(s)) return "아티코 · 마이크로컷";
     if (/인조가죽/.test(s)) return "아티코 인조가죽";

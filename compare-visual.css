@@ -199,6 +199,53 @@
   .cla-power .who.two { grid-template-columns: 1fr 1fr; }
 }
 .vs-tail { margin-top: 0.8rem; font-size: 14.5px; line-height: 1.55; color: #a4aaae; }
+.cla-stat-row {
+  margin-top: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+.cla-stat-row div {
+  min-width: 0;
+  padding: 0.55rem 0.5rem;
+  border-radius: 0.75rem;
+  background: rgba(228, 203, 134, 0.1);
+  text-align: center;
+}
+.cla-stat-row b {
+  display: block;
+  font-size: 19px;
+  font-weight: 800;
+  color: #e4cb86;
+  line-height: 1.2;
+}
+.cla-stat-row span {
+  display: block;
+  word-break: keep-all;
+  margin-top: 0.15rem;
+  font-size: 13px;
+  color: #c5ced3;
+}
+.cla-diff {
+  margin-top: 0.6rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(164, 170, 174, 0.18);
+  overflow: hidden;
+}
+.cla-diff > div {
+  display: grid;
+  grid-template-columns: 4.6rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border-top: 1px solid rgba(164, 170, 174, 0.14);
+  align-items: start;
+}
+.cla-diff > div:first-child { border-top: 0; }
+.cla-diff-head { background: rgba(255, 255, 255, 0.04); }
+.cla-diff-head b { font-size: 14px; font-weight: 800; color: #e4cb86; }
+.cla-diff span { font-size: 14px; font-weight: 800; color: #a4aaae; }
+.cla-power .cla-diff p { margin-top: 0; font-size: 15px; line-height: 1.45; word-break: keep-all; overflow-wrap: break-word; }
+.cla-diff-head b { word-break: keep-all; }
 .vs-sub-h { margin-top: 1.3rem; font-size: 18px; font-weight: 800; }
 .vs-kicker { font-size: 15px; font-weight: 700; color: #e4cb86; }
 
