@@ -6,6 +6,7 @@
     swap: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 7h11l-2.2-2.2 1.4-1.4L22 8l-4.8 4.6-1.4-1.4L18 9H7V7zm10 10H6l2.2 2.2-1.4 1.4L2 16l4.8-4.6 1.4 1.4L6 15h11v2z"/></svg>',
     tire: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>',
     gift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 10h16v10H4V10zm8-6l2.2 3H20v3H4V7h5.8L12 4zM11 12v6h2v-6h-2z"/></svg>',
+    welcome: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 8h16v12H4V8zm8-6 3 6H9l3-6zM11 11h2v7h-2v-7z"/></svg>',
     fleet: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20V8l6-4h6l6 4v12h-6v-5H9v5H3zm2-2h2v-3h4v3h6V9.2L15 6H9L5 9.2V18z"/></svg>',
     key: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 4a6 6 0 0 1 1.2 11.9L14 17v3h-3v2H8v-2H6v-3l1.8-1.1A6 6 0 0 1 14 4zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>',
     mou: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V9l8-5 8 5v11h-6v-6H10v6H4z"/></svg>',
@@ -20,6 +21,7 @@
     { id: "support", label: "6개월 지원", icon: icons.cal, ids: ["support"] },
     { id: "care", label: "신차교환", icon: icons.swap, ids: ["programs", "care-card"] },
     { id: "tire", label: "타이어", icon: icons.tire, ids: ["tire-card"] },
+    { id: "welcome", label: "출고 기프트", icon: icons.welcome, ids: ["welcome"] },
     { id: "mou", label: "MOU 할인", icon: icons.mou, ids: ["company"] },
     { id: "card", label: "카드", icon: icons.card, ids: ["paycard"] }
   ];
@@ -38,6 +40,7 @@
     programs: "care",
     "care-card": "care",
     "tire-card": "tire",
+    welcome: "welcome",
     company: "mou",
     paycard: "card"
   };
@@ -76,6 +79,11 @@
   rentalSlot.id = "rental-slot";
   rentalSlot.className = "jump mt-6";
   highlights.parentNode.insertBefore(rentalSlot, highlights);
+
+  var welcomeSlot = document.createElement("section");
+  welcomeSlot.id = "welcome";
+  welcomeSlot.className = "jump mt-6";
+  highlights.parentNode.insertBefore(welcomeSlot, highlights);
 
   var bar = document.createElement("div");
   bar.className = "promo-tabs mt-6";
@@ -363,6 +371,7 @@
   }
   var goldenFlag = { done: false };
   var rentalFlag = { done: false };
+  var welcomeFlag = { done: false };
 
   function allIds() {
     var ids = ["promo-board", "benefit-slot", "fleet-slot", "golden-slot", "rental-slot"];
@@ -392,6 +401,7 @@
     if (tab.id === "fleet") loadFleet();
     if (tab.id === "golden") loadPage(goldenFlag, goldenSlot, "golden.html", "골든타임을 불러오는 중입니다.", "golden.html", "골든타임 보기");
     if (tab.id === "rental") loadPage(rentalFlag, rentalSlot, "rental.html", "렌터카 조건을 불러오는 중입니다.", "rental.html", "렌터카·장기렌트 보기");
+    if (tab.id === "welcome") loadPage(welcomeFlag, welcomeSlot, "welcome.html", "출고 기프트를 불러오는 중입니다.", "welcome.html", "출고 기프트 보기");
     if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + (scrollId || tab.id));
     if (scrollId && document.getElementById(scrollId)) {
       document.getElementById(scrollId).scrollIntoView({ behavior: "smooth", block: "start" });

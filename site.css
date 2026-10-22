@@ -605,6 +605,7 @@ aside a[href="#owned"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://ww
 aside a[href="#company"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 20V9l8-5 8 5v11h-6v-6H10v6H4z'/%3E%3C/svg%3E"); }
 aside a[href="#paycard"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 6h18v12H3V6zm2 4h14V8H5v2z'/%3E%3C/svg%3E"); }
 aside a[href="#finder"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M5 16l1.5-4.5A2 2 0 0 1 8.4 10h7.2a2 2 0 0 1 1.9 1.5L19 16v4h-2v-2H7v2H5v-4zm2.2-1h9.6l-1-3H8.2l-1 3z'/%3E%3C/svg%3E"); }
+aside a[href="#welcome"] { --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 8h16v12H4V8zm8-6 3 6H9l3-6zM11 11h2v7h-2v-7z'/%3E%3C/svg%3E"); }
 aside a[href*="#consulting"] {
   --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H5z'/%3E%3C/svg%3E");
 }
@@ -697,3 +698,24 @@ a.spec-jump {
 
 /* 기본 아님: 어프로치북 기본 사양표에 없다는 뜻(없음 확정 아님) */
 .opt-item b.na { color: #c9ced1; font-weight: 700; font-size: 0.92em; border-bottom: 1px dashed rgba(255, 255, 255, 0.35); }
+
+.gift-plate {
+  background: #ffffff;
+  overflow: hidden;
+}
+.gift-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(164, 170, 174, 0.16);
+  font-size: 17px;
+  line-height: 1.45;
+}
+.spec-row:last-child { border-bottom: 0; }
+.spec-row b { font-weight: 800; white-space: nowrap; }
