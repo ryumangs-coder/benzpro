@@ -139,6 +139,36 @@ header.hp-head .hp-menu {
   font-size: 0.92rem;
   font-weight: 700;
 }
+.hp-deal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  margin-top: 0.45rem;
+}
+.hp-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0.12rem 0.7rem;
+  border-radius: 999px;
+  background: #ff6b57;
+  color: #17100d;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.hp-deal b {
+  color: #ff8a7a;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.hp-delta {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
 .hp-split {
   display: flex;
   flex-wrap: wrap;
@@ -222,6 +252,63 @@ header.hp-head .hp-menu {
   object-position: 50% 58%;
   border-radius: 0.8rem;
   background: #eceff1;
+}
+.hp-links > a.hp-benefit {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+.hp-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  color: #e4cb86;
+  font-weight: 800;
+}
+.hp-go span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+.hp-links > a.hp-benefit:active {
+  background: rgba(228, 203, 134, 0.16);
+}
+.hp-links > a.hp-benefit:focus-visible {
+  outline: 2px solid #e4cb86;
+  outline-offset: 3px;
+  border-color: #e4cb86;
+  background: rgba(228, 203, 134, 0.1);
+}
+.hp-links > a.hp-benefit:focus-visible .hp-go,
+.hp-links > a.hp-benefit:focus-visible strong {
+  color: #f3e2b0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hp-links > a.hp-benefit:hover {
+    border-color: #e4cb86;
+    background: rgba(228, 203, 134, 0.1);
+    transform: translateY(-2px);
+    cursor: pointer;
+  }
+  .hp-links > a.hp-benefit:hover .hp-go,
+  .hp-links > a.hp-benefit:hover strong {
+    color: #f3e2b0;
+  }
+  .hp-links > a.hp-benefit:hover .hp-go span {
+    transform: translateX(3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-links > a.hp-benefit,
+  .hp-go span {
+    transition: none;
+  }
+  .hp-links > a.hp-benefit:hover {
+    transform: none;
+  }
 }
 .hp-link-card strong,
 .hp-pre strong {

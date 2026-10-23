@@ -39,6 +39,7 @@
     pay: "install",
     model: E_EX,
     retain: false,
+    trade: false,
     conquest: false,
     mou: false,
     engaged: false
@@ -75,6 +76,14 @@
     if (man == null) return "";
     return man.toLocaleString("ko-KR") + "만원";
   }
+  function percentSaved(view) {
+    if (!view || !view.q || view.q.basis == null || !view.rate) return null;
+    return view.q.basis - window.BenzQuote.floorWon(view.q.basis * (1 - view.rate / 100));
+  }
+  function dealHtml(view) {
+    if (!view || view.status !== "ok" || !view.rate) return "";
+    return '<p class="hp-deal"><span class="hp-badge">' + esc(String(view.rate)) + '% 할인</span><b>' + esc(manText(percentSaved(view))) + " 할인</b></p>";
+  }
   function payName(pay) {
     var hit = PAYS.filter(function (item) { return item[0] === pay; })[0];
     return hit ? hit[1] : "";
@@ -107,6 +116,7 @@
     return window.BenzQuote.scene(row, {
       pay: state.pay,
       retain: state.retain,
+      trade: state.trade,
       conquest: state.conquest,
       mou: state.mou
     });
@@ -123,6 +133,7 @@
       my: my || state.modelYear || state.year,
       pay: state.pay,
       retain: state.retain,
+      trade: state.trade,
       conquest: state.conquest,
       mou: state.mou
     };
@@ -181,7 +192,7 @@
       var basis = financeBasis(state.pay) ? '<p class="hp-basis">대상 금융 이용 기준 · ' + esc(payName(state.pay)) + "</p>" : '<p class="hp-basis">' + esc(payName(state.pay)) + " 구매 기준</p>";
       body =
         '<p class="hp-meta">차량가 ' + esc(manText(view.q.basis)) + "</p>" +
-        '<p class="hp-split"><span>할인 <b>' + esc(manText(view.saved)) + "</b></span><span>할인율 <b>" + esc(String(view.rate)) + "%</b></span></p>" +
+        dealHtml(view) +
         '<p class="hp-num">' + esc(manText(view.after)) + "</p>" +
         '<p class="hp-note">할인 적용 차량가. 취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
         basis +
@@ -248,8 +259,9 @@
     var retainOn = view && view.retainRate;
     var conqOn = view && view.conqRate;
     opts.innerHTML =
-      '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="retain"' + (state.retain ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>지금 타는 벤츠<small>' + (retainOn ? "재구매 혜택 " + view.retainRate + "%. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "이 연식에는 재구매 혜택이 없습니다.") + "</small></span></label>" +
-      '<label class="hp-check' + (conqOn ? "" : " is-off") + '"><input type="checkbox" data-flag="conquest"' + (state.conquest ? " checked" : "") + (conqOn ? "" : " disabled") + '><span>다른 고급 브랜드<small>' + (conqOn ? "혜택 " + view.conqRate + "%. 지금 타는 벤츠 혜택과 같이 쓰지 않습니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.") + "</small></span></label>" +
+      '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="retain"' + (state.retain && retainOn ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>지금 타는 벤츠<small>' + (retainOn ? "재구매 혜택 " + view.retainRate + "%. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "이 연식에는 재구매 혜택이 없습니다.") + "</small></span></label>" +
+      '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="trade"' + (state.trade && retainOn ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>인증 중고로 매각<small>' + (retainOn ? "재구매를 켠 차에 1%가 더해집니다. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "재구매 혜택이 있는 차만 적용됩니다.") + "</small></span></label>" +
+      '<label class="hp-check' + (conqOn ? "" : " is-off") + '"><input type="checkbox" data-flag="conquest"' + (state.conquest && conqOn ? " checked" : "") + (conqOn ? "" : " disabled") + '><span>다른 고급 브랜드<small>' + (conqOn ? "혜택 " + view.conqRate + "%. 지금 타는 벤츠 혜택과 같이 쓰지 않습니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.") + "</small></span></label>" +
       '<label class="hp-check"><input type="checkbox" data-flag="mou"' + (state.mou ? " checked" : "") + '><span>MOU 제휴<small>제휴 여부는 상담에서 확인합니다. 여기서는 기존 견적과 같은 2%만 더합니다.</small></span></label>';
     var shown = resultOf(row);
     var html = "";
@@ -260,10 +272,10 @@
     } else {
       html =
         '<p class="hp-meta">차량가 ' + esc(manText(shown.q.basis)) + "</p>" +
+        dealHtml(shown) +
         "<ul class=\"hp-note\">" + shown.lines.map(function (line) {
           return "<li>" + esc(line.label) + " " + esc(String(line.pct)) + "%</li>";
         }).join("") + "</ul>" +
-        '<p class="hp-split"><span>할인 합계 <b>' + esc(manText(shown.saved)) + "</b></span><span>" + esc(String(shown.rate)) + "%</span></p>" +
         (financeBasis(state.pay) ? '<p class="hp-basis">대상 금융 이용 기준 · ' + esc(payName(state.pay)) + "</p>" : "") +
         '<p class="hp-num">' + esc(manText(shown.after)) + "</p>" +
         '<p class="hp-note">할인 적용 예상 차량가. 취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>';
@@ -328,7 +340,7 @@
     }
     var owned = document.getElementById("field-owned");
     if (owned && !owned.dataset.touched) {
-      if (state.retain) owned.value = "벤츠 보유";
+      if (state.retain || state.trade) owned.value = "벤츠 보유";
       else if (state.conquest) owned.value = "타 브랜드 보유";
     }
   }
@@ -347,7 +359,8 @@
     if (leftPrice !== "조건 확인 필요" && rightPrice !== "조건 확인 필요") {
       gap = manText(rv.after - lv.after);
     }
-    var specRows = (SPEC[state.year] || [
+    var specSource = SPEC[state.year] || (state.year === "MY27" ? SPEC.MY26 : null);
+    var specRows = (specSource || [
       ["외관 스타일", "확인 전", "확인 전"],
       ["휠", "확인 전", "확인 전"],
       ["기본 사양", "확인 전", "확인 전"]
@@ -356,13 +369,19 @@
     }).join("");
     var source = state.year === "MY26"
       ? "외관, 휠, 하체는 26년식 E클래스 카탈로그와 어프로치북에서 확인된 기본 사양입니다."
-      : "이 연식의 사양 차이는 확인된 자료가 없습니다. 가격만 같은 연식·같은 구매 방식으로 비교합니다.";
+      : "공통 사양은 2026년식 기준으로 정리했으며, 확인된 2027년식 변경 사항을 반영했습니다. 실제 적용 사양은 출고 차량 기준으로 확인해 주세요.";
+    var delta = "";
+    if (state.year === "MY27" && window.BenzStock && window.BenzStock.eEquip) {
+      delta = '<h3 class="hp-delta">달라진 점</h3><ul class="hp-note">' + window.BenzStock.eEquip().map(function (item) {
+        return "<li>" + esc(item.text) + "</li>";
+      }).join("") + "</ul>";
+    }
     host.innerHTML =
       "<table class=\"hp-table\"><caption class=\"hp-note\">" + esc(yearLabel(state.year)) + " · " + esc(payName(state.pay)) + " · 추가 혜택은 넣지 않은 비교</caption><thead><tr><th scope=\"col\">항목</th><th scope=\"col\">익스클루시브</th><th scope=\"col\">AMG 라인</th></tr></thead><tbody>" +
       specRows +
       "<tr><th scope=\"row\">할인 적용 차량가</th><td>" + esc(leftPrice) + "</td><td>" + esc(rightPrice) + "</td></tr>" +
       "<tr><th scope=\"row\">가격 차이</th><td colspan=\"2\">AMG 라인 − 익스클루시브 " + esc(gap) + "</td></tr>" +
-      "</tbody></table><p class=\"hp-note\">" + esc(source) + "</p>";
+      "</tbody></table><p class=\"hp-note\">" + esc(source) + "</p>" + delta;
     if (links) {
       var compare = "models.html?pick=" + encodeURIComponent(E_EX) + "&my=" + encodeURIComponent(state.year) + "&vs=" + encodeURIComponent(E_AMG) + "&vsmy=" + encodeURIComponent(state.year);
       links.innerHTML =
@@ -389,6 +408,7 @@
         '<article class="hp-link-card">' + photo(item.name, item.my, false) +
         '<p class="hp-note">' + esc(item.line) + "</p><strong>" + esc(showName(item.name)) + "</strong>" +
         "<p>" + esc(yearLabel(item.my)) + (basis ? " · " + esc(basis) : "") + "</p>" +
+        (view && view.status === "ok" && stock.code !== "soldout" ? dealHtml(view) : "") +
         '<p class="hp-num" style="font-size:1.6rem">' + esc(price) + "</p>" +
         '<a class="hp-btn" href="' + esc(href) + '" data-model-quote="' + esc(item.name) + '">이 차로 견적 보기</a></article>'
       );
@@ -467,13 +487,14 @@
       var seed = calcRow();
       state.pay = seed ? window.BenzQuote.defaultPay(seed) : "install";
     }
-    ["retain", "conquest", "mou"].forEach(function (key) {
+    ["retain", "trade", "conquest", "mou"].forEach(function (key) {
       if (params.get(key) === "1" || (!params.has(key) && stored[key])) state[key] = true;
     });
-    if (params.get("retain") === "1" && params.get("conquest") === "1") state.conquest = false;
+    if (state.trade) state.retain = true;
+    if ((state.retain || state.trade) && state.conquest) state.conquest = false;
     paintHero();
     draw();
-    if (askedName || params.get("pay") || params.get("retain") || params.get("mou")) engage();
+    if (askedName || params.get("pay") || params.get("retain") || params.get("trade") || params.get("mou")) engage();
   }
 
   var root = document.getElementById("buy");
@@ -533,7 +554,15 @@
       var key = flag.getAttribute("data-flag");
       state[key] = flag.checked;
       if (key === "retain" && flag.checked) state.conquest = false;
-      if (key === "conquest" && flag.checked) state.retain = false;
+      if (key === "retain" && !flag.checked) state.trade = false;
+      if (key === "trade" && flag.checked) {
+        state.retain = true;
+        state.conquest = false;
+      }
+      if (key === "conquest" && flag.checked) {
+        state.retain = false;
+        state.trade = false;
+      }
       engage();
       draw();
       syncUrl();

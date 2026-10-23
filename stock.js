@@ -136,6 +136,66 @@
     }).map(itemText);
   }
 
+  /* 연식 배너. 확인된 옵션 차이만.
+     27년식 E클래스 공통 사양의 출처는 26년식 같은 트림입니다.
+     review: recorded = 연식 비교에 이미 있던 변경. pending = 26년식 기준을 채운 뒤 운영자 최종 확인 전. */
+  var E_EQUIP = [
+    {
+      label: "사이드 볼스터",
+      my26: "가죽",
+      my27: "아티코 가죽",
+      text: "사이드 볼스터가 가죽에서 아티코 가죽으로 바뀝니다.",
+      source: "벤츠비교 연식 비교",
+      review: "recorded"
+    },
+    {
+      label: "시트백 맵포켓",
+      my26: "기본 적용",
+      my27: "미적용",
+      text: "시트백 맵포켓이 빠집니다.",
+      source: "벤츠비교 연식 비교",
+      review: "recorded"
+    },
+    {
+      label: "컵홀더",
+      my26: "26년식 모양",
+      my27: "모양이 바뀜",
+      text: "컵홀더 모양이 바뀝니다.",
+      source: "벤츠비교 연식 비교",
+      review: "recorded"
+    },
+    {
+      label: "어린이 시트 고정",
+      my26: "ISOFIX",
+      my27: "I-Size",
+      text: "어린이 시트 고정 이름이 ISOFIX에서 I-Size로 바뀝니다.",
+      source: "벤츠비교 연식 비교",
+      review: "recorded"
+    }
+  ];
+
+  function eClassRow(row) {
+    if (!row || row.seg !== "E") return false;
+    return String(row.name || "").indexOf("AMG ") !== 0;
+  }
+
+  function eDeltaRows(a, b) {
+    if (!eClassRow(a) || !eClassRow(b)) return [];
+    if (yearOf(a) === yearOf(b)) return [];
+    var left27 = yearOf(a) === "MY27";
+    return E_EQUIP.map(function (item) {
+      return {
+        cat: "달라진 점",
+        label: item.label,
+        left: left27 ? item.my27 : item.my26,
+        right: left27 ? item.my26 : item.my27,
+        differ: true,
+        source: item.source,
+        review: item.review
+      };
+    });
+  }
+
   /* 연식 배너. 확인된 옵션 차이만. */
   var SERIES = {
     E: {
@@ -145,11 +205,11 @@
           need: ["E 200 Exclusive", "E 200 AMG Line"],
           text: "27년식 E 200은 차량가가 26년식과 같습니다. 할인은 익스클루시브 18%, AMG Line 17%입니다."
         },
-        "사이드 볼스터가 가죽에서 아티코 가죽으로 바뀝니다.",
-        "시트백 맵포켓이 빠집니다.",
-        "컵홀더 모양이 바뀝니다.",
-        "어린이 시트 고정 이름이 ISOFIX에서 I-Size로 바뀝니다."
-      ]
+        {
+          need: ["E 220 d"],
+          text: "27년식 E 220 d는 아방가르드 구성입니다. 엔진과 사륜 구동은 26년식과 같고, 익스클루시브 사양으로 바꾸지 않습니다."
+        }
+      ].concat(E_EQUIP.map(function (item) { return item.text; }))
     },
     GLC: {
       title: "GLC 26년식과 27년식",
@@ -187,10 +247,13 @@
     var rightY = yearOf(b) === "MY27" ? "27년식" : "26년식";
 
     var html = '<section id="year-change" class="year-change">';
-    html += '<p class="year-kicker">연식이 바뀌면 먼저 보는 차이</p>';
+    html += '<p class="year-kicker">달라진 점</p>';
     html += "<h3>" + esc(pack && pack.note ? pack.note.title : "26년식과 27년식") + "</h3>";
     html += '<p class="year-pair">' + esc(show(nameOf(a))) + " · " + leftY + "  ↔  " + esc(show(nameOf(b))) + " · " + rightY + "</p>";
     html += '<ul class="year-list">' + items.map(function (line) { return "<li>" + esc(line) + "</li>"; }).join("") + "</ul>";
+    if (pack && pack.id === "E") {
+      html += '<p class="year-note">공통 사양은 2026년식 기준으로 정리했으며, 확인된 2027년식 변경 사항을 반영했습니다. 실제 적용 사양은 출고 차량 기준으로 확인해 주세요.</p>';
+    }
     html += "</section>";
     return html;
   }
@@ -201,6 +264,8 @@
     seriesOf: seriesOf,
     shouldBanner: shouldBanner,
     yearSection: yearSection,
+    eEquip: function () { return E_EQUIP.slice(); },
+    eDeltaRows: eDeltaRows,
     soldOut: function (row) { return of(row).code === "soldout"; }
   };
 })();

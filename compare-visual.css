@@ -870,6 +870,12 @@
   letter-spacing: 0.04em;
   color: #e4cb86;
 }
+.year-note {
+  margin-top: 0.75rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #c5ced3;
+}
 .year-change h3 {
   margin-top: 0.35rem;
   font-size: 1.35rem;

@@ -44,14 +44,14 @@
         color: #c5ced3;
       }
       .rowline b { color: #f4f7f8; font-size: 18px; font-weight: 750; }
-      .cut b { color: #ffb4ae !important; }
+      .cut b { color: #ff8a7a !important; }
       .rate-pill {
-        margin-left: 0.4rem;
+        margin-left: 0.45rem;
         border-radius: 999px;
-        background: rgba(255, 138, 128, 0.16);
-        color: #ffb4ae !important;
-        padding: 0.08rem 0.45rem;
-        font-size: 14px;
+        background: #ff6b57;
+        color: #17100d !important;
+        padding: 0.16rem 0.6rem;
+        font-size: 16px;
         font-style: normal;
         font-weight: 800;
       }
@@ -267,7 +267,7 @@
       </div>
     </div>
 
-    <script src="october-2026.js?v=20261022d"></script>
+    <script src="october-2026.js?v=20261023e"></script>
     <script src="quote.js?v=20261023b"></script>
     <script src="pick.js?v=20261023b"></script>
     <script src="car-photo.js?v=20261017d"></script>
@@ -443,10 +443,10 @@
             '<p class="fine">' + current.my + "</p>" +
             perkHtml +
             '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
-            '<div class="rowline cut"><span>할인 합계<em class="rate-pill">' + (view.rate || 0) + "%</em></span><b>" + ((view.saved || view.tax) ? "−" + won((view.saved || 0) - (view.tax || 0)) : "0만원") + "</b></div>" +
+            '<div class="rowline cut"><span>할인 합계' + (view.rate ? '<em class="rate-pill">' + view.rate + "% 할인</em>" : "") + "</span><b>" + (view.rate ? "−" + won(q.basis - window.BenzQuote.floorWon(q.basis * (1 - view.rate / 100))) : "0만원") + "</b></div>" +
             breakdown +
             '<div class="final"><span>할인 적용 차량가</span><strong>' + won(view.after) + "</strong></div>" +
-            '<p class="fine">할인율 ' + (view.rate || 0) + "%. 취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>" +
+            '<p class="fine">취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
             (notice ? '<p class="fine">' + notice + "</p>" : "") +
             monthLine;
         }
