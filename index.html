@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="chrome.css?v=20261023q" />
 <link rel="stylesheet" href="site.css" />
-  <link rel="stylesheet" href="home.css?v=20261023o" />
+  <link rel="stylesheet" href="home.css?v=20261023v" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/","name":"벤츠프로 | 메르세데스-벤츠 코리아 공식 파트너 김민구 차장","description":"E 200 할인 적용 차량가와 내 조건 견적. 벤츠프로, 메르세데스-벤츠 코리아 공식 파트너 김민구 차장.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script>
 </head>
@@ -113,115 +113,6 @@
       </div>
     </section>
 
-    <section class="hp-section" id="consulting">
-      <div class="hp-wrap">
-        <h2>확인한 견적, 실제 출고 조건으로 안내받으세요.</h2>
-        <div class="hp-consult">
-        <form id="consult-form" class="hp-panel">
-          <p id="consult-brief" class="hp-brief" hidden></p>
-          <div data-required="true">
-            <label class="hp-label" for="field-car">관심 차종</label>
-            <select id="field-car" name="carModel" class="hp-select" required data-pick-kicker="관심 차종" data-pick-action="차종 변경" data-pick-search="차종명 검색" data-pick-placeholder="모델명 또는 연식"></select>
-            <p class="hp-error">관심 차종을 선택해 주세요. 미정도 선택할 수 있습니다.</p>
-          </div>
-          <div data-required="true">
-            <label class="hp-label" for="field-name">성함</label>
-            <input id="field-name" name="name" class="hp-field" autocomplete="name" />
-            <p class="hp-error">성함을 입력해 주세요.</p>
-          </div>
-          <div data-required="true">
-            <label class="hp-label" for="field-phone">연락처</label>
-            <input id="field-phone" name="phone" class="hp-field" type="tel" inputmode="tel" autocomplete="tel" />
-            <p class="hp-error">연락처를 입력해 주세요.</p>
-          </div>
-          <details class="hp-more">
-            <summary>구매 시기, 방식, 지역, 보유 차량, 문의 내용</summary>
-            <label class="hp-label" for="field-when">구매 시기</label>
-            <select id="field-when" name="purchaseTiming" class="hp-select">
-              <option value="">선택 안 함</option>
-              <option>이번 달</option>
-              <option>1~2개월 안</option>
-              <option>정보 확인 단계</option>
-            </select>
-            <label class="hp-label" for="field-method">구매 방식</label>
-            <select id="field-method" name="purchaseMethod" class="hp-select">
-              <option value="">선택 안 함</option>
-              <option>현금</option>
-              <option>할부</option>
-              <option>금융리스</option>
-              <option>운용리스</option>
-              <option>장기렌트</option>
-              <option>아직 미정</option>
-            </select>
-            <label class="hp-label" for="field-region">지역</label>
-            <input id="field-region" name="region" class="hp-field" />
-            <label class="hp-label" for="field-owned">보유 차량</label>
-            <select id="field-owned" name="currentCar" class="hp-select">
-              <option value="">선택 안 함</option>
-              <option>없음</option>
-              <option>벤츠 보유</option>
-              <option>타 브랜드 보유</option>
-            </select>
-            <label class="hp-label" for="field-inquiry">문의 내용</label>
-            <textarea id="field-inquiry" name="inquiry" class="hp-field" rows="3"></textarea>
-          </details>
-          <div data-question="privacy">
-            <label class="hp-check" style="margin-top:0.9rem;align-items:flex-start">
-              <input id="privacy-agree" name="privacyAgree" type="checkbox" value="동의" />
-              <span>개인정보 수집 및 이용 동의 (필수)<small>수집 항목은 성함, 연락처, 관심 차종입니다. 선택하면 구매 시기, 구매 방식, 지역, 보유 차량, 문의 내용이 함께 전달됩니다. 견적에서 고른 연식과 구매 방식은 문의 내용에 포함됩니다. 목적: 견적 안내 및 상담. 보유: 상담 종료 후 1년 이내 파기. 동의하지 않으면 상담 접수가 어렵습니다.</small></span>
-            </label>
-            <p class="hp-error">개인정보 수집 및 이용에 동의해 주세요.</p>
-          </div>
-          <button id="consult-submit" class="hp-btn" type="submit" style="width:100%;margin-top:0.8rem">상담 신청하기</button>
-          <p id="consult-network-error" class="hp-error">전송에 실패했습니다. 전화나 카카오톡으로 연락해 주세요.</p>
-        </form>
-        <div class="hp-place">
-        <h3>다양한 벤츠를 한 자리에서, 고양 전시장에서 만나보세요.</h3>
-        <p class="hp-visit">고양·일산·파주·김포는 물론, 마포·강서·목동에서도 방문하기 좋습니다.</p>
-        <div class="hp-facilities">
-          <article>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20V9.2L8 6V4h3v2.1L12 5l9 6.2V20h-6v-6H9v6H3zm2-1.5h2V13h10v5.5h2v-7.1l-7-4.8-7 4.8v7.1z"/></svg>
-            <h4>다양한 모델을 한자리에서</h4>
-            <p>지상 10층 규모의 전시장에 최대 29대를 동시에 전시할 수 있습니다. 마이바흐 전용 라운지와 AMG 퍼포먼스 센터도 갖추고 있습니다.</p>
-          </article>
-          <article>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 6.3a4.5 4.5 0 0 0-6.2 6.2L3 18l3 3 5.5-5.5a4.5 4.5 0 0 0 6.2-6.2l-2.6 2.6-2.1-2.1 2.7-2.5z"/></svg>
-            <h4>전시장과 서비스센터를 한곳에</h4>
-            <p>7개 정비 작업 공간을 갖춘 서비스센터가 같은 건물에 있어, 차량 상담과 이후 정비를 한곳에서 이어갈 수 있습니다.</p>
-          </article>
-          <article>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h12v6a6 6 0 0 1-6 6H8a6 6 0 0 1-4-5.3V6zm12 2h2.2A2.8 2.8 0 0 1 21 10.8 2.8 2.8 0 0 1 18.2 13.6H16V12h2.2a1.3 1.3 0 0 0 0-2.6H16V8zM5 19h12v2H5v-2z"/></svg>
-            <h4>가족과 함께 편안하게</h4>
-            <p>북한산을 바라보는 카페와 키즈룸이 마련되어 있어, 아이와 함께 방문하셔도 편안하게 머무르실 수 있습니다.</p>
-          </article>
-        </div>
-        <div class="hp-address">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
-          <div>
-            <p class="hp-en">메르세데스 벤츠 모터원 고양전시장</p>
-            <p class="hp-addr">경기도 고양시 덕양구 의장로 110 (도내동)</p>
-            <p class="hp-note">우편번호 10551 · 스타필드 고양·이케아 고양점 인근</p>
-            <button type="button" class="hp-act" id="copy-addr">주소 복사</button>
-            <p id="addr-note" class="hp-note" role="status" aria-live="polite"></p>
-          </div>
-        </div>
-        <div class="hp-actions hp-contact">
-          <a class="hp-act hp-act-kakao" id="kakao-link" href="https://open.kakao.com/o/skdA6cZc" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.5C6.7 3.5 2.5 6.8 2.5 10.8c0 2.6 1.7 4.9 4.3 6.2l-.8 3 3.4-1.8c.8.1 1.6.2 2.6.2 5.3 0 9.5-3.3 9.5-7.3S17.3 3.5 12 3.5z"/></svg>카카오톡 상담</a>
-          <a class="hp-act" href="tel:01091649639"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 3.2h2.4l1.3 3.2-1.8 1.1a12.5 12.5 0 0 0 5.9 5.9l1.1-1.8 3.2 1.3v2.4a1.6 1.6 0 0 1-1.7 1.6A16.2 16.2 0 0 1 5 4.9a1.6 1.6 0 0 1 1.6-1.7z"/></svg>전화 문의</a>
-          <button type="button" class="hp-act" id="copy-quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 3h9a2 2 0 0 1 2 2v12h-2V5H8V3zM5 7h11a2 2 0 0 1 2 2v12H5V7zm2 2v10h9V9H7z"/></svg>견적 요약 복사</button>
-        </div>
-        <p class="hp-note">카카오톡 링크는 견적을 자동으로 보내지 않습니다. 필요하면 요약을 복사해 직접 붙여 넣으세요.</p>
-        <p id="copy-note" class="hp-note" role="status" aria-live="polite"></p>
-        <div id="copy-fallback" hidden>
-          <label class="hp-label" for="copy-text">직접 선택해 복사해 주세요</label>
-          <textarea id="copy-text" class="hp-field" rows="5" readonly></textarea>
-        </div>
-          <p id="copy-empty" class="hp-note" hidden>견적 선택 후 복사할 수 있어요. <a id="copy-empty-link" href="quote.html">견적 페이지로 이동</a></p>
-        </div>
-        </div>
-      </div>
-    </section>
-
     <section class="hp-section" id="preorder">
       <div class="hp-wrap">
         <h2>사전예약</h2>
@@ -263,6 +154,126 @@
       </div>
     </section>
 
+    <section class="hp-section" id="consulting">
+      <div class="hp-wrap">
+        <h2>확인한 견적, 실제 출고 조건으로 안내받으세요.</h2>
+        <div class="hp-consult">
+          <form id="consult-form">
+            <div data-required="true">
+              <label class="hp-label" for="field-car">관심 차종</label>
+              <select id="field-car" name="carModel" class="hp-select" required data-pick-kicker="관심 차종" data-pick-action="차종 변경" data-pick-search="차종명 검색" data-pick-placeholder="모델명 또는 연식"></select>
+              <p class="hp-error">관심 차종을 선택해 주세요. 미정도 선택할 수 있습니다.</p>
+            </div>
+            <div data-required="true">
+              <label class="hp-label" for="field-name">성함</label>
+              <input id="field-name" name="name" class="hp-field" autocomplete="name" />
+              <p class="hp-error">성함을 입력해 주세요.</p>
+            </div>
+            <div data-required="true">
+              <label class="hp-label" for="field-phone">연락처</label>
+              <input id="field-phone" name="phone" class="hp-field" type="tel" inputmode="tel" autocomplete="tel" />
+              <p class="hp-error">연락처를 입력해 주세요.</p>
+            </div>
+            <details id="quote-detail" class="hp-more" hidden>
+              <summary>선택한 견적 상세<span class="hp-fold" aria-hidden="true"></span></summary>
+              <div id="consult-brief" class="hp-brief"></div>
+              <button type="button" class="hp-act" id="copy-quote">견적 요약 복사</button>
+              <p id="copy-note" class="hp-note" role="status" aria-live="polite"></p>
+              <div id="copy-fallback" hidden>
+                <label class="hp-label" for="copy-text">직접 선택해 복사해 주세요</label>
+                <textarea id="copy-text" class="hp-field" rows="5" readonly></textarea>
+              </div>
+              <p id="copy-empty" class="hp-note" hidden>견적 선택 후 복사할 수 있어요. <a id="copy-empty-link" href="quote.html">견적 페이지로 이동</a></p>
+            </details>
+            <details class="hp-more" id="consult-extra">
+              <summary>추가 상담 내용 입력 (선택)<span class="hp-fold" aria-hidden="true"></span></summary>
+              <label class="hp-label" for="field-when">구매 시기</label>
+              <select id="field-when" name="purchaseTiming" class="hp-select">
+                <option value="">선택 안 함</option>
+                <option>이번 달</option>
+                <option>1~2개월 안</option>
+                <option>정보 확인 단계</option>
+              </select>
+              <label class="hp-label" for="field-method">구매 방식</label>
+              <select id="field-method" name="purchaseMethod" class="hp-select">
+                <option value="">선택 안 함</option>
+                <option>현금</option>
+                <option>할부</option>
+                <option>금융리스</option>
+                <option>운용리스</option>
+                <option>장기렌트</option>
+                <option>아직 미정</option>
+              </select>
+              <label class="hp-label" for="field-region">지역</label>
+              <input id="field-region" name="region" class="hp-field" />
+              <label class="hp-label" for="field-owned">보유 차량</label>
+              <select id="field-owned" name="currentCar" class="hp-select">
+                <option value="">선택 안 함</option>
+                <option>없음</option>
+                <option>벤츠 보유</option>
+                <option>타 브랜드 보유</option>
+              </select>
+              <label class="hp-label" for="field-inquiry">문의 내용</label>
+              <textarea id="field-inquiry" name="inquiry" class="hp-field" rows="3"></textarea>
+            </details>
+            <div data-question="privacy">
+              <label class="hp-check">
+                <input id="privacy-agree" name="privacyAgree" type="checkbox" value="동의" />
+                <span>개인정보 수집 및 이용 동의 (필수)<small>수집 항목은 성함, 연락처, 관심 차종입니다. 선택하면 구매 시기, 구매 방식, 지역, 보유 차량, 문의 내용이 함께 전달됩니다. 견적에서 고른 연식과 구매 방식은 문의 내용에 포함됩니다. 목적: 견적 안내 및 상담. 보유: 상담 종료 후 1년 이내 파기. 동의하지 않으면 상담 접수가 어렵습니다.</small></span>
+              </label>
+              <p class="hp-error">개인정보 수집 및 이용에 동의해 주세요.</p>
+            </div>
+            <button id="consult-submit" class="hp-btn" type="submit">상담 신청하기</button>
+            <p id="consult-network-error" class="hp-error">전송에 실패했습니다. 전화나 카카오톡으로 연락해 주세요.</p>
+          </form>
+          <div class="hp-place">
+            <p class="hp-kicker">메르세데스 벤츠 모터원 고양전시장</p>
+            <h3>벤츠를 고르는 시간, 가족의 나들이가 되도록.</h3>
+            <p class="hp-place-lead">다양한 벤츠를 한자리에서 비교하고, 북한산 뷰 카페와 키즈룸까지 함께 만나보세요.</p>
+            <p class="hp-visit">고양·일산·파주·김포는 물론, 마포·강서·목동에서도 방문하기 좋습니다.</p>
+            <ul class="hp-facilities">
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V10.2L9 7V5h3v2.2L12 6.2 20 11.5V20h-5v-6H9v6H4zm1.6-1.4h1.8V12.6h9.2v6h1.8v-6.2l-6.4-4.2-6.4 4.2v6.2z"/></svg>
+                <div>
+                  <h4>10층 규모, 다양한 벤츠를 한곳에</h4>
+                  <p>최대 29대 동시 전시 공간과 마이바흐 라운지·AMG 퍼포먼스 센터.</p>
+                </div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h9a3 3 0 0 1 3 3v2h1.2A2.8 2.8 0 0 1 22 11.8 2.8 2.8 0 0 1 19.2 14.6H18v1.4a3 3 0 0 1-3 3H8.5A4.5 4.5 0 0 1 4 14.5V7a3 3 0 0 1 2-2.8V4zm2 2v1h7V6H8zm0 3v1.2A2.5 2.5 0 0 0 6 12.5 2.5 2.5 0 0 0 8.5 15H15a1 1 0 0 0 1-1V9H8zm10 2h1.2a.8.8 0 1 0 0-1.6H18V11z"/></svg>
+                <div>
+                  <h4>가족도 즐거운 전시장</h4>
+                  <p>북한산 뷰 카페와 키즈룸에서 함께하는 여유.</p>
+                </div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 6.3a4.5 4.5 0 0 0-6.2 6.2L3 18l3 3 5.5-5.5a4.5 4.5 0 0 0 6.2-6.2l-2.6 2.6-2.1-2.1 2.7-2.5z"/></svg>
+                <div>
+                  <h4>구매부터 관리까지 한곳에서</h4>
+                  <p>7개 정비 작업 공간을 갖춘 서비스센터가 같은 건물에.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="hp-drive">
+              <h4>마음에 드는 벤츠, 직접 경험해 보세요.</h4>
+              <p>차량을 비교한 뒤 시승 상담까지. 희망 차종과 일정을 남겨주시면 시승 가능 여부를 안내해 드립니다.</p>
+            </div>
+            <div class="hp-address">
+              <p class="hp-addr">경기도 고양시 덕양구 의장로 110 (도내동)</p>
+              <p class="hp-note">스타필드 고양·이케아 고양점 인근</p>
+              <button type="button" class="hp-act" id="copy-addr">주소 복사</button>
+              <p id="addr-note" class="hp-note" role="status" aria-live="polite"></p>
+            </div>
+            <div class="hp-actions hp-contact">
+              <a class="hp-act hp-act-kakao" id="kakao-link" href="https://open.kakao.com/o/skdA6cZc" target="_blank" rel="noopener noreferrer">카카오톡 상담</a>
+              <a class="hp-act" href="tel:01091649639">전화 문의</a>
+            </div>
+            <p class="hp-note">카카오톡은 견적을 자동으로 보내지 않습니다. 견적 상세에서 요약을 복사해 붙여 넣으세요.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="hp-wrap mt-10 pb-6" data-home-foot></footer>
   </main>
 
@@ -284,7 +295,7 @@
   <script src="stock.js?v=20261023q"></script>
   <script src="car-photo.js?v=20261017d"></script>
   <script src="pick.js?v=20261023b"></script>
-  <script src="home.js?v=20261023q"></script>
+  <script src="home.js?v=20261023u"></script>
   <script src="site-ui.js?v=20261023q"></script>
 </body>
 </html>

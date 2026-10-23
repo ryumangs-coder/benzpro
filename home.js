@@ -353,11 +353,30 @@
 
   function paintBrief(row, view) {
     var brief = document.getElementById("consult-brief");
+    var box = document.getElementById("quote-detail");
+    var ready = !!(state.engaged && row && view && view.status === "ok");
+    if (brief) brief.dataset.copy = ready ? briefText(row, view) : "";
+    if (box) box.hidden = !ready;
     if (!brief) return;
-    var text = briefText(row, view);
-    brief.textContent = text;
-    brief.hidden = !state.engaged;
-    brief.dataset.copy = text;
+    brief.textContent = "";
+    if (!ready) return;
+    [
+      ["구매 방식", payName(state.pay)],
+      ["차량가", manText(view.q.basis)],
+      ["할인", view.lines.length ? view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(", ") : "선택한 할인 없음"],
+      ["할인 합계", manText(view.saved)],
+      ["할인 적용 차량가", manText(view.after)]
+    ].forEach(function (pair) {
+      var line = document.createElement("p");
+      var name = document.createElement("b");
+      name.textContent = pair[0];
+      line.appendChild(name);
+      line.appendChild(document.createTextNode(" " + pair[1]));
+      brief.appendChild(line);
+    });
+    var basis = document.createElement("p");
+    basis.textContent = "부가세가 포함된 권장소비자가에서 선택한 할인만 빼고, 만원 단위로 내림합니다. 취득세, 등록비, 보험료, 금융 이자, 월 납입 지원은 빠집니다.";
+    brief.appendChild(basis);
   }
 
   function paintFormCar() {
@@ -481,8 +500,8 @@
   function engage() {
     state.engaged = true;
     paintBar();
-    var brief = document.getElementById("consult-brief");
-    if (brief) brief.hidden = false;
+    var row = calcRow();
+    paintBrief(row, row ? resultOf(row) : null);
   }
 
   function boot() {
@@ -659,22 +678,34 @@
 
   var bar = document.getElementById("cta");
   var zone = document.getElementById("consulting");
+  function quietKakao(away) {
+    var kakao = document.querySelector(".bp-kakao");
+    if (kakao) kakao.classList.toggle("is-quiet", !!away);
+  }
   if (bar && zone && window.IntersectionObserver) {
     var watcher = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        bar.classList.toggle("is-away", entry.isIntersecting && entry.intersectionRatio > 0.12);
+        var away = entry.isIntersecting && entry.intersectionRatio > 0.12;
+        bar.classList.toggle("is-away", away);
+        quietKakao(away || bar.classList.contains("is-away"));
       });
     }, { threshold: [0, 0.12, 0.4] });
     watcher.observe(zone);
   }
   document.addEventListener("focusin", function (event) {
-    if (bar && event.target.closest && event.target.closest("#consult-form")) bar.classList.add("is-away");
+    if (bar && event.target.closest && event.target.closest("#consult-form")) {
+      bar.classList.add("is-away");
+      quietKakao(true);
+    }
   });
   document.addEventListener("focusout", function (event) {
     if (!bar || !event.target.closest || !event.target.closest("#consult-form")) return;
     setTimeout(function () {
       if (!document.activeElement || !document.activeElement.closest || !document.activeElement.closest("#consult-form")) {
-        bar.classList.remove("is-away");
+        var zoneBox = zone ? zone.getBoundingClientRect() : null;
+        var stillIn = zoneBox && zoneBox.top < window.innerHeight * 0.88 && zoneBox.bottom > window.innerHeight * 0.12;
+        if (!stillIn) bar.classList.remove("is-away");
+        quietKakao(stillIn);
       }
     }, 120);
   });
@@ -828,7 +859,10 @@
       openModal(false);
     }).catch(function () {
       var fail = document.getElementById("consult-network-error");
-      if (fail) fail.hidden = false;
+      if (fail) {
+        fail.hidden = false;
+        fail.classList.add("is-on");
+      }
     }).then(function () {
       if (button) button.disabled = false;
     });
