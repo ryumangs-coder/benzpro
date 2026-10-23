@@ -285,7 +285,7 @@
         : '<div class="price-hit">' +
           (best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
           '<span class="k was-k">정상가격</span>' +
-          '<span class="k now-k">할인 적용 실구매</span>' +
+          '<span class="k now-k">할인 적용 차량가</span>' +
           '<b class="was">' + won(best.priceMan) + "</b>" +
           '<span class="arrow" aria-hidden="true">→</span>' +
           '<b class="now">' + won(best.maxMan) + "</b>" +
@@ -309,6 +309,7 @@
     var quoteHref = bestRow
       ? "quote.html?name=" + encodeURIComponent(bestRow[2]) + "&my=" + encodeURIComponent(bestRow[1])
       : (f.href || "quote.html");
+    if (window.BenzPick && String(quoteHref).indexOf("quote.html") === 0) quoteHref = window.BenzPick.decorate(quoteHref);
     var ico =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 3 4 12.5V20h7.5L21 10.5 13.5 3zM8.8 16.2a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8z"/></svg>';
     var icoQuote =

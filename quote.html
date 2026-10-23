@@ -268,7 +268,8 @@
     </div>
 
     <script src="october-2026.js?v=20261022d"></script>
-    <script src="quote.js?v=20261012b"></script>
+    <script src="quote.js?v=20261023b"></script>
+    <script src="pick.js?v=20261023b"></script>
     <script src="car-photo.js?v=20261017d"></script>
     <script>
       (function () {
@@ -279,6 +280,7 @@
         });
         var state = { pay: "install", retain: false, trade: false, conquest: false, mou: false, repair: false, mile: false, showcar: false, early: false };
         var current = null;
+        var notice = "";
 
         function showName(name) {
           var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디").replace(/ electric/g, " 일렉트릭");
@@ -338,36 +340,7 @@
           return "cash";
         }
         function compute(row) {
-          var q = window.BenzQuote.of(row);
-          var fin = financeAdd(row, state.pay, q);
-          var lines = [];
-          if (q.cash) lines.push({ label: "기본 할인", pct: q.cash });
-          if (fin.add) lines.push({ label: fin.label, pct: fin.add });
-          var extra = 0;
-          function add(on, label, rate) {
-            if (!on || !rate) return;
-            extra += rate;
-            lines.push({ label: label, pct: rate });
-          }
-          var retainRate = pct(row.retain);
-          var conqRate = pct(row.conquest);
-          add(state.retain && retainRate, "지금 타는 벤츠", retainRate);
-          add(state.trade && state.retain && retainRate, "인증 중고로 매각", 1);
-          add(state.conquest && conqRate && !(state.retain && retainRate), "다른 브랜드", conqRate);
-          add(state.mou, "MOU 제휴", 2);
-          add(state.repair, "수리 이력 공개", 1);
-          add(state.mile, "도착 주행거리", 1);
-          add(state.showcar, "오래 전시된 차", 1);
-          var rate = (q.cash || 0) + fin.add + extra;
-          var has = q.cash != null || fin.add || extra;
-          var after = q.basis;
-          if (after != null && has) after = floorWon(q.basis * (1 - rate / 100));
-          if (after != null && q.extra) after -= q.extra;
-          var tax = state.early && q.tax ? q.tax : 0;
-          if (after != null && tax) after -= tax;
-          var saved = q.basis != null && after != null ? q.basis - after : null;
-          var month = state.pay === "care" ? support(row.name) : 0;
-          return { q: q, fin: fin, lines: lines, rate: has ? rate : 0, after: after, saved: saved, tax: tax, month: month, retainRate: retainRate, conqRate: conqRate };
+          return window.BenzQuote.scene(row, state);
         }
         function carKey(row) { return row.my + "|" + row.name; }
         function findCar(name, my) {
@@ -462,9 +435,7 @@
           if (q.extra) breakdown += '<div class="rowline cut"><span>옵션 추가 할인</span><b>−' + won(q.extra) + "</b></div>";
           if (view.tax) breakdown += '<div class="rowline cut"><span>개소세 인하</span><b>−' + won(view.tax) + "</b></div>";
           var monthLine = "";
-          if (view.month) monthLine = '<div class="rowline"><span>월납 지원</span><b>월 ' + view.month + "만원 × 6개월</b></div>";
-          var benefit = view.saved || 0;
-          if (view.month) benefit += view.month * 6 * 10000;
+          if (view.month) monthLine = '<div class="rowline"><span>월 납입 지원</span><b>월 ' + view.month + "만원 × 6개월</b></div>" + '<p class="fine">월 납입금이 아닙니다. 차량 할인가에 더하지 않습니다.</p>';
           document.getElementById("sheet").innerHTML =
             window.BenzPhoto.html(current.name, "wide mb-3") +
             '<p class="sheet-kicker">선택한 조건</p>' +
@@ -474,10 +445,10 @@
             '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
             '<div class="rowline cut"><span>할인 합계<em class="rate-pill">' + (view.rate || 0) + "%</em></span><b>" + ((view.saved || view.tax) ? "−" + won((view.saved || 0) - (view.tax || 0)) : "0만원") + "</b></div>" +
             breakdown +
-            '<div class="final"><span>최종 차량가</span><strong>' + won(view.after) + "</strong></div>" +
-            '<p class="fine">할인율 ' + (view.rate || 0) + "%. 선택한 조건의 예상 금액입니다.</p>" +
-            monthLine +
-            (view.month ? '<div class="rowline"><span>지원까지 더한 혜택</span><b>' + won(benefit) + "</b></div>" : "");
+            '<div class="final"><span>할인 적용 차량가</span><strong>' + won(view.after) + "</strong></div>" +
+            '<p class="fine">할인율 ' + (view.rate || 0) + "%. 취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>" +
+            (notice ? '<p class="fine">' + notice + "</p>" : "") +
+            monthLine;
         }
         function syncRules() {
           if (!state.retain) state.trade = false;
@@ -497,22 +468,52 @@
           paintPays(view);
           paintOpts(view);
           paintSheet(view);
+          publish();
         }
-        function pick(name, my, push) {
-          current = findCar(name, my);
+        function exactCar(name, my) {
+          if (!name) return null;
+          return rows.filter(function (row) { return row.name === name && (!my || row.my === my); })[0] || null;
+        }
+        function publish() {
+          if (!window.BenzPick || !current) return;
+          var saved = window.BenzPick.write({
+            name: current.name,
+            my: current.my,
+            pay: state.pay,
+            retain: state.retain,
+            trade: state.trade,
+            conquest: state.conquest,
+            mou: state.mou
+          });
+          if (history.replaceState) history.replaceState(null, "", "quote.html?" + window.BenzPick.params(saved).toString());
+        }
+        function pick(name, my) {
+          notice = "";
+          var exact = exactCar(name, my);
+          if (name && !exact) notice = "요청하신 차종을 찾지 못했습니다. 기본 차종으로 열었습니다.";
+          current = exact || exactCar("E 200 Exclusive", "MY27") || rows[0];
           if (!state.pay) state.pay = defaultPay(current);
           draw();
-          if (push) {
-            var params = new URLSearchParams();
-            params.set("name", current.name);
-            params.set("my", current.my);
-            history.replaceState(null, "", "quote.html?" + params.toString());
-          }
         }
 
         var params = new URLSearchParams(location.search);
-        current = findCar(params.get("name") || "", params.get("my") || "");
-        state.pay = defaultPay(current);
+        var stored = (window.BenzPick && window.BenzPick.read()) || {};
+        var askedName = params.get("name") || "";
+        var askedMy = params.get("my") || "";
+        var fromUrl = askedName ? exactCar(askedName, askedMy) : null;
+        if (askedName && !fromUrl) notice = "주소의 차종이나 연식을 찾지 못했습니다. 기본 차종으로 열었습니다.";
+        if (!fromUrl && !askedName) fromUrl = exactCar(stored.name || "", stored.my || "");
+        current = fromUrl || exactCar("E 200 Exclusive", "MY27") || rows[0];
+        var payOk = { cash: 1, install: 1, care: 1, lease: 1 };
+        if (payOk[params.get("pay")]) state.pay = params.get("pay");
+        else if (payOk[stored.pay]) state.pay = stored.pay;
+        else state.pay = defaultPay(current);
+        var flagKeys = ["retain", "trade", "conquest", "mou", "repair", "mile", "showcar", "early"];
+        var urlHasFlag = flagKeys.some(function (key) { return params.has(key); });
+        flagKeys.forEach(function (key) {
+          if (urlHasFlag) state[key] = params.get(key) === "1";
+          else if (stored[key]) state[key] = true;
+        });
         draw();
 
         function splitKey(value) {
@@ -625,6 +626,16 @@
           var button = document.getElementById("send");
           button.disabled = true;
           button.textContent = "전송 중...";
+          if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+            form.classList.add("hidden");
+            var doneBox = document.getElementById("done");
+            doneBox.classList.remove("hidden");
+            var doneLine = doneBox.querySelector("p");
+            if (doneLine) doneLine.textContent = "테스트 화면이라 문의는 전송하지 않았습니다.";
+            button.disabled = false;
+            button.textContent = "견적 상담 받기";
+            return;
+          }
           fetch(WEBHOOK_URL, {
             method: "POST",
             mode: "no-cors",

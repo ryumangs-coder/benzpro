@@ -114,7 +114,7 @@
     </div>
 
     <script src="october-2026.js?v=20261022d"></script>
-    <script src="quote.js?v=20261012b"></script>
+    <script src="quote.js?v=20261023b"></script>
     <script src="stock.js?v=20261022d"></script>
     <script src="guide-data.js?v=20261012e"></script>
     <script src="approach-specs.js?v=20261016b"></script>
@@ -125,6 +125,7 @@
     <script src="tech-data.js?v=20261022g"></script>
     <script src="compare-visual.js?v=20261022c"></script>
     <script src="colors.js?v=20261022a"></script>
+    <script src="pick.js?v=20261023b"></script>
     <script>
       (function () {
         var specs = [
@@ -215,7 +216,8 @@
           var params = new URLSearchParams();
           params.set("name", row.name);
           params.set("my", row.my);
-          return "quote.html?" + params.toString();
+          var href = "quote.html?" + params.toString();
+          return window.BenzPick ? window.BenzPick.decorate(href) : href;
         }
         function showName(name) {
           var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디").replace(/ electric/g, " 일렉트릭");

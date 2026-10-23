@@ -167,5 +167,114 @@
       tax: tax
     };
   }
-  window.BenzQuote = { of: of, man: man };
+  function pctOf(s) {
+    if (!s || s === "—") return 0;
+    var m = String(s).match(/(\d+(?:\.\d+)?)%/);
+    return m ? parseFloat(m[1]) : 0;
+  }
+  function leaseOnly(row) {
+    var s = String(row.mbm || "");
+    return s.indexOf("운용리스") !== -1 && s.indexOf("할부") === -1;
+  }
+  function payAdd(row, pay, q) {
+    if (pay === "cash") return { add: 0, label: "현금 구매" };
+    if (pay === "lease") {
+      var add = q.altAdd || (leaseOnly(row) ? q.finAdd : 0);
+      return { add: add || 0, label: "운용리스·장기렌트" };
+    }
+    if (leaseOnly(row)) return { add: 0, label: pay === "care" ? "안심보장할부" : "할부" };
+    return { add: q.finAdd || 0, label: pay === "care" ? "안심보장할부" : "할부" };
+  }
+  function careMonth(name) {
+    name = String(name || "");
+    if (name.indexOf("S 63") !== -1) return 200;
+    if (name.indexOf("GLS 63") !== -1) return 145;
+    if (name.indexOf("GLE 53") !== -1) return 115;
+    if (name.indexOf("E 53") !== -1) return 100;
+    if (name.indexOf("GLB 35") !== -1) return 50;
+    if (name.indexOf("GLE 450") !== -1) return 60;
+    if (name.indexOf("electric") !== -1) return 0;
+    if (name.indexOf("GLC 300") !== -1 && name.indexOf("AMG") !== -1) return 45;
+    if (name.indexOf("GLC 300") !== -1 && name.toLowerCase().indexOf("avant") !== -1) return 40;
+    if (name.indexOf("E 300") !== -1) return 45;
+    if (name.indexOf("E 200") !== -1 && name.indexOf("AMG") !== -1) return 37;
+    if (name.indexOf("E 200") !== -1 && name.indexOf("Exclusive") !== -1) return 35;
+    if (name.indexOf("C 200") !== -1) return 30;
+    return 0;
+  }
+  function defaultPay(row) {
+    var q = of(row);
+    if (leaseOnly(row) && (q.finAdd || q.altAdd)) return "lease";
+    if (q.finAdd) return "install";
+    return "cash";
+  }
+  /* 견적 페이지와 메인이 같이 쓰는 조건 계산.
+   * 재고에만 해당하는 통관·전시·수리·주행거리는 state로 켰을 때만 반영합니다. */
+  function scene(row, state) {
+    state = state || {};
+    var pay = state.pay || "cash";
+    var q = of(row);
+    var fin = payAdd(row, pay, q);
+    var lines = [];
+    var blocks = [];
+    if (q.cash) lines.push({ label: "기본 할인", pct: q.cash });
+    if (fin.add) lines.push({ label: fin.label, pct: fin.add });
+    var extra = 0;
+    function add(on, label, rate) {
+      if (!on || !rate) return;
+      extra += rate;
+      lines.push({ label: label, pct: rate });
+    }
+    var retainRate = pctOf(row.retain);
+    var conqRate = pctOf(row.conquest);
+    if (state.retain && !retainRate) blocks.push("이 연식은 지금 타는 벤츠 혜택이 없습니다.");
+    if (state.conquest && !conqRate) blocks.push("이 차종은 다른 브랜드 혜택 대상이 아닙니다.");
+    if (state.retain && state.conquest && retainRate) {
+      blocks.push("지금 타는 벤츠 혜택과 다른 브랜드 혜택은 같이 적용되지 않습니다. 지금 타는 벤츠 혜택만 반영했습니다.");
+    }
+    if (state.trade && !(state.retain && retainRate)) {
+      blocks.push("인증 중고 매각은 지금 타는 벤츠 혜택과 같이만 적용됩니다.");
+    }
+    add(state.retain && retainRate, "지금 타는 벤츠", retainRate);
+    add(state.trade && state.retain && retainRate, "인증 중고로 매각", 1);
+    add(state.conquest && conqRate && !(state.retain && retainRate), "다른 브랜드", conqRate);
+    add(state.mou, "MOU 제휴", 2);
+    add(state.repair, "수리 이력 공개", 1);
+    add(state.mile, "도착 주행거리", 1);
+    add(state.showcar, "오래 전시된 차", 1);
+    if (state.mou) blocks.push("MOU는 제휴 여부를 확인한 뒤에 적용됩니다.");
+    if (state.repair || state.mile || state.showcar) {
+      blocks.push("수리 이력, 주행거리, 전시 할인은 해당 재고인지 확인이 필요합니다.");
+    }
+    if (state.early) {
+      blocks.push(q.tax ? "7월 1일 이전 통관 재고인지 확인이 필요합니다." : "이 차는 개소세 인하 재고 금액이 없습니다.");
+    }
+    var rate = (q.cash || 0) + fin.add + extra;
+    var has = q.cash != null || fin.add || extra;
+    var after = q.basis;
+    if (after != null && has) after = floorWon(q.basis * (1 - rate / 100));
+    if (after != null && q.extra) after -= q.extra;
+    var tax = state.early && q.tax ? q.tax : 0;
+    if (after != null && tax) after -= tax;
+    var saved = q.basis != null && after != null ? q.basis - after : null;
+    var month = pay === "care" ? careMonth(row.name) : 0;
+    var status = "ok";
+    if (q.basis == null || !has) status = "need";
+    return {
+      q: q,
+      fin: fin,
+      lines: lines,
+      rate: has ? rate : 0,
+      after: after,
+      saved: saved,
+      tax: tax,
+      month: month,
+      retainRate: retainRate,
+      conqRate: conqRate,
+      blocks: blocks,
+      status: status,
+      pay: pay
+    };
+  }
+  window.BenzQuote = { of: of, man: man, scene: scene, defaultPay: defaultPay, floorWon: floorWon };
 })();
