@@ -290,8 +290,9 @@
     }
     html += '<p class="hp-note"><a href="' + esc(quoteHref()) + '">통관, 전시, 수리 이력처럼 특정 재고만 해당하는 조건은 상세 견적에서 확인합니다.</a></p>';
     out.innerHTML = html;
-    var navQuote = document.getElementById("nav-quote");
-    if (navQuote) navQuote.setAttribute("href", quoteHref());
+    document.querySelectorAll("#bp-quote, [data-bp-quote]").forEach(function (navQuote) {
+      navQuote.setAttribute("href", quoteHref());
+    });
     var go = document.getElementById("calc-quote");
     var talk = document.getElementById("calc-talk");
     if (go) go.setAttribute("href", quoteHref());
@@ -418,21 +419,19 @@
   function paintBar() {
     var primary = document.getElementById("bar-primary");
     var secondary = document.getElementById("bar-secondary");
-    if (!primary || !secondary) return;
-    secondary.removeAttribute("target");
-    secondary.removeAttribute("rel");
+    if (!primary) return;
     if (state.engaged) {
       primary.textContent = "내 견적 보기";
       primary.setAttribute("href", quoteHref());
-      secondary.textContent = "이 조건으로 상담";
-      secondary.setAttribute("href", "#consulting");
+      if (secondary) {
+        secondary.hidden = false;
+        secondary.textContent = "이 조건으로 상담";
+        secondary.setAttribute("href", "#consulting");
+      }
     } else {
       primary.textContent = "내 할인 계산";
       primary.setAttribute("href", "#calc");
-      secondary.textContent = "카톡 상담";
-      secondary.setAttribute("href", "https://open.kakao.com/o/skdA6cZc");
-      secondary.setAttribute("target", "_blank");
-      secondary.setAttribute("rel", "noopener noreferrer");
+      if (secondary) secondary.hidden = true;
     }
   }
 
@@ -501,23 +500,7 @@
   if (!root) return;
   boot();
 
-  var insight = document.getElementById("insight-list");
-  if (insight && window.fetch) {
-    fetch("https://mercedes.benzpro.co.kr/api/posts?limit=3")
-      .then(function (res) { return res.json(); })
-      .then(function (payload) {
-        var posts = (payload.posts || []).filter(function (post) {
-          return post && post.status === "published" && post.slug && post.title;
-        }).slice(0, 3);
-        if (!posts.length) return;
-        insight.innerHTML = posts.map(function (post) {
-          var href = "https://mercedes.benzpro.co.kr/posts/" + encodeURIComponent(post.slug);
-          var img = post.thumbnail ? '<img src="' + esc(post.thumbnail) + '" alt="" width="640" height="360" loading="lazy" decoding="async">' : "";
-          return '<a class="hp-link-card" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + img + "<strong>" + esc(post.title) + "</strong></a>";
-        }).join("");
-      })
-      .catch(function () {});
-  }
+  mountInsights();
 
   root.addEventListener("click", function (event) {
     var chipBtn = event.target.closest("[data-group]");
@@ -662,14 +645,60 @@
   var copyBtn = document.getElementById("copy-quote");
   if (copyBtn) {
     copyBtn.addEventListener("click", function () {
-      var brief = document.getElementById("consult-brief");
-      var text = brief ? brief.dataset.copy || brief.textContent : "";
       var note = document.getElementById("copy-note");
-      function done() {
-        if (note) note.hidden = false;
+      var empty = document.getElementById("copy-empty");
+      var fallback = document.getElementById("copy-fallback");
+      var box = document.getElementById("copy-text");
+      var row = calcRow();
+      var view = row ? fullScene(row) : null;
+      if (empty) empty.hidden = true;
+      if (fallback) fallback.hidden = true;
+      if (!row || !view || view.status !== "ok") {
+        if (note) note.textContent = "";
+        if (empty) {
+          empty.hidden = false;
+          var jump = document.getElementById("copy-empty-link");
+          if (jump) jump.setAttribute("href", quoteHref());
+        }
+        return;
       }
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, done);
-      else done();
+      var text = [
+        "차종: " + showName(row.name),
+        "연식: " + yearLabel(row.my),
+        "구매 방식: " + payName(state.pay),
+        "할인 조건: " + (view.lines.length ? view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(", ") : "선택한 할인 없음"),
+        "차량가: " + manText(view.q.basis),
+        "할인 합계: " + manText(view.saved),
+        "할인 적용 차량가: " + manText(view.after),
+        "계산 기준: 부가세가 포함된 권장소비자가에서 선택한 할인만 빼고, 결과 금액은 만원 단위로 내림합니다.",
+        "포함: 선택한 차량 할인",
+        "제외: 취득세, 등록비, 보험료, 금융 이자, 월 납입 지원, 사은품"
+      ].join("\n");
+      function success() {
+        if (note) note.textContent = "견적 요약을 복사했습니다";
+      }
+      function fail() {
+        if (note) note.textContent = "복사에 실패했습니다. 아래 글을 직접 선택해 복사해 주세요.";
+        if (fallback) fallback.hidden = false;
+        if (box) {
+          box.value = text;
+          box.focus();
+          box.select();
+        }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(success, fail);
+      else fail();
+    });
+  }
+  var addrBtn = document.getElementById("copy-addr");
+  if (addrBtn) {
+    addrBtn.addEventListener("click", function () {
+      var line = "경기도 고양시 덕양구 의장로 110 (도내동)";
+      var note = document.getElementById("addr-note");
+      function ok() { if (note) note.textContent = "주소를 복사했습니다"; }
+      function bad() { if (note) note.textContent = line; }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(line).then(ok, bad);
+      else bad();
     });
   }
 
@@ -761,4 +790,141 @@
       if (button) button.disabled = false;
     });
   });
+
+  function mountInsights() {
+    var track = document.getElementById("insight-list");
+    var view = document.getElementById("insight-view");
+    var box = document.getElementById("insight-marquee");
+    var pauseBtn = document.getElementById("insight-pause");
+    var fallback = document.getElementById("insight-fallback");
+    if (!track || !view || !box) return;
+    var CACHE = "benzpro-insights-v1";
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var userPaused = reduce;
+    var dragMoved = false;
+
+    function card(post, clone) {
+      var link = document.createElement("a");
+      link.className = "bp-card";
+      link.href = "https://mercedes.benzpro.co.kr/posts/" + encodeURIComponent(post.slug);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", post.title + " (새 창)");
+      if (clone) {
+        link.setAttribute("aria-hidden", "true");
+        link.tabIndex = -1;
+        if ("inert" in link) link.inert = true;
+      }
+      var img = document.createElement("img");
+      img.alt = "";
+      img.width = 240;
+      img.height = 135;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.src = post.thumbnail || "images/brand/og.png";
+      img.addEventListener("error", function () {
+        if (img.getAttribute("src") !== "images/brand/og.png") img.src = "images/brand/og.png";
+      });
+      var title = document.createElement("strong");
+      title.textContent = post.title;
+      link.appendChild(img);
+      link.appendChild(title);
+      return link;
+    }
+    function setMotion() {
+      var half = track.scrollWidth / 2;
+      var seconds = Math.max(half / 25, 8);
+      track.style.animationDuration = seconds + "s";
+      var paused = userPaused || reduce;
+      box.classList.toggle("is-paused", paused);
+      box.classList.toggle("is-manual", paused);
+      if (pauseBtn) {
+        pauseBtn.hidden = reduce;
+        pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
+        pauseBtn.textContent = paused ? "재생" : "일시정지";
+      }
+    }
+    function render(posts) {
+      track.textContent = "";
+      if (!posts.length) {
+        if (fallback) fallback.hidden = false;
+        if (pauseBtn) pauseBtn.hidden = true;
+        return;
+      }
+      if (fallback) fallback.hidden = true;
+      posts.forEach(function (post) { track.appendChild(card(post, false)); });
+      if (!reduce) {
+        posts.forEach(function (post) { track.appendChild(card(post, true)); });
+      }
+      setMotion();
+    }
+    function normalize(list) {
+      var seen = {};
+      return (list || []).filter(function (post) {
+        if (!post || post.status !== "published" || !post.slug || !post.title) return false;
+        if (seen[post.slug]) return false;
+        seen[post.slug] = true;
+        return true;
+      }).sort(function (a, b) {
+        return String(b.publish_at || b.created_at || "").localeCompare(String(a.publish_at || a.created_at || ""));
+      }).slice(0, 10).map(function (post) {
+        return {
+          title: String(post.title),
+          slug: String(post.slug),
+          thumbnail: post.thumbnail ? String(post.thumbnail) : "",
+          publish_at: String(post.publish_at || post.created_at || ""),
+          status: "published"
+        };
+      });
+    }
+    function readCache() {
+      try { return normalize(JSON.parse(localStorage.getItem(CACHE) || "[]")); }
+      catch (err) { return []; }
+    }
+    if (pauseBtn) {
+      pauseBtn.addEventListener("click", function () {
+        userPaused = pauseBtn.getAttribute("aria-pressed") !== "true";
+        setMotion();
+      });
+    }
+    view.addEventListener("pointerdown", function (event) {
+      view.dataset.x = String(event.clientX);
+      dragMoved = false;
+    });
+    view.addEventListener("pointermove", function (event) {
+      if (!view.dataset.x) return;
+      if (Math.abs(event.clientX - Number(view.dataset.x)) > 8) {
+        dragMoved = true;
+        userPaused = true;
+        setMotion();
+      }
+    });
+    view.addEventListener("pointerup", function () { delete view.dataset.x; });
+    view.addEventListener("pointercancel", function () { delete view.dataset.x; });
+    view.addEventListener("click", function (event) {
+      if (!dragMoved) return;
+      event.preventDefault();
+      event.stopPropagation();
+      dragMoved = false;
+    }, true);
+    window.addEventListener("resize", setMotion);
+
+    var cached = readCache();
+    if (cached.length) render(cached);
+    if (!window.fetch) {
+      if (!cached.length && fallback) fallback.hidden = false;
+      return;
+    }
+    fetch("https://mercedes.benzpro.co.kr/api/posts?limit=30")
+      .then(function (res) { if (!res.ok) throw new Error("posts"); return res.json(); })
+      .then(function (payload) {
+        var posts = normalize(payload.posts || []);
+        if (!posts.length) throw new Error("empty");
+        try { localStorage.setItem(CACHE, JSON.stringify(posts)); } catch (err) {}
+        render(posts);
+      })
+      .catch(function () {
+        if (!cached.length && fallback) fallback.hidden = false;
+      });
+  }
 })();

@@ -54,7 +54,8 @@
   }
   function decorate(href) {
     var pick = read();
-    if (!pick || String(href).indexOf("quote.html") !== 0) return href;
+    var pathOnly = String(href).split("#")[0].split("?")[0];
+    if (!pick || !/(^|\/)quote\.html$/.test(pathOnly)) return href;
     var hash = "";
     var bare = String(href);
     var hashAt = bare.indexOf("#");
