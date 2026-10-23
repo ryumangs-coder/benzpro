@@ -204,6 +204,11 @@ header.hp-head .hp-menu {
   width: 1.15rem;
   height: 1.15rem;
 }
+.hp-check span {
+  min-width: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
 .hp-check small {
   display: block;
   color: #c5ced3;
@@ -319,19 +324,61 @@ header.hp-head .hp-menu {
 }
 .hp-link-card p,
 .hp-pre p,
+.hp-intro li,
 .hp-staff li {
   margin-top: 0.3rem;
   color: #c5ced3;
   line-height: 1.5;
   word-break: keep-all;
 }
-.hp-staff {
+.hp-consult {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.85rem;
+  align-items: start;
+  margin-top: 0.55rem;
 }
-.hp-staff ul {
-  margin-top: 0.6rem;
+.hp-intro .hp-who {
+  margin-top: 0;
+}
+.hp-intro h3 {
+  margin: 0.85rem 0 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+#consulting .hp-lead {
+  max-width: none;
+}
+.hp-intro .hp-lead {
+  margin-top: 0.35rem;
+}
+.hp-intro ul {
+  margin-top: 0.7rem;
   padding-left: 1.1rem;
+}
+.hp-consult .hp-panel {
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+}
+@media (max-width: 899px) {
+  #consulting {
+    padding-top: 1.35rem;
+  }
+  .hp-consult {
+    margin-top: 0.4rem;
+    gap: 0.7rem;
+  }
+  .hp-intro h3 {
+    margin-top: 0.65rem;
+  }
+}
+@media (min-width: 900px) {
+  .hp-consult {
+    grid-template-columns: minmax(16rem, 1fr) minmax(380px, 440px);
+    gap: 1.5rem 2rem;
+    margin-top: 0.85rem;
+  }
 }
 .hp-field,
 .hp-select {
@@ -354,6 +401,8 @@ header.hp-head .hp-menu {
   margin-top: 0.3rem;
   color: #f3b4b4;
   font-size: 0.9rem;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 .hp-error.is-on {
   display: block;
@@ -525,10 +574,6 @@ body.hp-home {
   }
   .hp-insights {
     grid-template-columns: 1.15fr 1fr 1fr;
-  }
-  .hp-staff {
-    grid-template-columns: 0.8fr 1.2fr;
-    align-items: start;
   }
 }
 @media (max-width: 959px) {

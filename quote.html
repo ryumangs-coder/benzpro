@@ -23,7 +23,7 @@
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="벤츠프로" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261023g" />
+    <link rel="stylesheet" href="chrome.css?v=20261023h" />
 <link rel="stylesheet" href="site.css?v=20261016b" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023g"></script>
+<script src="chrome.js?v=20261023j"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -258,20 +258,8 @@
           <div class="q-pick">
             <h2>어떤 벤츠의 견적을 확인할까요?</h2>
             <p>아래 차종을 누르면 다른 모델로 바꿀 수 있습니다.</p>
-            <button type="button" class="q-pick-card" id="car-open" aria-haspopup="listbox" aria-expanded="false" aria-controls="car-panel">
-              <span class="q-pick-k">현재 선택한 차종</span>
-              <span class="q-pick-name" id="car-name"></span>
-              <span class="q-pick-year" id="car-year"></span>
-              <span class="q-pick-change">차종 변경 <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 9l6 6 6-6H6z"/></svg></span>
-            </button>
             <label class="sr-only" for="car">차종</label>
-            <select id="car" class="q-pick-native" tabindex="-1" aria-hidden="true"></select>
-            <div id="car-panel" class="q-pick-panel" hidden>
-              <label for="car-search">차종명 검색</label>
-              <input id="car-search" type="search" autocomplete="off" placeholder="모델명 또는 연식" />
-              <div id="car-list" role="listbox" aria-label="차종"></div>
-              <p id="car-empty" hidden>검색 결과가 없습니다.</p>
-            </div>
+            <select id="car" data-pick-kicker="현재 선택한 차종" data-pick-action="차종 변경" data-pick-search="차종명 검색" data-pick-placeholder="모델명 또는 연식"></select>
             <div id="car-photo" class="mt-3"></div>
             <div id="family" class="mt-3 flex flex-wrap gap-2"></div>
           </div>
@@ -441,66 +429,6 @@
           });
           if (seg) html += "</optgroup>";
           document.getElementById("car").innerHTML = html;
-          syncCarFace();
-        }
-        function yearLabel(my) {
-          return String(my || "").replace("MY", "") + "년식";
-        }
-        function syncCarFace() {
-          var name = document.getElementById("car-name");
-          var year = document.getElementById("car-year");
-          if (!name || !current) return;
-          name.textContent = showName(current.name);
-          year.textContent = yearLabel(current.my);
-          var open = document.getElementById("car-open");
-          if (open) open.setAttribute("aria-label", "현재 선택한 차종 " + showName(current.name) + " " + yearLabel(current.my) + ". 차종 변경");
-        }
-        function closeCarPanel() {
-          var panel = document.getElementById("car-panel");
-          var open = document.getElementById("car-open");
-          if (panel) panel.hidden = true;
-          if (open) {
-            open.setAttribute("aria-expanded", "false");
-            open.focus();
-          }
-        }
-        function renderCarList(query) {
-          var list = document.getElementById("car-list");
-          var empty = document.getElementById("car-empty");
-          var select = document.getElementById("car");
-          var q = String(query || "").trim().toLowerCase();
-          list.innerHTML = "";
-          var count = 0;
-          Array.prototype.forEach.call(select.children, function (group) {
-            if (group.tagName !== "OPTGROUP") return;
-            var options = Array.prototype.filter.call(group.children, function (option) {
-              return !q || option.textContent.toLowerCase().indexOf(q) !== -1;
-            });
-            if (!options.length) return;
-            var title = document.createElement("p");
-            title.className = "q-group";
-            title.textContent = group.label;
-            list.appendChild(title);
-            options.forEach(function (option) {
-              count += 1;
-              var btn = document.createElement("button");
-              btn.type = "button";
-              btn.className = "q-option";
-              btn.setAttribute("role", "option");
-              btn.setAttribute("data-value", option.value);
-              var selected = option.selected;
-              btn.setAttribute("aria-selected", selected ? "true" : "false");
-              var parts = option.textContent.split(" · ");
-              var name = document.createElement("span");
-              name.textContent = parts[0];
-              var meta = document.createElement("small");
-              meta.textContent = (selected ? "선택됨 " : "") + (parts[1] || "");
-              btn.appendChild(name);
-              btn.appendChild(meta);
-              list.appendChild(btn);
-            });
-          });
-          empty.hidden = count !== 0;
         }
         function paintFamily() {
           var mates = rows.filter(function (r) {
@@ -671,58 +599,6 @@
           var key = splitKey(e.target.value);
           state.pay = "";
           pick(key.name, key.my, true);
-          closeCarPanel();
-        });
-        var carOpen = document.getElementById("car-open");
-        var carPanel = document.getElementById("car-panel");
-        var carSearch = document.getElementById("car-search");
-        var carList = document.getElementById("car-list");
-        function openCarPanel() {
-          carPanel.hidden = false;
-          carOpen.setAttribute("aria-expanded", "true");
-          carSearch.value = "";
-          renderCarList("");
-          carSearch.focus();
-        }
-        carOpen.addEventListener("click", function () {
-          if (carOpen.getAttribute("aria-expanded") === "true") closeCarPanel();
-          else openCarPanel();
-        });
-        carOpen.addEventListener("keydown", function (event) {
-          if (event.key === "ArrowDown") {
-            event.preventDefault();
-            openCarPanel();
-          }
-        });
-        carSearch.addEventListener("input", function () { renderCarList(carSearch.value); });
-        carList.addEventListener("click", function (event) {
-          var btn = event.target.closest("[data-value]");
-          if (!btn) return;
-          var select = document.getElementById("car");
-          select.value = btn.getAttribute("data-value");
-          select.dispatchEvent(new Event("change"));
-        });
-        carPanel.addEventListener("keydown", function (event) {
-          var options = carList.querySelectorAll(".q-option");
-          if (event.key === "Escape") {
-            event.preventDefault();
-            closeCarPanel();
-            return;
-          }
-          if (event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "Home" && event.key !== "End") return;
-          if (!options.length) return;
-          event.preventDefault();
-          var index = Array.prototype.indexOf.call(options, document.activeElement);
-          if (event.key === "Home") index = 0;
-          else if (event.key === "End") index = options.length - 1;
-          else if (event.key === "ArrowDown") index = index < 0 ? 0 : Math.min(options.length - 1, index + 1);
-          else index = index < 0 ? options.length - 1 : Math.max(0, index - 1);
-          options[index].focus();
-        });
-        document.addEventListener("click", function (event) {
-          if (carPanel.hidden) return;
-          if (carPanel.contains(event.target) || carOpen.contains(event.target)) return;
-          closeCarPanel();
         });
         document.getElementById("family").addEventListener("click", function (e) {
           var btn = e.target.closest("[data-car]");

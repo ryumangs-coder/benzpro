@@ -13,7 +13,7 @@
     calc: ico("M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm1 4h8v3H8V7zm0 5h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2zM8 15h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"),
     car: ico("M5 16l1.5-4.5A2 2 0 0 1 8.4 10h7.2a2 2 0 0 1 1.9 1.5L19 16v4h-2v-2H7v2H5v-4zm2.2-1h9.6l-1-3H8.2l-1 3zM7.5 16.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm9 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"),
     cal: ico("M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10z"),
-    yt: ico("M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5v-7L16 12l-6.2 3.5z"),
+    yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="yt-body" fill="#FF0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z"/><path class="yt-play" fill="#ffffff" d="M9.8 15.5v-7L16 12l-6.2 3.5z"/></svg>',
     phone: ico("M6.6 3.2h2.4l1.3 3.2-1.8 1.1a12.5 12.5 0 0 0 5.9 5.9l1.1-1.8 3.2 1.3v2.4a1.6 1.6 0 0 1-1.7 1.6A16.2 16.2 0 0 1 5 4.9a1.6 1.6 0 0 1 1.6-1.7z"),
     menu: ico("M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"),
     close: ico("M6.2 5 12 10.8 17.8 5 19 6.2 13.2 12 19 17.8 17.8 19 12 13.2 6.2 19 5 17.8 10.8 12 5 6.2z"),
@@ -44,15 +44,15 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023g";
+    css.href = "chrome.css?v=20261023h";
     document.head.appendChild(css);
   }
 
   var head = document.createElement("header");
   head.id = "bp-head";
   head.innerHTML =
-    '<a class="bp-logo" href="index.html" aria-label="벤츠프로 홈">' + I.star +
-    '<span><span class="bp-word">BENZ <em>PRO</em></span></span></a>' +
+    '<a class="bp-logo" href="index.html" aria-label="벤츠프로 홈. 메르세데스-벤츠 공식 파트너 김민구 차장">' + I.star +
+    '<span class="bp-brand"><span class="bp-word">BENZ <em>PRO</em></span><span class="bp-logo-sub">메르세데스-벤츠 공식 파트너 김민구 차장</span></span></a>' +
     '<nav class="bp-nav" aria-label="주요 메뉴">' +
     item(PRICES, "prices", I.tag, "할인·가격") +
     item("quote.html", "quote", I.calc, "내 견적", ' id="bp-quote"') +
@@ -60,7 +60,7 @@
     item("preorder.html", "preorder", I.cal, "사전예약") +
     "</nav>" +
     '<div class="bp-tools">' +
-    '<a class="bp-icon" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 유튜브 채널" title="벤츠프로 유튜브 채널">' + I.yt + "</a>" +
+    '<a class="bp-icon bp-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 유튜브 채널" title="벤츠프로 유튜브 채널">' + I.yt + "</a>" +
     '<a class="bp-icon" href="' + TEL + '" aria-label="벤츠프로 전화 문의" title="벤츠프로 전화 문의">' + I.phone + "</a>" +
     '<button type="button" class="bp-icon bp-burger" id="bp-menu" aria-expanded="false" aria-controls="bp-drawer" aria-label="메뉴">' + I.menu + "</button>" +
     "</div>";
@@ -94,6 +94,17 @@
   parent.insertBefore(kakao, parent.firstChild);
   parent.insertBefore(drawer, parent.firstChild);
   parent.insertBefore(head, parent.firstChild);
+
+  var logoSub = head.querySelector(".bp-logo-sub");
+  function fitLogoSub() {
+    if (!logoSub) return;
+    logoSub.hidden = true;
+    if (!desktop.matches) return;
+    logoSub.hidden = false;
+    var links = head.querySelectorAll(".bp-nav a");
+    var wrapped = links.length > 1 && links[0].offsetTop !== links[links.length - 1].offsetTop;
+    if (wrapped || head.scrollWidth > head.clientWidth + 1) logoSub.hidden = true;
+  }
 
   var menuBtn = head.querySelector("#bp-menu");
   var panel = drawer.querySelector(".bp-panel");
@@ -190,10 +201,20 @@
     document.body.classList.add("bp-has-kakao");
     tidyBars();
     decorateQuote();
-    window.addEventListener("resize", tidyBars);
+    fitLogoSub();
+    window.addEventListener("resize", function () {
+      tidyBars();
+      fitLogoSub();
+    });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready);
   else ready();
+
+  if (!document.querySelector('script[src^="select-ui.js"]')) {
+    var pickUi = document.createElement("script");
+    pickUi.src = "select-ui.js?v=20261023j";
+    document.head.appendChild(pickUi);
+  }
 
   if (window.visualViewport) {
     window.visualViewport.addEventListener("resize", function () {
