@@ -303,8 +303,16 @@
   function list(items, cls) {
     return '<ul class="' + cls + '">' + items.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
   }
-  function ask(name) {
-    return "index.html?note=" + encodeURIComponent(name + " 상담") + "#consulting";
+  function ask(label) {
+    var params = new URLSearchParams();
+    var row = ctxRows[0];
+    if (row && row.name) {
+      params.set("name", row.name);
+      if (row.my) params.set("my", row.my);
+    }
+    var cars = ctxRows.map(function (item) { return item && item.name ? item.name : ""; }).filter(Boolean).join(" / ");
+    params.set("note", (label || "상담") + (cars ? " · " + cars : ""));
+    return "index.html?" + params.toString() + "#consulting";
   }
   var ctxRows = [];
   function setRows(rows) { ctxRows = (rows || []).filter(Boolean); }

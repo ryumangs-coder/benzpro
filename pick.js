@@ -54,8 +54,7 @@
   }
   function decorate(href) {
     var pick = read();
-    var pathOnly = String(href).split("#")[0].split("?")[0];
-    if (!pick || !/(^|\/)quote\.html$/.test(pathOnly)) return href;
+    if (!pick || href == null) return href;
     var hash = "";
     var bare = String(href);
     var hashAt = bare.indexOf("#");
@@ -63,14 +62,22 @@
       hash = bare.slice(hashAt);
       bare = bare.slice(0, hashAt);
     }
+    var pathOnly = bare.split("?")[0];
+    var isQuote = /(^|\/)quote\.html$/.test(pathOnly);
+    var isHome = /(^|\/)index\.html$/.test(pathOnly) || pathOnly === "/" || pathOnly === "";
+    var keep = hash === "#consulting" || hash === "#calc" || hash.indexOf("#consulting") === 0 || hash.indexOf("#calc") === 0;
+    if (!isQuote && !(isHome && keep)) return href;
     var cut = bare.indexOf("?");
     var query = new URLSearchParams(cut === -1 ? "" : bare.slice(cut + 1));
     var path = cut === -1 ? bare : bare.slice(0, cut);
+    if (!query.get("name") && pick.name) query.set("name", pick.name);
+    if (!query.get("my") && pick.my) query.set("my", pick.my);
     if (!query.get("pay") && pick.pay) query.set("pay", pick.pay);
     FLAGS.forEach(function (key) {
       if (!query.has(key) && pick[key]) query.set(key, "1");
     });
-    return path + "?" + query.toString() + hash;
+    var q = query.toString();
+    return path + (q ? "?" + q : "") + hash;
   }
 
   window.BenzPick = { read: read, write: write, params: params, decorate: decorate, flags: FLAGS };

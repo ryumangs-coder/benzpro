@@ -44,7 +44,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023z2";
+    css.href = "chrome.css?v=20261023z4";
     document.head.appendChild(css);
   }
 
@@ -91,6 +91,8 @@
     item("mou.html", "", I.calc, "MOU할인") +
     item("fleet.html", "", I.car, "법인할인") +
     item("rental.html", "", I.cal, "렌터카") +
+    item("golden.html", "", I.cal, "골든타임") +
+    item("welcome.html", "", I.doc, "구매 기프트") +
     item("care.html", "", I.shield, "신차교환") +
     item("tire.html", "", I.doc, "타이어") +
     item("cards.html", "", I.tag, "카드혜택") +
@@ -201,9 +203,10 @@
 
   function decorateQuote() {
     if (!window.BenzPick) return;
-    [document.getElementById("bp-quote"), drawer.querySelector("[data-bp-quote]")].forEach(function (link) {
-      if (!link) return;
-      link.setAttribute("href", window.BenzPick.decorate(link.getAttribute("href")));
+    Array.prototype.forEach.call(document.querySelectorAll("a[href]"), function (link) {
+      var href = link.getAttribute("href");
+      var next = window.BenzPick.decorate(href);
+      if (next !== href) link.setAttribute("href", next);
     });
   }
 
@@ -295,6 +298,13 @@
     var pickUi = document.createElement("script");
     pickUi.src = "select-ui.js?v=20261023w";
     document.head.appendChild(pickUi);
+  }
+  if (!document.querySelector('script[src^="pick.js"]')) {
+    var pickSrc = document.createElement("script");
+    pickSrc.src = "pick.js?v=20261023c";
+    pickSrc.async = false;
+    pickSrc.onload = function () { decorateQuote(); };
+    document.head.appendChild(pickSrc);
   }
 
   if (window.visualViewport) {

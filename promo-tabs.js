@@ -230,10 +230,17 @@
     if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
     return s;
   }
-  function consultHref(f) {
+  function consultHref(f, row) {
     var params = new URLSearchParams();
-    params.set("car", f.car);
-    params.set("note", f.name);
+    if (row) {
+      params.set("name", row[2]);
+      params.set("my", row[1]);
+      params.set("note", showName(row[2]) + " " + row[1] + " 상담");
+      var st = stockOf(row);
+      if (st.code === "soldout") params.set("ended", "1");
+    } else {
+      params.set("note", f.name + " 상담");
+    }
     return "index.html?" + params.toString() + "#consulting";
   }
   function card(f) {
@@ -331,7 +338,7 @@
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 3h10l4 4v14H5V3zm2 2v14h10V8h-3V5H7zm1 6h8v2H8v-2z"/></svg>';
     var icoAsk =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H5z"/></svg>';
-    var askHref = consultHref(f);
+    var askHref = consultHref(f, bestRow);
     var askLabel = "구매 문의";
     var quoteLabel = "견적 확인";
     return (

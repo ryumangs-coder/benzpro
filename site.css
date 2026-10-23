@@ -658,12 +658,20 @@ a.spec-jump {
 .car-photo.dark img { object-fit: contain; }
 .car-photo.sm { aspect-ratio: 4 / 3; border-radius: 0.85rem; }
 .benz-pick-back {
+  position: relative;
+  z-index: 40;
   width: min(1160px, calc(100% - 2rem));
   margin: 0.6rem auto 0;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(228, 203, 134, 0.35);
+  border-radius: 0.9rem;
+  background: #10222c;
   color: #f4f7f8;
   font-size: 15px;
   line-height: 1.45;
 }
+.benz-pick-back p { margin: 0; }
+.benz-pick-back p + p { margin-top: 0.15rem; }
 .benz-pick-back a {
   display: inline-flex;
   min-height: 44px;

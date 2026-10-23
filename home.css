@@ -499,6 +499,10 @@ header.hp-head .hp-menu {
 .hp-error.is-on {
   display: block;
 }
+.hp-error[hidden],
+.hp-modal[hidden] {
+  display: none !important;
+}
 .hp-more {
   margin-top: 0.8rem;
   border-top: 1px solid rgba(164, 170, 174, 0.2);

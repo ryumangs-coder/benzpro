@@ -223,12 +223,13 @@
     var stock = stockOf(row);
     var ended = stock.code === "soldout";
     var value = row.name + "|" + row.my;
-    var selected = row.name === state.model && row.my === (state.modelYear || state.year) ? " selected" : "";
+    var selected = optionHtml.select && row.name === state.model && row.my === (state.modelYear || state.year) ? " selected" : "";
     var attrs = ended ? ' data-offer="ended" data-status="재고 소진 · 종료된 프로모션"' : "";
     var label = showName(row.name) + " · " + yearLabel(row.my) + (ended ? " · 재고 소진" : "");
     return '<option value="' + esc(value) + '"' + attrs + selected + ">" + esc(label) + "</option>";
   }
-  function modelOptions() {
+  function modelOptions(mark) {
+    optionHtml.select = !!mark;
     var html = '<option value="">선택해 주세요</option><option value="상담 후 결정">미정</option>';
     var live = rows.filter(function (row) { return stockOf(row).code !== "soldout"; });
     var past = rows.filter(function (row) { return stockOf(row).code === "soldout"; });
@@ -269,7 +270,7 @@
     var opts = document.getElementById("calc-opts");
     var out = document.getElementById("calc-out");
     if (!model || !out) return;
-    model.innerHTML = modelOptions();
+    model.innerHTML = modelOptions(true);
     pays.innerHTML = PAYS.map(function (item) { return chip("calc-pay", item[0], item[1], item[0] === state.pay); }).join("");
     var row = calcRow();
     var view = row ? fullScene(row) : null;
@@ -391,7 +392,16 @@
   function paintFormCar() {
     var select = document.getElementById("field-car");
     if (!select || select.value === "상담 후 결정") return;
-    select.innerHTML = modelOptions();
+    var keep = select.value;
+    select.innerHTML = modelOptions(state.engaged);
+    if (keep === "상담 후 결정") {
+      select.value = "상담 후 결정";
+      return;
+    }
+    if (!state.engaged) {
+      select.value = "";
+      return;
+    }
     var wanted = state.model + "|" + (state.modelYear || state.year);
     Array.prototype.forEach.call(select.options, function (option) {
       if (option.value === wanted) option.selected = true;
@@ -556,14 +566,18 @@
     paintHero();
     draw();
     if (askedName || params.get("pay") || params.get("retain") || params.get("trade") || params.get("mou")) engage();
-    if (params.get("ended") === "1" && params.get("note")) {
+    var note = params.get("note");
+    if (note) {
       var inquiry = document.getElementById("field-inquiry");
       if (inquiry && !inquiry.value) {
-        inquiry.value = "종료된 프로모션 안내 요청입니다. " + params.get("note") + " 현재 출고 조건이 아닙니다.";
+        inquiry.value = params.get("ended") === "1"
+          ? "종료된 프로모션 안내 요청입니다. " + note + " 현재 출고 조건이 아닙니다."
+          : note;
       }
       var details = inquiry && inquiry.closest("details");
       if (details) details.open = true;
     }
+    paintFormCar();
   }
 
   var root = document.getElementById("buy");
@@ -819,22 +833,38 @@
         ? "테스트 화면이라 문의는 전송하지 않았습니다."
         : "접수되었습니다. 김민구 차장이 선택하신 차종과 출고 가능 여부를 확인한 뒤 연락드립니다.";
     }
-    if (modal) modal.classList.add("is-on");
+    if (modal) {
+      modal.hidden = false;
+      modal.removeAttribute("aria-hidden");
+      modal.removeAttribute("inert");
+      modal.classList.add("is-on");
+    }
     if (modalClose) modalClose.focus();
   }
   function closeModal() {
-    if (modal) modal.classList.remove("is-on");
+    if (modal) {
+      modal.classList.remove("is-on");
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+      modal.setAttribute("inert", "");
+    }
   }
   if (modalClose) modalClose.addEventListener("click", closeModal);
   if (modal) {
     modal.addEventListener("click", function (event) {
       if (event.target === modal) closeModal();
     });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && modal.classList.contains("is-on")) closeModal();
+    });
   }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-    form.querySelectorAll(".hp-error").forEach(function (item) { item.classList.remove("is-on"); });
+    form.querySelectorAll(".hp-error").forEach(function (item) {
+      item.classList.remove("is-on");
+      if (item.id === "consult-network-error") item.hidden = true;
+    });
     var car = form.querySelector("#field-car");
     var name = form.querySelector("#field-name");
     var phone = form.querySelector("#field-phone");
@@ -855,10 +885,15 @@
       if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
-    var row = calcRow();
-    var view = row ? resultOf(row) : null;
     var typed = (form.querySelector("[name='inquiry']").value || "").trim();
-    var inquiry = [briefText(row, view), typed].filter(Boolean).join("\n");
+    var inquiry;
+    if (car.value === "상담 후 결정") {
+      inquiry = ["차종 미정", typed].filter(Boolean).join("\n");
+    } else {
+      var row = calcRow();
+      var view = row ? resultOf(row) : null;
+      inquiry = [briefText(row, view), typed].filter(Boolean).join("\n");
+    }
     var method = form.querySelector("#field-method").value;
     if (!method) {
       method = { cash: "현금", install: "할부", care: "할부", lease: "운용리스" }[state.pay] || "";
