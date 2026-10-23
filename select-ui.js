@@ -3,6 +3,7 @@
   var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.2 16.6 4.6 12l1.4-1.4 3.2 3.2 7.8-7.8 1.4 1.4z"/></svg>';
   var openBox = null;
   var boxes = [];
+  var pastOn = false;
 
   function labelFor(select) {
     if (!select.id) return null;
@@ -109,18 +110,12 @@
     search.setAttribute("aria-label", searchLabel);
     searchWrap.appendChild(searchLab);
     searchWrap.appendChild(search);
-    var pastWrap = document.createElement("label");
-    pastWrap.className = "bp-select-past";
-    pastWrap.hidden = true;
-    var pastId = (select.id || "pick") + "-past";
-    var pastBox = document.createElement("input");
-    pastBox.id = pastId;
-    pastBox.type = "checkbox";
-    pastBox.className = "bp-past-check";
-    var pastText = document.createElement("span");
-    pastText.textContent = "지난 프로모션 함께 보기";
-    pastWrap.appendChild(pastBox);
-    pastWrap.appendChild(pastText);
+    var pastBtn = document.createElement("button");
+    pastBtn.type = "button";
+    pastBtn.className = "bp-past-toggle";
+    pastBtn.hidden = true;
+    pastBtn.setAttribute("aria-pressed", "false");
+    pastBtn.textContent = "지난 연식 보기";
     var countEl = document.createElement("p");
     countEl.className = "bp-select-count";
     countEl.setAttribute("aria-live", "polite");
@@ -133,11 +128,11 @@
     empty.className = "bp-select-empty";
     empty.hidden = true;
     panel.appendChild(searchWrap);
-    panel.appendChild(pastWrap);
     panel.appendChild(countEl);
     panel.appendChild(list);
     panel.appendChild(empty);
     box.insertBefore(trigger, select);
+    box.insertBefore(pastBtn, select);
     box.appendChild(panel);
     trigger.setAttribute("aria-controls", list.id);
 
@@ -162,6 +157,8 @@
       year.textContent = face.year;
       year.hidden = !face.year;
       searchWrap.hidden = items.length <= 8;
+      pastBtn.hidden = !items.some(function (item) { return item.offer === "ended"; });
+      syncPastButtons();
       trigger.disabled = select.disabled;
       trigger.setAttribute("aria-disabled", select.disabled ? "true" : "false");
       if (select.required) trigger.setAttribute("aria-required", "true");
@@ -172,7 +169,8 @@
 
     function place() {
       box.classList.remove("is-up", "is-fixed");
-      var rect = trigger.getBoundingClientRect();
+      var anchor = pastBtn.hidden ? trigger : pastBtn;
+      var rect = anchor.getBoundingClientRect();
       var below = window.innerHeight - rect.bottom;
       var above = rect.top;
       if (below < 280 && above > below) box.classList.add("is-up");
@@ -215,26 +213,32 @@
       if (restore) trigger.focus();
     }
 
-    function pastSource() {
-      if (select.getAttribute("data-pick-past") === "page") {
-        return document.getElementById("show-archive");
-      }
-      return pastBox;
-    }
     function includePast() {
-      var source = pastSource();
-      return !!(source && source.checked);
+      var host = document.getElementById("show-archive");
+      if (select.getAttribute("data-pick-past") === "page" && host) return host.checked;
+      return pastOn;
+    }
+    function syncPastButtons() {
+      document.querySelectorAll(".bp-past-toggle").forEach(function (btn) {
+        var on = pastOn;
+        var owner = btn.closest(".bp-select");
+        var native = owner && owner.querySelector("select");
+        if (native && native.getAttribute("data-pick-past") === "page") {
+          var host = document.getElementById("show-archive");
+          if (host) on = host.checked;
+        }
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        btn.textContent = on ? "지난 연식 숨기기" : "지난 연식 보기";
+      });
     }
     function paint(query) {
       var items = optionsOf(select);
       var q = String(query || "").trim().toLowerCase();
       var many = items.length > 8;
       var hasPast = items.some(function (item) { return item.offer === "ended"; });
-      var pagePast = select.getAttribute("data-pick-past") === "page";
-      var host = document.getElementById("show-archive");
       searchWrap.hidden = !many;
-      pastWrap.hidden = !hasPast;
-      if (pagePast && host) pastBox.checked = host.checked;
+      pastBtn.hidden = !hasPast;
+      syncPastButtons();
       list.textContent = "";
       if (!items.length) {
         countEl.hidden = true;
@@ -307,7 +311,7 @@
       });
       empty.hidden = count !== 0;
       empty.textContent = pastOnly
-        ? "현재 판매 가능한 검색 결과가 없습니다. ‘지난 프로모션 함께 보기’를 선택하면 이전 조건을 확인할 수 있습니다."
+        ? "지금 고를 수 있는 검색 결과가 없습니다. 지난 연식 보기를 누르면 이전 조건을 확인할 수 있습니다."
         : "검색 결과가 없습니다.";
     }
 
@@ -338,12 +342,15 @@
         open();
       }
     });
-    pastBox.addEventListener("change", function () {
-      document.querySelectorAll(".bp-past-check").forEach(function (box) {
-        if (box !== pastBox) box.checked = pastBox.checked;
-      });
+    pastBtn.addEventListener("mousedown", function (event) { event.preventDefault(); });
+    pastBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      var next = !includePast();
+      pastOn = next;
       var host = document.getElementById("show-archive");
-      if (host && host.checked !== pastBox.checked) host.checked = pastBox.checked;
+      if (host) host.checked = next;
+      syncPastButtons();
       boxes.forEach(function (other) {
         if (other._paint) other._paint(other._query ? other._query() : "");
       });
@@ -384,7 +391,7 @@
     var wrapLabel = select.closest("label");
     if (wrapLabel) {
       wrapLabel.addEventListener("click", function (event) {
-        if (event.target.closest(".q-pick-panel")) return;
+        if (event.target.closest(".q-pick-panel, .bp-past-toggle")) return;
         event.preventDefault();
         if (event.target.closest(".q-pick-card") || trigger.disabled) return;
         trigger.focus();
@@ -424,9 +431,7 @@
 
   document.addEventListener("change", function (event) {
     if (!event.target || event.target.id !== "show-archive") return;
-    document.querySelectorAll(".bp-past-check").forEach(function (box) {
-      box.checked = event.target.checked;
-    });
+    pastOn = event.target.checked;
     boxes.forEach(function (box) {
       if (box._paint) box._paint(box._query ? box._query() : "");
     });

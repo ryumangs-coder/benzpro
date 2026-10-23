@@ -274,7 +274,7 @@
     var conqOn = view && view.conqRate && stockOf(row).code !== "soldout";
     var soldPick = row && stockOf(row).code === "soldout";
     opts.innerHTML = soldPick
-      ? '<p class="hp-note">종료된 프로모션이라 추가 혜택을 현재 조건으로 적용하지 않습니다.</p>'
+      ? '<p class="hp-note">추가 혜택은 새 연식에서 다시 고릅니다.</p>'
       :
       '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="retain"' + (state.retain && retainOn ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>지금 타는 벤츠<small>' + (retainOn ? "재구매 혜택 " + view.retainRate + "%. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "이 연식에는 재구매 혜택이 없습니다.") + "</small></span></label>" +
       '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="trade"' + (state.trade && retainOn ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>인증 중고로 매각<small>' + (retainOn ? "재구매를 켠 차에 1%가 더해집니다. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "재구매 혜택이 있는 차만 적용됩니다.") + "</small></span></label>" +
@@ -306,7 +306,8 @@
       }).join("") + "</ul>";
     }
     if (shown.status === "sold") {
-      html += '<p class="hp-note">이 연식은 재고가 소진된 종료 프로모션입니다. 현재 구매 조건으로 견적을 이어가지 않습니다.</p>';
+      var nudge = window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(row) : { text: "새 연식 조건을 확인해 보세요." };
+      html += '<p class="hp-note">이 숫자는 지난 프로모션입니다. ' + esc(nudge.text) + "</p>";
     } else {
       html += '<p class="hp-note"><a href="' + esc(quoteHref()) + '">통관, 전시, 수리 이력처럼 특정 재고만 해당하는 조건은 상세 견적에서 확인합니다.</a></p>';
     }
@@ -316,13 +317,15 @@
     });
     var go = document.getElementById("calc-quote");
     var talk = document.getElementById("calc-talk");
+    var nudge = row && window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(row) : { name: "", my: "", text: "" };
+    var nextHref = nudge.name ? ("quote.html?name=" + encodeURIComponent(nudge.name) + "&my=" + encodeURIComponent(nudge.my)) : quoteHref();
     if (go) {
-      go.setAttribute("href", quoteHref());
-      go.textContent = shown.status === "sold" ? "지난 조건 보기" : "상세 견적 이어보기";
+      go.setAttribute("href", shown.status === "sold" ? nextHref : quoteHref());
+      go.textContent = shown.status === "sold" ? "새 연식 확인하기" : "상세 견적 이어보기";
     }
     if (talk) {
       talk.setAttribute("href", "#consulting");
-      talk.textContent = shown.status === "sold" ? "종료된 조건으로 상담" : "이 조건으로 상담받기";
+      talk.textContent = shown.status === "sold" ? "새 연식으로 상담" : "이 조건으로 상담받기";
     }
     paintBrief(row, shown);
     paintFormCar();
@@ -330,7 +333,8 @@
 
   function briefText(row, view) {
     if (view && view.status === "sold") {
-      return "종료된 프로모션. " + showName(row.name) + " · " + yearLabel(row.my) + ". 현재 출고 조건이 아닙니다. " + (view.blocks[0] || "");
+      var nudge = window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(row) : { text: "새 연식 조건을 확인해 보세요." };
+      return "지난 프로모션. " + showName(row.name) + " · " + yearLabel(row.my) + ". " + nudge.text + " " + (view.blocks[0] || "");
     }
     if (!row || !view || view.status !== "ok") {
       return showName(state.model) + " · " + yearLabel(state.modelYear || state.year) + " · " + payName(state.pay) + " · 할인 조건 확인 필요";

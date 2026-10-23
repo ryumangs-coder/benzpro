@@ -15,8 +15,8 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
     { k: "cam", label: "주차 카메라 (360°·후방)", cat: "안전·주차", fam: /^360° 카메라|^후방 카메라|주차 패키지$|^MB\.DRIVE 주차 어시스트 360|^주차 보조$/ },
     { k: "cockpit", label: "MBUX 디지털 콕핏", cat: "디스플레이·오디오", fam: /와이드 ?스크린 콕핏|^MBUX (슈퍼스크린|하이퍼스크린|멀티미디어 시스템)$|^대형 디스플레이$|^(LCD |OLED )?(센트럴|프론트|미디어) 디스플레이$|디지털 계기반|^3D 계기반$|^계기반$|^드라이버 디스플레이$|^디스플레이 패키지$|^스마트폰 통합 패키지$|^애플 카플레이$|^안드로이드 오토$/ },
     { k: "hud", label: "헤드업 디스플레이", cat: "디스플레이·오디오", fam: /헤드업 디스플레이/ },
-    { k: "seatF", label: "앞좌석 열선·통풍 시트", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)|^앞좌석 시트$/, quiet: true },
-    { k: "seatR", label: "뒷좌석 열선·통풍 시트", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)|^뒷좌석 시트$/, quiet: true },
+    { k: "seatF", label: "앞좌석 시트", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)|^앞좌석 시트$/, quiet: true },
+    { k: "seatR", label: "뒷좌석 시트", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)|^뒷좌석 시트$/, quiet: true },
     { k: "air", label: "공기 청정 패키지", cat: "실내 편의", fam: /^공기 청정 패키지/ },
     { k: "balance", label: "에어 밸런스 패키지", cat: "실내 편의", fam: /^에어 밸런스 패키지/ },
     { k: "amb", label: "앰비언트 라이트", cat: "실내 편의", fam: /^(액티브 )?앰비언트 라이트( 플러스| 프리미엄)?$|로고 프로젝션 앰비언트/ },
@@ -94,7 +94,9 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
       if (old === "no") return { k: "no", t: "—", d: "", old: old };
       return { k: "no", t: "기본 아님", d: "", old: old };
     }
-    return { k: "yes", t: v || "●", d: v, old: old };
+    var shown = v || "●";
+    if ((feat.k === "seatF" || feat.k === "seatR") && shown === "열선만") shown = "열선";
+    return { k: "yes", t: shown, d: shown, old: old };
   }
 
   function sameCell(feat, x, y) {
@@ -126,6 +128,13 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
       if (left.k === "no" && right.k === "no") return;
       var differ = !sameCell(feat, left, right);
       var label = feat.label;
+      if (feat.k === "seatF" || feat.k === "seatR") {
+        var where = feat.k === "seatF" ? "앞좌석" : "뒷좌석";
+        var bits = (left.d + " " + right.d);
+        if (bits.indexOf("통풍") !== -1 && bits.indexOf("열선") !== -1) label = where + " 시트";
+        else if (bits.indexOf("통풍") !== -1) label = where + " 통풍 시트";
+        else if (bits.indexOf("열선") !== -1) label = where + " 열선 시트";
+      }
       if (feat.k === "cockpit" && /스크린/.test(left.d + right.d)) label = "MBUX 디지털 콕핏 · 슈퍼스크린";
       if (feat.k === "cockpit" && /하이퍼스크린/.test(left.d + right.d)) label = "MBUX 디지털 콕핏 · 하이퍼스크린";
       var detail = left.d || right.d;

@@ -70,14 +70,33 @@
   function liveStatus() {
     return { code: "live", label: "", past: false, offer: "live", promo: "", next: "", reason: "", blockAsk: false };
   }
-  /* 26년식 재고 소진: 일반 S, 일반 GLC, 일반 GLA·CLA, GLB, EQB 2026년식 이하.
+  /* 26년식 재고 소진: 일반 S, 일반 GLC, 일반 GLA·CLA, GLB, EQB 2026년식 이하,
+   * EQA·EQE 26년식, A클래스(AMG A 45 제외).
    * S·GLC·GLA·CLA는 기존처럼 AMG를 빼 둡니다. GLB 2026년식은 AMG 포함입니다.
-   * 마이바흐 S 580·680만 26년식 S 재고입니다. */
+   * 마이바흐 S 580·680만 26년식 S 재고입니다. AMG A 45는 재고 소진에서 빼 둡니다. */
   function of(row) {
     var my = yearOf(row);
     var name = nameOf(row);
     var year = yearNum(my);
 
+    if (my === "MY26" && /^EQA /.test(name)) {
+      return ended({
+        next: "MY27",
+        reason: "26년식 EQA는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요."
+      });
+    }
+    if (my === "MY26" && /^EQE /.test(name)) {
+      return ended({
+        next: "MY27",
+        reason: "26년식 EQE는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요."
+      });
+    }
+    if (/^A \d/.test(name)) {
+      return ended({
+        next: "MY27",
+        reason: "A클래스 해치백·세단은 재고가 소진되었습니다. AMG A 45 S는 그대로 고를 수 있습니다."
+      });
+    }
     if ((/^EQB /.test(name) || /^AMG EQB /.test(name)) && year && year < 27) {
       return ended({
         next: "MY27",
@@ -125,6 +144,33 @@
 
   function live(row) {
     return of(row).code !== "soldout";
+  }
+  function modelRows() {
+    return (window.OCTOBER_2026 && window.OCTOBER_2026.models) || [];
+  }
+  function suggest(row) {
+    var name = nameOf(row);
+    var year = yearNum(yearOf(row));
+    var list = modelRows();
+    var same = list.filter(function (item) {
+      return item[2] === name && yearNum(item[1]) > year && of(item).code !== "soldout";
+    }).sort(function (a, b) { return yearNum(b[1]) - yearNum(a[1]); });
+    if (same[0]) {
+      return { name: same[0][2], my: same[0][1], text: "27년식 " + same[0][2] + " 조건을 확인해 보세요." };
+    }
+    if (/^A /.test(name)) {
+      var amg = list.filter(function (item) {
+        return item[2].indexOf("AMG A 45") === 0 && of(item).code !== "soldout";
+      }).sort(function (a, b) { return yearNum(b[1]) - yearNum(a[1]); });
+      if (amg[0]) return { name: amg[0][2], my: amg[0][1], text: "지금 고를 수 있는 A클래스 새 연식은 AMG A 45 S입니다." };
+    }
+    if (name.indexOf("EQE") === 0) {
+      var eqa = list.filter(function (item) {
+        return item[2] === "EQA 250 Progressive" && item[1] === "MY27" && of(item).code !== "soldout";
+      })[0];
+      if (eqa) return { name: eqa[2], my: eqa[1], text: "27년식 EQA 조건을 확인해 보세요." };
+    }
+    return { name: "", my: "", text: "새 연식 조건을 확인해 보세요." };
   }
 
   function itemFits(item, a, b) {
@@ -277,6 +323,7 @@
   window.BenzStock = {
     of: of,
     live: live,
+    suggest: suggest,
     seriesOf: seriesOf,
     shouldBanner: shouldBanner,
     yearSection: yearSection,

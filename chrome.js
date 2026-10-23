@@ -44,7 +44,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023n";
+    css.href = "chrome.css?v=20261023q";
     document.head.appendChild(css);
   }
 
@@ -212,7 +212,7 @@
 
   if (!document.querySelector('script[src^="select-ui.js"]')) {
     var pickUi = document.createElement("script");
-    pickUi.src = "select-ui.js?v=20261023n";
+    pickUi.src = "select-ui.js?v=20261023q";
     document.head.appendChild(pickUi);
   }
 
