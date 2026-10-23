@@ -23,7 +23,7 @@
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="벤츠프로" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261023l" />
+    <link rel="stylesheet" href="chrome.css?v=20261023n" />
 <link rel="stylesheet" href="site.css?v=20261016b" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023l"></script>
+<script src="chrome.js?v=20261023n"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -283,6 +283,7 @@
 
           <form id="lead" class="rounded-3xl border border-white/10 bg-[#10222c] p-5" novalidate>
             <h2 class="text-[22px] font-bold">이 견적으로 상담 받기</h2>
+            <p id="ended-note" class="mt-2 hidden text-[16px] leading-relaxed text-[#ffb4ae]">이 차종은 종료된 프로모션입니다. 현재 출고 조건으로 견적을 신청할 수 없습니다. 전화와 카톡은 일반 상담이며, 이 조건의 출고를 안내하지 않습니다.</p>
             <p class="mt-1 text-[15px] leading-relaxed text-[#8b969c]">성함과 연락처만 있으면 됩니다. 이메일은 있으시면 적어 주세요.</p>
             <div class="mt-4 space-y-3">
               <div data-q="name">
@@ -338,6 +339,7 @@
 
     <script src="october-2026.js?v=20261023e"></script>
     <script src="quote.js?v=20261023b"></script>
+    <script src="stock.js?v=20261023n"></script>
     <script src="pick.js?v=20261023b"></script>
     <script src="car-photo.js?v=20261017d"></script>
     <script>
@@ -416,18 +418,34 @@
           var hit = rows.filter(function (r) { return r.name === name && (!my || r.my === my); })[0];
           return hit || rows.filter(function (r) { return r.name === "E 200 AMG Line" && r.my === "MY26"; })[0] || rows[0];
         }
+        function stockOf(row) {
+          return window.BenzStock ? window.BenzStock.of(row) : { code: "live" };
+        }
+        function isEnded(row) {
+          return stockOf(row).code === "soldout";
+        }
         function paintCarList() {
           var html = "";
-          var seg = "";
-          rows.forEach(function (row) {
-            if (row.seg !== seg) {
-              if (seg) html += "</optgroup>";
-              seg = row.seg;
-              html += '<optgroup label="' + (segName[seg] || seg) + '">';
-            }
-            html += '<option value="' + carKey(row).replace(/"/g, "&quot;") + '"' + (row === current ? " selected" : "") + ">" + showName(row.name) + " · " + row.my + "</option>";
-          });
-          if (seg) html += "</optgroup>";
+          var liveRows = rows.filter(function (row) { return !isEnded(row); });
+          var pastRows = rows.filter(isEnded);
+          function addGroup(list, title) {
+            var group = "";
+            list.forEach(function (row) {
+              var label = title ? title + " · " + (segName[row.seg] || row.seg) : (segName[row.seg] || row.seg);
+              if (label !== group) {
+                if (group) html += "</optgroup>";
+                group = label;
+                html += '<optgroup label="' + group + '">';
+              }
+              var ended = isEnded(row);
+              var attrs = ended ? ' data-offer="ended" data-status="재고 소진 · 종료된 프로모션"' : "";
+              var text = showName(row.name) + " · " + row.my + (ended ? " · 재고 소진" : "");
+              html += '<option value="' + carKey(row).replace(/"/g, "&quot;") + '"' + attrs + (row === current ? " selected" : "") + ">" + text + "</option>";
+            });
+            if (group) html += "</optgroup>";
+          }
+          addGroup(liveRows, "");
+          addGroup(pastRows, "지난 프로모션");
           document.getElementById("car").innerHTML = html;
         }
         function paintFamily() {
@@ -438,10 +456,13 @@
               if (current.name.indexOf("CLA") !== -1) return ev && r.name.indexOf("CLA") !== -1;
             }
             return r.seg === current.seg;
+          }).filter(function (row) {
+            return row === current || !isEnded(row);
           }).slice(0, 12);
           document.getElementById("family").innerHTML = mates.map(function (row) {
             var on = row === current ? " pay on" : " pay";
-            return '<button type="button" class="' + on + '" data-car="' + carKey(row).replace(/"/g, "&quot;") + '">' + showName(row.name) + "</button>";
+            var mark = isEnded(row) ? " · 재고 소진" : "";
+            return '<button type="button" class="' + on + '" data-car="' + carKey(row).replace(/"/g, "&quot;") + '">' + showName(row.name) + mark + "</button>";
           }).join("");
         }
         function paintPays(view) {
@@ -486,6 +507,22 @@
         }
         function paintSheet(view) {
           var q = view.q;
+          var sold = isEnded(current);
+          var st = stockOf(current);
+          if (sold) {
+            var pastPrice = q.basis == null ? "권장가는 지난 자료에 없습니다." : won(q.basis);
+            var pastAfter = view.after == null ? "—" : won(view.after);
+            document.getElementById("sheet").innerHTML =
+              window.BenzPhoto.html(current.name, "wide mb-3") +
+              '<p class="sheet-kicker">재고 소진 · 종료된 프로모션</p>' +
+              '<h2 class="mt-1 text-[22px] font-bold leading-snug">' + showName(current.name) + "</h2>" +
+              '<p class="fine">' + current.my + "</p>" +
+              '<p class="mt-3 text-[16px] font-bold leading-relaxed text-[#ffb4ae]">' + (st.reason || "현재 구매 조건이 아닙니다.") + "</p>" +
+              '<div class="rowline mt-2"><span>지난 차량가</span><b>' + pastPrice + "</b></div>" +
+              '<div class="rowline"><span>지난 할인 적용 차량가</span><b>' + pastAfter + "</b></div>" +
+              '<p class="fine">이 숫자는 종료된 프로모션입니다. 지금 출고할 수 있는 금액이 아닙니다.</p>';
+            return;
+          }
           if (q.basis == null) {
             document.getElementById("sheet").innerHTML = window.BenzPhoto.html(current.name, "wide mb-3") + '<p class="sheet-kicker">' + showName(current.name) + "</p><p class=\"mt-3 text-[22px] font-bold\">권장가는 상담에서 확인합니다</p>";
             return;
@@ -531,12 +568,26 @@
         function draw() {
           syncRules();
           var view = compute(current);
+          var sold = isEnded(current);
           paintCarList();
           document.getElementById("car-photo").innerHTML = window.BenzPhoto.html(current.name, "wide");
           paintFamily();
-          paintPays(view);
-          paintOpts(view);
+          if (sold) {
+            document.getElementById("pays").innerHTML = "";
+            document.getElementById("pay-note").textContent = "이 연식은 종료된 프로모션이라 구매 방식을 현재 조건으로 고르지 않습니다.";
+            document.getElementById("opts").innerHTML = '<p class="text-[16px] leading-relaxed text-[#ffb4ae]">재고 소진 · 종료된 프로모션입니다. 혜택을 현재 구매 조건처럼 적용하지 않습니다.</p>';
+          } else {
+            paintPays(view);
+            paintOpts(view);
+          }
           paintSheet(view);
+          var endedNote = document.getElementById("ended-note");
+          var send = document.getElementById("send");
+          if (endedNote) endedNote.classList.toggle("hidden", !sold);
+          if (send) {
+            send.disabled = sold;
+            send.textContent = sold ? "이 조건으로는 견적 신청을 받지 않습니다" : "견적 상담 받기";
+          }
           publish();
         }
         function exactCar(name, my) {
@@ -674,6 +725,7 @@
             form.querySelector('[data-q="privacy"] .error').classList.remove("hidden");
           }
           if (!ok) return;
+          if (isEnded(current)) return;
           var view = compute(current);
           var picked = view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(", ");
           var inquiry = [

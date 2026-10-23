@@ -49,62 +49,78 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
   }
-  /* 26년식 판매 소진: 일반 S, 일반 GLC, 일반 GLA·CLA, EQB.
-   * AMG 브랜드는 빼 달라는 요청대로 AMG는 그대로 둡니다. AMG GLC 43만 26년식 GLC 재고.
+  function yearNum(my) {
+    var match = String(my || "").match(/MY(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
+  }
+  /* 재고가 확인된 연식만 종료로 둡니다. 재고를 모르는 항목은 live로 남깁니다. */
+  function ended(extra) {
+    extra = extra || {};
+    return {
+      code: "soldout",
+      label: "재고 소진",
+      past: true,
+      offer: "ended",
+      promo: "ended",
+      next: extra.next || "",
+      reason: extra.reason || "",
+      blockAsk: true
+    };
+  }
+  function liveStatus() {
+    return { code: "live", label: "", past: false, offer: "live", promo: "", next: "", reason: "", blockAsk: false };
+  }
+  /* 26년식 재고 소진: 일반 S, 일반 GLC, 일반 GLA·CLA, GLB, EQB 2026년식 이하.
+   * S·GLC·GLA·CLA는 기존처럼 AMG를 빼 둡니다. GLB 2026년식은 AMG 포함입니다.
    * 마이바흐 S 580·680만 26년식 S 재고입니다. */
   function of(row) {
     var my = yearOf(row);
     var name = nameOf(row);
+    var year = yearNum(my);
 
+    if ((/^EQB /.test(name) || /^AMG EQB /.test(name)) && year && year < 27) {
+      return ended({
+        next: "MY27",
+        reason: "2026년식과 그 이전 EQB는 현재 판매 항목이 아닙니다. 2027년식부터 판매 가능합니다. 등록된 2027년식 가격, 할인, 재고, 출고 일정은 없습니다. 즉시 출고가 아닙니다. 보이는 숫자는 종료된 프로모션입니다."
+      });
+    }
+    if (my === "MY26" && (/^GLB /.test(name) || /^AMG GLB /.test(name))) {
+      return ended({
+        reason: "26년식 GLB는 재고가 소진되었습니다. 다른 연식의 GLB는 이 상태와 같이 숨기지 않습니다."
+      });
+    }
     if (my === "MY26") {
       if (isSRegular(name)) {
-        return {
-          code: "soldout",
-          label: "판매 소진",
+        return ended({
           next: "MY27",
-          reason: "26년식 일반 S클래스는 재고가 없습니다. 지금 고르는 차는 27년식입니다.",
-          blockAsk: true
-        };
+          reason: "26년식 일반 S클래스는 재고가 없습니다. 지금 고르는 차는 27년식입니다."
+        });
       }
       if (/^GLC /.test(name) && !isAmg(name)) {
-        return {
-          code: "soldout",
-          label: "판매 소진",
+        return ended({
           next: "MY27",
-          reason: "26년식 일반 GLC는 재고가 없습니다. 27년식만 선택할 수 있습니다.",
-          blockAsk: true
-        };
+          reason: "26년식 일반 GLC는 재고가 없습니다. 27년식만 선택할 수 있습니다."
+        });
       }
       if (/^GLA /.test(name) && !isAmg(name)) {
-        return {
-          code: "soldout",
-          label: "판매 소진",
+        return ended({
           next: "MY27",
-          reason: "26년식 GLA는 재고가 없습니다. 27년식만 선택할 수 있습니다.",
-          blockAsk: true
-        };
+          reason: "26년식 GLA는 재고가 없습니다. 27년식만 선택할 수 있습니다."
+        });
       }
       if (/^CLA /.test(name) && !isAmg(name)) {
-        return {
-          code: "soldout",
-          label: "판매 소진",
+        return ended({
           next: "MY27",
-          reason: "26년식 CLA는 재고가 없습니다. 27년식 신형 CLA만 선택할 수 있습니다.",
-          blockAsk: true
-        };
-      }
-      if (/^EQB /.test(name)) {
-        return {
-          code: "soldout",
-          label: "판매 소진",
-          next: "",
-          reason: "26년식 EQB는 재고가 없습니다. 이 할인은 지난 조건입니다.",
-          blockAsk: true
-        };
+          reason: "26년식 CLA는 재고가 없습니다. 27년식 신형 CLA만 선택할 수 있습니다."
+        });
       }
     }
 
-    return { code: "live", label: "", next: "", reason: "", blockAsk: false };
+    return liveStatus();
+  }
+  function statusLabel(st) {
+    if (!st || st.code !== "soldout") return "";
+    return "재고 소진 · 종료된 프로모션";
   }
 
   function live(row) {
@@ -266,6 +282,8 @@
     yearSection: yearSection,
     eEquip: function () { return E_EQUIP.slice(); },
     eDeltaRows: eDeltaRows,
-    soldOut: function (row) { return of(row).code === "soldout"; }
+    soldOut: function (row) { return of(row).code === "soldout"; },
+    statusLabel: statusLabel,
+    showPast: false
   };
 })();

@@ -185,7 +185,7 @@
     var photoNote = state.year === "MY26" ? "" : '<p class="hp-photo-note">사진은 26년식 카탈로그의 이 트림입니다. ' + esc(yearLabel(state.year)) + " 전용 사진은 없습니다.</p>";
     var body;
     if (stock.code === "soldout") {
-      body = '<p class="hp-num">판매 소진</p><p class="hp-note">' + esc(stock.reason || "이 연식은 현재 구매 가격으로 보여 드리지 않습니다.") + "</p>";
+      body = '<p class="hp-num">재고 소진</p><p class="hp-note">' + esc(stock.reason || "이 연식은 현재 구매 가격으로 보여 드리지 않습니다.") + "</p>";
     } else if (view.status !== "ok") {
       body = '<p class="hp-meta">차량가 ' + esc(manText(view.q.basis) || "확인 필요") + '</p><p class="hp-num">조건 확인 필요</p><p class="hp-note">' + esc(payName(state.pay)) + " 기준 할인이 이 데이터에 없습니다. 다른 연식 가격으로 바꾸지 않았습니다.</p>";
     } else {
@@ -219,21 +219,35 @@
     grid.innerHTML = card(E_EX) + card(E_AMG);
   }
 
+  function optionHtml(row) {
+    var stock = stockOf(row);
+    var ended = stock.code === "soldout";
+    var value = row.name + "|" + row.my;
+    var selected = row.name === state.model && row.my === (state.modelYear || state.year) ? " selected" : "";
+    var attrs = ended ? ' data-offer="ended" data-status="재고 소진 · 종료된 프로모션"' : "";
+    var label = showName(row.name) + " · " + yearLabel(row.my) + (ended ? " · 재고 소진" : "");
+    return '<option value="' + esc(value) + '"' + attrs + selected + ">" + esc(label) + "</option>";
+  }
   function modelOptions() {
     var html = '<option value="">선택해 주세요</option><option value="상담 후 결정">미정</option>';
-    var seg = "";
-    rows.forEach(function (row) {
-      if (stockOf(row).code === "soldout") return;
-      if (row.seg !== seg) {
-        if (seg) html += "</optgroup>";
-        seg = row.seg;
-        html += '<optgroup label="' + esc(row.seg) + '">';
-      }
-      var value = row.name + "|" + row.my;
-      var selected = row.name === state.model && row.my === (state.modelYear || state.year) ? " selected" : "";
-      html += '<option value="' + esc(value) + '"' + selected + ">" + esc(showName(row.name) + " · " + yearLabel(row.my)) + "</option>";
-    });
-    if (seg) html += "</optgroup>";
+    var live = rows.filter(function (row) { return stockOf(row).code !== "soldout"; });
+    var past = rows.filter(function (row) { return stockOf(row).code === "soldout"; });
+    function groups(list, title) {
+      var seg = "";
+      var chunk = "";
+      list.forEach(function (row) {
+        if (row.seg !== seg) {
+          if (seg) chunk += "</optgroup>";
+          seg = row.seg;
+          chunk += '<optgroup label="' + esc(title ? title + " · " + row.seg : row.seg) + '">';
+        }
+        chunk += optionHtml(row);
+      });
+      if (seg) chunk += "</optgroup>";
+      return chunk;
+    }
+    html += groups(live, "");
+    html += groups(past, "지난 프로모션");
     return html;
   }
 
@@ -256,9 +270,12 @@
     pays.innerHTML = PAYS.map(function (item) { return chip("calc-pay", item[0], item[1], item[0] === state.pay); }).join("");
     var row = calcRow();
     var view = row ? fullScene(row) : null;
-    var retainOn = view && view.retainRate;
-    var conqOn = view && view.conqRate;
-    opts.innerHTML =
+    var retainOn = view && view.retainRate && stockOf(row).code !== "soldout";
+    var conqOn = view && view.conqRate && stockOf(row).code !== "soldout";
+    var soldPick = row && stockOf(row).code === "soldout";
+    opts.innerHTML = soldPick
+      ? '<p class="hp-note">종료된 프로모션이라 추가 혜택을 현재 조건으로 적용하지 않습니다.</p>'
+      :
       '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="retain"' + (state.retain && retainOn ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>지금 타는 벤츠<small>' + (retainOn ? "재구매 혜택 " + view.retainRate + "%. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "이 연식에는 재구매 혜택이 없습니다.") + "</small></span></label>" +
       '<label class="hp-check' + (retainOn ? "" : " is-off") + '"><input type="checkbox" data-flag="trade"' + (state.trade && retainOn ? " checked" : "") + (retainOn ? "" : " disabled") + '><span>인증 중고로 매각<small>' + (retainOn ? "재구매를 켠 차에 1%가 더해집니다. 다른 브랜드 혜택과는 같이 쓰지 않습니다." : "재구매 혜택이 있는 차만 적용됩니다.") + "</small></span></label>" +
       '<label class="hp-check' + (conqOn ? "" : " is-off") + '"><input type="checkbox" data-flag="conquest"' + (state.conquest && conqOn ? " checked" : "") + (conqOn ? "" : " disabled") + '><span>다른 고급 브랜드<small>' + (conqOn ? "혜택 " + view.conqRate + "%. 지금 타는 벤츠 혜택과 같이 쓰지 않습니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.") + "</small></span></label>" +
@@ -268,7 +285,7 @@
     if (!row || shown.status === "need") {
       html = '<p class="hp-num">조건 확인 필요</p><p class="hp-note">이 연식과 구매 방식의 할인 데이터가 없습니다.</p>';
     } else if (shown.status === "sold") {
-      html = '<p class="hp-num">판매 소진</p><p class="hp-note">' + esc(shown.blocks[0] || "") + "</p>";
+      html = '<p class="hp-num">재고 소진 · 종료된 프로모션</p><p class="hp-note">' + esc(shown.blocks[0] || "") + "</p>";
     } else {
       html =
         '<p class="hp-meta">차량가 ' + esc(manText(shown.q.basis)) + "</p>" +
@@ -283,25 +300,38 @@
         html += '<p class="hp-note">월 납입 지원 ' + shown.month + "만원 × 6개월. 월 납입금이 아니며, 차량가에 더하지 않았습니다.</p>";
       }
     }
-    if (shown.blocks && shown.blocks.length) {
+    if (shown.blocks && shown.blocks.length && shown.status !== "sold") {
       html += '<p class="hp-note">확인이 필요한 조건</p><ul class="hp-note">' + shown.blocks.map(function (line) {
         return "<li>" + esc(line) + "</li>";
       }).join("") + "</ul>";
     }
-    html += '<p class="hp-note"><a href="' + esc(quoteHref()) + '">통관, 전시, 수리 이력처럼 특정 재고만 해당하는 조건은 상세 견적에서 확인합니다.</a></p>';
+    if (shown.status === "sold") {
+      html += '<p class="hp-note">이 연식은 재고가 소진된 종료 프로모션입니다. 현재 구매 조건으로 견적을 이어가지 않습니다.</p>';
+    } else {
+      html += '<p class="hp-note"><a href="' + esc(quoteHref()) + '">통관, 전시, 수리 이력처럼 특정 재고만 해당하는 조건은 상세 견적에서 확인합니다.</a></p>';
+    }
     out.innerHTML = html;
     document.querySelectorAll("#bp-quote, [data-bp-quote]").forEach(function (navQuote) {
       navQuote.setAttribute("href", quoteHref());
     });
     var go = document.getElementById("calc-quote");
     var talk = document.getElementById("calc-talk");
-    if (go) go.setAttribute("href", quoteHref());
-    if (talk) talk.setAttribute("href", "#consulting");
+    if (go) {
+      go.setAttribute("href", quoteHref());
+      go.textContent = shown.status === "sold" ? "지난 조건 보기" : "상세 견적 이어보기";
+    }
+    if (talk) {
+      talk.setAttribute("href", "#consulting");
+      talk.textContent = shown.status === "sold" ? "종료된 조건으로 상담" : "이 조건으로 상담받기";
+    }
     paintBrief(row, shown);
     paintFormCar();
   }
 
   function briefText(row, view) {
+    if (view && view.status === "sold") {
+      return "종료된 프로모션. " + showName(row.name) + " · " + yearLabel(row.my) + ". 현재 출고 조건이 아닙니다. " + (view.blocks[0] || "");
+    }
     if (!row || !view || view.status !== "ok") {
       return showName(state.model) + " · " + yearLabel(state.modelYear || state.year) + " · " + payName(state.pay) + " · 할인 조건 확인 필요";
     }
@@ -401,7 +431,7 @@
       var view = row ? window.BenzQuote.scene(row, { pay: state.pay }) : null;
       var price = "조건 확인 필요";
       var basis = payName(state.pay) + " 기준";
-      if (row && stock.code === "soldout") price = "판매 소진";
+      if (row && stock.code === "soldout") price = "재고 소진";
       else if (view && view.status === "ok") price = manText(view.after);
       else if (view && view.q.basis != null) basis = "차량가 " + manText(view.q.basis);
       var href = row ? quoteHref(item.name, item.my) : "prices.html#highlights";
@@ -494,6 +524,14 @@
     paintHero();
     draw();
     if (askedName || params.get("pay") || params.get("retain") || params.get("trade") || params.get("mou")) engage();
+    if (params.get("ended") === "1" && params.get("note")) {
+      var inquiry = document.getElementById("field-inquiry");
+      if (inquiry && !inquiry.value) {
+        inquiry.value = "종료된 프로모션 안내 요청입니다. " + params.get("note") + " 현재 출고 조건이 아닙니다.";
+      }
+      var details = inquiry && inquiry.closest("details");
+      if (details) details.open = true;
+    }
   }
 
   var root = document.getElementById("buy");
@@ -551,8 +589,9 @@
       syncUrl();
       return;
     }
-    if (event.target.id === "calc-model") {
+    if (event.target.id === "calc-model" || event.target.id === "field-car") {
       var value = event.target.value;
+      if (value === "상담 후 결정") return;
       if (value && value.indexOf("|") !== -1) {
         state.model = value.slice(0, value.indexOf("|"));
         state.modelYear = value.slice(value.indexOf("|") + 1);

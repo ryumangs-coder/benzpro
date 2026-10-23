@@ -43,7 +43,9 @@
             value: child.value,
             text: child.textContent.replace(/\s+/g, " ").trim(),
             disabled: child.disabled,
-            group: group
+            group: group,
+            offer: child.getAttribute("data-offer") || "",
+            status: child.getAttribute("data-status") || ""
           });
         }
       });
@@ -107,6 +109,21 @@
     search.setAttribute("aria-label", searchLabel);
     searchWrap.appendChild(searchLab);
     searchWrap.appendChild(search);
+    var pastWrap = document.createElement("label");
+    pastWrap.className = "bp-select-past";
+    pastWrap.hidden = true;
+    var pastId = (select.id || "pick") + "-past";
+    var pastBox = document.createElement("input");
+    pastBox.id = pastId;
+    pastBox.type = "checkbox";
+    pastBox.className = "bp-past-check";
+    var pastText = document.createElement("span");
+    pastText.textContent = "지난 프로모션 함께 보기";
+    pastWrap.appendChild(pastBox);
+    pastWrap.appendChild(pastText);
+    var countEl = document.createElement("p");
+    countEl.className = "bp-select-count";
+    countEl.setAttribute("aria-live", "polite");
     var list = document.createElement("div");
     list.className = "bp-select-list";
     list.id = select.id ? select.id + "-list" : "";
@@ -116,6 +133,8 @@
     empty.className = "bp-select-empty";
     empty.hidden = true;
     panel.appendChild(searchWrap);
+    panel.appendChild(pastWrap);
+    panel.appendChild(countEl);
     panel.appendChild(list);
     panel.appendChild(empty);
     box.insertBefore(trigger, select);
@@ -196,22 +215,47 @@
       if (restore) trigger.focus();
     }
 
+    function pastSource() {
+      if (select.getAttribute("data-pick-past") === "page") {
+        return document.getElementById("show-archive");
+      }
+      return pastBox;
+    }
+    function includePast() {
+      var source = pastSource();
+      return !!(source && source.checked);
+    }
     function paint(query) {
       var items = optionsOf(select);
       var q = String(query || "").trim().toLowerCase();
       var many = items.length > 8;
+      var hasPast = items.some(function (item) { return item.offer === "ended"; });
+      var pagePast = select.getAttribute("data-pick-past") === "page";
+      var host = document.getElementById("show-archive");
       searchWrap.hidden = !many;
+      pastWrap.hidden = !hasPast;
+      if (pagePast && host) pastBox.checked = host.checked;
       list.textContent = "";
       if (!items.length) {
+        countEl.hidden = true;
         empty.hidden = false;
         empty.textContent = "선택할 항목이 없습니다.";
         return;
       }
+      function matches(item) {
+        if (!q) return true;
+        return (item.group + " " + item.text + " " + item.status).toLowerCase().indexOf(q) !== -1;
+      }
+      var matched = items.filter(matches);
+      var visible = matched.filter(function (item) {
+        return includePast() || item.offer !== "ended";
+      });
+      var pastOnly = !visible.length && matched.some(function (item) { return item.offer === "ended"; });
+      countEl.hidden = !many && !hasPast;
+      countEl.textContent = visible.length + "개";
       var count = 0;
       var lastGroup = null;
-      items.forEach(function (item) {
-        var blob = (item.group + " " + item.text).toLowerCase();
-        if (q && blob.indexOf(q) === -1) return;
+      visible.forEach(function (item) {
         count += 1;
         if (item.group && item.group !== lastGroup) {
           lastGroup = item.group;
@@ -223,7 +267,7 @@
         var chosen = select.selectedIndex >= 0 && select.options[select.selectedIndex] === item.option;
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "q-option";
+        btn.className = "q-option" + (item.offer === "ended" ? " is-past" : "");
         btn.setAttribute("role", "option");
         btn.setAttribute("aria-selected", chosen ? "true" : "false");
         btn.disabled = item.disabled;
@@ -231,7 +275,15 @@
         var parts = faceParts(item.text);
         var main = document.createElement("span");
         main.className = "q-option-main";
-        main.textContent = item.text.indexOf(" · ") === -1 ? item.text : parts.name;
+        var nameSpan = document.createElement("span");
+        nameSpan.textContent = item.text.indexOf(" · ") === -1 ? item.text : parts.name;
+        main.appendChild(nameSpan);
+        if (item.offer === "ended") {
+          var badge = document.createElement("span");
+          badge.className = "q-past-badge";
+          badge.textContent = item.status || "재고 소진 · 종료된 프로모션";
+          main.appendChild(badge);
+        }
         var meta = document.createElement("span");
         meta.className = "q-option-meta";
         if (chosen) meta.innerHTML = CHECK;
@@ -254,7 +306,9 @@
         list.appendChild(btn);
       });
       empty.hidden = count !== 0;
-      empty.textContent = "검색 결과가 없습니다.";
+      empty.textContent = pastOnly
+        ? "현재 판매 가능한 검색 결과가 없습니다. ‘지난 프로모션 함께 보기’를 선택하면 이전 조건을 확인할 수 있습니다."
+        : "검색 결과가 없습니다.";
     }
 
     function open() {
@@ -283,6 +337,16 @@
         event.preventDefault();
         open();
       }
+    });
+    pastBox.addEventListener("change", function () {
+      document.querySelectorAll(".bp-past-check").forEach(function (box) {
+        if (box !== pastBox) box.checked = pastBox.checked;
+      });
+      var host = document.getElementById("show-archive");
+      if (host && host.checked !== pastBox.checked) host.checked = pastBox.checked;
+      boxes.forEach(function (other) {
+        if (other._paint) other._paint(other._query ? other._query() : "");
+      });
     });
     search.addEventListener("input", function () { paint(search.value); });
     search.addEventListener("keydown", function (event) {
@@ -348,6 +412,8 @@
     box._close = close;
     box._place = place;
     box._refresh = refresh;
+    box._paint = paint;
+    box._query = function () { return search.value; };
     boxes.push(box);
     refresh();
   }
@@ -356,6 +422,15 @@
     Array.prototype.forEach.call((root || document).querySelectorAll("select"), enhance);
   }
 
+  document.addEventListener("change", function (event) {
+    if (!event.target || event.target.id !== "show-archive") return;
+    document.querySelectorAll(".bp-past-check").forEach(function (box) {
+      box.checked = event.target.checked;
+    });
+    boxes.forEach(function (box) {
+      if (box._paint) box._paint(box._query ? box._query() : "");
+    });
+  });
   document.addEventListener("pointerdown", function (event) {
     if (!openBox || openBox.contains(event.target)) return;
     openBox._close(false);

@@ -157,7 +157,7 @@
     { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
     { group: "sedan", name: "S클래스", line: "26년식 일반 모델은 판매가 끝났습니다. 지금 고르는 차는 27년식입니다.", prefix: "S ", car: "S-Class" },
     { group: "suv", name: "GLA", line: "26년식은 재고가 없습니다. 27년식 GLA만 선택할 수 있습니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
-    { group: "suv", name: "GLB", line: "2열과 3열을 고를 수 있는 컴팩트 SUV입니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
+    { group: "suv", name: "GLB", line: "26년식 GLB는 재고가 소진되었습니다. 다른 연식은 등록된 판매 조건이 있을 때만 고릅니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
     { group: "suv", name: "GLC", line: "26년식 일반 모델은 판매가 끝났습니다. AMG 43만 남아 있고, 일반 GLC는 27년식만 선택할 수 있습니다.", prefix: "GLC ", not: ["Coup", "electric"], car: "GLC" },
     { group: "suv", name: "GLC 쿠페", line: "26년식 일반 쿠페는 판매가 끝났습니다. AMG 43 쿠페만 남아 있고, 일반 쿠페는 27년식만 선택할 수 있습니다.", prefix: "GLC ", has: "Coup", not: "electric", car: "GLC" },
     { group: "suv", name: "GLE", line: "공간이 더 필요한 중대형 SUV입니다.", prefix: "GLE ", not: "Coup", car: "GLE" },
@@ -165,7 +165,7 @@
     { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
     { group: "suv", name: "G클래스", line: "각진 오프로더입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 450", car: "상담 후 결정" },
     { group: "ev", name: "EQA", line: "작은 전기 SUV입니다.", prefix: "EQA", car: "상담 후 결정" },
-    { group: "ev", name: "EQB", line: "26년식 EQB는 판매가 끝났습니다. 이 할인은 지난 조건입니다.", prefix: "EQB", car: "상담 후 결정" },
+    { group: "ev", name: "EQB", line: "2026년식과 그 이전 EQB는 현재 판매 항목이 아닙니다. 2027년식부터 판매 가능합니다. 등록된 2027년식 가격, 할인, 재고, 출고 일정은 없습니다. 즉시 출고가 아닙니다.", prefix: "EQB", car: "상담 후 결정" },
     { group: "ev", name: "EQE", line: "전기 세단과 SUV가 있습니다.", prefix: "EQE", car: "상담 후 결정" },
     { group: "ev", name: "EQS", line: "큰 전기 SUV입니다.", prefix: "EQS", car: "상담 후 결정" },
     { group: "ev", name: "G 580", line: "전기 G클래스입니다.", prefix: "G 580", car: "상담 후 결정" },
@@ -173,7 +173,7 @@
     { group: "coupe", name: "CLE 카브리올레", line: "지붕이 열리는 CLE입니다.", prefix: "CLE ", has: "Cabriolet", car: "상담 후 결정" },
     { group: "amg", name: "AMG A클래스", line: "A클래스의 고성능입니다.", prefix: "AMG A", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG CLA", line: "CLA의 고성능입니다.", prefix: "AMG CLA", kind: "amg", car: "AMG" },
-    { group: "amg", name: "AMG GLB", line: "GLB의 고성능입니다.", prefix: "AMG GLB", kind: "amg", car: "AMG" },
+    { group: "amg", name: "AMG GLB", line: "26년식 AMG GLB는 재고가 소진되었습니다. 다른 연식은 등록된 판매 조건이 있을 때만 고릅니다.", prefix: "AMG GLB", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG E클래스", line: "E클래스의 고성능입니다.", prefix: "AMG E", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG S클래스", line: "S클래스의 고성능입니다.", prefix: "AMG S ", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG GLC", line: "GLC의 고성능입니다.", prefix: "AMG GLC", kind: "amg", car: "AMG" },
@@ -258,6 +258,7 @@
         var params = new URLSearchParams();
         params.set("prefix", f.prefix);
         params.set("kind", f.kind || "base");
+        params.set("past", "1");
         if (f.has) params.set("has", f.has);
         if (f.not) params.set("not", Array.isArray(f.not) ? f.not.join(",") : f.not);
         return "prices.html?" + params.toString() + "#finder";
@@ -265,7 +266,7 @@
       return (
         '<article class="rounded-3xl bg-white p-5 sold-card">' +
         (window.BenzPhoto ? window.BenzPhoto.html(past[2], "wide mb-3") : "") +
-        '<p class="text-[14px] font-semibold text-[#ffb4ae]">판매 소진</p>' +
+        '<p class="text-[14px] font-semibold text-[#ffb4ae]">재고 소진 · 종료된 프로모션</p>' +
         '<h3 class="mt-1 text-[24px] font-bold leading-snug">' + f.name + "</h3>" +
         '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">' + f.line + "</p>" +
         '<p class="mt-3 text-[18px] font-bold text-[#ffb4ae]">이 차종으로 구매 문의는 받지 않습니다.</p>' +
@@ -348,7 +349,7 @@
     if (!cards.length) return;
     html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
     if (g.id === "ev") {
-      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">EQA, EQB, EQE, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다.</p>';
+      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">EQA, EQE, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. EQB는 2026년식 재고가 소진되었고, 2027년식 판매 조건은 아직 등록되지 않았습니다. 즉시 출고가 아닙니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다.</p>';
     }
     html += "</section>";
   });
