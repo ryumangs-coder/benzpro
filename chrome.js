@@ -44,7 +44,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023q";
+    css.href = "chrome.css?v=20261023w";
     document.head.appendChild(css);
   }
 
@@ -82,16 +82,16 @@
     item("https://mercedes.benzpro.co.kr", "", I.doc, "인사이트", ' target="_blank" rel="noopener noreferrer"') +
     "</div></div>";
 
-  var kakao = document.createElement("a");
-  kakao.className = "bp-kakao";
-  kakao.href = KAKAO;
-  kakao.target = "_blank";
-  kakao.rel = "noopener noreferrer";
-  kakao.setAttribute("aria-label", "카톡 문의");
-  kakao.innerHTML = I.talk + "<span>카톡 문의</span>";
+  var dock = document.createElement("nav");
+  dock.className = "bp-dock";
+  dock.setAttribute("aria-label", "문의");
+  dock.innerHTML =
+    '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브">' + I.yt + "</a>" +
+    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="카카오톡 문의">' + I.talk + "</a>" +
+    '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의">' + I.phone + "</a>";
 
   var parent = document.body || document.documentElement;
-  parent.insertBefore(kakao, parent.firstChild);
+  parent.insertBefore(dock, parent.firstChild);
   parent.insertBefore(drawer, parent.firstChild);
   parent.insertBefore(head, parent.firstChild);
 
@@ -167,7 +167,7 @@
     var bars = document.querySelectorAll("#cta, .fixed.bottom-0, [class*='bottom-0']");
     var lift = 0;
     Array.prototype.forEach.call(bars, function (bar) {
-      if (bar === kakao || bar.id === "bp-drawer" || bar.id === "bp-head") return;
+      if (bar === dock || bar.id === "bp-drawer" || bar.id === "bp-head") return;
       var style = window.getComputedStyle(bar);
       if (style.position !== "fixed") return;
       Array.prototype.forEach.call(bar.querySelectorAll('a[href*="open.kakao.com"]'), function (link) {
@@ -212,7 +212,7 @@
 
   if (!document.querySelector('script[src^="select-ui.js"]')) {
     var pickUi = document.createElement("script");
-    pickUi.src = "select-ui.js?v=20261023q";
+    pickUi.src = "select-ui.js?v=20261023w";
     document.head.appendChild(pickUi);
   }
 

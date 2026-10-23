@@ -152,7 +152,7 @@
 
   var families = [
     { group: "sedan", name: "A클래스", line: "도심에서 쓰기 좋은 작은 세단과 해치백입니다.", prefix: "A ", car: "A, CLA, GLA, GLB" },
-    { group: "sedan", name: "CLA", line: "26년식은 재고가 없습니다. 지금 고르는 차는 27년식 체인지 모델입니다.", prefix: "CLA ", car: "A, CLA, GLA, GLB" },
+    { group: "sedan", name: "CLA", line: "CLA는 하이브리드와 전기차 중에서 고를 수 있습니다.", prefix: "CLA ", car: "A, CLA, GLA, GLB" },
     { group: "sedan", name: "C클래스", line: "가장 많이 비교하는 중형 세단입니다.", prefix: "C ", car: "C-Class" },
     { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
     { group: "sedan", name: "S클래스", line: "26년식 일반 모델은 판매가 끝났습니다. 지금 고르는 차는 27년식입니다.", prefix: "S ", car: "S-Class" },
@@ -165,7 +165,7 @@
     { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
     { group: "suv", name: "G클래스", line: "각진 오프로더입니다. 이번 달 현금 할인은 없습니다.", prefix: "G 450", car: "상담 후 결정" },
     { group: "ev", name: "EQA", line: "작은 전기 SUV입니다.", prefix: "EQA", car: "상담 후 결정" },
-    { group: "ev", name: "EQB", line: "2026년식과 그 이전 EQB는 현재 판매 항목이 아닙니다. 2027년식부터 판매 가능합니다. 등록된 2027년식 가격, 할인, 재고, 출고 일정은 없습니다. 즉시 출고가 아닙니다.", prefix: "EQB", car: "상담 후 결정" },
+    { group: "ev", name: "EQB", line: "26년식 재고가 소진되었습니다. 27년식 할인은 최신 정보가 확인되면 업데이트됩니다.", prefix: "EQB", car: "상담 후 결정" },
     { group: "ev", name: "EQE", line: "전기 세단과 SUV가 있습니다.", prefix: "EQE", car: "상담 후 결정" },
     { group: "ev", name: "EQS", line: "큰 전기 SUV입니다.", prefix: "EQS", car: "상담 후 결정" },
     { group: "ev", name: "G 580", line: "전기 G클래스입니다.", prefix: "G 580", car: "상담 후 결정" },
@@ -264,16 +264,25 @@
         return "prices.html?" + params.toString() + "#finder";
       })();
       var sug = window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(past) : { name: "", my: "", text: "새 연식 조건을 확인해 보세요." };
+      var pending = window.BenzStock && window.BenzStock.discountPending && window.BenzStock.discountPending(past);
       var nextHref = sug.name
         ? "quote.html?name=" + encodeURIComponent(sug.name) + "&my=" + encodeURIComponent(sug.my)
         : "models.html";
+      var listMan = window.BenzQuote && window.BenzQuote.man ? window.BenzQuote.man(past[3]) : Math.floor(Number(past[3]) / 10000);
+      var soldLead = pending
+        ? (window.BenzStock.pendingNote ? window.BenzStock.pendingNote() : "27년식 할인은 최신 정보가 확인되면 업데이트됩니다.")
+        : sug.text;
+      var soldPrice = pending
+        ? '<p class="mt-3 text-[20px] font-bold">정상가격 ' + won(listMan) + "</p>"
+        : "";
       return (
         '<article class="rounded-3xl bg-white p-5 sold-card">' +
         (window.BenzPhoto ? window.BenzPhoto.html(past[2], "wide mb-3") : "") +
         '<p class="text-[14px] font-semibold text-[#ffb4ae]">재고 소진 · 종료된 프로모션</p>' +
         '<h3 class="mt-1 text-[24px] font-bold leading-snug">' + f.name + "</h3>" +
         '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">' + f.line + "</p>" +
-        '<p class="mt-3 text-[18px] font-bold" style="color:#e4cb86">' + sug.text + "</p>" +
+        '<p class="mt-3 text-[18px] font-bold" style="color:#e4cb86">' + soldLead + "</p>" +
+        soldPrice +
         '<div class="promo-actions">' +
         '<a class="act-gold" href="' + nextHref + '"><span>새 연식 확인하기</span></a>' +
         '<a class="act-line" href="' + finderHref + '"><span>지난 프로모션 보기</span></a>' +
@@ -354,7 +363,7 @@
     if (!cards.length) return;
     html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
     if (g.id === "ev") {
-      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">27년식 EQA, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. 26년식 EQA와 EQE는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요. EQB는 2026년식 재고가 소진되었고, 2027년식 판매 조건은 아직 등록되지 않았습니다. 즉시 출고가 아닙니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다.</p>';
+      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">27년식 EQA, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. 26년식 EQA와 EQE는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요. EQB는 26년식 재고가 소진되었고, 27년식 할인은 최신 정보가 확인되면 업데이트됩니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다.</p>';
     }
     html += "</section>";
   });

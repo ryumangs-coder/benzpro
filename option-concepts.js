@@ -124,7 +124,7 @@
     { key: "mcF", label: "앞좌석 멀티컨투어 시트", cat: "시트·공간", mode: "tier", none: "—", re: /멀티컨투어|^시트 마사지·컨투어$/,
       val: function (t) { return /액티브/.test(t) ? "액티브 멀티컨투어" : "멀티컨투어"; }, rank: function (t) { return /액티브/.test(t) ? 1 : 0; } },
     { key: "rearpower", label: "뒷좌석 전동 시트", cat: "시트·공간", mode: "flag", re: /뒷좌석 전동 ?시트|^뒷좌석 시트 조절/ },
-    { key: "mem", label: "메모리 시트", cat: "시트·공간", mode: "flag", re: /^(운전석 |동반석 |앞좌석 )?메모리 (시트|패키지)$/ },
+    { key: "mem", label: "메모리 시트", cat: "시트·공간", mode: "tier", none: "없음", re: /^(운전석 |동반석 |앞좌석 )?메모리 (시트|패키지)$/ },
     { key: "lumbar", label: "요추 지지대 (허리 받침)", cat: "시트·공간", mode: "flag", re: /요추 지지대/ },
     { key: "chauffeur", label: "쇼퍼 패키지", cat: "시트·공간", mode: "flag", re: /^쇼퍼 패키지|^앞좌석 쇼퍼 포지션/ },
     { key: "seattype", label: "시트 종류", cat: "시트·공간", mode: "tier", none: null,
@@ -149,7 +149,7 @@
       eq: function (a, b) { return squash(a) === squash(b); } },
     { key: "upholstery", label: "시트 소재", cat: "시트·공간", mode: "tier", none: null,
       re: /^(?!.*(스티어링|루프 라이너|시트 벨트)).*(가죽|아티코|마이크로컷)|^시트 소재$|^가죽 패키지$/, val: seatMat,
-      eq: function (a, b) { return a === b || a === "가죽" || b === "가죽"; } },
+      eq: function (a, b) { return a === b; } },
     { key: "ext", label: "외관 디자인 (익스테리어 라인)", cat: "외관·생활 편의", mode: "tier", none: "—",
       re: /익스테리어|외장$|^외관 디자인$|^메르세데스-벤츠 스타일링|바디 ?스타일링|스타일링 패키지|^(AMG Line|EXCLUSIVE|AVANTGARDE|PROGRESSIVE)$|^(프로그레시브|아방가르드|익스클루시브) 라인$/i, val: lineName },
     { key: "glass", label: "열·소음 차단 유리", cat: "외관·생활 편의", mode: "flag", re: /소음 차단|차음·단열|어쿠스틱 글래스|열·소음/ },
@@ -210,6 +210,16 @@
     var yes = list.filter(function (x) { return x.st === "yes"; });
     var opt = list.filter(function (x) { return x.st === "opt"; });
     var no = list.filter(function (x) { return x.st === "no"; });
+    if (rule.key === "mem") {
+      var memPool = yes.length ? yes : opt;
+      if (!memPool.length) return { k: "no", v: "없음" };
+      var blob = memPool.map(function (x) { return x.text; }).join(" ");
+      var front = /앞좌석/.test(blob);
+      var driver = front || /운전석/.test(blob) || /메모리 패키지/.test(blob);
+      var pass = front || /동반석|조수석/.test(blob);
+      var who = driver && pass ? "운전석·조수석" : driver ? "운전석만" : pass ? "조수석만" : "있음";
+      return { k: yes.length ? "yes" : "opt", v: who };
+    }
     if (rule.mode === "flag") return yes.length ? { k: "yes" } : (opt.length ? { k: "opt" } : { k: "no" });
     var pool = yes.length ? yes : (rule.yesOnly ? [] : opt);
     if (pool.length) {
@@ -255,6 +265,15 @@
     return flatPair(pair).some(function (it) { return mapped(it.text, skip) || !!labelRule(it); });
   }
 
+  function eLeather(name) {
+    name = String(name || "");
+    if (/^EQE/.test(name)) return "";
+    if (!/^E /.test(name) && !/^AMG E /.test(name)) return "";
+    var num = name.match(/\bE\s+(\d+)/);
+    if (!num) return "";
+    return parseInt(num[1], 10) >= 300 ? "천연 나파 가죽" : "아티코 가죽";
+  }
+
   function pair(recA, recB, opt) {
     opt = opt || {};
     var a = build(recA, opt.skip);
@@ -263,10 +282,20 @@
     RULES.forEach(function (rule) {
       var x = a[rule.key] || null;
       var y = b[rule.key] || null;
+      if (rule.key === "upholstery") {
+        var leatherA = eLeather(opt.nameA);
+        var leatherB = eLeather(opt.nameB);
+        if (leatherA) x = { k: "yes", v: leatherA };
+        if (leatherB) y = { k: "yes", v: leatherB };
+      }
+      if (rule.key === "mem") {
+        if (!x) x = { k: "no", v: "없음" };
+        if (!y) y = { k: "no", v: "없음" };
+      }
       if (!x && !y) return;
       if (opt.oneThin && ((opt.thinA && !x) || (opt.thinB && !y))) return;
       var on = function (s) { return !!s && s.k !== "no"; };
-      if (!on(x) && !on(y)) return;
+      if (!on(x) && !on(y) && rule.key !== "mem") return;
       var row;
       if (rule.mode === "flag") {
         var lt = x && x.k === "yes" ? "●" : (x && x.k === "opt" ? "선택" : "—");
@@ -287,7 +316,7 @@
         var oa = on(x) && x.k === "opt";
         var ob = on(y) && y.k === "opt";
         var same = rule.eq ? rule.eq(va, vb) : squash(va) === squash(vb);
-        var differ = !same || oa !== ob;
+        var differ = !same || oa !== ob || (rule.key === "mem" && !on(x) && !on(y));
         row = {
           left: va + (oa ? " (선택)" : ""), right: vb + (ob ? " (선택)" : ""),
           kl: !on(x) ? "no" : (oa ? "opt" : "yes"), kr: !on(y) ? "no" : (ob ? "opt" : "yes"),

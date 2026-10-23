@@ -255,6 +255,9 @@
     if (!row) return { status: "need", blocks: ["차종을 데이터에서 찾지 못했습니다."] };
     var stock = stockOf(row);
     if (stock.code === "soldout") {
+      if (window.BenzStock && window.BenzStock.discountPending && window.BenzStock.discountPending(row)) {
+        return { status: "list", q: window.BenzQuote.of(row), blocks: [window.BenzStock.pendingNote()], stock: stock };
+      }
       return { status: "sold", blocks: [stock.reason || "판매 소진된 연식입니다."], stock: stock };
     }
     return fullScene(row);
@@ -284,6 +287,8 @@
     var html = "";
     if (!row || shown.status === "need") {
       html = '<p class="hp-num">조건 확인 필요</p><p class="hp-note">이 연식과 구매 방식의 할인 데이터가 없습니다.</p>';
+    } else if (shown.status === "list") {
+      html = '<p class="hp-meta">정상가격 ' + esc(manText(shown.q && shown.q.basis)) + '</p><p class="hp-note">' + esc(shown.blocks[0] || "") + "</p>";
     } else if (shown.status === "sold") {
       html = '<p class="hp-num">재고 소진 · 종료된 프로모션</p><p class="hp-note">' + esc(shown.blocks[0] || "") + "</p>";
     } else {
@@ -320,18 +325,21 @@
     var nudge = row && window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(row) : { name: "", my: "", text: "" };
     var nextHref = nudge.name ? ("quote.html?name=" + encodeURIComponent(nudge.name) + "&my=" + encodeURIComponent(nudge.my)) : quoteHref();
     if (go) {
-      go.setAttribute("href", shown.status === "sold" ? nextHref : quoteHref());
-      go.textContent = shown.status === "sold" ? "새 연식 확인하기" : "상세 견적 이어보기";
+      go.setAttribute("href", shown.status === "sold" || shown.status === "list" ? nextHref : quoteHref());
+      go.textContent = shown.status === "sold" || shown.status === "list" ? "새 연식 확인하기" : "상세 견적 이어보기";
     }
     if (talk) {
       talk.setAttribute("href", "#consulting");
-      talk.textContent = shown.status === "sold" ? "새 연식으로 상담" : "이 조건으로 상담받기";
+      talk.textContent = shown.status === "sold" || shown.status === "list" ? "새 연식으로 상담" : "이 조건으로 상담받기";
     }
     paintBrief(row, shown);
     paintFormCar();
   }
 
   function briefText(row, view) {
+    if (view && view.status === "list") {
+      return "정상가격. " + showName(row.name) + " · " + yearLabel(row.my) + ". " + manText(view.q && view.q.basis) + ". " + (view.blocks[0] || "");
+    }
     if (view && view.status === "sold") {
       var nudge = window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(row) : { text: "새 연식 조건을 확인해 보세요." };
       return "지난 프로모션. " + showName(row.name) + " · " + yearLabel(row.my) + ". " + nudge.text + " " + (view.blocks[0] || "");
@@ -355,7 +363,8 @@
     var brief = document.getElementById("consult-brief");
     var box = document.getElementById("quote-detail");
     var ready = !!(state.engaged && row && view && view.status === "ok");
-    if (brief) brief.dataset.copy = ready ? briefText(row, view) : "";
+    var copyReady = ready || !!(state.engaged && row && view && view.status === "list");
+    if (brief) brief.dataset.copy = copyReady ? briefText(row, view) : "";
     if (box) box.hidden = !ready;
     if (!brief) return;
     brief.textContent = "";
@@ -679,8 +688,8 @@
   var bar = document.getElementById("cta");
   var zone = document.getElementById("consulting");
   function quietKakao(away) {
-    var kakao = document.querySelector(".bp-kakao");
-    if (kakao) kakao.classList.toggle("is-quiet", !!away);
+    var dock = document.querySelector(".bp-dock");
+    if (dock) dock.classList.toggle("is-low", !!away);
   }
   if (bar && zone && window.IntersectionObserver) {
     var watcher = new IntersectionObserver(function (entries) {
@@ -724,9 +733,32 @@
       var fallback = document.getElementById("copy-fallback");
       var box = document.getElementById("copy-text");
       var row = calcRow();
-      var view = row ? fullScene(row) : null;
+      var view = row ? resultOf(row) : null;
       if (empty) empty.hidden = true;
       if (fallback) fallback.hidden = true;
+      if (row && view && view.status === "list") {
+        var listText = [
+          "차종: " + showName(row.name),
+          "연식: " + yearLabel(row.my),
+          "정상가격: " + manText(view.q && view.q.basis),
+          window.BenzStock.pendingNote()
+        ].join("\n");
+        function listOk() {
+          if (note) note.textContent = "견적 요약을 복사했습니다";
+        }
+        function listFail() {
+          if (note) note.textContent = "복사에 실패했습니다. 아래 글을 직접 선택해 복사해 주세요.";
+          if (fallback) fallback.hidden = false;
+          if (box) {
+            box.value = listText;
+            box.focus();
+            box.select();
+          }
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(listText).then(listOk, listFail);
+        else listFail();
+        return;
+      }
       if (!row || !view || view.status !== "ok") {
         if (note) note.textContent = "";
         if (empty) {

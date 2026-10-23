@@ -100,7 +100,7 @@
     if ((/^EQB /.test(name) || /^AMG EQB /.test(name)) && year && year < 27) {
       return ended({
         next: "MY27",
-        reason: "2026년식과 그 이전 EQB는 현재 판매 항목이 아닙니다. 2027년식부터 판매 가능합니다. 등록된 2027년식 가격, 할인, 재고, 출고 일정은 없습니다. 즉시 출고가 아닙니다. 보이는 숫자는 종료된 프로모션입니다."
+        reason: "26년식 재고가 소진되었습니다. 27년식 할인은 최신 정보가 확인되면 업데이트됩니다."
       });
     }
     if (my === "MY26" && (/^GLB /.test(name) || /^AMG GLB /.test(name))) {
@@ -147,6 +147,18 @@
   }
   function modelRows() {
     return (window.OCTOBER_2026 && window.OCTOBER_2026.models) || [];
+  }
+  var PENDING_NOTE = "26년식 재고가 소진되었습니다. 27년식 할인은 최신 정보가 확인되면 업데이트됩니다.";
+  function discountPending(row) {
+    if (of(row).code !== "soldout") return false;
+    var name = nameOf(row);
+    var year = yearNum(yearOf(row));
+    var next = modelRows().filter(function (item) {
+      return item[2] === name && yearNum(item[1]) > year && of(item).code !== "soldout";
+    })[0];
+    if (!next) return true;
+    var cash = next[4];
+    return cash == null || cash === "—" || cash === "";
   }
   function suggest(row) {
     var name = nameOf(row);
@@ -324,6 +336,8 @@
     of: of,
     live: live,
     suggest: suggest,
+    discountPending: discountPending,
+    pendingNote: function () { return PENDING_NOTE; },
     seriesOf: seriesOf,
     shouldBanner: shouldBanner,
     yearSection: yearSection,

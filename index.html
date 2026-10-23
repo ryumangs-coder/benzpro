@@ -28,14 +28,14 @@
   <meta name="twitter:description" content="E 200 할인 적용 차량가와 내 조건 견적. 벤츠프로, 메르세데스-벤츠 코리아 공식 파트너 김민구 차장." />
   <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  <link rel="stylesheet" href="chrome.css?v=20261023q" />
+  <link rel="stylesheet" href="chrome.css?v=20261023w" />
 <link rel="stylesheet" href="site.css" />
-  <link rel="stylesheet" href="home.css?v=20261023v" />
+  <link rel="stylesheet" href="home.css?v=20261023x" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/","name":"벤츠프로 | 메르세데스-벤츠 코리아 공식 파트너 김민구 차장","description":"E 200 할인 적용 차량가와 내 조건 견적. 벤츠프로, 메르세데스-벤츠 코리아 공식 파트너 김민구 차장.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script>
 </head>
 <body class="hp-home bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023q"></script>
+<script src="chrome.js?v=20261023x"></script>
   
 
   <main id="buy">
@@ -177,13 +177,6 @@
             <details id="quote-detail" class="hp-more" hidden>
               <summary>선택한 견적 상세<span class="hp-fold" aria-hidden="true"></span></summary>
               <div id="consult-brief" class="hp-brief"></div>
-              <button type="button" class="hp-act" id="copy-quote">견적 요약 복사</button>
-              <p id="copy-note" class="hp-note" role="status" aria-live="polite"></p>
-              <div id="copy-fallback" hidden>
-                <label class="hp-label" for="copy-text">직접 선택해 복사해 주세요</label>
-                <textarea id="copy-text" class="hp-field" rows="5" readonly></textarea>
-              </div>
-              <p id="copy-empty" class="hp-note" hidden>견적 선택 후 복사할 수 있어요. <a id="copy-empty-link" href="quote.html">견적 페이지로 이동</a></p>
             </details>
             <details class="hp-more" id="consult-extra">
               <summary>추가 상담 내용 입력 (선택)<span class="hp-fold" aria-hidden="true"></span></summary>
@@ -259,16 +252,19 @@
               <p>차량을 비교한 뒤 시승 상담까지. 희망 차종과 일정을 남겨주시면 시승 가능 여부를 안내해 드립니다.</p>
             </div>
             <div class="hp-address">
-              <p class="hp-addr">경기도 고양시 덕양구 의장로 110 (도내동)</p>
-              <p class="hp-note">스타필드 고양·이케아 고양점 인근</p>
+              <p class="hp-addr"><svg class="hp-pin" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a7 7 0 0 0-7 7c0 5.2 7 12 7 12s7-6.8 7-12a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg><span>경기도 고양시 덕양구 의장로 110 (도내동)</span></p>
+              <p class="hp-landmark">스타필드 고양·이케아 고양점 인근</p>
               <button type="button" class="hp-act" id="copy-addr">주소 복사</button>
               <p id="addr-note" class="hp-note" role="status" aria-live="polite"></p>
+              <button type="button" class="hp-act hp-act-copy" id="copy-quote">견적 요약 복사</button>
+              <p id="copy-note" class="hp-note" role="status" aria-live="polite"></p>
+              <div id="copy-fallback" hidden>
+                <label class="hp-label" for="copy-text">직접 선택해 복사해 주세요</label>
+                <textarea id="copy-text" class="hp-field" rows="5" readonly></textarea>
+              </div>
+              <p id="copy-empty" class="hp-note" hidden>견적 선택 후 복사할 수 있어요. <a id="copy-empty-link" href="quote.html">견적 페이지로 이동</a></p>
+              <p class="hp-note">카카오톡은 견적을 자동으로 보내지 않습니다. 요약을 복사해 붙여 넣으세요.</p>
             </div>
-            <div class="hp-actions hp-contact">
-              <a class="hp-act hp-act-kakao" id="kakao-link" href="https://open.kakao.com/o/skdA6cZc" target="_blank" rel="noopener noreferrer">카카오톡 상담</a>
-              <a class="hp-act" href="tel:01091649639">전화 문의</a>
-            </div>
-            <p class="hp-note">카카오톡은 견적을 자동으로 보내지 않습니다. 견적 상세에서 요약을 복사해 붙여 넣으세요.</p>
           </div>
         </div>
       </div>
@@ -292,10 +288,10 @@
 
   <script src="october-2026.js?v=20261023r"></script>
   <script src="quote.js?v=20261023b"></script>
-  <script src="stock.js?v=20261023q"></script>
+  <script src="stock.js?v=20261023w"></script>
   <script src="car-photo.js?v=20261017d"></script>
   <script src="pick.js?v=20261023b"></script>
-  <script src="home.js?v=20261023u"></script>
-  <script src="site-ui.js?v=20261023q"></script>
+  <script src="home.js?v=20261023w"></script>
+  <script src="site-ui.js?v=20261023x"></script>
 </body>
 </html>

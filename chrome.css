@@ -22,7 +22,7 @@ html {
 }
 #bp-head a::before,
 #bp-head button::before,
-.bp-kakao::before,
+.bp-dock a::before,
 .hp-contact a::before,
 .hp-contact button::before {
   content: none !important;
@@ -149,7 +149,7 @@ html {
 }
 .bp-nav a:focus-visible,
 .bp-icon:focus-visible,
-.bp-kakao:focus-visible,
+.bp-dock a:focus-visible,
 .bp-panel a:focus-visible,
 .bp-panel button:focus-visible {
   outline: 2px solid #e4cb86;
@@ -282,40 +282,50 @@ html {
 body.bp-lock {
   overflow: hidden;
 }
-.bp-kakao {
+.bp-dock {
   position: fixed;
-  right: max(0.75rem, env(safe-area-inset-right));
+  right: max(0.65rem, env(safe-area-inset-right));
   bottom: calc(0.75rem + env(safe-area-inset-bottom) + var(--bp-kakao-lift, 0px));
   z-index: 55;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.bp-dock a {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  min-height: 48px;
-  padding: 0.55rem 0.9rem;
-  border-radius: 999px;
-  background: #fee500 !important;
-  color: #191600 !important;
-  font-size: 15px;
-  font-weight: 800;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
   text-decoration: none;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
-  transition: transform 180ms ease, background-color 180ms ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
 }
-.bp-kakao svg {
+.bp-dock svg {
   width: 22px;
   height: 22px;
   flex: none;
 }
-.bp-kakao:hover,
-.bp-kakao:focus-visible {
-  background: #ffe14a !important;
+.bp-dock-yt {
+  background: #141414 !important;
 }
-.bp-kakao:active {
-  transform: translateY(1px);
+.bp-dock-kakao {
+  background: #fee500 !important;
+  color: #191600 !important;
 }
-body.bp-lock .bp-kakao,
-body.bp-keyboard .bp-kakao {
+.bp-dock-tel {
+  background: #e4cb86 !important;
+  color: #17140c !important;
+}
+.bp-dock a:hover,
+.bp-dock a:focus-visible {
+  transform: translateY(-1px);
+}
+.bp-dock.is-low {
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+body.bp-lock .bp-dock,
+body.bp-keyboard .bp-dock {
   visibility: hidden;
   pointer-events: none;
 }
@@ -323,8 +333,9 @@ body.bp-keyboard .bp-kakao {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  justify-content: center;
   gap: 0.2rem 0.45rem;
-  margin: 0.85rem 0 0;
+  margin: 0.85rem auto 0;
   padding: 0.85rem 1rem;
   border-radius: 1rem;
   background: #0b1216;
@@ -332,6 +343,7 @@ body.bp-keyboard .bp-kakao {
   font-size: 14px;
   font-weight: 650;
   line-height: 1.45;
+  text-align: center;
 }
 .bp-mark-benz,
 .bp-mark-pro,
@@ -349,7 +361,7 @@ section[id],
   scroll-margin-top: 4.75rem;
 }
 @media (prefers-reduced-motion: reduce) {
-  .bp-kakao,
+  .bp-dock a,
   .bp-icon,
   .bp-nav a {
     transition: none;
@@ -432,6 +444,12 @@ section[id],
   overflow-wrap: anywhere;
 }
 .bp-select .q-pick-year { grid-area: year; color: #e4cb86; font-size: 15px; font-weight: 750; }
+.bp-select .q-option-name { color: #f4f7f8; font-weight: 750; }
+.bp-select .q-option-year { margin-left: 0.45rem; font-weight: 800; }
+.bp-select .q-option-year.is-y27,
+.bp-select .q-pick-year.is-y27 { color: #e4cb86; }
+.bp-select .q-option-year.is-y26,
+.bp-select .q-pick-year.is-y26 { color: #7eb6ff; }
 .bp-select .q-pick-year:empty,
 .bp-select .q-pick-year[hidden] { display: none; }
 .bp-select .q-pick-change {

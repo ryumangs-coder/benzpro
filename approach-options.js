@@ -15,8 +15,10 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
     { k: "cam", label: "주차 카메라 (360°·후방)", cat: "안전·주차", fam: /^360° 카메라|^후방 카메라|주차 패키지$|^MB\.DRIVE 주차 어시스트 360|^주차 보조$/ },
     { k: "cockpit", label: "MBUX 디지털 콕핏", cat: "디스플레이·오디오", fam: /와이드 ?스크린 콕핏|^MBUX (슈퍼스크린|하이퍼스크린|멀티미디어 시스템)$|^대형 디스플레이$|^(LCD |OLED )?(센트럴|프론트|미디어) 디스플레이$|디지털 계기반|^3D 계기반$|^계기반$|^드라이버 디스플레이$|^디스플레이 패키지$|^스마트폰 통합 패키지$|^애플 카플레이$|^안드로이드 오토$/ },
     { k: "hud", label: "헤드업 디스플레이", cat: "디스플레이·오디오", fam: /헤드업 디스플레이/ },
-    { k: "seatF", label: "앞좌석 시트", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)|^앞좌석 시트$/, quiet: true },
-    { k: "seatR", label: "뒷좌석 시트", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)|^뒷좌석 시트$/, quiet: true },
+    { k: "heatF", label: "앞좌석 열선", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)|^앞좌석 시트$/, quiet: true, seat: "seatF", bit: "heat", always: true },
+    { k: "heatR", label: "뒷좌석 열선", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)|^뒷좌석 시트$/, quiet: true, seat: "seatR", bit: "heat", always: true },
+    { k: "ventF", label: "앞좌석 통풍", cat: "시트·공간", fam: /^앞좌석 (통풍|시트 통풍)/, quiet: true, seat: "seatF", bit: "vent", always: true },
+    { k: "ventR", label: "뒷좌석 통풍", cat: "시트·공간", fam: /^뒷좌석 (통풍|시트 통풍)/, quiet: true, seat: "seatR", bit: "vent", always: true },
     { k: "air", label: "공기 청정 패키지", cat: "실내 편의", fam: /^공기 청정 패키지/ },
     { k: "balance", label: "에어 밸런스 패키지", cat: "실내 편의", fam: /^에어 밸런스 패키지/ },
     { k: "amb", label: "앰비언트 라이트", cat: "실내 편의", fam: /^(액티브 )?앰비언트 라이트( 플러스| 프리미엄)?$|로고 프로젝션 앰비언트/ },
@@ -85,7 +87,17 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
     return yes ? "yes" : (opt ? "opt" : (no ? "no" : ""));
   }
 
+  function seatOn(raw, bit) {
+    raw = String(raw || "");
+    return bit === "heat" ? /열선/.test(raw) : /통풍/.test(raw);
+  }
+
   function cellOf(rule, feat, rec) {
+    if (feat.seat) {
+      var rawSeat = rule.f[feat.seat];
+      if (rawSeat && seatOn(rawSeat, feat.bit)) return { k: "yes", t: "●", d: "있음", old: "" };
+      return { k: "no", t: "없음", d: "없음", old: "" };
+    }
     var v = rule.f[feat.k];
     var old = legacyState(rec, feat);
     if (v === null || v === undefined) {
@@ -95,7 +107,6 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
       return { k: "no", t: "기본 아님", d: "", old: old };
     }
     var shown = v || "●";
-    if ((feat.k === "seatF" || feat.k === "seatR") && shown === "열선만") shown = "열선";
     return { k: "yes", t: shown, d: shown, old: old };
   }
 
@@ -125,16 +136,10 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
           notes.push({ who: names[s[2]], text: feat.label + "은(는) 카탈로그 요약에는 미적용으로 되어 있었지만 어프로치북 기본 사양표에는 들어 있어서 '기본'으로 표시했습니다." });
         }
       });
-      if (left.k === "no" && right.k === "no") return;
-      var differ = !sameCell(feat, left, right);
+      if (left.k === "no" && right.k === "no" && !feat.always) return;
+      var bothNo = left.k === "no" && right.k === "no";
+      var differ = !sameCell(feat, left, right) || (feat.always && bothNo);
       var label = feat.label;
-      if (feat.k === "seatF" || feat.k === "seatR") {
-        var where = feat.k === "seatF" ? "앞좌석" : "뒷좌석";
-        var bits = (left.d + " " + right.d);
-        if (bits.indexOf("통풍") !== -1 && bits.indexOf("열선") !== -1) label = where + " 시트";
-        else if (bits.indexOf("통풍") !== -1) label = where + " 통풍 시트";
-        else if (bits.indexOf("열선") !== -1) label = where + " 열선 시트";
-      }
       if (feat.k === "cockpit" && /스크린/.test(left.d + right.d)) label = "MBUX 디지털 콕핏 · 슈퍼스크린";
       if (feat.k === "cockpit" && /하이퍼스크린/.test(left.d + right.d)) label = "MBUX 디지털 콕핏 · 하이퍼스크린";
       var detail = left.d || right.d;

@@ -23,7 +23,7 @@
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="벤츠프로" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261023q" />
+    <link rel="stylesheet" href="chrome.css?v=20261023w" />
 <link rel="stylesheet" href="site.css?v=20261016b" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023q"></script>
+<script src="chrome.js?v=20261023x"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -339,7 +339,7 @@
 
     <script src="october-2026.js?v=20261023r"></script>
     <script src="quote.js?v=20261023b"></script>
-    <script src="stock.js?v=20261023q"></script>
+    <script src="stock.js?v=20261023w"></script>
     <script src="pick.js?v=20261023b"></script>
     <script src="car-photo.js?v=20261017d"></script>
     <script>
@@ -510,17 +510,28 @@
           var sold = isEnded(current);
           var st = stockOf(current);
           if (sold) {
+            var pending = window.BenzStock && window.BenzStock.discountPending && window.BenzStock.discountPending(current);
             var pastPrice = q.basis == null ? "권장가는 지난 자료에 없습니다." : won(q.basis);
+            if (pending) {
+              document.getElementById("sheet").innerHTML =
+                window.BenzPhoto.html(current.name, "wide mb-3") +
+                '<p class="sheet-kicker">재고 소진</p>' +
+                '<h2 class="mt-1 text-[22px] font-bold leading-snug">' + showName(current.name) + "</h2>" +
+                '<p class="fine">' + current.my + "</p>" +
+                '<p class="mt-3 text-[16px] font-bold leading-relaxed text-[#ffb4ae]">' + (window.BenzStock.pendingNote()) + "</p>" +
+                '<div class="rowline mt-2"><span>정상가격</span><b>' + pastPrice + "</b></div>";
+              return;
+            }
             var pastAfter = view.after == null ? "—" : won(view.after);
             document.getElementById("sheet").innerHTML =
               window.BenzPhoto.html(current.name, "wide mb-3") +
               '<p class="sheet-kicker">재고 소진 · 종료된 프로모션</p>' +
               '<h2 class="mt-1 text-[22px] font-bold leading-snug">' + showName(current.name) + "</h2>" +
               '<p class="fine">' + current.my + "</p>" +
-              '<p class="mt-3 text-[16px] font-bold leading-relaxed text-[#ffb4ae]">' + (st.reason || "현재 구매 조건이 아닙니다.") + "</p>" +
+              '<p class="mt-3 text-[16px] font-bold leading-relaxed text-[#ffb4ae]">' + (st.reason || "재고가 소진된 연식입니다.") + "</p>" +
               '<div class="rowline mt-2"><span>지난 차량가</span><b>' + pastPrice + "</b></div>" +
               '<div class="rowline"><span>지난 할인 적용 차량가</span><b>' + pastAfter + "</b></div>" +
-              '<p class="fine">이 숫자는 종료된 프로모션입니다. 지금 출고할 수 있는 금액이 아닙니다.</p>';
+              '<p class="fine">이 숫자는 종료된 프로모션입니다.</p>';
             return;
           }
           if (q.basis == null) {
@@ -574,9 +585,12 @@
           paintFamily();
           var sug = sold && window.BenzStock && window.BenzStock.suggest ? window.BenzStock.suggest(current) : { name: "", my: "", text: "새 연식 조건을 확인해 보세요." };
           if (sold) {
+            var pendingPick = window.BenzStock && window.BenzStock.discountPending && window.BenzStock.discountPending(current);
             document.getElementById("pays").innerHTML = "";
-            document.getElementById("pay-note").textContent = sug.text;
-            document.getElementById("opts").innerHTML = '<p class="text-[16px] leading-relaxed text-[#ffb4ae]">이 연식은 지난 프로모션입니다. ' + sug.text + "</p>";
+            document.getElementById("pay-note").textContent = pendingPick ? window.BenzStock.pendingNote() : sug.text;
+            document.getElementById("opts").innerHTML = pendingPick
+              ? '<p class="text-[16px] leading-relaxed text-[#ffb4ae]">' + window.BenzStock.pendingNote() + "</p>"
+              : '<p class="text-[16px] leading-relaxed text-[#ffb4ae]">이 연식은 지난 프로모션입니다. ' + sug.text + "</p>";
           } else {
             paintPays(view);
             paintOpts(view);
@@ -586,7 +600,7 @@
           var send = document.getElementById("send");
           if (endedNote) {
             endedNote.classList.toggle("hidden", !sold);
-            if (sold) endedNote.textContent = "이 숫자는 지난 프로모션입니다. " + sug.text;
+            if (sold) endedNote.textContent = window.BenzStock && window.BenzStock.discountPending && window.BenzStock.discountPending(current) ? window.BenzStock.pendingNote() : ("이 숫자는 지난 프로모션입니다. " + sug.text);
           }
           if (send) {
             send.disabled = false;
@@ -788,6 +802,6 @@
         });
       })();
     </script>
-    <script src="site-ui.js?v=20261023q"></script>
+    <script src="site-ui.js?v=20261023x"></script>
   </body>
 </html>

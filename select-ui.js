@@ -156,6 +156,9 @@
       name.textContent = face.name;
       year.textContent = face.year;
       year.hidden = !face.year;
+      year.classList.remove("is-y26", "is-y27");
+      if (/^27/.test(face.year)) year.classList.add("is-y27");
+      else if (/^26/.test(face.year)) year.classList.add("is-y26");
       searchWrap.hidden = items.length <= 8;
       pastBtn.hidden = !items.some(function (item) { return item.offer === "ended"; });
       syncPastButtons();
@@ -277,11 +280,20 @@
         btn.disabled = item.disabled;
         if (item.disabled) btn.setAttribute("aria-disabled", "true");
         var parts = faceParts(item.text);
+        var tone = /MY27|27년식/.test(item.text) ? "is-y27" : (/MY26|26년식/.test(item.text) ? "is-y26" : "");
+        if (tone) btn.classList.add(tone);
         var main = document.createElement("span");
         main.className = "q-option-main";
         var nameSpan = document.createElement("span");
+        nameSpan.className = "q-option-name";
         nameSpan.textContent = item.text.indexOf(" · ") === -1 ? item.text : parts.name;
         main.appendChild(nameSpan);
+        if (parts.year) {
+          var yearSpan = document.createElement("span");
+          yearSpan.className = "q-option-year" + (tone ? " " + tone : "");
+          yearSpan.textContent = parts.year;
+          main.appendChild(yearSpan);
+        }
         if (item.offer === "ended") {
           var badge = document.createElement("span");
           badge.className = "q-past-badge";
@@ -294,7 +306,6 @@
         var metaText = document.createElement("span");
         var bits = [];
         if (chosen) bits.push("선택됨");
-        if (item.text.indexOf(" · ") !== -1 && parts.year) bits.push(parts.year);
         metaText.textContent = bits.join(" ");
         meta.appendChild(metaText);
         btn.appendChild(main);
