@@ -96,21 +96,35 @@ html {
 }
 .bp-brand {
   display: flex;
-  align-items: center;
-  gap: 0.55rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.16rem;
+  min-width: 0;
+}
+.bp-markline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
   min-width: 0;
 }
 .bp-logo-sub[hidden] {
   display: none !important;
 }
 .bp-logo-sub {
-  display: none;
+  display: block;
+  max-width: 100%;
   color: #d5dde2;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 650;
   line-height: 1.25;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
   white-space: nowrap;
+}
+.bp-sub-line {
+  display: inline;
+}
+.bp-sub-line + .bp-sub-line::before {
+  content: " ";
 }
 .bp-nav {
   display: none;
@@ -186,10 +200,39 @@ html {
 .bp-burger {
   display: inline-flex;
 }
+@media (max-width: 1099px) {
+  .bp-logo {
+    flex: 1;
+    min-width: 0;
+  }
+  .bp-logo-sub {
+    display: flex;
+    flex-direction: column;
+    white-space: normal;
+    font-size: 12px;
+  }
+  .bp-sub-line {
+    display: block;
+    white-space: nowrap;
+  }
+  .bp-sub-line + .bp-sub-line::before {
+    content: none;
+  }
+  html {
+    scroll-padding-top: 6.75rem;
+  }
+  section[id],
+  .jump {
+    scroll-margin-top: 6.75rem;
+  }
+}
 @media (max-width: 389px) {
   #bp-head {
     gap: 0.3rem;
     padding-inline: 0.4rem;
+  }
+  .bp-logo-sub {
+    font-size: 11px;
   }
   .bp-logo {
     gap: 0.35rem;
@@ -213,8 +256,15 @@ html {
   #bp-head {
     padding-inline: 1.25rem;
   }
+  .bp-brand {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.55rem;
+  }
   .bp-logo-sub {
-    display: block;
+    font-size: 12.5px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
   }
   .bp-nav {
     display: flex;
@@ -249,9 +299,138 @@ html {
   box-shadow: -12px 0 32px rgba(0, 0, 0, 0.35);
   overflow: auto;
 }
-.bp-panel-top {
+.bp-panel-brand {
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(228, 203, 134, 0.28);
+}
+.bp-panel a.bp-panel-logo {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.45rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.35rem 0;
+  border-bottom: none;
+  color: #f4f7f8 !important;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.bp-panel-marks {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.bp-panel-partner {
+  color: #d5dde2;
+  font-size: 12.5px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+}
+.bp-extra {
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+.bp-extra p {
+  margin: 0;
+  padding: 0.35rem 0.2rem 0.15rem;
+  color: #e4cb86;
+  font-size: 14px;
+  font-weight: 800;
+}
+body.bp-has-toc main {
+  padding-left: 3.35rem;
+}
+.bp-toc-open {
+  position: fixed;
+  left: 0;
+  top: 7.6rem;
+  z-index: 57;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  min-height: 9.5rem;
+  padding: 0.85rem 0;
+  border: 2px solid #e4cb86;
+  border-left: none;
+  border-radius: 0 1rem 1rem 0;
+  background: #e4cb86;
+  color: #17140c;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+  writing-mode: vertical-rl;
+  box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+.bp-toc-open[aria-expanded="true"] {
+  background: #17140c;
+  color: #e4cb86;
+}
+.bp-toc {
+  position: fixed;
+  left: 3.2rem;
+  top: 7rem;
+  bottom: 5.75rem;
+  z-index: 56;
+  width: min(18.5rem, calc(100vw - 4.75rem));
+  overflow: auto;
+  padding: 0.9rem 0.95rem 1rem;
+  border: 2px solid #e4cb86;
+  border-radius: 1.15rem;
+  background: #10222c;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.48);
+}
+.bp-toc[hidden] {
+  display: none !important;
+}
+.bp-toc p {
+  margin: 0 0 0.35rem;
+  color: #e4cb86;
+  font-size: 16px;
+  font-weight: 800;
+}
+.bp-toc a {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.35rem 0.15rem;
+  border-bottom: 1px solid rgba(228, 203, 134, 0.2);
+  color: #f4f7f8;
+  font-size: 17px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.bp-toc a:hover,
+.bp-toc a:focus-visible {
+  color: #e4cb86;
+}
+.bp-toc-row {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1100px) {
+  .bp-toc-open {
+    top: 7.4rem;
+    bottom: auto;
+  }
+  .bp-toc {
+    top: 11rem;
+    bottom: auto;
+    max-height: calc(100vh - 12.5rem);
+    width: 17.5rem;
+  }
 }
 .bp-panel a {
   display: flex;

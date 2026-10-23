@@ -44,7 +44,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023y";
+    css.href = "chrome.css?v=20261023z2";
     document.head.appendChild(css);
   }
 
@@ -52,7 +52,7 @@
   head.id = "bp-head";
   head.innerHTML =
     '<a class="bp-logo" href="index.html" aria-label="벤츠프로 홈. 메르세데스-벤츠 공식 파트너 김민구 차장">' + I.star +
-    '<span class="bp-brand"><span class="bp-word">BENZ <em>PRO</em></span><span class="bp-ko">벤츠<em>프로</em></span><span class="bp-logo-sub">메르세데스-벤츠 공식 파트너 김민구 차장</span></span></a>' +
+    '<span class="bp-brand"><span class="bp-markline"><span class="bp-word">BENZ <em>PRO</em></span><span class="bp-ko">벤츠<em>프로</em></span></span><span class="bp-logo-sub"><span class="bp-sub-line">메르세데스-벤츠</span><span class="bp-sub-line">공식 파트너 김민구 차장</span></span></span></a>' +
     '<nav class="bp-nav" aria-label="주요 메뉴">' +
     item(PRICES, "prices", I.tag, "할인·가격") +
     item("quote.html", "quote", I.calc, "내 견적", ' id="bp-quote"') +
@@ -72,7 +72,11 @@
   drawer.innerHTML =
     '<div class="bp-backdrop" data-bp-close></div>' +
     '<div class="bp-panel" role="dialog" aria-modal="true" aria-label="메뉴">' +
-    '<div class="bp-panel-top"><button type="button" class="bp-icon" data-bp-close aria-label="메뉴 닫기">' + I.close + "</button></div>" +
+    '<div class="bp-panel-brand">' +
+    '<a class="bp-panel-logo" href="index.html">' +
+    '<span class="bp-panel-marks"><b class="bp-mark-benz">BENZ</b> <b class="bp-mark-pro">PRO</b> <span class="bp-ko-lock"><b class="bp-mark-benz">벤츠</b><b class="bp-mark-pro">프로</b></span></span>' +
+    '<span class="bp-panel-partner">메르세데스-벤츠 공식 파트너 김민구 차장</span></a>' +
+    '<button type="button" class="bp-icon" data-bp-close aria-label="메뉴 닫기">' + I.close + "</button></div>" +
     item(PRICES, "prices", I.tag, "할인·가격") +
     item("quote.html", "quote", I.calc, "내 견적", ' data-bp-quote') +
     item("models.html", "models", I.car, "차종 비교") +
@@ -80,6 +84,16 @@
     '<div class="bp-sub">' +
     item("warranty.html", "", I.shield, "보증 연장") +
     item("https://mercedes.benzpro.co.kr", "", I.doc, "인사이트", ' target="_blank" rel="noopener noreferrer"') +
+    "</div>" +
+    '<div class="bp-extra">' +
+    '<p>혜택 더 보기</p>' +
+    item("benefit.html", "", I.tag, "추가혜택") +
+    item("mou.html", "", I.calc, "MOU할인") +
+    item("fleet.html", "", I.car, "법인할인") +
+    item("rental.html", "", I.cal, "렌터카") +
+    item("care.html", "", I.shield, "신차교환") +
+    item("tire.html", "", I.doc, "타이어") +
+    item("cards.html", "", I.tag, "카드혜택") +
     "</div></div>";
 
   var dock = document.createElement("nav");
@@ -98,9 +112,8 @@
   var logoSub = head.querySelector(".bp-logo-sub");
   function fitLogoSub() {
     if (!logoSub) return;
-    logoSub.hidden = true;
-    if (!desktop.matches) return;
     logoSub.hidden = false;
+    if (!desktop.matches) return;
     var links = head.querySelectorAll(".bp-nav a");
     var wrapped = links.length > 1 && links[0].offsetTop !== links[links.length - 1].offsetTop;
     if (wrapped || head.scrollWidth > head.clientWidth + 1) logoSub.hidden = true;
@@ -194,6 +207,73 @@
     });
   }
 
+  function mountToc() {
+    var file = pageFile();
+    if (file !== "models" && file !== "prices" && file !== "quote") return;
+    if (document.querySelector(".bp-toc-open")) return;
+    var links = {
+      prices: [
+        ["#highlights", "이번 달 차값"],
+        ["#how", "할인 계산"],
+        ["#raised", "할인이 오른 차"],
+        ["#support", "6개월 지원"],
+        ["#programs", "금융 보장"],
+        ["#care-card", "신차교환"],
+        ["#tire-card", "타이어"],
+        ["#examples", "세 대 비교"],
+        ["#owned", "보유 차량 혜택"],
+        ["#company", "MOU 할인"],
+        ["#paycard", "카드 결제"],
+        ["#finder", "차종별 가격"]
+      ],
+      quote: [
+        ["#q-car", "차 고르기"],
+        ["#q-pay", "구매 방식"],
+        ["#q-benefit", "해당하는 혜택"],
+        ["#lead", "상담 남기기"],
+        ["#sheet", "견적 요약"]
+      ]
+    }[file] || [];
+    var live = links.filter(function (item) { return !!document.querySelector(item[0]); });
+    if (file !== "models" && !live.length) return;
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "bp-toc-open";
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", "bp-toc");
+    button.setAttribute("aria-label", "이 페이지에서 이동");
+    button.textContent = "페이지 목차";
+    var panel = document.createElement("nav");
+    panel.id = "bp-toc";
+    panel.className = "bp-toc";
+    panel.hidden = true;
+    panel.setAttribute("aria-label", "이 페이지에서 이동");
+    panel.innerHTML = '<p>이 페이지에서 이동</p><div class="bp-toc-row"></div>';
+    panel.querySelector(".bp-toc-row").innerHTML = live.map(function (item) {
+      return '<a href="' + item[0] + '">' + item[1] + "</a>";
+    }).join("");
+    function setOpen(open) {
+      panel.hidden = !open;
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+      button.textContent = open ? "닫기" : "페이지 목차";
+    }
+    button.addEventListener("click", function () { setOpen(panel.hidden); });
+    panel.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setOpen(false);
+    });
+    document.addEventListener("click", function (event) {
+      if (panel.hidden) return;
+      if (event.target.closest("#bp-toc, .bp-toc-open")) return;
+      setOpen(false);
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !panel.hidden) setOpen(false);
+    });
+    document.body.classList.add("bp-has-toc");
+    document.body.appendChild(button);
+    document.body.appendChild(panel);
+  }
+
   function ready() {
     Array.prototype.forEach.call(document.querySelectorAll("header"), function (old) {
       if (old.id !== "bp-head") old.remove();
@@ -201,6 +281,7 @@
     document.body.classList.add("bp-has-kakao");
     tidyBars();
     decorateQuote();
+    mountToc();
     fitLogoSub();
     window.addEventListener("resize", function () {
       tidyBars();

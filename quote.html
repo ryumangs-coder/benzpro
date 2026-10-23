@@ -23,7 +23,7 @@
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="벤츠프로" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261023y" />
+    <link rel="stylesheet" href="chrome.css?v=20261023z2" />
 <link rel="stylesheet" href="site.css?v=20261016b" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023x"></script>
+<script src="chrome.js?v=20261023z2"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -255,7 +255,7 @@
 
       <div class="mt-6 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <section class="order-2 space-y-6 lg:order-1">
-          <div class="q-pick">
+          <div class="q-pick" id="q-car">
             <h2>어떤 벤츠의 견적을 확인할까요?</h2>
             <p>아래 차종을 누르면 다른 모델로 바꿀 수 있습니다.</p>
             <label class="sr-only" for="car">차종</label>
@@ -264,7 +264,7 @@
             <div id="family" class="mt-3 flex flex-wrap gap-2"></div>
           </div>
 
-          <section>
+          <section id="q-pay">
             <h2 class="text-[22px] font-bold">어떻게 사실지</h2>
             <div id="pays" class="mt-3 flex flex-wrap gap-2"></div>
             <p id="pay-note" class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]"></p>
@@ -275,7 +275,7 @@
             </div>
           </section>
 
-          <section>
+          <section id="q-benefit">
             <h2 class="text-[22px] font-bold">해당하는 혜택</h2>
             <p class="mt-1 text-[15px] leading-relaxed text-[#8b969c]">지금 벤츠를 타는 혜택과 다른 브랜드 혜택은 둘 중 하나입니다. 전시·수리·주행거리는 그 차일 때만 빠지고, 상담에서 확인합니다.</p>
             <div id="opts" class="mt-3 space-y-2"></div>

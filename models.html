@@ -7,7 +7,7 @@
     <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261023y" />
+    <link rel="stylesheet" href="chrome.css?v=20261023z2" />
 <link rel="stylesheet" href="site.css?v=20261021a" />
     <link rel="stylesheet" href="compare-visual.css?v=20261023e" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +16,7 @@
     </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/models","name":"차량 가이드 | 벤츠프로","description":"메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script></head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023x"></script>
+<script src="chrome.js?v=20261023z2"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8 lg:pr-[20rem]">
@@ -40,16 +40,6 @@
         <span>지난 연식 보기<span class="mt-1 block text-[15px] text-[#A4AAAE]">재고가 소진된 연식은 처음에 숨깁니다. 이전 조건이 궁금하면 켜고, 새 연식 조건을 확인해 보세요.</span></span>
       </label>
 
-      <nav class="vs-jump" aria-label="이 페이지 바로가기">
-        <a href="#vs-hero">두 차 한눈에</a>
-        <a href="#price-compare">가격</a>
-        <a href="#spec-compare">제원 비교</a>
-        <a href="#opt-compare">옵션 비교</a>
-        <a href="#color-board">외장·내장 색</a>
-        <a href="#faq">이 두 차에 질문</a>
-      </nav>
-      <button type="button" id="cmp-jump-open" class="cmp-jump-open" aria-expanded="false" aria-controls="cmp-jump">바로가기</button>
-      <nav id="cmp-jump" class="cmp-jump" hidden aria-label="소카테고리 바로가기"></nav>
 
       <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
       <div id="color-lightbox" class="color-lightbox" hidden>
@@ -85,13 +75,6 @@
       </div>
     </aside>
 
-    <div class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0b1f2a]/95 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:hidden">
-      <div class="mx-auto grid max-w-lg grid-cols-3 gap-2">
-        <a id="quote-mobile" href="quote.html" class="flex min-h-[48px] items-center justify-center rounded-2xl bg-[#E4CB86] text-[15px] font-bold text-[#0B1F2A]">견적</a>
-        <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[15px] font-bold">카톡</a>
-        <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 text-[15px] font-bold">전화</a>
-      </div>
-    </div>
 
     <script src="october-2026.js?v=20261023r"></script>
     <script src="quote.js?v=20261023b"></script>
@@ -1676,8 +1659,8 @@
           drawCompare();
         });
         function fillJump() {
-          var panel = document.getElementById("cmp-jump");
-          if (!panel) return;
+          var row = document.querySelector(".bp-toc-row");
+          if (!row) return;
           var links = [
             ["#vs-hero", "두 차 한눈에"],
             ["#cla-power", "CLA 엔진·전기"],
@@ -1694,28 +1677,13 @@
             ["#mb-history", "벤츠의 역사"],
             ["#faq", "이 두 차에 질문"]
           ];
-          panel.innerHTML = "<p>이 비교에서</p>" + links.filter(function (item) {
+          row.innerHTML = links.filter(function (item) {
             return !!document.querySelector(item[0]);
           }).map(function (item) {
             return '<a href="' + item[0] + '">' + item[1] + "</a>";
           }).join("");
         }
-        var jumpOpen = document.getElementById("cmp-jump-open");
-        var jumpPanel = document.getElementById("cmp-jump");
-        function setJump(open) {
-          jumpPanel.hidden = !open;
-          jumpOpen.setAttribute("aria-expanded", open ? "true" : "false");
-          jumpOpen.textContent = open ? "바로가기 닫기" : "바로가기";
-        }
-        jumpOpen.addEventListener("click", function () {
-          setJump(jumpPanel.hidden);
-        });
-        jumpPanel.addEventListener("click", function (event) {
-          if (event.target.closest("a")) setJump(false);
-        });
-        document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape" && !jumpPanel.hidden) setJump(false);
-        });
+        document.addEventListener("DOMContentLoaded", fillJump);
         drawCompare();
         var colorLight = document.getElementById("color-lightbox");
         var colorLightImg = colorLight.querySelector("img");
