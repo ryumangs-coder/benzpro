@@ -280,6 +280,7 @@
     var b = build(recB, opt.skip);
     var rows = [];
     RULES.forEach(function (rule) {
+      if (rule.key === "mem") return;
       var x = a[rule.key] || null;
       var y = b[rule.key] || null;
       if (rule.key === "upholstery") {
@@ -288,14 +289,10 @@
         if (leatherA) x = { k: "yes", v: leatherA };
         if (leatherB) y = { k: "yes", v: leatherB };
       }
-      if (rule.key === "mem") {
-        if (!x) x = { k: "no", v: "없음" };
-        if (!y) y = { k: "no", v: "없음" };
-      }
       if (!x && !y) return;
       if (opt.oneThin && ((opt.thinA && !x) || (opt.thinB && !y))) return;
       var on = function (s) { return !!s && s.k !== "no"; };
-      if (!on(x) && !on(y) && rule.key !== "mem") return;
+      if (!on(x) && !on(y)) return;
       var row;
       if (rule.mode === "flag") {
         var lt = x && x.k === "yes" ? "●" : (x && x.k === "opt" ? "선택" : "—");

@@ -163,6 +163,11 @@
     var cars = [a, b].filter(Boolean);
     (diffs || []).forEach(function (item) {
       if (!item.differ) return;
+      if (/메모리 시트|메모리 패키지/.test(item.label)) return;
+      if (item.label === "뒷좌석 통풍") {
+        var absent = function (v) { return !v || v === "없음" || v === "—" || v === "-" || v === "기본 아님"; };
+        if (absent(item.left) && absent(item.right)) return;
+      }
       var t = topicOfLabel(item.label);
       if (!t || !topicFits(t, cars)) { rest += 1; return; }
       if (!map[t.id]) { map[t.id] = { topic: t, items: [], score: 0 }; groups.push(map[t.id]); }

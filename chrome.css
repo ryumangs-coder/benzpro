@@ -355,6 +355,15 @@ body.bp-keyboard .bp-dock {
 .bp-mark-benz { color: #fff; }
 .bp-mark-pro,
 .bp-mark-name { color: #e4cb86; letter-spacing: 0.04em; }
+.bp-ko-lock {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+}
+.bp-ko-lock .bp-mark-benz,
+.bp-ko-lock .bp-mark-pro {
+  letter-spacing: 0;
+}
 .bp-mark-name { letter-spacing: 0; }
 section[id],
 .jump {

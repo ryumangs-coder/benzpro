@@ -44,7 +44,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023w";
+    css.href = "chrome.css?v=20261023y";
     document.head.appendChild(css);
   }
 

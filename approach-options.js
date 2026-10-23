@@ -18,7 +18,7 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"어프로치�
     { k: "heatF", label: "앞좌석 열선", cat: "시트·공간", fam: /^앞좌석 (열선|시트 히팅)|^앞좌석 시트$/, quiet: true, seat: "seatF", bit: "heat", always: true },
     { k: "heatR", label: "뒷좌석 열선", cat: "시트·공간", fam: /^뒷좌석 (열선|시트 히팅)|^뒷좌석 시트$/, quiet: true, seat: "seatR", bit: "heat", always: true },
     { k: "ventF", label: "앞좌석 통풍", cat: "시트·공간", fam: /^앞좌석 (통풍|시트 통풍)/, quiet: true, seat: "seatF", bit: "vent", always: true },
-    { k: "ventR", label: "뒷좌석 통풍", cat: "시트·공간", fam: /^뒷좌석 (통풍|시트 통풍)/, quiet: true, seat: "seatR", bit: "vent", always: true },
+    { k: "ventR", label: "뒷좌석 통풍", cat: "시트·공간", fam: /^뒷좌석 (통풍|시트 통풍)/, quiet: true, seat: "seatR", bit: "vent" },
     { k: "air", label: "공기 청정 패키지", cat: "실내 편의", fam: /^공기 청정 패키지/ },
     { k: "balance", label: "에어 밸런스 패키지", cat: "실내 편의", fam: /^에어 밸런스 패키지/ },
     { k: "amb", label: "앰비언트 라이트", cat: "실내 편의", fam: /^(액티브 )?앰비언트 라이트( 플러스| 프리미엄)?$|로고 프로젝션 앰비언트/ },
