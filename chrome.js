@@ -44,7 +44,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023h";
+    css.href = "chrome.css?v=20261023l";
     document.head.appendChild(css);
   }
 
@@ -52,7 +52,7 @@
   head.id = "bp-head";
   head.innerHTML =
     '<a class="bp-logo" href="index.html" aria-label="벤츠프로 홈. 메르세데스-벤츠 공식 파트너 김민구 차장">' + I.star +
-    '<span class="bp-brand"><span class="bp-word">BENZ <em>PRO</em></span><span class="bp-logo-sub">메르세데스-벤츠 공식 파트너 김민구 차장</span></span></a>' +
+    '<span class="bp-brand"><span class="bp-word">BENZ <em>PRO</em></span><span class="bp-ko">벤츠<em>프로</em></span><span class="bp-logo-sub">메르세데스-벤츠 공식 파트너 김민구 차장</span></span></a>' +
     '<nav class="bp-nav" aria-label="주요 메뉴">' +
     item(PRICES, "prices", I.tag, "할인·가격") +
     item("quote.html", "quote", I.calc, "내 견적", ' id="bp-quote"') +

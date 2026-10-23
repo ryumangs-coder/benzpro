@@ -80,6 +80,20 @@ html {
   color: #e4cb86;
   font-style: normal;
 }
+.bp-ko {
+  display: inline-flex;
+  align-items: baseline;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.bp-ko em {
+  color: #e4cb86;
+  font-style: normal;
+}
 .bp-brand {
   display: flex;
   align-items: center;
@@ -171,6 +185,29 @@ html {
 }
 .bp-burger {
   display: inline-flex;
+}
+@media (max-width: 389px) {
+  #bp-head {
+    gap: 0.3rem;
+    padding-inline: 0.4rem;
+  }
+  .bp-logo {
+    gap: 0.35rem;
+  }
+  .bp-brand {
+    gap: 0.28rem;
+  }
+  .bp-word,
+  .bp-ko {
+    font-size: 13px;
+  }
+  .bp-word {
+    letter-spacing: 0.02em;
+  }
+  .bp-logo svg {
+    width: 28px;
+    height: 28px;
+  }
 }
 @media (min-width: 1100px) {
   #bp-head {
