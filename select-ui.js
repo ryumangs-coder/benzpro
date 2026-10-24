@@ -336,10 +336,18 @@
       openBox = box;
       search.value = "";
       paint("");
-      if (!searchWrap.hidden) search.focus();
+      /* 터치 기기에서는 목록부터 보여 줍니다. 검색 칸은 사용자가 직접 눌러야 키보드가 열립니다. */
+      var touchFirst = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      if (!searchWrap.hidden && !touchFirst) search.focus();
       else {
-        var current = list.querySelector('[aria-selected="true"]') || list.querySelector(".q-option");
-        if (current) current.focus();
+        var current = list.querySelector('[aria-selected="true"]:not(:disabled)') || list.querySelector(".q-option:not(:disabled)");
+        if (current) {
+          current.focus({ preventScroll: true });
+          if (current.scrollIntoView) current.scrollIntoView({ block: "nearest" });
+        } else {
+          panel.tabIndex = -1;
+          panel.focus({ preventScroll: true });
+        }
       }
     }
 

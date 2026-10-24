@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style>
   <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
   <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -28,14 +28,14 @@
   <meta name="twitter:description" content="E 200 할인 적용 차량가와 내 조건 견적. 벤츠프로, 메르세데스-벤츠 코리아 공식 파트너 김민구 차장." />
   <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  <link rel="stylesheet" href="chrome.css?v=20261023z4" />
-<link rel="stylesheet" href="site.css?v=20261023z" />
+  <link rel="stylesheet" href="chrome.css?v=20261024e" />
+<link rel="stylesheet" href="site.css?v=20261024e" />
   <link rel="stylesheet" href="home.css?v=20261023y" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/","name":"벤츠프로 | 메르세데스-벤츠 코리아 공식 파트너 김민구 차장","description":"E 200 할인 적용 차량가와 내 조건 견적. 벤츠프로, 메르세데스-벤츠 코리아 공식 파트너 김민구 차장.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script>
 </head>
 <body class="hp-home bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023z4"></script>
+<script src="chrome.js?v=20261024e"></script>
   
 
   <main id="buy">
@@ -210,10 +210,14 @@
               <textarea id="field-inquiry" name="inquiry" class="hp-field" rows="3"></textarea>
             </details>
             <div data-question="privacy">
-              <label class="hp-check">
-                <input id="privacy-agree" name="privacyAgree" type="checkbox" value="동의" />
-                <span>개인정보 수집 및 이용 동의 (필수)<small>수집 항목은 성함, 연락처, 관심 차종입니다. 선택하면 구매 시기, 구매 방식, 지역, 보유 차량, 문의 내용이 함께 전달됩니다. 견적에서 고른 연식과 구매 방식은 문의 내용에 포함됩니다. 목적: 견적 안내 및 상담. 보유: 상담 종료 후 1년 이내 파기. 동의하지 않으면 상담 접수가 어렵습니다.</small></span>
-              </label>
+              <div class="bp-consent-row">
+                <label class="hp-check">
+                  <input id="privacy-agree" name="privacyAgree" type="checkbox" value="동의" />
+                  <span>개인정보 수집 및 이용 동의 (필수)</span>
+                </label>
+                <button type="button" class="bp-consent-toggle" data-consent-toggle aria-expanded="false" aria-controls="privacy-detail">내용보기</button>
+              </div>
+              <div id="privacy-detail" class="bp-consent-detail" hidden><p>수집 항목은 성함, 연락처, 관심 차종입니다. 선택하면 구매 시기, 구매 방식, 지역, 보유 차량, 문의 내용이 함께 전달됩니다. 견적에서 고른 연식과 구매 방식은 문의 내용에 포함됩니다. 목적: 견적 안내 및 상담. 보유: 상담 종료 후 1년 이내 파기. 동의하지 않으면 상담 접수가 어렵습니다.</p></div>
               <p class="hp-error">개인정보 수집 및 이용에 동의해 주세요.</p>
             </div>
             <button id="consult-submit" class="hp-btn" type="submit">상담 신청하기</button>
@@ -291,7 +295,7 @@
   <script src="stock.js?v=20261023w"></script>
   <script src="car-photo.js?v=20261017d"></script>
   <script src="pick.js?v=20261023c"></script>
-  <script src="home.js?v=20261023z"></script>
+  <script src="home.js?v=20261024e"></script>
   <script src="site-ui.js?v=20261023y"></script>
 </body>
 </html>

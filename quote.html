@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko" data-theme="dark" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style>
     <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
     <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png" />
     <link rel="canonical" href="https://benzpro.co.kr/quote" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0F0F0F" />
+    <meta name="theme-color" content="#0b1f2a" />
     <meta name="description" content="2026년 10월 벤츠 견적. 재구매, MOU, 전시차 조건을 체크하면 최종 차량가가 바로 바뀝니다. 벤츠프로, 김민구 차장." />
     <title>견적 확인 | 벤츠프로</title>
     <meta property="og:type" content="website" />
@@ -23,8 +23,8 @@
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="벤츠프로" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261023z4" />
-<link rel="stylesheet" href="site.css?v=20261016b" />
+    <link rel="stylesheet" href="chrome.css?v=20261024e" />
+<link rel="stylesheet" href="site.css?v=20261024e" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261023z4"></script>
+<script src="chrome.js?v=20261024e"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -302,10 +302,14 @@
                 <p class="error mt-1 hidden text-[13px] text-[#F87171]">이메일 형식을 확인해 주세요.</p>
               </div>
               <div data-q="privacy" class="rounded-xl border border-white/15 px-3 py-3">
-                <label class="flex items-start gap-2 text-[12px] leading-relaxed text-[#A4AAAE]">
-                  <input id="privacy" name="privacyAgree" type="checkbox" value="동의" class="mt-0.5 h-4 w-4 shrink-0" />
-                  <span><b class="font-semibold text-white">개인정보 수집 및 이용 동의 (필수)</b><br />수집 항목: 성함, 연락처, 이메일, 희망 차종과 견적 조건 · 수집 목적: 견적 안내 및 상담 · 보유 기간: 상담 종료 후 1년 이내 파기. 동의를 거부하실 수 있으나, 동의하지 않으면 견적 안내가 어렵습니다.</span>
-                </label>
+                <div class="bp-consent-row">
+                  <label class="flex items-center gap-2 text-[14px] text-white">
+                    <input id="privacy" name="privacyAgree" type="checkbox" value="동의" class="h-4 w-4 shrink-0" />
+                    <span class="font-semibold">개인정보 수집 및 이용 동의 (필수)</span>
+                  </label>
+                  <button type="button" class="bp-consent-toggle" data-consent-toggle aria-expanded="false" aria-controls="privacy-detail">내용보기</button>
+                </div>
+                <div id="privacy-detail" class="bp-consent-detail" hidden><p>수집 항목: 성함, 연락처, 이메일, 희망 차종과 견적 조건 · 수집 목적: 견적 안내 및 상담 · 보유 기간: 상담 종료 후 1년 이내 파기. 동의를 거부하실 수 있으나, 동의하지 않으면 견적 안내가 어렵습니다.</p></div>
                 <p class="error mt-2 hidden text-[13px] text-[#F87171]">개인정보 수집 및 이용에 동의해 주세요.</p>
               </div>
             </div>
@@ -313,7 +317,7 @@
             <p id="net-err" class="mt-2 hidden text-[14px] text-[#F87171]" hidden aria-hidden="true">전송되지 않았습니다. 전화나 카톡으로 남겨 주세요.</p>
             <div class="mt-3 grid grid-cols-2 gap-2">
               <a href="tel:01091649639" class="flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 text-[16px] font-bold">전화 문의</a>
-              <a href="https://open.kakao.com/o/skdA6cZc" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[16px] font-bold">카톡 문의</a>
+              <a href="https://open.kakao.com/me/benzpro" class="kakao flex min-h-[48px] items-center justify-center rounded-2xl text-[16px] font-bold">카톡 문의</a>
             </div>
           </form>
 
@@ -555,7 +559,7 @@
             '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
             '<div class="rowline cut"><span>할인 합계' + (view.rate ? '<em class="rate-pill">' + view.rate + "% 할인</em>" : "") + "</span><b>" + (view.rate ? "−" + won(q.basis - window.BenzQuote.floorWon(q.basis * (1 - view.rate / 100))) : "0만원") + "</b></div>" +
             breakdown +
-            '<div class="final"><span>할인 적용 차량가</span><strong>' + won(view.after) + "</strong></div>" +
+            '<div class="final"><span>할인 적용 차량가</span><strong data-count data-count-key="quote-final">' + won(view.after) + "</strong></div>" +
             '<p class="fine">취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
             (notice ? '<p class="fine">' + notice + "</p>" : "") +
             monthLine;
@@ -716,6 +720,7 @@
         var form = document.getElementById("lead");
         form.addEventListener("submit", function (event) {
           event.preventDefault();
+          if (window.BenzSubmit && window.BenzSubmit.isBusy(form)) return;
           var sendBtn = document.getElementById("send");
           if (isEnded(current)) {
             if (sendBtn && sendBtn.dataset.next) location.href = sendBtn.dataset.next;
@@ -767,9 +772,10 @@
           body.append("email", email);
           body.append("privacyAgree", "동의");
           var button = document.getElementById("send");
-          button.disabled = true;
-          button.textContent = "전송 중...";
-          if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+          var netErr = document.getElementById("net-err");
+          if (netErr) { netErr.classList.add("hidden"); netErr.hidden = true; netErr.setAttribute("aria-hidden", "true"); }
+          var isLocal = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+          if (isLocal) {
             form.classList.add("hidden");
             form.setAttribute("aria-hidden", "true");
             var doneBox = document.getElementById("done");
@@ -778,16 +784,11 @@
             doneBox.removeAttribute("aria-hidden");
             var doneLine = doneBox.querySelector("p");
             if (doneLine) doneLine.textContent = "테스트 화면이라 문의는 전송하지 않았습니다.";
-            button.disabled = false;
-            button.textContent = "견적 상담 받기";
             return;
           }
-          fetch(WEBHOOK_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-            body: body.toString()
-          }).then(function () {
+          var finish = window.BenzSubmit.start(form, button, "상담 신청 중…");
+          if (!finish) return;
+          window.BenzSubmit.post(WEBHOOK_URL, body.toString()).then(function () {
             form.classList.add("hidden");
             form.setAttribute("aria-hidden", "true");
             var doneOk = document.getElementById("done");
@@ -799,8 +800,8 @@
             fail.classList.remove("hidden");
             fail.hidden = false;
             fail.removeAttribute("aria-hidden");
-            button.disabled = false;
-            button.textContent = "견적 상담 받기";
+          }).then(function () {
+            finish();
           });
         });
       })();

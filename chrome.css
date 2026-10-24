@@ -812,3 +812,250 @@ main input[type="checkbox"]:focus-visible {
   outline: 2px solid #e4cb86;
   outline-offset: 2px;
 }
+
+/* ===== 다크 테마 고정: 기기 설정과 관계없이 입력창·선택창·팝업도 같은 어두운 모습 ===== */
+:root {
+  color-scheme: dark;
+}
+input,
+select,
+textarea,
+button {
+  color-scheme: dark;
+}
+select option,
+select optgroup {
+  background-color: #0c1a24;
+  color: #f4f7f8;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #f4f7f8;
+  caret-color: #f4f7f8;
+  box-shadow: 0 0 0 1000px #0c1a24 inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+/* ===== 공통 고정 버튼: 맨 위로 / 유튜브 / 카카오톡 / 전화 ===== */
+.bp-dock .bp-dock-top {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.4rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(228, 203, 134, 0.6);
+  border-radius: 50%;
+  background: #10222c;
+  color: #e4cb86;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms, background-color 180ms ease;
+}
+.bp-dock.has-top .bp-dock-top {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+.bp-dock .bp-dock-top:focus-visible {
+  outline: 2px solid #e4cb86;
+  outline-offset: 3px;
+}
+.bp-dock .bp-dock-top:active {
+  transform: scale(0.96);
+}
+@media (hover: hover) {
+  .bp-dock .bp-dock-top:hover {
+    background: #17303c;
+  }
+}
+/* 우측 하단 고정 유튜브 버튼만 흰 배경 */
+.bp-dock a.bp-dock-yt {
+  background: #fbfaf7 !important;
+  color: #e00000 !important;
+  border: 1px solid rgba(11, 31, 42, 0.16);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+.bp-dock a.bp-dock-yt svg {
+  width: 26px;
+  height: 26px;
+}
+@media (hover: hover) {
+  .bp-dock a.bp-dock-yt:hover {
+    background: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.34), 0 1px 3px rgba(0, 0, 0, 0.18);
+  }
+}
+.bp-dock a.bp-dock-yt:active {
+  background: #efece6 !important;
+  transform: scale(0.96);
+}
+.bp-dock a.bp-dock-yt:focus-visible {
+  outline: 2px solid #e4cb86;
+  outline-offset: 3px;
+}
+body.bp-lock .bp-dock .bp-dock-top,
+body.bp-keyboard .bp-dock .bp-dock-top {
+  visibility: hidden;
+}
+
+/* ===== 제출 버튼 상태 ===== */
+form button[type="submit"] {
+  position: relative;
+  cursor: pointer;
+  transition: background-color 180ms ease, box-shadow 180ms ease, filter 180ms ease, transform 180ms ease;
+}
+@media (hover: hover) {
+  form button[type="submit"]:hover:not(.is-busy) {
+    filter: brightness(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+form button[type="submit"]:active:not(.is-busy) {
+  filter: brightness(0.94);
+  transform: translateY(1px);
+}
+form button[type="submit"]:focus-visible {
+  outline: 2px solid #e4cb86;
+  outline-offset: 3px;
+}
+form button[type="submit"].is-busy {
+  cursor: progress;
+  pointer-events: none;
+  filter: brightness(0.92);
+}
+form button[type="submit"].is-busy::before {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  margin-top: -0.55em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: bp-spin 700ms linear infinite;
+}
+@keyframes bp-spin {
+  to { transform: rotate(360deg); }
+}
+.bp-submit-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ===== 개인정보 안내 접기 ===== */
+.bp-consent-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+}
+.bp-consent-row > label {
+  flex: 1 1 15rem;
+  min-width: 0;
+}
+.bp-consent-toggle {
+  min-height: 44px;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid rgba(228, 203, 134, 0.55);
+  border-radius: 999px;
+  background: transparent;
+  color: #e4cb86;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+.bp-consent-toggle:focus-visible {
+  outline: 2px solid #e4cb86;
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .bp-consent-toggle:hover {
+    background: rgba(228, 203, 134, 0.12);
+  }
+}
+.bp-consent-detail {
+  margin-top: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #c5ced3;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.bp-consent-detail[hidden] {
+  display: none;
+}
+
+/* ===== 모션: opacity·transform만 사용 ===== */
+html.bp-fx .bp-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 320ms ease-out, transform 320ms ease-out;
+  transition-delay: var(--bp-d, 0ms);
+}
+html.bp-fx .bp-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.bp-counting {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.bp-count-ghost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  -webkit-text-fill-color: currentColor;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.bp-fx .bp-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .bp-dock .bp-dock-top,
+  .bp-dock a.bp-dock-yt,
+  form button[type="submit"],
+  .bp-consent-toggle {
+    transition: none;
+  }
+  form button[type="submit"].is-busy::before {
+    animation-duration: 1.6s;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 입력창·제출 버튼과 겹칠 때는 고정 버튼 묶음을 잠시 숨깁니다. */
+.bp-dock.is-away {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 150ms ease, visibility 0s linear 150ms;
+}

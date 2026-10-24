@@ -323,13 +323,27 @@ input:checked + .pick {
 }
 .guide-row {
   display: grid;
-  grid-template-columns: 1fr minmax(88px, 120px) 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(88px, 120px) minmax(0, 1fr);
   border-bottom: 1px solid rgba(164, 170, 174, 0.2);
 }
 .guide-row b,
 .guide-row span {
   padding: 0.75rem 0.7rem;
   font-size: 15px;
+}
+.guide-row b {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 359px) {
+  .guide-row {
+    grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+  }
+  .guide-row b,
+  .guide-row span {
+    padding: 0.65rem 0.35rem;
+    font-size: 14px;
+  }
 }
 .guide-row .k {
   text-align: center;

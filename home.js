@@ -193,7 +193,7 @@
       body =
         '<p class="hp-meta">차량가 ' + esc(manText(view.q.basis)) + "</p>" +
         dealHtml(view) +
-        '<p class="hp-num">' + esc(manText(view.after)) + "</p>" +
+        '<p class="hp-num" data-count data-count-key="hero-final-' + esc(name) + '">' + esc(manText(view.after)) + "</p>" +
         '<p class="hp-note">할인 적용 차량가. 취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
         basis +
         '<p class="hp-note">' + esc(view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(" · ")) + "</p>";
@@ -861,6 +861,7 @@
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
+    if (window.BenzSubmit && window.BenzSubmit.isBusy(form)) return;
     form.querySelectorAll(".hp-error").forEach(function (item) {
       item.classList.remove("is-on");
       if (item.id === "consult-network-error") item.hidden = true;
@@ -914,13 +915,18 @@
       openModal(true);
       return;
     }
-    if (button) button.disabled = true;
-    fetch("https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-      body: body.toString()
-    }).then(function () {
+    var finish = window.BenzSubmit ? window.BenzSubmit.start(form, button, "상담 신청 중…") : null;
+    if (window.BenzSubmit && !finish) return;
+    var HOOK = "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
+    var request = window.BenzSubmit
+      ? window.BenzSubmit.post(HOOK, body.toString())
+      : fetch(HOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: body.toString()
+        });
+    request.then(function () {
       form.reset();
       if (agree) agree.checked = false;
       openModal(false);
@@ -931,7 +937,7 @@
         fail.classList.add("is-on");
       }
     }).then(function () {
-      if (button) button.disabled = false;
+      if (finish) finish();
     });
   });
 

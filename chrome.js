@@ -1,8 +1,25 @@
 (function () {
   var YT = "https://www.youtube.com/@benzpro.official";
   var TEL = "tel:01091649639";
-  var KAKAO = "https://open.kakao.com/o/skdA6cZc";
+  var KAKAO = "https://open.kakao.com/me/benzpro";
   var PRICES = "https://benzpro.co.kr/prices.html";
+
+  /* 상담 연결 주소는 이 한 곳에서 관리합니다. 정적 HTML의 카카오톡 링크도 아래에서 같은 주소로 맞춥니다. */
+  window.BenzProConfig = Object.freeze({ kakao: KAKAO, youtube: YT, tel: TEL, prices: PRICES });
+
+  /* 사이트는 다크 테마 하나만 씁니다. 예전에 저장된 테마 값이 디자인을 바꾸지 않게 정리합니다. */
+  (function lockTheme() {
+    var root = document.documentElement;
+    root.setAttribute("data-theme", "dark");
+    root.style.colorScheme = "dark";
+    try {
+      ["theme", "color-theme", "colorTheme", "color-scheme", "darkMode", "dark-mode", "vueuse-color-scheme", "benzpro-theme"].forEach(function (key) {
+        window.localStorage.removeItem(key);
+        window.sessionStorage.removeItem(key);
+      });
+    } catch (err) {}
+    root.classList.remove("light", "theme-light", "dark");
+  })();
 
   function ico(path) {
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="' + path + '"/></svg>';
@@ -16,6 +33,7 @@
     yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="yt-body" fill="#FF0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z"/><path class="yt-play" fill="#ffffff" d="M9.8 15.5v-7L16 12l-6.2 3.5z"/></svg>',
     phone: ico("M6.6 3.2h2.4l1.3 3.2-1.8 1.1a12.5 12.5 0 0 0 5.9 5.9l1.1-1.8 3.2 1.3v2.4a1.6 1.6 0 0 1-1.7 1.6A16.2 16.2 0 0 1 5 4.9a1.6 1.6 0 0 1 1.6-1.7z"),
     menu: ico("M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"),
+    up: ico("M12 5.2 4.6 12.6l1.4 1.4 5-5V19h2V9l5 5 1.4-1.4L12 5.2z"),
     close: ico("M6.2 5 12 10.8 17.8 5 19 6.2 13.2 12 19 17.8 17.8 19 12 13.2 6.2 19 5 17.8 10.8 12 5 6.2z"),
     shield: ico("M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 13.6-3.4-3.4 1.4-1.4 2 2 4.6-4.6 1.4 1.4-6 6z"),
     doc: ico("M5 4h10l4 4v12H5V4zm2 2v12h10V9h-3V6H7zm2 6h6v2H9v-2zm0 3h6v2H9v-2z"),
@@ -44,7 +62,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261023z4";
+    css.href = "chrome.css?v=20261024e";
     document.head.appendChild(css);
   }
 
@@ -102,9 +120,10 @@
   dock.className = "bp-dock";
   dock.setAttribute("aria-label", "문의");
   dock.innerHTML =
-    '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브">' + I.yt + "</a>" +
-    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="카카오톡 문의">' + I.talk + "</a>" +
-    '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의">' + I.phone + "</a>";
+    '<button type="button" class="bp-dock-top" aria-label="맨 위로" title="맨 위로">' + I.up + "</button>" +
+    '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브" title="유튜브">' + I.yt + "</a>" +
+    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="카카오톡 문의 (새 창)" title="카카오톡 문의">' + I.talk + "</a>" +
+    '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의" title="전화 문의">' + I.phone + "</a>";
 
   var parent = document.body || document.documentElement;
   parent.insertBefore(dock, parent.firstChild);
@@ -277,27 +296,200 @@
     document.body.appendChild(panel);
   }
 
+  /* 카카오톡 상담 링크: 공통 설정 주소로 맞추고, 새 창으로 열리는 링크에는 rel과 안내를 붙입니다. */
+  function normalizeKakao(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var links = [];
+    if (scope !== document && scope.matches && scope.matches('a[href*="open.kakao.com"]')) links.push(scope);
+    Array.prototype.push.apply(links, scope.querySelectorAll('a[href*="open.kakao.com"]'));
+    links.forEach(function (link) {
+      if (link.getAttribute("href") !== KAKAO) link.setAttribute("href", KAKAO);
+      link.setAttribute("target", "_blank");
+      var rel = (link.getAttribute("rel") || "").split(/\s+/).filter(Boolean);
+      ["noopener", "noreferrer"].forEach(function (token) {
+        if (rel.indexOf(token) === -1) rel.push(token);
+      });
+      link.setAttribute("rel", rel.join(" "));
+      if (!link.hasAttribute("aria-label")) {
+        var text = (link.textContent || "").replace(/\s+/g, " ").trim();
+        if (text) link.setAttribute("aria-label", text + " (새 창)");
+      }
+    });
+  }
+
+  /* 맨 위로 버튼. 위치는 공통 고정 버튼 영역(.bp-dock) 안에서만 관리합니다. */
+  function mountTopButton() {
+    var top = dock.querySelector(".bp-dock-top");
+    if (!top) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var shown = false;
+    var queued = false;
+    function threshold() {
+      return Math.max(480, window.innerHeight * 0.8);
+    }
+    /* 입력창·제출 버튼 위에 고정 버튼이 겹치면 잠시 숨겨서 입력과 제출을 가리지 않습니다. */
+    var away = false;
+    function overlapsForm() {
+      var d = dock.getBoundingClientRect();
+      if (!d.width) return false;
+      var topEdge = shown ? Math.min(d.top, top.getBoundingClientRect().top) : d.top;
+      var controls = document.querySelectorAll(
+        "form input:not([type=hidden]), form select, form textarea, form button, .bp-consent-row"
+      );
+      for (var i = 0; i < controls.length; i++) {
+        var r = controls[i].getBoundingClientRect();
+        if (!r.width || !r.height) continue;
+        if (r.bottom > topEdge - 6 && r.top < d.bottom + 6 && r.right > d.left - 6 && r.left < d.right + 6) return true;
+      }
+      return false;
+    }
+    function update() {
+      queued = false;
+      var next = (window.pageYOffset || document.documentElement.scrollTop || 0) > threshold();
+      if (next !== shown) {
+        shown = next;
+        dock.classList.toggle("has-top", shown);
+      }
+      var overlap = overlapsForm();
+      if (overlap !== away) {
+        away = overlap;
+        dock.classList.toggle("is-away", away);
+      }
+    }
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(update);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    top.addEventListener("click", function (event) {
+      var byKeyboard = event.detail === 0;
+      window.scrollTo({ top: 0, left: 0, behavior: reduce.matches ? "instant" : "smooth" });
+      if (byKeyboard) {
+        var target = head.querySelector(".bp-logo");
+        if (target) target.focus({ preventScroll: true });
+      }
+    });
+    update();
+  }
+
+  /* 상담 폼 공통 제출 상태. 실제 요청이 시작될 때만 로딩을 보여 주고, 끝나면 반드시 되돌립니다. */
+  var SUBMIT_TIMEOUT = 20000;
+  window.BenzSubmit = {
+    isBusy: function (form) {
+      return !!form && form.getAttribute("aria-busy") === "true";
+    },
+    start: function (form, button, label) {
+      if (!form || !button || this.isBusy(form)) return null;
+      var idle = button.textContent;
+      var rect = button.getBoundingClientRect();
+      var live = form.querySelector(".bp-submit-status");
+      if (!live) {
+        live = document.createElement("span");
+        live.className = "bp-submit-status";
+        live.setAttribute("role", "status");
+        live.setAttribute("aria-live", "polite");
+        form.appendChild(live);
+      }
+      var busyText = label || button.getAttribute("data-busy-label") || "처리 중…";
+      button.style.minWidth = Math.ceil(rect.width) + "px";
+      button.style.minHeight = Math.ceil(rect.height) + "px";
+      button.classList.add("is-busy");
+      button.setAttribute("aria-disabled", "true");
+      form.setAttribute("aria-busy", "true");
+      button.textContent = busyText;
+      live.textContent = busyText;
+      var finished = false;
+      return function finish() {
+        if (finished) return;
+        finished = true;
+        button.classList.remove("is-busy");
+        button.removeAttribute("aria-disabled");
+        button.style.minWidth = "";
+        button.style.minHeight = "";
+        button.textContent = idle;
+        form.removeAttribute("aria-busy");
+        live.textContent = "";
+      };
+    },
+    /* 기존 방식 그대로 전송합니다(no-cors). 응답 본문은 읽을 수 없어, 네트워크 오류·시간 초과·HTTP 오류가 확인될 때만 실패로 처리합니다. */
+    post: function (url, body) {
+      return new Promise(function (resolve, reject) {
+        var ctrl = window.AbortController ? new AbortController() : null;
+        var timer = window.setTimeout(function () {
+          if (ctrl) ctrl.abort();
+          reject(new Error("timeout"));
+        }, SUBMIT_TIMEOUT);
+        fetch(url, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: body,
+          signal: ctrl ? ctrl.signal : undefined
+        }).then(function (res) {
+          window.clearTimeout(timer);
+          if (res && res.type !== "opaque" && res.ok === false) reject(new Error("http " + res.status));
+          else resolve(res);
+        }, function (err) {
+          window.clearTimeout(timer);
+          reject(err);
+        });
+      });
+    }
+  };
+
+  /* 개인정보 안내 접기·펼치기. 체크박스와 분리된 버튼이고, 숨긴 본문은 hidden으로 탐색에서 제외됩니다. */
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest && event.target.closest("[data-consent-toggle]");
+    if (!btn) return;
+    event.preventDefault();
+    var detail = document.getElementById(btn.getAttribute("aria-controls"));
+    if (!detail) return;
+    var open = btn.getAttribute("aria-expanded") !== "true";
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "접기" : "내용보기";
+    detail.hidden = !open;
+  });
+
   function ready() {
     Array.prototype.forEach.call(document.querySelectorAll("header"), function (old) {
       if (old.id !== "bp-head") old.remove();
     });
     document.body.classList.add("bp-has-kakao");
+    normalizeKakao(document);
     tidyBars();
     decorateQuote();
     mountToc();
+    mountTopButton();
     fitLogoSub();
     window.addEventListener("resize", function () {
       tidyBars();
       fitLogoSub();
     });
+    if (window.MutationObserver) {
+      new MutationObserver(function (records) {
+        records.forEach(function (record) {
+          Array.prototype.forEach.call(record.addedNodes, function (node) {
+            if (node.nodeType === 1) normalizeKakao(node);
+          });
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready);
   else ready();
 
   if (!document.querySelector('script[src^="select-ui.js"]')) {
     var pickUi = document.createElement("script");
-    pickUi.src = "select-ui.js?v=20261023w";
+    pickUi.src = "select-ui.js?v=20261024e";
     document.head.appendChild(pickUi);
+  }
+  if (!document.querySelector('script[src^="motion.js"]')) {
+    var motion = document.createElement("script");
+    motion.src = "motion.js?v=20261024e";
+    motion.async = true;
+    document.head.appendChild(motion);
   }
   if (!document.querySelector('script[src^="pick.js"]')) {
     var pickSrc = document.createElement("script");
