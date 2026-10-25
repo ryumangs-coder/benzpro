@@ -106,6 +106,8 @@
     search.id = searchId;
     search.type = "search";
     search.autocomplete = "off";
+    search.setAttribute("data-gtm-ignore", "1");
+    search.setAttribute("data-gtag-ignore", "1");
     search.placeholder = placeholder;
     search.setAttribute("aria-label", searchLabel);
     searchWrap.appendChild(searchLab);
@@ -314,7 +316,10 @@
         btn.addEventListener("click", function () {
           if (item.disabled) return;
           select.value = item.value;
+          /* 사용자가 직접 고른 변경임을 알립니다(측정과 기본값 설정을 구분). */
+          select.__bpUser = true;
           select.dispatchEvent(new Event("change", { bubbles: true }));
+          select.__bpUser = false;
           refresh();
           close(true);
         });

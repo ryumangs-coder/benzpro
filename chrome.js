@@ -482,7 +482,7 @@
 
   if (!document.querySelector('script[src^="select-ui.js"]')) {
     var pickUi = document.createElement("script");
-    pickUi.src = "select-ui.js?v=20261024e";
+    pickUi.src = "select-ui.js?v=20261025c";
     document.head.appendChild(pickUi);
   }
   if (!document.querySelector('script[src^="motion.js"]')) {

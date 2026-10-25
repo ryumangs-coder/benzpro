@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="dark" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style> <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" /> <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" /> <link rel="icon" href="/favicon.ico" sizes="any" /> <link rel="icon" type="image/png" sizes="192x192" href="/images/brand/icon-192.png" /> <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png" /> <link rel="canonical" href="https://benzpro.co.kr/models" />
+    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261025c"></script> <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" /> <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" /> <link rel="icon" href="/favicon.ico" sizes="any" /> <link rel="icon" type="image/png" sizes="192x192" href="/images/brand/icon-192.png" /> <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png" /> <link rel="canonical" href="https://benzpro.co.kr/models" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1f2a" />
     <meta name="description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." />
@@ -16,7 +16,7 @@
     </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/models","name":"차량 가이드 | 벤츠프로","description":"메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script></head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261024e"></script>
+<script src="chrome.js?v=20261025a"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8 lg:pr-[20rem]">
@@ -1569,6 +1569,13 @@
             wheel: info ? info.wheel : null
           };
         }
+        /* 측정: 실제로 표시된 비교와 사용자가 직접 바꾼 차량에만 호출합니다. 실패해도 비교 화면에는 영향이 없습니다. */
+        var compareDrawn = 0;
+        function track(fn) {
+          try {
+            if (window.BenzTrack) fn(window.BenzTrack);
+          } catch (err) { /* 무시 */ }
+        }
         function drawCompare() {
           var a = rows[Number(left.value)];
           var b = rows[Number(right.value)];
@@ -1636,6 +1643,18 @@
           document.getElementById("quote-right").textContent = isEnded(b) ? "지난 조건 보기" : showName(b.name) + " 견적 확인";
           fillJump();
           renderFaq(a, b, da, db);
+          compareDrawn += 1;
+          /* 첫 화면의 기본 두 대는 사용자가 고른 비교가 아니므로 보내지 않습니다. 주소로 지정해 들어왔거나, 이후에 바꾼 결과만 보냅니다. */
+          var queryPick = (function () {
+            try {
+              var q = new URLSearchParams(location.search);
+              return !!(q.get("pick") || q.get("vs"));
+            } catch (err) { return false; }
+          })();
+          track(function (T) {
+            if (compareDrawn === 1 && !queryPick) return;
+            T.comparisonView(a, b, "comparison", compareDrawn === 1 ? "load" : "change");
+          });
         }
 
         archiveBox.addEventListener("change", function () {
@@ -1647,14 +1666,30 @@
           if (![].some.call(right.options, function (opt) { return opt.value === right.value && opt.value; })) {
             right.value = String(findIndex("E 200 AMG Line", "MY26"));
           }
+          lastLeft = left.value;
+          lastRight = right.value;
           drawCompare();
         });
-        left.addEventListener("change", drawCompare);
-        right.addEventListener("change", drawCompare);
+        var lastLeft = left.value;
+        var lastRight = right.value;
+        left.addEventListener("change", function (event) {
+          var changed = left.value !== lastLeft;
+          lastLeft = left.value;
+          drawCompare();
+          if (changed) track(function (T) { if (T.isUser(event)) T.vehicleSelect(rows[Number(left.value)], "comparison_left"); });
+        });
+        right.addEventListener("change", function (event) {
+          var changed = right.value !== lastRight;
+          lastRight = right.value;
+          drawCompare();
+          if (changed) track(function (T) { if (T.isUser(event)) T.vehicleSelect(rows[Number(right.value)], "comparison_right"); });
+        });
         document.getElementById("swap").addEventListener("click", function () {
           var keep = left.value;
           left.value = right.value;
           right.value = keep;
+          lastLeft = left.value;
+          lastRight = right.value;
           drawCompare();
         });
         function fillJump() {

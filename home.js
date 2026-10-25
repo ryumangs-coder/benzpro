@@ -586,11 +586,36 @@
 
   mountInsights();
 
+  /* 측정: 사용자가 직접 바꾼 경우에만 호출합니다. 측정이 막히거나 실패해도 견적 기능에는 영향이 없습니다. */
+  function track(fn) {
+    try {
+      if (window.BenzTrack) fn(window.BenzTrack);
+    } catch (err) { /* 무시 */ }
+  }
+  function trackQuote() {
+    track(function (T) {
+      if (!state.engaged) return;
+      var row = calcRow();
+      var out = document.getElementById("calc-out");
+      if (!row || !out || !out.offsetParent) return;
+      var view = resultOf(row);
+      if (!view || view.status !== "ok") return;
+      var flags = [];
+      if (state.retain && view.retainRate) flags.push("retain");
+      if (state.trade && view.retainRate) flags.push("trade");
+      if (state.conquest && view.conqRate) flags.push("conquest");
+      if (state.mou) flags.push("mou");
+      T.quoteView(row, state.pay, flags, view.after, "calculator", "change");
+    });
+  }
+
   root.addEventListener("click", function (event) {
     var chipBtn = event.target.closest("[data-group]");
     if (chipBtn) {
       var group = chipBtn.getAttribute("data-group");
       var value = chipBtn.getAttribute("data-value");
+      var prevYear = state.year;
+      var prevPay = state.pay;
       if (group === "year") {
         state.year = value;
         if (state.model === E_EX || state.model === E_AMG) state.modelYear = value;
@@ -599,6 +624,13 @@
       engage();
       draw();
       syncUrl();
+      if (group === "year" && value !== prevYear) {
+        track(function (T) { T.vehicleSelect(null, "hero", { vehicle_series: "e_class", model_year: value }); });
+      }
+      if ((group === "pay" || group === "calc-pay") && value !== prevPay) {
+        track(function (T) { T.purchaseMethodSelect(value, group === "pay" ? "hero" : "calculator", group === "pay" ? null : calcRow()); });
+      }
+      trackQuote();
       return;
     }
     var open = event.target.closest("[data-open-calc]");
@@ -610,6 +642,8 @@
       engage();
       draw();
       syncUrl();
+      track(function (T) { T.vehicleSelect(calcRow(), "hero"); });
+      trackQuote();
       var calc = document.getElementById("calc");
       if (calc) calc.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -633,18 +667,33 @@
       engage();
       draw();
       syncUrl();
+      track(function (T) {
+        if (!T.isUser(event)) return;
+        T.benefitSelect(key, flag.checked, "calculator", calcRow(), state.pay);
+      });
+      trackQuote();
       return;
     }
     if (event.target.id === "calc-model" || event.target.id === "field-car") {
       var value = event.target.value;
       if (value === "상담 후 결정") return;
       if (value && value.indexOf("|") !== -1) {
+        var prevKey = state.model + "|" + (state.modelYear || state.year);
         state.model = value.slice(0, value.indexOf("|"));
         state.modelYear = value.slice(value.indexOf("|") + 1);
         if (state.model === E_EX || state.model === E_AMG) state.year = state.modelYear;
         engage();
         draw();
         syncUrl();
+        if (value !== prevKey) {
+          var where = event.target.id === "field-car" ? "contact_section" : "calculator";
+          track(function (T) {
+            if (T.isUser(event)) T.vehicleSelect(calcRow(), where);
+          });
+        }
+        track(function (T) {
+          if (T.isUser(event)) trackQuote();
+        });
       }
     }
     if (event.target.id === "field-method") event.target.dataset.touched = "1";
@@ -926,7 +975,10 @@
           headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
           body: body.toString()
         });
-    request.then(function () {
+    var leadRow = car.value === "상담 후 결정" ? null : calcRow();
+    var leadPay = leadRow ? state.pay : "";
+    request.then(function (res) {
+      track(function (T) { T.formResult("home_consult", res, T.vehicleParams(leadRow, leadPay)); });
       form.reset();
       if (agree) agree.checked = false;
       openModal(false);

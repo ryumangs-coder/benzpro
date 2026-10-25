@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="dark" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style>
+    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261025c"></script>
     <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
     <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261024e"></script>
+<script src="chrome.js?v=20261025a"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -605,6 +605,8 @@
             send.textContent = sold ? "새 연식 확인하기" : "견적 상담 받기";
           }
           publish();
+          drawn += 1;
+          trackQuoteView();
         }
         function exactCar(name, my) {
           if (!name) return null;
@@ -622,6 +624,32 @@
             mou: state.mou
           });
           if (history.replaceState) history.replaceState(null, "", "quote.html?" + window.BenzPick.params(saved).toString());
+        }
+        /* 측정: 사용자가 직접 바꾼 경우와 실제 견적 표시에만 호출합니다. 실패해도 견적에는 영향이 없습니다. */
+        function track(fn) {
+          try {
+            if (window.BenzTrack) fn(window.BenzTrack);
+          } catch (err) { /* 무시 */ }
+        }
+        function activeFlags(view) {
+          var keys = [];
+          if (state.retain && view.retainRate) keys.push("retain");
+          if (state.trade && view.retainRate) keys.push("trade");
+          if (state.conquest && view.conqRate) keys.push("conquest");
+          ["mou", "repair", "mile", "showcar", "early"].forEach(function (key) {
+            if (state[key]) keys.push(key);
+          });
+          return keys;
+        }
+        var drawn = 0;
+        function trackQuoteView() {
+          track(function (T) {
+            var sheet = document.getElementById("sheet");
+            if (!sheet || !sheet.offsetParent || isEnded(current)) return;
+            var view = compute(current);
+            if (!view || view.status !== "ok" || view.q.basis == null || view.after == null) return;
+            T.quoteView(current, state.pay, activeFlags(view), view.after, "quote_result", drawn === 1 ? "load" : "change");
+          });
         }
         function pick(name, my) {
           var prev = { retain: state.retain, trade: state.trade, conquest: state.conquest, early: state.early };
@@ -664,20 +692,26 @@
         }
         document.getElementById("car").addEventListener("change", function (e) {
           var key = splitKey(e.target.value);
+          var before = current;
           state.pay = "";
           pick(key.name, key.my, true);
+          if (current !== before) track(function (T) { if (T.isUser(e)) T.vehicleSelect(current, "quote_page"); });
         });
         document.getElementById("family").addEventListener("click", function (e) {
           var btn = e.target.closest("[data-car]");
           if (!btn) return;
           var key = splitKey(btn.getAttribute("data-car"));
+          var before = current;
           pick(key.name, key.my, true);
+          if (current !== before) track(function (T) { T.vehicleSelect(current, "quote_page"); });
         });
         document.getElementById("pays").addEventListener("click", function (e) {
           var btn = e.target.closest("[data-pay]");
           if (!btn) return;
+          var beforePay = state.pay;
           state.pay = btn.getAttribute("data-pay");
           draw();
+          if (state.pay !== beforePay) track(function (T) { T.purchaseMethodSelect(state.pay, "quote_page", current); });
         });
         document.getElementById("opts").addEventListener("change", function (e) {
           var input = e.target.closest("[data-opt]");
@@ -694,6 +728,7 @@
             state.conquest = false;
           }
           draw();
+          track(function (T) { T.benefitSelect(key, input.checked, "quote_page", current, state.pay); });
         });
 
         function carModel(row) {
@@ -788,7 +823,10 @@
           }
           var finish = window.BenzSubmit.start(form, button, "상담 신청 중…");
           if (!finish) return;
-          window.BenzSubmit.post(WEBHOOK_URL, body.toString()).then(function () {
+          var leadRow = current;
+          var leadPay = state.pay;
+          window.BenzSubmit.post(WEBHOOK_URL, body.toString()).then(function (res) {
+            track(function (T) { T.formResult("quote_consult", res, T.vehicleParams(leadRow, leadPay)); });
             form.classList.add("hidden");
             form.setAttribute("aria-hidden", "true");
             var doneOk = document.getElementById("done");
