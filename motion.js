@@ -227,10 +227,36 @@
   });
   window.addEventListener("beforeprint", revealAll);
 
+  /* 제목 형광펜: 화면 밖 제목만 들어올 때 한 번 그어집니다. 스크립트가 없으면 강조는 이미 보입니다. */
+  var markIO = null;
+  function markTitles(root) {
+    if (reduceQuery.matches) return;
+    var scope = root && root.querySelectorAll ? root : document;
+    Array.prototype.forEach.call(scope.querySelectorAll(".bp-mark:not([data-mark-seen])"), function (el) {
+      el.setAttribute("data-mark-seen", "1");
+      var rect = el.getBoundingClientRect();
+      var inView = rect.bottom > 0 && rect.top < (window.innerHeight || 800) * 0.92;
+      if (inView || !hasIO) return;
+      if (!markIO) {
+        markIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            markIO.unobserve(entry.target);
+            entry.target.classList.remove("bp-mark-wait");
+            entry.target.classList.add("bp-mark-run");
+          });
+        }, { threshold: 0.4 });
+      }
+      el.classList.add("bp-mark-wait");
+      markIO.observe(el);
+    });
+  }
+
   function scanAll(root) {
     try {
       scanCounts(root);
       markFx(root);
+      markTitles(root);
     } catch (err) {
       revealAll();
     }

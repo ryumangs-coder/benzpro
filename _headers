@@ -1,0 +1,6 @@
+# /chat 리디렉션이 오래 캐시되지 않게 합니다.
+/chat
+  Cache-Control: no-store
+
+/chat/
+  Cache-Control: no-store

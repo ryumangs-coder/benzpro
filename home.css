@@ -21,7 +21,7 @@
   line-height: 1.28;
   word-break: keep-all;
 }
-.hp-hero h1 span {
+.hp-hero h1 > span {
   display: block;
 }
 .hp-hero p {
@@ -71,8 +71,8 @@ header.hp-head .hp-menu {
   line-height: 1.35;
   word-break: keep-all;
 }
-.hp-section h2 span,
-.hp-title span {
+.hp-section h2 > span,
+.hp-title > span {
   display: block;
 }
 .hp-section .hp-lead {

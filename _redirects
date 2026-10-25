@@ -1,0 +1,4 @@
+# 카카오톡 상담. 실제 채널 주소는 이 파일에서만 관리합니다.
+# Cloudflare Pages가 302로 보냅니다. 채널이 바뀌면 아래 목적지 두 줄만 고치면 됩니다.
+/chat   https://pf.kakao.com/_YxnqWX/chat   302
+/chat/  https://pf.kakao.com/_YxnqWX/chat   302

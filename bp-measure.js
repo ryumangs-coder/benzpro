@@ -275,6 +275,19 @@
     return { benefit: "benefit_overview", mou: "mou", fleet: "corporate", cards: "card", golden: "golden_time", welcome: "welcome_gift" }[slugName] || "";
   }
   var lastClick = { key: "", at: 0 };
+  /* 카카오톡 상담: 내부 /chat과 예전 오픈채팅 주소를 같은 클릭으로 봅니다. /chat 페이지 자체에서는 이벤트를 다시 보내지 않습니다. */
+  function isKakaoConsult(href) {
+    if (!href) return false;
+    if (/^https?:\/\/(open|pf)\.kakao\.com\//i.test(href)) return true;
+    try {
+      var u = new URL(href, location.href);
+      var path = (u.pathname || "").replace(/\/+$/, "") || "/";
+      if (path !== "/chat") return false;
+      return u.hostname === location.hostname || sameSite(u.hostname);
+    } catch (err) {
+      return /(?:^|\/)chat\/?$/.test(href);
+    }
+  }
   function onLinkClick(event) {
     try {
       var el = event.target && event.target.closest ? event.target.closest("a[href]") : null;
@@ -289,7 +302,8 @@
       if (/^tel:/i.test(href)) {
         name = "contact_click";
         params.contact_method = "phone";
-      } else if (/^https?:\/\/open\.kakao\.com\//i.test(href)) {
+      } else if (isKakaoConsult(href)) {
+        if (pageSlug === "chat") return;
         name = "contact_click";
         params.contact_method = "kakao";
       } else {

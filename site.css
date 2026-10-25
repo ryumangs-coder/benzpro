@@ -593,6 +593,7 @@ a.kakao {
 }
 
 a[href*="open.kakao.com"]::before,
+a[href*="/chat"]::before,
 a[href^="tel:"]::before,
 aside a[data-spy]::before,
 aside a[href*="#consulting"]::before {
@@ -604,7 +605,8 @@ aside a[href*="#consulting"]::before {
   -webkit-mask: var(--mark) center / contain no-repeat;
   mask: var(--mark) center / contain no-repeat;
 }
-a[href*="open.kakao.com"] {
+a[href*="open.kakao.com"],
+a[href*="/chat"] {
   --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 3.5C6.7 3.5 2.5 6.8 2.5 10.8c0 2.6 1.7 4.9 4.3 6.2l-.8 3 3.4-1.8c.8.1 1.6.2 2.6.2 5.3 0 9.5-3.3 9.5-7.3S17.3 3.5 12 3.5z'/%3E%3C/svg%3E");
 }
 a[href^="tel:"] {

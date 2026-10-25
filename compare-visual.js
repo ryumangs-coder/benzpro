@@ -383,7 +383,7 @@
         '<p class="vs-note">메르세데스-벤츠 코리아 공식 자료(E-클래스 2026.04, S-클래스 2026.09 등) 기준입니다. 연식, 생산 시점, 옵션에 따라 달라질 수 있어 계약 전에 실제 차량으로 다시 확인합니다.</p>' : "") +
       (t.note ? '<p class="vs-note">' + esc(t.note) + "</p>" : "") +
       '<div class="vs-cta-row"><a class="vs-cta gold" href="' + ask(t.name) + '">이 기술, 전시장에서 직접 보기</a>' +
-      '<a class="vs-cta kakao" href="https://open.kakao.com/me/benzpro">카톡으로 물어보기</a></div>' +
+      '<a class="vs-cta kakao" href="' + ((window.BenzProConfig && window.BenzProConfig.kakao) || "https://benzpro.co.kr/chat") + '">카톡으로 물어보기</a></div>' +
       '<div class="vs-nav"><button type="button" data-tech="' + prev.id + '">◂ ' + esc(prev.name) + '</button><button type="button" data-tech="' + next.id + '">' + esc(next.name) + " ▸</button></div>" +
       "</div>";
   }
