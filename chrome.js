@@ -1,7 +1,7 @@
 (function () {
   var YT = "https://www.youtube.com/@benzpro.official";
   var TEL = "tel:01091649639";
-  var KAKAO = "https://open.kakao.com/me/benzpro";
+  var KAKAO = "https://benzpro.co.kr/chat";
   var PRICES = "https://benzpro.co.kr/prices.html";
 
   /* 상담 연결 주소는 이 한 곳에서 관리합니다. 정적 HTML의 카카오톡 링크도 아래에서 같은 주소로 맞춥니다. */
@@ -62,7 +62,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261024e";
+    css.href = "chrome.css?v=20261025e";
     document.head.appendChild(css);
   }
 
@@ -122,7 +122,7 @@
   dock.innerHTML =
     '<button type="button" class="bp-dock-top" aria-label="맨 위로" title="맨 위로">' + I.up + "</button>" +
     '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브" title="유튜브">' + I.yt + "</a>" +
-    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="카카오톡 문의 (새 창)" title="카카오톡 문의">' + I.talk + "</a>" +
+    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 카카오톡 채널 상담" title="벤츠프로 카카오톡 채널 상담">' + I.talk + "</a>" +
     '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의" title="전화 문의">' + I.phone + "</a>";
 
   var parent = document.body || document.documentElement;
@@ -204,7 +204,7 @@
       if (bar === dock || bar.id === "bp-drawer" || bar.id === "bp-head") return;
       var style = window.getComputedStyle(bar);
       if (style.position !== "fixed") return;
-      Array.prototype.forEach.call(bar.querySelectorAll('a[href*="open.kakao.com"]'), function (link) {
+      Array.prototype.forEach.call(bar.querySelectorAll('a[href*="open.kakao.com"], a[href*="pf.kakao.com"], a[href*="/chat"]'), function (link) {
         link.remove();
       });
       var links = bar.querySelectorAll("a, button");
@@ -224,6 +224,7 @@
     if (!window.BenzPick) return;
     Array.prototype.forEach.call(document.querySelectorAll("a[href]"), function (link) {
       var href = link.getAttribute("href");
+      if (isConsultLink(href)) return;
       var next = window.BenzPick.decorate(href);
       if (next !== href) link.setAttribute("href", next);
     });
@@ -296,12 +297,26 @@
     document.body.appendChild(panel);
   }
 
-  /* 카카오톡 상담 링크: 공통 설정 주소로 맞추고, 새 창으로 열리는 링크에는 rel과 안내를 붙입니다. */
+  /* 카카오톡 상담 링크: 공통 설정 주소(/chat)로 맞추고, 새 창으로 열리는 링크에는 rel과 안내를 붙입니다. */
+  function isConsultLink(href) {
+    if (!href) return false;
+    if (/open\.kakao\.com|pf\.kakao\.com/i.test(href)) return true;
+    try {
+      var u = new URL(href, location.href);
+      var path = (u.pathname || "").replace(/\/+$/, "") || "/";
+      return path === "/chat";
+    } catch (err) {
+      return /(?:^|\/)chat\/?$/.test(href);
+    }
+  }
   function normalizeKakao(root) {
     var scope = root && root.querySelectorAll ? root : document;
     var links = [];
-    if (scope !== document && scope.matches && scope.matches('a[href*="open.kakao.com"]')) links.push(scope);
-    Array.prototype.push.apply(links, scope.querySelectorAll('a[href*="open.kakao.com"]'));
+    var all = scope.querySelectorAll("a[href]");
+    if (scope !== document && scope.matches && scope.matches("a[href]") && isConsultLink(scope.getAttribute("href"))) links.push(scope);
+    Array.prototype.forEach.call(all, function (link) {
+      if (isConsultLink(link.getAttribute("href"))) links.push(link);
+    });
     links.forEach(function (link) {
       if (link.getAttribute("href") !== KAKAO) link.setAttribute("href", KAKAO);
       link.setAttribute("target", "_blank");
@@ -310,9 +325,20 @@
         if (rel.indexOf(token) === -1) rel.push(token);
       });
       link.setAttribute("rel", rel.join(" "));
-      if (!link.hasAttribute("aria-label")) {
-        var text = (link.textContent || "").replace(/\s+/g, " ").trim();
-        if (text) link.setAttribute("aria-label", text + " (새 창)");
+      var text = (link.textContent || "").replace(/\s+/g, " ").trim();
+      var label = link.getAttribute("aria-label") || "";
+      if (/오픈채팅/.test(text)) {
+        link.childNodes.forEach(function (node) {
+          if (node.nodeType === 3 && /오픈채팅/.test(node.nodeValue || "")) {
+            node.nodeValue = node.nodeValue.replace(/오픈채팅 상담/g, "카카오톡 채널 상담").replace(/오픈채팅/g, "카카오톡 채널");
+          }
+        });
+        text = (link.textContent || "").replace(/\s+/g, " ").trim();
+      }
+      if (/오픈채팅/.test(label) || !label) {
+        if (!text) link.setAttribute("aria-label", "벤츠프로 카카오톡 채널 상담");
+        else if (/오픈채팅/.test(label || text)) link.setAttribute("aria-label", (label || text).replace(/오픈채팅 상담/g, "카카오톡 채널 상담").replace(/오픈채팅/g, "카카오톡 채널"));
+        else if (!label) link.setAttribute("aria-label", text + " (새 창)");
       }
     });
   }
@@ -487,7 +513,7 @@
   }
   if (!document.querySelector('script[src^="motion.js"]')) {
     var motion = document.createElement("script");
-    motion.src = "motion.js?v=20261024e";
+    motion.src = "motion.js?v=20261025d";
     motion.async = true;
     document.head.appendChild(motion);
   }
