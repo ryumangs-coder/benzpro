@@ -76,15 +76,15 @@
     </aside>
 
 
-    <script src="october-2026.js?v=20261026a"></script>
-    <script src="quote.js?v=20261023b"></script>
+    <script src="october-2026.js?v=20261026b"></script>
+    <script src="quote.js?v=20261026b"></script>
     <script src="stock.js?v=20261026a"></script>
-    <script src="guide-data.js?v=20261012e"></script>
+    <script src="guide-data.js?v=20261026b"></script>
     <script src="approach-specs.js?v=20261016b"></script>
-    <script src="approach-options.js?v=20261023y"></script>
+    <script src="approach-options.js?v=20261026b"></script>
     <script src="preorder-guides.js?v=20261026a"></script>
-    <script src="option-concepts.js?v=20261026a"></script>
-    <script src="option-words.js?v=20261016a"></script>
+    <script src="option-concepts.js?v=20261026c"></script>
+    <script src="option-words.js?v=20261026a"></script>
     <script src="tech-data.js?v=20261022g"></script>
     <script src="compare-visual.js?v=20261023z"></script>
     <script src="colors.js?v=20261022a"></script>
@@ -1122,12 +1122,12 @@
             }
           }
           if (/Final Edition/.test(row.name)) {
-            var baseC = mates.filter(function (item) { return /Avantgarde/.test(item.name); })[0];
+            var amgC = mates.filter(function (item) { return /AMG Line/.test(item.name); })[0];
             add(
               "final",
-              name + "는 아방가르드와 구성이 다른가요?",
-              "파이널 에디션은 C 200에 별도 구성이 더해진 트림입니다. 정상가격은 " + won(man(q.vehicle)) + "입니다." +
-                (baseC ? " 아방가르드는 " + won(window.BenzQuote.man(baseC.price)) + "이고, 기본 할인 " + baseC.cash + "에 금융 추가가 있으면 그 비율이 같이 붙습니다." : "")
+              name + "는 AMG Line과 무엇이 다른가요?",
+              "파이널 에디션은 가격표와 제품 자료에 C 200 AMG Line Special Edition으로 적힌 차입니다. AMG Line 외관에 헤드업 디스플레이와 어드밴스드 사운드 시스템이 더 들어 있습니다. 정상가격은 " + won(man(q.vehicle)) + "입니다." +
+                (amgC ? " AMG Line은 " + won(window.BenzQuote.man(amgC.price)) + "이고, " + (amgC.cash === row.cash ? "기본 할인은 둘 다 " + row.cash + "입니다." : "AMG Line 기본 할인은 " + amgC.cash + "입니다.") : "")
             );
           }
           var seriesRows = rows.filter(function (item) {

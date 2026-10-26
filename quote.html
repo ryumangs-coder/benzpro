@@ -334,8 +334,8 @@
       </div>
     </main>
 
-    <script src="october-2026.js?v=20261026a"></script>
-    <script src="quote.js?v=20261023b"></script>
+    <script src="october-2026.js?v=20261026b"></script>
+    <script src="quote.js?v=20261026b"></script>
     <script src="stock.js?v=20261026a"></script>
     <script src="pick.js?v=20261023c"></script>
     <script src="car-photo.js?v=20261026a"></script>
@@ -542,7 +542,7 @@
           var perkHtml = "";
           if (q.points && q.points.length) {
             perkHtml =
-              '<div class="q-perks"><b>140주년 에디션에 더 들어간 사양</b><ul>' +
+              '<div class="q-perks"><b>' + q.pointsTitle + "</b><ul>" +
               q.points.map(function (line) { return "<li>" + line + "</li>"; }).join("") +
               "</ul></div>";
           }

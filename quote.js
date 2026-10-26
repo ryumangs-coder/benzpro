@@ -89,6 +89,30 @@
         "E-액티브 바디 컨트롤이 들어 있습니다. 앞 노면을 보고 바퀴를 미리 움직여 울퉁불퉁을 더 걸러 줍니다.",
         "외장은 알파인 그레이 100대입니다."
       ]
+    },
+    "MY26|C 200 Final Edition": {
+      option: 0,
+      extra: 0,
+      optionLabel: "",
+      pointsTitle: "C 200 AMG Line Special Edition 구성",
+      points: [
+        "AMG Line 외관입니다. 실내는 아티코 가죽 블랙(111A)입니다.",
+        "C 200 AMG Line보다 정상가격이 200만원 낮고, 헤드업 디스플레이와 어드밴스드 사운드 시스템이 더 들어 있습니다.",
+        "앞좌석 열선·통풍 시트, 파노라믹 선루프, 열선 스티어링 휠, 전동 트렁크, 앰비언트 라이트 프리미엄, 스마트폰 통합 패키지, 드라이빙 어시스턴스 패키지 플러스가 기본입니다.",
+        "2026년 6~9월 생산분 약 760대입니다."
+      ]
+    },
+    "MY27|GLC 300 4MATIC": {
+      option: 0,
+      extra: 0,
+      optionLabel: "",
+      pointsTitle: "GLC 300 4MATIC 기본 모델 구성",
+      points: [
+        "아방가르드 외관입니다. 실내는 아티코 가죽 블랙(101A)입니다.",
+        "GLC 300 4MATIC 아방가르드보다 정상가격이 550만원 낮습니다. 헤드업 디스플레이, 부메스터 3D 서라운드 사운드, 블랙 나파 룩 아티코 대시보드가 빠집니다.",
+        "앞좌석 열선·통풍 시트, 파노라믹 선루프, 열선 스티어링 휠, 360° 카메라 주차 패키지, 전동 트렁크, 열·소음 차단 글래스, 앰비언트 라이트 프리미엄, 스마트폰 통합 패키지, 드라이빙 어시스턴스 패키지 플러스가 기본입니다.",
+        "2026년 7~12월 생산분 약 500대입니다."
+      ]
     }
   };
 
@@ -152,6 +176,7 @@
       extra: extra,
       optionLabel: edition ? edition.optionLabel : "",
       points: edition && edition.points ? edition.points : [],
+      pointsTitle: edition && edition.pointsTitle ? edition.pointsTitle : "140주년 에디션에 더 들어간 사양",
       basis: basis,
       cash: cash,
       finAdd: fin.add,

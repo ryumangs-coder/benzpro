@@ -150,7 +150,7 @@
       re: /트림|우드$|우드,|^기본 실내 장식$/, val: trimName,
       eq: function (a, b) { return squash(a) === squash(b); } },
     { key: "upholstery", label: "시트 소재", cat: "시트·공간", mode: "tier", none: null,
-      re: /^(?!.*(스티어링|루프 라이너|시트 벨트)).*(가죽|아티코|마이크로컷)|^시트 소재$|^가죽 패키지$/, val: seatMat,
+      re: /^(?!.*(스티어링|루프 라이너|시트 벨트|대시보드)).*(가죽|아티코|마이크로컷)|^시트 소재$|^가죽 패키지$/, val: seatMat,
       eq: function (a, b) { return a === b; } },
     { key: "ext", label: "외관 디자인 (익스테리어 라인)", cat: "외관·생활 편의", mode: "tier", none: "—",
       re: /익스테리어|외장$|^외관 디자인$|^메르세데스-벤츠 스타일링|바디 ?스타일링|스타일링 패키지|^(AMG Line|EXCLUSIVE|AVANTGARDE|PROGRESSIVE)$|^(프로그레시브|아방가르드|익스클루시브) 라인$/i, val: lineName },
@@ -245,6 +245,7 @@
       if (skip && skip(it.text)) return;
       var rule = ruleOf(it.text) || labelRule(it);
       if (!rule) return;
+      if (rule.key === "upholstery" && /스티어링|대시보드/.test(it.pair || "")) return;
       (map[rule.key] = map[rule.key] || []).push(it);
     });
     var out = {};
