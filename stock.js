@@ -25,6 +25,7 @@
     if (name.indexOf("EQE") !== -1) return "EQE";
     if (name.indexOf("EQS") !== -1) return "EQS";
     if (name.indexOf("GLA") !== -1) return "GLA";
+    if (name.indexOf("GLB") !== -1 && name.indexOf("electric") !== -1) return "GLB electric";
     if (name.indexOf("GLB") !== -1) return "GLB";
     if (name.indexOf("GLC") !== -1 && name.indexOf("electric") !== -1) return "GLC electric";
     if (name.indexOf("GLC") !== -1) return "GLC";

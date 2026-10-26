@@ -9,8 +9,10 @@
 (function () {
   var GENERIC = /^(기본 적용|적용|포함|기본|미적용|없음|—|-|해당 없음|유료 선택|선택)$/;
 
+  var UNKNOWN = "정보가 아직 없습니다";
   function stOf(s) {
     s = String(s || "").trim();
+    if (s === "확인 필요") return "unk";
     if (/^(기본 적용|적용|포함|기본)$/.test(s)) return "yes";
     if (/^(선택|유료 선택)$/.test(s)) return "opt";
     if (/^(미적용|없음|—|-|해당 없음)$/.test(s)) return "no";
@@ -210,6 +212,7 @@
     var yes = list.filter(function (x) { return x.st === "yes"; });
     var opt = list.filter(function (x) { return x.st === "opt"; });
     var no = list.filter(function (x) { return x.st === "no"; });
+    var unk = list.filter(function (x) { return x.st === "unk"; });
     if (rule.key === "mem") {
       var memPool = yes.length ? yes : opt;
       if (!memPool.length) return { k: "no", v: "없음" };
@@ -220,7 +223,7 @@
       var who = driver && pass ? "운전석·조수석" : driver ? "운전석만" : pass ? "조수석만" : "있음";
       return { k: yes.length ? "yes" : "opt", v: who };
     }
-    if (rule.mode === "flag") return yes.length ? { k: "yes" } : (opt.length ? { k: "opt" } : { k: "no" });
+    if (rule.mode === "flag") return yes.length ? { k: "yes" } : (opt.length ? { k: "opt" } : (unk.length ? { k: "unk" } : { k: "no" }));
     var pool = yes.length ? yes : (rule.yesOnly ? [] : opt);
     if (pool.length) {
       var best = pool[0];
@@ -231,6 +234,7 @@
       });
       return { k: yes.length ? "yes" : "opt", v: rule.val ? rule.val(best.text) : best.text };
     }
+    if (unk.length) return { k: "unk", v: UNKNOWN };
     return no.length ? { k: "no" } : null;
   }
 
@@ -295,9 +299,11 @@
       if (!on(x) && !on(y)) return;
       var row;
       if (rule.mode === "flag") {
-        var lt = x && x.k === "yes" ? "●" : (x && x.k === "opt" ? "선택" : "—");
-        var rt = y && y.k === "yes" ? "●" : (y && y.k === "opt" ? "선택" : "—");
-        row = { left: lt, right: rt, kl: lt === "●" ? "yes" : (lt === "선택" ? "opt" : "no"), kr: rt === "●" ? "yes" : (rt === "선택" ? "opt" : "no"), differ: lt !== rt, detail: "" };
+        var flagText = function (s) { return !s ? "—" : s.k === "yes" ? "●" : s.k === "opt" ? "선택" : s.k === "unk" ? UNKNOWN : "—"; };
+        var flagKind = function (s) { return s && s.k !== "no" ? s.k : "no"; };
+        var lt = flagText(x);
+        var rt = flagText(y);
+        row = { left: lt, right: rt, kl: flagKind(x), kr: flagKind(y), differ: lt !== rt, detail: "" };
       } else {
         if (rule.none === null && (!on(x) || !on(y))) return;
         var noneA = rule.none;
@@ -316,7 +322,7 @@
         var differ = !same || oa !== ob || (rule.key === "mem" && !on(x) && !on(y));
         row = {
           left: va + (oa ? " (선택)" : ""), right: vb + (ob ? " (선택)" : ""),
-          kl: !on(x) ? "no" : (oa ? "opt" : "yes"), kr: !on(y) ? "no" : (ob ? "opt" : "yes"),
+          kl: !on(x) ? "no" : (oa ? "opt" : x.k), kr: !on(y) ? "no" : (ob ? "opt" : y.k),
           differ: differ, detail: !differ && on(x) ? va : ""
         };
       }

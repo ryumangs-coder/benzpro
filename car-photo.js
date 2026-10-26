@@ -145,6 +145,7 @@
     if (/^CLE.*Cab/.test(n)) return c + "cle-cabriolet/149U.webp";
     if (/^CLE/.test(n)) return c + "cle-coupe/149U.webp";
     if (/^GLA/.test(n)) return c + "gla/149U.webp";
+    if (/electric/i.test(n) && /^GLB/.test(n)) return "";
     if (/^GLB/.test(n)) return c + "glb/149U.webp";
     if (/^GLC.*Coup/.test(n)) return c + "glc-coupe/149U.webp";
     if (/^GLC/.test(n)) return c + "glc/149U.webp";
