@@ -592,6 +592,9 @@
       if (window.BenzTrack) fn(window.BenzTrack);
     } catch (err) { /* 무시 */ }
   }
+  track(function (T) {
+    T.setContext(function () { return state.engaged ? { row: calcRow(), pay: state.pay } : null; });
+  });
   function trackQuote() {
     track(function (T) {
       if (!state.engaged) return;
@@ -808,6 +811,7 @@
         ].join("\n");
         function listOk() {
           if (note) note.textContent = "견적 요약을 복사했습니다";
+          track(function (T) { T.quoteCopy(row, "", "contact_section"); });
         }
         function listFail() {
           if (note) note.textContent = "복사에 실패했습니다. 아래 글을 직접 선택해 복사해 주세요.";
@@ -845,6 +849,7 @@
       ].join("\n");
       function success() {
         if (note) note.textContent = "견적 요약을 복사했습니다";
+        track(function (T) { T.quoteCopy(row, state.pay, "contact_section"); });
       }
       function fail() {
         if (note) note.textContent = "복사에 실패했습니다. 아래 글을 직접 선택해 복사해 주세요.";
@@ -864,7 +869,10 @@
     addrBtn.addEventListener("click", function () {
       var line = "경기도 고양시 덕양구 의장로 110 (도내동)";
       var note = document.getElementById("addr-note");
-      function ok() { if (note) note.textContent = "주소를 복사했습니다"; }
+      function ok() {
+        if (note) note.textContent = "주소를 복사했습니다";
+        track(function (T) { T.showroomAction("address_copy"); });
+      }
       function bad() { if (note) note.textContent = line; }
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(line).then(ok, bad);
       else bad();
@@ -920,17 +928,20 @@
     var phone = form.querySelector("#field-phone");
     var agree = form.querySelector("#privacy-agree");
     var bad = false;
-    function mark(field) {
+    var missing = [];
+    function mark(field, kind) {
       bad = true;
+      missing.push(kind);
       var box = field && field.closest("[data-required], [data-question]");
       var message = box && box.querySelector(".hp-error");
       if (message) message.classList.add("is-on");
     }
-    if (!car || !car.value) mark(car);
-    if (!name || !name.value.trim()) mark(name);
-    if (!phone || !phone.value.trim()) mark(phone);
-    if (!agree || !agree.checked) mark(agree);
+    if (!car || !car.value) mark(car, "vehicle");
+    if (!name || !name.value.trim()) mark(name, "name");
+    if (!phone || !phone.value.trim()) mark(phone, "phone");
+    if (!agree || !agree.checked) mark(agree, "consent");
     if (bad) {
+      track(function (T) { T.formError("home_consult", "validation", missing); });
       var first = form.querySelector(".hp-error.is-on");
       if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
@@ -960,7 +971,7 @@
     body.append("inquiry", inquiry);
     body.append("privacyAgree", "동의");
     var button = document.getElementById("consult-submit");
-    if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+    if (!window.BenzSubmit && (location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
       openModal(true);
       return;
     }
@@ -977,12 +988,14 @@
         });
     var leadRow = car.value === "상담 후 결정" ? null : calcRow();
     var leadPay = leadRow ? state.pay : "";
+    track(function (T) { T.formSubmit("home_consult", T.vehicleParams(leadRow, leadPay), button); });
     request.then(function (res) {
       track(function (T) { T.formResult("home_consult", res, T.vehicleParams(leadRow, leadPay)); });
       form.reset();
       if (agree) agree.checked = false;
-      openModal(false);
-    }).catch(function () {
+      openModal(!!(window.BenzSubmit && window.BenzSubmit.isTest));
+    }).catch(function (err) {
+      track(function (T) { T.formError("home_consult", window.BenzSubmit ? window.BenzSubmit.errorType(err) : "network"); });
       var fail = document.getElementById("consult-network-error");
       if (fail) {
         fail.hidden = false;

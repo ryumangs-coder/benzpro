@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="dark" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261025d"></script>
+    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261027e"></script>
     <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
     <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -245,7 +245,7 @@
     </style>
   </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261025f"></script>
+<script src="chrome.js?v=20261027b"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
@@ -641,6 +641,9 @@
           });
           return keys;
         }
+        track(function (T) {
+          T.setContext(function () { return isEnded(current) ? null : { row: current, pay: state.pay }; });
+        });
         var drawn = 0;
         function trackQuoteView() {
           track(function (T) {
@@ -767,8 +770,10 @@
           var phone = form.phone.value.trim();
           var email = form.email.value.trim();
           var ok = true;
+          var missing = [];
           function bad(key) {
             ok = false;
+            missing.push(key);
             var box = form.querySelector('[data-q="' + key + '"]');
             box.querySelector(".error").classList.remove("hidden");
             var field = box.querySelector(".field");
@@ -779,9 +784,13 @@
           if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) bad("email");
           if (!form.privacy.checked) {
             ok = false;
+            missing.push("consent");
             form.querySelector('[data-q="privacy"] .error').classList.remove("hidden");
           }
-          if (!ok) return;
+          if (!ok) {
+            track(function (T) { T.formError("quote_consult", "validation", missing); });
+            return;
+          }
           var view = compute(current);
           var picked = view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(", ");
           var inquiry = [
@@ -809,22 +818,11 @@
           var button = document.getElementById("send");
           var netErr = document.getElementById("net-err");
           if (netErr) { netErr.classList.add("hidden"); netErr.hidden = true; netErr.setAttribute("aria-hidden", "true"); }
-          var isLocal = location.hostname === "127.0.0.1" || location.hostname === "localhost";
-          if (isLocal) {
-            form.classList.add("hidden");
-            form.setAttribute("aria-hidden", "true");
-            var doneBox = document.getElementById("done");
-            doneBox.classList.remove("hidden");
-            doneBox.hidden = false;
-            doneBox.removeAttribute("aria-hidden");
-            var doneLine = doneBox.querySelector("p");
-            if (doneLine) doneLine.textContent = "테스트 화면이라 문의는 전송하지 않았습니다.";
-            return;
-          }
           var finish = window.BenzSubmit.start(form, button, "상담 신청 중…");
           if (!finish) return;
           var leadRow = current;
           var leadPay = state.pay;
+          track(function (T) { T.formSubmit("quote_consult", T.vehicleParams(leadRow, leadPay), button); });
           window.BenzSubmit.post(WEBHOOK_URL, body.toString()).then(function (res) {
             track(function (T) { T.formResult("quote_consult", res, T.vehicleParams(leadRow, leadPay)); });
             form.classList.add("hidden");
@@ -833,7 +831,12 @@
             doneOk.classList.remove("hidden");
             doneOk.hidden = false;
             doneOk.removeAttribute("aria-hidden");
-          }).catch(function () {
+            if (window.BenzSubmit.isTest) {
+              var doneLine = doneOk.querySelector("p");
+              if (doneLine) doneLine.textContent = "테스트 화면이라 문의는 전송하지 않았습니다.";
+            }
+          }).catch(function (err) {
+            track(function (T) { T.formError("quote_consult", window.BenzSubmit.errorType(err)); });
             var fail = document.getElementById("net-err");
             fail.classList.remove("hidden");
             fail.hidden = false;

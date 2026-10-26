@@ -402,7 +402,35 @@
 
   /* 상담 폼 공통 제출 상태. 실제 요청이 시작될 때만 로딩을 보여 주고, 끝나면 반드시 되돌립니다. */
   var SUBMIT_TIMEOUT = 20000;
+  var SUBMIT_HOST = String(location.hostname || "");
+  var SUBMIT_TEST = SUBMIT_HOST === "127.0.0.1" || SUBMIT_HOST === "localhost";
+  /* 로컬 미리보기에서만 쓰는 가짜 응답. 접수 주소로는 아무것도 보내지 않습니다.
+     localStorage "benzpro-submit-mock" = ok(기본) | confirmed | network | timeout | server */
+  function mockPost() {
+    var kind = "ok";
+    try { kind = window.localStorage.getItem("benzpro-submit-mock") || "ok"; } catch (err) { kind = "ok"; }
+    return new Promise(function (resolve, reject) {
+      window.setTimeout(function () {
+        if (kind === "network") reject(new TypeError("Failed to fetch"));
+        else if (kind === "timeout") reject(new Error("timeout"));
+        else if (kind === "server") reject(new Error("http 500"));
+        else if (kind === "confirmed") {
+          var res = { type: "basic", ok: true, status: 200, json: function () { return Promise.resolve({ ok: true }); } };
+          res.clone = function () { return res; };
+          resolve(res);
+        } else resolve({ type: "opaque", ok: false, status: 0 });
+      }, 300);
+    });
+  }
   window.BenzSubmit = {
+    isTest: SUBMIT_TEST,
+    /* 실패 원인을 정해진 종류로만 나눕니다. 서버 원문 메시지는 쓰지 않습니다. */
+    errorType: function (err) {
+      var msg = String((err && err.message) || "");
+      if (msg === "timeout" || (err && err.name === "AbortError")) return "timeout";
+      if (/^http \d{3}$/.test(msg)) return "server";
+      return "network";
+    },
     isBusy: function (form) {
       return !!form && form.getAttribute("aria-busy") === "true";
     },
@@ -441,6 +469,7 @@
     },
     /* 기존 방식 그대로 전송합니다(no-cors). 응답 본문은 읽을 수 없어, 네트워크 오류·시간 초과·HTTP 오류가 확인될 때만 실패로 처리합니다. */
     post: function (url, body) {
+      if (SUBMIT_TEST) return mockPost();
       return new Promise(function (resolve, reject) {
         var ctrl = window.AbortController ? new AbortController() : null;
         var timer = window.setTimeout(function () {
