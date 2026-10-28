@@ -157,7 +157,7 @@
     { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
     { group: "sedan", name: "S클래스", line: "26년식 일반 모델은 판매가 끝났습니다. 지금 고르는 차는 27년식입니다.", prefix: "S ", car: "S-Class" },
     { group: "suv", name: "GLA", line: "26년식은 재고가 없습니다. 27년식 GLA만 선택할 수 있습니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
-    { group: "suv", name: "GLB", line: "26년식 GLB는 재고가 소진되었습니다. 다른 연식은 등록된 판매 조건이 있을 때만 고릅니다.", prefix: "GLB ", not: "electric", car: "A, CLA, GLA, GLB" },
+    { group: "suv", name: "GLB", line: "26년식 GLB는 재고가 소진되었습니다. 27년식은 신형 일렉트릭 GLB 250+입니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
     { group: "suv", name: "GLC", line: "26년식 일반 모델은 판매가 끝났습니다. AMG 43만 남아 있고, 일반 GLC는 27년식만 선택할 수 있습니다.", prefix: "GLC ", not: ["Coup", "electric"], car: "GLC" },
     { group: "suv", name: "GLC 쿠페", line: "26년식 일반 쿠페는 판매가 끝났습니다. AMG 43 쿠페만 남아 있고, 일반 쿠페는 27년식만 선택할 수 있습니다.", prefix: "GLC ", has: "Coup", not: "electric", car: "GLC" },
     { group: "suv", name: "GLE", line: "공간이 더 필요한 중대형 SUV입니다.", prefix: "GLE ", not: "Coup", car: "GLE" },
@@ -226,7 +226,7 @@
     return n.toLocaleString("ko-KR") + "만원";
   }
   function showName(name) {
-    var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디");
+    var s = String(name).replace("(SWB)", "숏바디").replace(/ Long/g, " 롱바디").replace(/ electric/g, " 일렉트릭");
     if (s === "S 450 4MATIC") return "S 450 4MATIC 숏바디";
     return s;
   }
