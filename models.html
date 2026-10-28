@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="chrome.css?v=20261025e" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
-    <link rel="stylesheet" href="compare-visual.css?v=20261023e" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261028a" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -82,8 +82,9 @@
     <script src="guide-data.js?v=20261026b"></script>
     <script src="approach-specs.js?v=20261016b"></script>
     <script src="approach-options.js?v=20261026b"></script>
-    <script src="preorder-guides.js?v=20261028a"></script>
-    <script src="spec-fill.js?v=20261028c"></script>
+    <script src="preorder-guides.js?v=20261028b"></script>
+    <script src="spec-fill.js?v=20261028d"></script>
+    <script src="compare-specs.js?v=20261028c"></script>
     <script src="option-concepts.js?v=20261026c"></script>
     <script src="option-words.js?v=20261028a"></script>
     <script src="tech-data.js?v=20261022g"></script>
@@ -488,6 +489,8 @@
           if (label === "구동 방식" || label === "구동방식") return "구동";
           if (label === "가속력") return "0-100km/h";
           if (label === "공차 중량") return "공차중량";
+          if (label === "인증 주행거리") return "1회 충전 주행거리";
+          if (label === "배터리 용량") return "배터리";
           return label;
         }
         function specNumber(value) {
@@ -538,6 +541,7 @@
           if (label === "최고출력") return specNumber(v) ? specNumber(v) + "ps" : v;
           if (label === "모터 최고출력") return specNumber(v) ? specNumber(v) + "kW" : v;
           if (label === "1회 충전 주행거리") return tidyMeasure(v, "km");
+          if (label === "배터리" && /^\d+(?:\.\d+)?$/.test(v)) return v + " (단위 미표기)";
           if (label === "최대토크") return specNumber(v) ? specNumber(v) + "kg·m" : v;
           if (label === "0-100km/h") return specNumber(v) ? specNumber(v) + "초" : v;
           if (label === "복합연비") return tidyEconomy(v);
@@ -568,17 +572,19 @@
           (book.specs || []).forEach(function (pair) { bookMap[pair[0]] = pair[1]; });
           var have = {};
           var rows = [];
+          /* 세 번째 칸은 출처 {by, url, my, basis, note, checked}. 출처가 없는 기존 값은 null로 둡니다. */
+          var bookSrc = book.specs && book.specs.length ? { by: "사이트 기존 제원 규칙 · 출처 기록 없음", my: book.year || "연식 구분 없음" } : null;
           (guideList || []).forEach(function (pair) {
             var label = canonSpec(pair[0]);
             if (!pair[1] || have[label]) return;
             if (replace[label] && bookMap[label]) return;
             have[label] = true;
-            rows.push([label, tidySpec(label, pair[1])]);
+            rows.push([label, tidySpec(label, pair[1]), pair[2] || null]);
           });
           var extra = (book.specs || []).filter(function (pair) { return !have[pair[0]]; }).map(function (pair) {
-            return [pair[0], tidySpec(pair[0], pair[1])];
+            return [pair[0], tidySpec(pair[0], pair[1]), bookSrc];
           });
-          var order = ["길이", "너비", "높이", "휠베이스", "배기량", "엔진", "연료", "배터리", "변속기", "구동", "최고출력", "모터 최고출력", "최대토크", "0-100km/h", "최고속도", "복합연비", "도심 · 고속 연비", "연비 등급", "연료탱크", "WLTP 주행거리", "1회 충전 주행거리", "급속 충전", "트렁크", "공차중량", "승차 정원", "서스펜션", "브레이크", "타이어"];
+          var order = ["길이", "너비", "높이", "휠베이스", "배기량", "엔진", "연료", "배터리", "전기 아키텍처", "변속기", "구동", "최고출력", "모터 최고출력", "최대토크", "0-100km/h", "최고속도", "복합연비", "도심 · 고속 연비", "연비 등급", "연료탱크", "1회 충전 주행거리", "WLTP 주행거리", "급속 충전", "트렁크", "전면 트렁크", "공차중량", "승차 정원", "서스펜션", "브레이크", "타이어"];
           var all = rows.concat(extra);
           all.sort(function (a, b) {
             var ia = order.indexOf(a[0]);
@@ -671,6 +677,17 @@
           var leftSpecs = mergedSpecs(pa.spec && pa.spec.specs, a);
           var rightSpecs = mergedSpecs(pb.spec && pb.spec.specs, b);
           var specWins = { left: [], right: [] };
+          var S = window.BenzSpecs;
+          function specMap(list) {
+            var map = {};
+            (list || []).forEach(function (pair) { map[pair[0]] = { text: pair[1], src: pair[2] || null }; });
+            return map;
+          }
+          var mapA = specMap(leftSpecs.rows);
+          var mapB = specMap(rightSpecs.rows);
+          var ctxA = S ? S.ctx(a, mapA) : null;
+          var ctxB = S ? S.ctx(b, mapB) : null;
+          var judged = [];
           function rowsFor(listA, listB) {
             var labels = [];
             (listA || []).concat(listB || []).forEach(function (pair) {
@@ -679,6 +696,11 @@
             return labels
               .map(function (label) {
                 var view = harmonize(label, pairVal(listA, label), pairVal(listB, label));
+                if (S) {
+                  var made = S.row(label, view.a, view.b, mapA[label] && mapA[label].src, mapB[label] && mapB[label].src, ctxA, ctxB, a.i === b.i);
+                  judged.push(made.judge);
+                  return made.html;
+                }
                 var gap = a.i === b.i ? null : specGap(label, view.a, view.b);
                 if (gap && gap.win) specWins[gap.win].push(label);
                 return specLine(label, view.a, view.b, gap);
@@ -687,11 +709,29 @@
           }
           var specHtml = rowsFor(leftSpecs.rows, rightSpecs.rows);
           var specSummary = specWinSummary(specWins, a, b);
+          var specExtra = "";
+          if (S && specHtml) {
+            var dims = {};
+            ["길이", "너비", "높이", "휠베이스"].forEach(function (label) {
+              dims[label] = { left: mapA[label] && mapA[label].text, right: mapB[label] && mapB[label].text };
+            });
+            var priceA = pack(a).priceMan;
+            var priceB = pack(b).priceMan;
+            specSummary = a.i === b.i ? "" : S.summary(showName(a.name) + " · " + a.my, showName(b.name) + " · " + b.my, judged, {
+              left: priceA, right: priceB,
+              basis: "정상가격 기준 · " + (window.OCTOBER_2026 && window.OCTOBER_2026.asOfPrice ? window.OCTOBER_2026.asOfPrice.replace(/\./g, ".") + " 가격표" : "가격표") + " · 부가세 포함 · 할인 전"
+            });
+            specExtra = S.figure(dims) + S.battery(a, b, mapA, mapB, ctxA, ctxB) + S.generation(a, b, mapA, mapB);
+          }
           var filledNote = leftSpecs.filled || rightSpecs.filled
             ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">비어 있던 칸은 같은 차의 제원표에서 채웠습니다. 휠과 연식에 따라 숫자가 달라질 수 있습니다.</p>'
             : "";
           var specSection = specHtml
-            ? '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 더 나은 쪽에 ‘우세’를 붙이고, 가운데 화살표가 그쪽을 가리키며 차이를 보여 줍니다. 크기·무게처럼 좋고 나쁨이 없는 항목은 차이만 적습니다.</p>' + filledNote + specSummary + '<div class="mt-3">' + specHtml + "</div>"
+            ? '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3>' +
+              (S
+                ? '<p class="sp-intro">숫자마다 쉬운 설명과 차이를 함께 적었어요. 힘·주행거리처럼 클수록 강점인 항목은 조건이 같을 때만 ‘✔ 우세’를 붙여요. 길이·무게처럼 좋고 나쁨이 없는 항목은 ‘↔ 크기 차이’로만 적고, 연식·동력 방식·측정 기준이 다르면 우열을 가리지 않아요. 값이 없는 칸은 ‘공식 자료 확인 필요’로 남겨 둡니다.</p>'
+                : '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 더 나은 쪽에 ‘우세’를 붙이고, 가운데 화살표가 그쪽을 가리키며 차이를 보여 줍니다. 크기·무게처럼 좋고 나쁨이 없는 항목은 차이만 적습니다.</p>') +
+              filledNote + specSummary + '<div class="' + (S ? "sp-list" : "mt-3") + '">' + specHtml + "</div>" + specExtra
             : '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다. 상담에서 숫자로 같이 보겠습니다.</p>' + askBox(a, b, "제원부터 같이 보겠습니다", "길이, 힘, 연비가 집에 맞는지 두 차 기준으로 짚어 드립니다.");
           var gearA = {};
           var gearB = {};

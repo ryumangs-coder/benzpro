@@ -1,5 +1,5 @@
 /* 제원 빈칸 보완 (벤츠비교).
- * 새 숫자를 만들지 않습니다. 같은 차의 다른 기록에 이미 있는 값, 차 이름으로 확실한 값(4MATIC = 사륜구동, 전기차 = 전기)만 채웁니다.
+ * 새 숫자를 만들지 않습니다. 이름이 달라 연결되지 않던 같은 차의 기록과, 차 이름으로 확실한 값(4MATIC = 사륜구동, 전기차 = 전기)만 채웁니다.
  * guide-data.js · approach-specs.js · preorder-guides.js 다음에 불러옵니다. */
 (function () {
   var book = window.GUIDE_DATA;
@@ -46,42 +46,8 @@
     if (!book[key] && book[ALIAS[key]]) book[key] = book[ALIAS[key]];
   });
 
-  /* 2. 같은 세대·같은 트림의 다른 연식 기록에서 차체·엔진 값만 가져옵니다. 연비는 연식마다 달라 가져오지 않습니다.
-        E클래스는 기존 방침(27년식 공통 사양은 26년식 같은 트림 기준)과 같습니다. */
-  var BODY = ["길이", "너비", "높이", "휠베이스", "배기량", "최고출력", "최대토크"];
-  [
-    ["MY27|E200EXCLUSIVE", "MY26|E200EXCLUSIVE"],
-    ["MY27|E200AMGLINE", "MY26|E200AMGLINE"],
-    ["MY27|E3004MATICEXCLUSIVE", "MY26|E3004MATICEXCLUSIVE"],
-    ["MY27|E3004MATICAMGLINE", "MY26|E3004MATICAMGLINE"],
-    ["MY27|E4504MATICEXCLUSIVE", "MY26|E4504MATICEXCLUSIVE"],
-    ["MY27|E4504MATICAMGLINE", "MY26|E4504MATICAMGLINE"],
-    ["MY27|GLC220D4MATIC", "MY26|GLC220D4MATIC"],
-    ["MY27|GLC3004MATICAVANTGARDE", "MY26|GLC3004MATICAVANTGARDE"],
-    ["MY27|GLC3004MATICAMGLINE", "MY26|GLC3004MATICAMGLINE"],
-    ["MY27|GLC3004MATIC", "MY26|GLC3004MATICAVANTGARDE"],
-    ["MY27|AMGSL634MATICPLUS", "MY26|AMGSL634MATICPLUS"]
-  ].forEach(function (pair) {
-    var from = book[pair[1]];
-    if (!from) return;
-    BODY.forEach(function (label) { add(pair[0], label, valueOf(from, label)); });
-  });
-
-  /* 27년식 GLC 300 4MATIC 기본 모델은 아방가르드와 엔진·구동이 같습니다(제품 정보: 아방가르드에서 HUD·부메스터·대시보드만 빠짐).
-     휠 디자인이 달라 타이어 규격은 가져오지 않습니다. */
-  var glcAv = rules.filter(function (r) { return (r.need || []).join("|") === "GLC 300|Avantgarde"; })[0];
-  if (glcAv) {
-    (glcAv.specs || []).forEach(function (pair) {
-      if (pair[0] !== "타이어" && pair[0] !== "복합연비") add("MY27|GLC3004MATIC", pair[0], pair[1]);
-    });
-  }
-
-  /* GLE 450 4MATIC SUV는 같은 엔진인 GLE 450 쿠페 어프로치북 값(최대토크 51kg·m로 동일)에서 최고출력만 가져옵니다. */
-  var gleCoupe = rules.filter(function (r) { return (r.need || []).join("|") === "GLE 450|Coup"; })[0];
-  var glePower = gleCoupe ? (gleCoupe.specs || []).filter(function (pair) { return pair[0] === "최고출력"; })[0] : null;
-  if (glePower) {
-    ["MY26|GLE4504MATIC", "MY26|GLE4504MATICAMGLINE"].forEach(function (key) { add(key, "최고출력", glePower[1]); });
-  }
+  /* 다른 연식·다른 트림 기록에서 숫자를 옮겨 채우지 않습니다. 연식·트림마다 값이 달라질 수 있어, 그 차의 자료가 없으면
+     비교 화면에 "공식 자료 확인 필요"로 남깁니다. */
 
   /* 3. 이름으로 확실한 값 */
   var FUEL = {

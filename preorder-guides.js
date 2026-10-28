@@ -347,18 +347,38 @@
     specs.push({ need: ["CLA 250+", "electric"], not: [], year: "MY27", specs: cla250ev.slice() });
   }
 
-  /* 일렉트릭 GLB (X244). 출처: 2026.10.26 MY27 GLB electric 제품 정보 v2.
-   * 자료에 없는 출력·주행거리·크기는 적지 않습니다. */
+  /* 일렉트릭 GLB (X244). 장비 목록은 2026.10.26 MY27 GLB electric 제품 정보 v2, 제원 숫자는 아래 공개 출처를 씁니다.
+   * 자료에 없는 출력·국내 인증 주행거리는 적지 않습니다. */
   (specs || []).concat(basics || []).forEach(function (item) {
     var need = (item.need || []).join(" ");
     if (!/^(AMG )?GLB /.test(need)) return;
     item.not = item.not || [];
     if (item.not.indexOf("electric") === -1) item.not.push("electric");
   });
+  /* 세 번째 칸은 출처. 공식 스토어 상세와 벤츠코리아 발표를 인용한 기사를 구분해 적습니다(확인 2026-10-28, 트림 GLB 250+ electric · 2027년식).
+     공식 스토어의 최고출력 표기("0 ps")는 잘못된 값이라 쓰지 않습니다. 국내 인증 주행거리는 아직 공개되지 않았습니다. */
+  var GLB_STORE = { by: "메르세데스-벤츠 스토어 공식 상세(사전예약 · 사양 참고용)", url: "https://www.mercedes-benz.co.kr/passengercars/buy/new-car/product.html/MBJ3H2FF9C", my: "2027년식 GLB 250+ electric", checked: "2026-10-28" };
+  var GLB_NEWS = { by: "뉴시스 기사(벤츠코리아 발표 인용) · 공식 제원표 아님", url: "https://www.newsis.com/view/NISX20261028_0003844233", my: "GLB 250+ electric", checked: "2026-10-28" };
+  function from(src, extra) {
+    var out = {};
+    Object.keys(src).forEach(function (k) { out[k] = src[k]; });
+    Object.keys(extra || {}).forEach(function (k) { out[k] = extra[k]; });
+    return out;
+  }
   var glb250ev = [
+    ["너비", "2,029mm", from(GLB_STORE, { basis: "사이드미러 포함 여부 미표기" })],
+    ["휠베이스", "2,889mm", from(GLB_NEWS, { note: "전작 대비 60mm 증가로 발표" })],
     ["배기량", "엔진 없음"],
-    ["연료", "전기"],
-    ["배터리", "85kWh NMC (CATL)"],
+    ["연료", "전기", GLB_STORE],
+    ["배터리", "85kWh 리튬이온", from(GLB_NEWS, { basis: "용량 기준(사용 가능/전체) 미표기" })],
+    ["전기 아키텍처", "800V", GLB_NEWS],
+    ["최대토크", "34.2kg·m", from(GLB_STORE, { note: "공식 표기 335Nm을 kg·m로 바꾼 값(335 ÷ 9.80665)" })],
+    ["0-100km/h", "7.4초", GLB_STORE],
+    ["1회 충전 주행거리", "국내 인증 수치 미공개", { by: "국내 인증 수치 미공개", checked: "2026-10-28" }],
+    ["WLTP 주행거리", "최대 631km", from(GLB_NEWS, { basis: "WLTP" })],
+    ["급속 충전", "최대 320kW (DC) · 10분 충전으로 최대 260km", from(GLB_NEWS, { note: "260km의 측정 기준은 기사에 없음" })],
+    ["트렁크", "540–1,715L", from(GLB_NEWS, { note: "뒤 트렁크 기본–뒷좌석 접었을 때 · 측정 방식 미표기" })],
+    ["전면 트렁크", "127L", GLB_NEWS],
     ["서스펜션", "컴포트"],
     ["스페어 타이어", "타이어핏"]
   ];
@@ -371,6 +391,8 @@
       ["외관 디자인", "프로그레시브 라인"],
       ["기본 휠", "18인치 5스포크 경량 알로이 (83R)"],
       ["대형 디스플레이", "MBUX 슈퍼스크린"],
+      ["화면 크기", "운전석 10.25인치 · 가운데 14인치 · 조수석 14인치 (기사, 벤츠코리아 발표)"],
+      ["운영체제", "MB.OS (기사, 벤츠코리아 발표)"],
       ["헤드업 디스플레이", "헤드업 디스플레이"],
       ["주행 보조", "MB.DRIVE 어시스트"],
       ["온도 조절", "2존 온도 조절 시스템"],
