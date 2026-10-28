@@ -358,6 +358,86 @@ input:checked + .pick {
 .guide-row .opt-diff {
   color: #5eead4;
 }
+/* 제원 비교: 더 나은 쪽 값, 가운데 차이 */
+.guide-row b.win {
+  color: #86efac;
+}
+.guide-row .spec-win {
+  display: inline-block;
+  margin: 0 0.35rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(134, 239, 172, 0.14);
+  color: #86efac;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.5;
+  vertical-align: 0.1em;
+}
+.guide-row .spec-gap {
+  display: block;
+  margin-top: 0.3rem;
+  color: #c5ced3;
+  font-size: 12.5px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.guide-row .spec-gap.is-win {
+  color: #86efac;
+}
+.spec-sum {
+  margin-top: 0.85rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+.spec-sum-h {
+  grid-column: 1 / -1;
+  color: #a4aaae;
+  font-size: 14px;
+  font-weight: 700;
+}
+.spec-sum-side {
+  min-width: 0;
+  border: 1px solid rgba(134, 239, 172, 0.28);
+  border-radius: 1rem;
+  background: rgba(134, 239, 172, 0.06);
+  padding: 0.7rem 0.8rem;
+}
+.spec-sum-side b {
+  display: block;
+  color: #f4f7f8;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.spec-sum-side span {
+  display: block;
+  margin-top: 0.25rem;
+  color: #86efac;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.spec-sum-side.is-right {
+  text-align: right;
+}
+@media (max-width: 359px) {
+  .guide-row .spec-win {
+    display: block;
+    width: max-content;
+    margin: 0 0 0.2rem auto;
+  }
+  .guide-row b:not(.text-right) .spec-win {
+    margin: 0.2rem auto 0 0;
+  }
+  .guide-row .spec-gap {
+    font-size: 11.5px;
+  }
+}
 .lineup-scroll {
   max-width: 100%;
   overflow-x: auto;

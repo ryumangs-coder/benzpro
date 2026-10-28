@@ -8,7 +8,7 @@
     <title>차량 가이드 | 벤츠프로</title> <meta property="og:type" content="website" /> <meta property="og:site_name" content="벤츠프로" /> <meta property="og:locale" content="ko_KR" /> <meta property="og:url" content="https://benzpro.co.kr/models" /> <meta property="og:title" content="차량 가이드 | 벤츠프로" /> <meta property="og:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta property="og:image" content="https://benzpro.co.kr/images/brand/og.png" /> <meta property="og:image:width" content="1200" /> <meta property="og:image:height" content="1200" /> <meta property="og:image:alt" content="벤츠프로" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:title" content="차량 가이드 | 벤츠프로" /> <meta name="twitter:description" content="메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로." /> <meta name="twitter:image" content="https://benzpro.co.kr/images/brand/og.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="chrome.css?v=20261025e" />
-<link rel="stylesheet" href="site.css?v=20261025d" />
+<link rel="stylesheet" href="site.css?v=20261028a" />
     <link rel="stylesheet" href="compare-visual.css?v=20261023e" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -331,6 +331,77 @@
           if (other) right.value = String(other.i);
         })();
 
+        /* 제원 한 줄의 우열. better: up(클수록 좋음) · down(작을수록 좋음) · size(좋고 나쁨 없이 차이만). */
+        var SPEC_RULES = {
+          "최고출력": { better: "up", re: /(\d+(?:\.\d+)?)\s*ps/i, unit: "ps" },
+          "모터 최고출력": { better: "up", re: /(\d+(?:\.\d+)?)\s*kW/, unit: "kW" },
+          "최대토크": { better: "up", re: /(\d+(?:\.\d+)?)\s*kg·m/, unit: "kg·m" },
+          "0-100km/h": { better: "down", re: /(\d+(?:\.\d+)?)\s*초/, unit: "초", word: "빠름" },
+          "최고속도": { better: "up", re: /(\d+(?:\.\d+)?)\s*km\/h/, unit: "km/h" },
+          "복합연비": { better: "up", re: /(\d+(?:\.\d+)?)\s*(km\/kWh|km\/L)/, unit: "" },
+          "1회 충전 주행거리": { better: "up", re: /(\d+(?:\.\d+)?)\s*km/, unit: "km" },
+          "WLTP 주행거리": { better: "up", re: /(\d+(?:\.\d+)?)\s*km/, unit: "km" },
+          "배터리": { better: "up", re: /(\d+(?:\.\d+)?)\s*kWh/, unit: "kWh" },
+          "급속 충전": { better: "up", re: /(\d+(?:\.\d+)?)\s*kW(?!h)/, unit: "kW" },
+          "트렁크": { better: "up", re: /(\d+(?:\.\d+)?)/, unit: "L" },
+          "연료탱크": { better: "up", re: /(\d+(?:\.\d+)?)\s*L/, unit: "L" },
+          "승차 정원": { better: "up", re: /(\d+)\s*인/, unit: "인" },
+          "길이": { better: "size", re: /(\d+(?:\.\d+)?)/, unit: "mm", word: "김" },
+          "너비": { better: "size", re: /(\d+(?:\.\d+)?)/, unit: "mm", word: "넓음" },
+          "높이": { better: "size", re: /(\d+(?:\.\d+)?)/, unit: "mm", word: "높음" },
+          "휠베이스": { better: "size", re: /(\d+(?:\.\d+)?)/, unit: "mm", word: "김" },
+          "배기량": { better: "size", re: /(\d+(?:\.\d+)?)/, unit: "cc", word: "큼" },
+          "공차중량": { better: "size", re: /(\d+(?:\.\d+)?)/, unit: "kg", word: "무거움" }
+        };
+        function specNum(rule, value) {
+          var m = String(value || "").replace(/(\d),(\d{3})/g, "$1$2").match(rule.re);
+          if (!m) return null;
+          return { n: parseFloat(m[1]), unit: m[2] || rule.unit };
+        }
+        function gapText(n, unit) {
+          var r = Math.round(n * 10) / 10;
+          var s = r % 1 === 0 ? r.toLocaleString("ko-KR") : r.toFixed(1);
+          return s + unit;
+        }
+        /* 두 값을 비교해 {win: left|right|null, side: 가리킬 쪽, text: 가운데 문구, say: 화면 읽기 문구} */
+        function specGap(label, a, b) {
+          var rule = SPEC_RULES[label];
+          if (!rule) return null;
+          var x = specNum(rule, a);
+          var y = specNum(rule, b);
+          if (!x || !y || x.unit !== y.unit || x.n === y.n) return null;
+          var big = x.n > y.n ? "left" : "right";
+          var diff = gapText(Math.abs(x.n - y.n), x.unit);
+          if (rule.better === "size") {
+            return { win: null, side: big, text: diff + " " + rule.word, say: (big === "left" ? "왼쪽" : "오른쪽") + "이 " + diff + " " + rule.word };
+          }
+          var win = rule.better === "down" ? (big === "left" ? "right" : "left") : big;
+          var text = rule.better === "down" ? diff + " " + rule.word : "+" + diff;
+          return { win: win, side: win, text: text, say: (win === "left" ? "왼쪽" : "오른쪽") + "이 " + (rule.better === "down" ? diff + " " + rule.word : diff + " 더 높음") };
+        }
+        function specLine(label, a, b, gap) {
+          var diff = a !== b;
+          var cls = diff ? " diff" : "";
+          var tag = '<em class="spec-win">우세</em>';
+          var left = '<b class="text-right' + cls + (gap && gap.win === "left" ? " win" : "") + '">' + (gap && gap.win === "left" ? tag : "") + a + "</b>";
+          var right = '<b class="' + cls.trim() + (gap && gap.win === "right" ? " win" : "") + '">' + b + (gap && gap.win === "right" ? tag : "") + "</b>";
+          var mid = '<span class="k">' + label;
+          if (gap) {
+            var arrow = gap.side === "left" ? "◀ " : "";
+            var tail = gap.side === "right" ? " ▶" : "";
+            mid += '<i class="spec-gap' + (gap.win ? " is-win" : "") + '" aria-hidden="true">' + arrow + esc(gap.text) + tail + '</i><span class="sr-only">' + esc(gap.say) + "</span>";
+          }
+          mid += "</span>";
+          return '<div class="guide-row">' + left + mid + right + "</div>";
+        }
+        function specWinSummary(wins, a, b) {
+          if (a.i === b.i || (!wins.left.length && !wins.right.length)) return "";
+          function side(name, list, cls) {
+            return '<div class="spec-sum-side ' + cls + '"><b>' + esc(name) + '</b><span>' + (list.length ? esc(list.join(" · ")) : "앞서는 숫자 없음") + "</span></div>";
+          }
+          return '<div class="spec-sum" role="note"><p class="spec-sum-h">숫자로 앞서는 항목</p>' +
+            side(showName(a.name), wins.left, "is-left") + side(showName(b.name), wins.right, "is-right") + "</div>";
+        }
         function line(label, a, b, hot) {
           var diff = a !== b;
           var cls = diff && hot ? " diff" : "";
@@ -599,6 +670,7 @@
           var pb = featureRecord(b, yearPair ? false : true);
           var leftSpecs = mergedSpecs(pa.spec && pa.spec.specs, a);
           var rightSpecs = mergedSpecs(pb.spec && pb.spec.specs, b);
+          var specWins = { left: [], right: [] };
           function rowsFor(listA, listB) {
             var labels = [];
             (listA || []).concat(listB || []).forEach(function (pair) {
@@ -607,16 +679,19 @@
             return labels
               .map(function (label) {
                 var view = harmonize(label, pairVal(listA, label), pairVal(listB, label));
-                return line(label, view.a, view.b, true);
+                var gap = a.i === b.i ? null : specGap(label, view.a, view.b);
+                if (gap && gap.win) specWins[gap.win].push(label);
+                return specLine(label, view.a, view.b, gap);
               })
               .join("");
           }
           var specHtml = rowsFor(leftSpecs.rows, rightSpecs.rows);
+          var specSummary = specWinSummary(specWins, a, b);
           var filledNote = leftSpecs.filled || rightSpecs.filled
             ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">비어 있던 칸은 같은 차의 제원표에서 채웠습니다. 휠과 연식에 따라 숫자가 달라질 수 있습니다.</p>'
             : "";
           var specSection = specHtml
-            ? '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 다른 칸은 금색입니다.</p>' + filledNote + '<div class="mt-3">' + specHtml + "</div>"
+            ? '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">길이, 힘, 연비처럼 차를 고를 때 먼저 보는 숫자입니다. 더 나은 쪽에 ‘우세’를 붙이고, 가운데 화살표가 그쪽을 가리키며 차이를 보여 줍니다. 크기·무게처럼 좋고 나쁨이 없는 항목은 차이만 적습니다.</p>' + filledNote + specSummary + '<div class="mt-3">' + specHtml + "</div>"
             : '<h3 id="spec-compare" class="mt-8 text-[22px] font-bold">제원 비교</h3><p class="mt-2 text-[16px] leading-relaxed">이 두 트림은 공개된 제원 표가 없습니다. 상담에서 숫자로 같이 보겠습니다.</p>' + askBox(a, b, "제원부터 같이 보겠습니다", "길이, 힘, 연비가 집에 맞는지 두 차 기준으로 짚어 드립니다.");
           var gearA = {};
           var gearB = {};
