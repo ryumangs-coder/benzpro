@@ -102,7 +102,14 @@
   add("MY27",["CLA 250+","electric"],[],{"0-100km/h":"6.7초"},claLaunch);
   gear(["CLA","electric"],"2단 변속기",official("Mercedes-Benz Group · 전기 CLA 구동계", "https://group.mercedes-benz.com/technology/innovation/development/next-generation-cla.html"));
   add("MY27",["GLB 250+","electric"],[],{"길이":"4732mm","너비":"1861mm","높이":"1687mm","구동":"후륜구동","모터 최고출력":"200kW"},reference("Mercedes-Benz UK · 전기 GLB 제조사 제원", "https://www.mercedes-benz.co.uk/passengercars/models/suv/glb-electric/overview.html"),["너비"]);
+  add("MY27",["GLB 250+","electric"],[],{"배터리":"85kWh 리튬이온","최대토크":"34.2kg·m","0-100km/h":"7.4초","최고속도":"210km/h","WLTP 주행거리":"542–631km","복합연비":"15.8–18.3kWh/100km"},reference("Mercedes-Benz Media · 전기 GLB 공식 제원","https://media.mercedes-benz.com/press-kit/5c87b37d-85fa-4161-a246-68ad10e5c54a/article/4a0928df-7c62-440f-bb7b-923b980106ad"));
   gear(["GLC","electric"],"2단 변속기",official("Mercedes-Benz Media · 전기 GLC 구동계", "https://media.mercedes-benz.com/en/press-kit/8fa9180e-edb4-4629-8c85-e2bc3c6e1468/article/c25c6609-7ee7-49f0-944f-f39a1f3b1141"));
+  /* GLC 300 electric: domestic MY27 body/range figures are from the user's dealer sheet;
+     performance/charging/range bands below are explicitly marked as Europe WLTP references. */
+  var glc300evLocal = { by: "사용자 제공 국내 MY27 제원", my: "MY27", internal: true };
+  add("MY27",["GLC 300","electric"],[],{"길이":"4845mm","너비":"1913mm","높이":"1644mm","휠베이스":"2972mm","연료":"전기","구동":"사륜구동","배터리":"85kWh 리튬이온","모터 최고출력":"310kW","최대토크":"81.6kg·m","1회 충전 주행거리":"448km","승차 정원":"5인승"},glc300evLocal,["길이","너비","높이","휠베이스","배터리","모터 최고출력","최대토크","1회 충전 주행거리"]);
+  var glc300evEU = reference("Mercedes-Benz Media · GLC 300 4MATIC electric 공식 제원","https://media.mercedes-benz.com/en/article/b7a07378-7df6-407d-a074-7d44426efe70","해외 제조사 사양 · WLTP/유럽 시장 기준");
+  add("MY27",["GLC 300","electric"],[],{"0-100km/h":"4.7초","최고속도":"210km/h","WLTP 주행거리":"523–616km","복합연비":"15.9–18.8kWh/100km","트렁크":"570–1740L","전면 트렁크":"128L","급속 충전":"320kW DC · 10–80% 약 22분","전기 아키텍처":"800V"},glc300evEU,["트렁크"]);
   var glc53 = reference("Mercedes-AMG · GLC 53 제조사 제원", "https://media.mercedes-benz.com/article/7baf1cd8-2b99-4d6d-9d51-5ae0133298ad");
   add("MY27",["AMG GLC 53"],[],{"배기량":"2999cc","연료":"가솔린 · 48V 마일드 하이브리드","최고출력":"449ps","최대토크":"61.2kg·m","0-100km/h":"4.2초","구동":"사륜구동","엔진":"직렬 6기통 터보"},glc53);
   gear(["AMG GLC 53"],"AMG SPEEDSHIFT TCT 9G",official("Mercedes-AMG · GLC 53 구동계", "https://www.mercedes-amg.com/en/glc-suv"));

@@ -16,6 +16,7 @@
   function src(id, size) {
     var s = String(id || "");
     if (/^images\//.test(s)) return s + (s.indexOf("?") >= 0 ? "" : VER);
+    if (/^https:\/\//i.test(s)) return s;
     return T.base + s + "-sm.webp" + VER;
   }
 

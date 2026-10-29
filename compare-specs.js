@@ -16,11 +16,10 @@
       url: "https://www.mercedes-benz.co.kr/passengercars/electric-battery.html",
       checked: CHECKED
     },
-    newsis: {
-      by: "뉴시스 기사(벤츠코리아 발표 인용, 2026.10.28)",
-      url: "https://www.newsis.com/view/NISX20261028_0003844233",
-      checked: CHECKED,
-      article: true
+    glb: {
+      by: "Mercedes-Benz 공식 GLB 제원",
+      url: "https://media.mercedes-benz.com/press-kit/5c87b37d-85fa-4161-a246-68ad10e5c54a/article/4a0928df-7c62-440f-bb7b-923b980106ad",
+      checked: CHECKED
     },
     store: {
       by: "메르세데스-벤츠 스토어 공식 상세(사전예약, 사양 참고용)",
@@ -171,7 +170,25 @@
       return out;
     }
     if (meta.kind === "text") {
-      var same = String(va).replace(/\s/g, "") === String(vb).replace(/\s/g, "");
+      var leftText = String(va).replace(/\s/g, "");
+      var rightText = String(vb).replace(/\s/g, "");
+      if (label === "변속기") {
+        function gearboxKey(value) {
+          var s = String(value || "").replace(/[\s_-]/g, "").toUpperCase();
+          if (s.indexOf("TCT") !== -1) return "AMG:TCT9";
+          if (s.indexOf("MCT") !== -1) return "AMG:MCT9";
+          if (s.indexOf("DCT") !== -1 && s.indexOf("7") !== -1) return "DCT7";
+          if (s.indexOf("DCT") !== -1 && s.indexOf("8") !== -1) return "DCT8";
+          if (s.indexOf("9G") !== -1 || s.indexOf("9단") !== -1 || s.indexOf("9SPEED") !== -1 || s.indexOf("9속") !== -1 || s.indexOf("TRONIC") !== -1) return "9G-TRONIC";
+          if (s.indexOf("7G") !== -1 || s.indexOf("7단") !== -1 || s.indexOf("7SPEED") !== -1) return "7G-TRONIC";
+          if (s.indexOf("8G") !== -1 || s.indexOf("8단") !== -1 || s.indexOf("8SPEED") !== -1) return "8G-DCT";
+          if (s.indexOf("2단") !== -1 || s.indexOf("TWOSPEED") !== -1 || s.indexOf("2SPEED") !== -1) return "2단 변속기";
+          return s;
+        }
+        leftText = gearboxKey(va);
+        rightText = gearboxKey(vb);
+      }
+      var same = leftText === rightText;
       out.type = same ? "same" : "differ";
       out.text = same ? "두 차가 같아요." : "두 차가 달라요.";
       out.say = same ? "" : (meta.say || "");
@@ -230,15 +247,8 @@
   }
 
   function sourceLine(s) {
-    if (!s) return "출처 기록 없음";
-    var text = esc(s.by || "출처");
-    var extra = [];
-    if (s.my) extra.push(s.my);
-    if (s.basis) extra.push(s.basis);
-    if (s.note) extra.push(s.note);
-    if (s.checked) extra.push("확인 " + s.checked);
-    var tail = extra.length ? " · " + esc(extra.join(" · ")) : "";
-    return s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + text + " ↗</a>" + tail : text + tail;
+    if (!s || !s.url || /어프로치북|송파/i.test(String(s.by || "")) || !/^https:\/\/(?:[^/]+\.)?(?:mercedes-benz\.[a-z.]+|mercedes-amg\.com|mbusa\.com)(?:\/|$)/i.test(String(s.url))) return "";
+    return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.by || "공식 자료") + " ↗</a>";
   }
   function valueCell(side, v, win) {
     var miss = isMissing(v);
@@ -271,7 +281,11 @@
       else if (j.why) html += '<p class="sp-say">' + esc(j.why) + (j.say ? " " + esc(j.say) : "") + "</p>";
       else if (j.say) html += '<p class="sp-say">' + esc(j.say) + "</p>";
     }
-    html += '<p class="sp-src">근거 · 왼쪽: ' + sourceLine(sa) + (sameCar ? "" : " / 오른쪽: " + sourceLine(sb)) + "</p></div>";
+    var srcA = sourceLine(sa);
+    var srcB = sameCar ? "" : sourceLine(sb);
+    var source = srcA && srcB ? (srcA === srcB ? srcA : "왼쪽 " + srcA + " · 오른쪽 " + srcB) : (srcA || srcB);
+    if (source) html += '<p class="sp-src">출처 · ' + source + "</p>";
+    html += "</div>";
     return { html: html, judge: j };
   }
 
@@ -447,7 +461,7 @@
     var wbN = numOf("휠베이스", v(g.nm, "휠베이스"));
     var wbO = numOf("휠베이스", v(g.om, "휠베이스"));
     var wb = wbN && wbO ? fmt(wbN.n - wbO.n, "mm") : "";
-    var src = sourceLine(SOURCES.newsis);
+    var src = sourceLine(SOURCES.glb);
     var rows = [
       ["휠베이스", "신형 GLB " + (v(g.nm, "휠베이스") || "자료 확인 필요") + " · EQB " + (v(g.om, "휠베이스") || "자료 확인 필요") +
         (wb ? " → 신형이 " + wb + " 더 깁니다. 발표 자료의 '전작 대비 60mm 증가'와 같아요." : ""), "계산"],
@@ -462,7 +476,7 @@
     return '<section class="sp-gen" aria-labelledby="sp-gen-h"><h4 id="sp-gen-h">세대가 바뀌며 달라진 점 · 신형 일렉트릭 GLB와 EQB</h4>' +
       '<p class="sp-fig-lead">EQB는 지난 세대의 소형 전기 SUV이고, 신형 일렉트릭 GLB는 벤츠코리아가 EQB와 견주어 설명한 새 세대 전기 SUV예요. 어느 차가 이긴다기보다, 무엇이 바뀌었는지 보는 카드예요.</p>' +
       "<dl>" + rows.map(function (r) { return "<dt>" + esc(r[0]) + ' <em class="sp-gen-k">' + esc(r[2]) + "</em></dt><dd>" + esc(r[1]) + "</dd>"; }).join("") +
-      "</dl>" + '<p class="sp-src">근거 · ' + src + " · EQB 값은 사이트 기존 자료(출처 기록 없음)</p></section>";
+      "</dl>" + (src ? '<p class="sp-src">출처 · ' + src + "</p>" : "") + "</section>";
   }
 
   window.BenzSpecs = {
