@@ -1,0 +1,18 @@
+# Keep development and handoff files out of public static assets
+.git/
+.github/
+.gitignore
+README.md
+docs/
+scripts/
+node_modules/
+.wrangler/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.log
+*.pem
+*.key
+.DS_Store
+**/.DS_Store

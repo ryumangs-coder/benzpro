@@ -7,3 +7,9 @@
 - 앱 간 인수인계/배포 안내, 로컬 JavaScript 구문 검사 추가.
 - GitHub push 및 운영 배포: 미실행.
 - 다음: Cloudflare 관리 화면에서 배포 설정과 최근 배포 버전 확인.
+
+## 2026-10-29 — Cloudflare 배포 경로 확인
+- 실제 운영 서비스·도메인·배포 상태를 관리 화면에서 확인하고 DEPLOYMENT.md에 기록.
+- 운영 설정/코드 변경·GitHub push·운영 배포 없음.
+- 개발 문서/검사 도구를 정적 자산에서 제외하는 .assetsignore 추가.
+- Wrangler 4.155.0의 배포 없는 dry-run 검사 통과. 실제 업로드 없음.
