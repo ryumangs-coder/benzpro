@@ -148,6 +148,7 @@
 
   /* 우세를 붙이지 않는 이유 */
   function blocker(meta, ca, cb, sa, sb) {
+    if ((sa && sa.reference) || (sb && sb.reference)) return { stop: true, why: "제조사 참고 사양이 포함되어 있어 국내 해당 연식의 확정 제원으로 우열을 판정하지 않아요." };
     if (sa && sb && sa.basis && sb.basis && sa.basis !== sb.basis) return { stop: true, why: "측정 기준이 달라(" + sa.basis + " · " + sb.basis + ") 비교하지 않아요." };
     var unclear = [sa, sb].filter(function (s) { return s && /미표기/.test(s.basis || ""); })[0];
     if (meta.basisCheck && unclear) return { stop: true, why: "한쪽 값의 측정 기준(" + unclear.basis + ")이 확인되지 않아 차이를 계산하지 않아요." };
