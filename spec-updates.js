@@ -7,8 +7,8 @@
   var rules = [];
   var checked = "2026-10-29";
   function pdf(page, year) {
-    return { by: "HS효성 더클래스 송파 어프로치북 · " + page + "쪽", my: year, checked: checked,
-      note: "사용자 제공 딜러 제원표 · 세부 사양은 생산 시점에 따라 다를 수 있음" };
+    return { by: "사용자 제공 사양 자료 · " + page + "쪽", my: year, checked: checked,
+      note: "세부 사양은 생산 시점에 따라 다를 수 있음" };
   }
   function official(title, url, note) {
     return { by: title, url: url, checked: checked, note: note || "현행 세대 제조사 공통 사양" };

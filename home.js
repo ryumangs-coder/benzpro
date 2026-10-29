@@ -441,7 +441,7 @@
       return "<tr><th scope=\"row\">" + esc(item[0]) + "</th><td>" + esc(item[1]) + "</td><td>" + esc(item[2]) + "</td></tr>";
     }).join("");
     var source = state.year === "MY26"
-      ? "외관, 휠, 하체는 26년식 E클래스 카탈로그와 어프로치북에서 확인된 기본 사양입니다."
+      ? "외관, 휠, 하체는 26년식 E클래스 카탈로그와 기본 사양 자료에서 확인된 내용입니다."
       : "공통 사양은 2026년식 기준으로 정리했으며, 확인된 2027년식 변경 사항을 반영했습니다. 실제 적용 사양은 출고 차량 기준으로 확인해 주세요.";
     var delta = "";
     if (state.year === "MY27" && window.BenzStock && window.BenzStock.eEquip) {
