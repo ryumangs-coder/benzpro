@@ -527,7 +527,7 @@
     var params = new URLSearchParams(location.search);
     var stored = (window.BenzPick && window.BenzPick.read()) || {};
     var years = eYears();
-    state.year = years[0] || "MY27";
+    state.year = years.indexOf("MY26") !== -1 ? "MY26" : (years[0] || "MY26");
     var askedName = params.get("name") || "";
     var askedMy = params.get("my") || "";
     var named = null;
