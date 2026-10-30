@@ -2,3 +2,9 @@
 # Cloudflare Pages가 302로 보냅니다. 채널이 바뀌면 아래 목적지 두 줄만 고치면 됩니다.
 /chat   https://pf.kakao.com/_YxnqWX/chat   302
 /chat/  https://pf.kakao.com/_YxnqWX/chat   302
+
+# 외부 채널 유입 통일. :campaign에는 영문 소문자·숫자·하이픈만 사용하며 고객 정보는 넣지 않습니다.
+# 예: /go/youtube/e300-4matic-review
+/go/youtube/:campaign https://benzpro.co.kr/?utm_source=youtube&utm_medium=video&utm_campaign=:campaign 302
+/go/naver/:campaign https://benzpro.co.kr/?utm_source=naver&utm_medium=organic&utm_campaign=:campaign 302
+/go/instagram/:campaign https://benzpro.co.kr/?utm_source=instagram&utm_medium=social&utm_campaign=:campaign 302
