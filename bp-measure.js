@@ -16,7 +16,7 @@
  * 이벤트 값의 의미
  *   quote_price_man : 견적 화면에 표시된 "할인 적용 예상 차량가", 만원 단위 정수. 취득세·등록비·보험료·금융 이자 제외.
  *                     실제 계약 금액이나 매출이 아니므로 value/currency 파라미터로 보내지 않습니다.
- *   contact_click   : 카카오톡·전화 "버튼을 누른 것"입니다. 메시지 전송이나 통화 연결 완료가 아닙니다.
+ *   phone_click / kakao_click : 전화·카카오톡 버튼을 누른 것입니다. 통화 연결이나 메시지 전송 완료가 아닙니다.
  *   consultation_submit : 필수 입력 검사를 통과하고 접수 요청을 "시작"한 것입니다. 접수 성공이 아닙니다.
  *   generate_lead   : 접수 서버가 응답 본문 {"ok":true}로 접수를 확인해 준 경우에만 보냅니다.
  *                     지금 접수 주소(Apps Script)는 no-cors로 호출해 응답을 읽을 수 없으므로, 현재는 보내지지 않습니다(미측정).
@@ -31,7 +31,7 @@
     cookieDomain: "benzpro.co.kr",
     siteType: "main",
     /* 화면·문구·버튼을 바꿔 배포할 때 사람이 직접 올립니다(예: 2026-11-03a). 방문마다 바뀌는 값이 아닙니다. */
-    uiVersion: "2026-10-27a",
+    uiVersion: "2026-10-30a",
     testFlagKey: "benzpro-ga-test",
     internalFlagKey: "benzpro-ga-internal",
     /* 방문 동의 배너가 생기면 true로 바꾸고 BenzTrack.setConsent(true|false)를 연결합니다. 지금은 사이트에 분석 동의 화면이 없습니다. */
@@ -302,7 +302,7 @@
     } catch (err) { /* 무시 */ }
     return "content";
   }
-  /* 버튼 ID: 노출(cta_view)과 클릭(contact_click·consultation_submit)이 같은 값을 씁니다.
+  /* 버튼 ID: 노출(cta_view)과 클릭(phone_click·kakao_click·consultation_submit)이 같은 값을 씁니다.
      data-cta가 있으면 그 값을, 없으면 "위치_목적"으로 만듭니다. 화면 문구가 바뀌어도 값은 그대로입니다. */
   var CTA_FIXED = [
     ["#consult-submit", "home_consult_submit"],
@@ -377,7 +377,7 @@
           params.cta_id = ctaIdOf(el, place, "reservation");
         }
       } else if (method) {
-        name = "contact_click";
+        name = method === "phone" ? "phone_click" : "kakao_click";
         params.contact_method = method;
         params.cta_id = ctaIdOf(el, place, method);
         var ctx = currentContext();
@@ -410,7 +410,7 @@
       lastClick.key = key;
       lastClick.at = now;
       /* 1초가 되기 전에 눌러도 "본 사람" 안에 들어가도록, 노출을 먼저 기록합니다. */
-      if (name === "contact_click") ctaView(params.cta_id, place, { beacon: true });
+      if (name === "phone_click" || name === "kakao_click") ctaView(params.cta_id, place, { beacon: true });
       send(name, params, { beacon: true });
     } catch (err) { /* 링크 이동은 항상 그대로 진행합니다. */ }
   }
