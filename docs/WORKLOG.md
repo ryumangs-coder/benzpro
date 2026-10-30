@@ -41,3 +41,11 @@
 - 운영 반영용 브랜치 `analytics-contact-events-20261030`에서 bp-measure.js를 수정해 이후에는 `phone_click`과 `kakao_click`을 사이트에서 직접 전송하도록 준비.
 - 확인: 소스의 기존 `contact_method` 값은 `tel:` 링크에 `phone`, `/chat`·카카오 링크에 `kakao`로 판별함. 개인정보는 이벤트로 전송하지 않음.
 - GitHub main 반영 및 Cloudflare 운영 배포: 미실행(운영 배포 승인 대기).
+
+## 2026-10-30 — 카카오톡 GA4 맞춤 이벤트 추가
+
+- bp-measure.js 공통 캡처 클릭 처리에서 /chat, pf.kakao.com, open.kakao.com 링크에 `카톡` 이벤트 추가. event_category=conversion, event_label=kakao_consulting, transport_type=beacon 적용.
+- 동적 버튼/중첩 아이콘 클릭 포함. 기존 분석의 800ms 제한과 별도로 클릭마다 기록. 기존 kakao_click·phone_click, 링크 이동과 다른 리스너 유지.
+- 공개 HTML 16개의 측정 스크립트 캐시 버전 20261030b로 갱신.
+- scripts/check-kakao.cjs: 페이로드, beacon, 링크 범위, 연속 클릭, 초기 대기열, 로컬/테스트 모드, 전체 HTML 참조 검증 통과. scripts/check.sh 통과.
+- 사용자 명시 승인에 따라 main 푸시로 운영 자동 배포 진행. 운영 자산 갱신 확인 예정. GA4 수신 화면은 계정 접근이 없어 별도 검증 필요. 차단 확장 프로그램/오프라인 환경의 수신은 보장할 수 없음.

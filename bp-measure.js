@@ -31,7 +31,7 @@
     cookieDomain: "benzpro.co.kr",
     siteType: "main",
     /* 화면·문구·버튼을 바꿔 배포할 때 사람이 직접 올립니다(예: 2026-11-03a). 방문마다 바뀌는 값이 아닙니다. */
-    uiVersion: "2026-10-30a",
+    uiVersion: "2026-10-30b",
     testFlagKey: "benzpro-ga-test",
     internalFlagKey: "benzpro-ga-internal",
     /* 방문 동의 배너가 생기면 true로 바꾸고 BenzTrack.setConsent(true|false)를 연결합니다. 지금은 사이트에 분석 동의 화면이 없습니다. */
@@ -117,6 +117,7 @@
     vehicle_series: "code", model_id: "code", model_year: "code", purchase_method: "code",
     benefit_type: "code", action: "code", contact_method: "code", form_id: "code",
     reservation_target: "code", view_trigger: "code",
+    event_category: "code", event_label: "code",
     compare_model_id: "code", compare_model_year: "code", compare_series: "code",
     error_type: "code", error_fields: "code",
     compare_count: "int", quote_price_man: "int", benefit_count: "int"
@@ -368,6 +369,12 @@
       var params = { placement: place };
       var method = el.hasAttribute("href") ? contactMethodOf(el) : "";
       var pickOnly = !el.hasAttribute("href");
+
+      /* 모든 카카오톡 클릭을 즉시 기록합니다. 기존 분석의 800ms 중복 제한과는
+         별개이며, 캡처 단계와 beacon 전송으로 새 창·현재 창 이동을 모두 보존합니다. */
+      if (method === "kakao") {
+        send("카톡", { event_category: "conversion", event_label: "kakao_consulting" }, { beacon: true });
+      }
 
       if (pickOnly) {
         var target0 = PREORDER_TARGETS[el.getAttribute("data-pick")];
