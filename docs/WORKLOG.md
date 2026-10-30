@@ -32,3 +32,12 @@
 - 주요 제원 10개 항목 기준 누락 241칸 → 52칸. 연식·모델과 일치하는 신뢰 가능한 수치를 확인하지 못한 칸은 임의로 채우지 않음. 전체 제원 항목의 누락 총계와는 다름.
 - PDF 내 의심값 제외: E53 연료탱크 370L, S500/580 탱크·트렁크 교차값, GLS450 휠베이스 2995mm, Maybach GLS 연비 12.0km/L. EQS SUV의 PDF 구형 배터리/거리와 사이트 현재 값이 충돌하여 덮어쓰지 않음.
 - 검증: scripts/check.sh 및 scripts/check-comparison.cjs. 로컬 화면에서 E200, AMG CLE53 대 GLC43, 전기 CLA 대 전기 GLC의 값/출처/참고값 처리 확인.
+
+
+## 2026-10-30 — 상담 클릭 이벤트 분리 준비
+
+- GA4 맞춤 이벤트의 기존 카카오톡 조건이 `form_submit` 및 `/chat` 페이지 URL을 기준으로 되어 있어, 실제 클릭 추적 구조와 일치하지 않음을 확인.
+- GA4 맞춤 이벤트를 `kakao_click`으로 수정: `event_name=contact_click` 및 `contact_method=kakao`일 때만 생성.
+- 운영 반영용 브랜치 `analytics-contact-events-20261030`에서 bp-measure.js를 수정해 이후에는 `phone_click`과 `kakao_click`을 사이트에서 직접 전송하도록 준비.
+- 확인: 소스의 기존 `contact_method` 값은 `tel:` 링크에 `phone`, `/chat`·카카오 링크에 `kakao`로 판별함. 개인정보는 이벤트로 전송하지 않음.
+- GitHub main 반영 및 Cloudflare 운영 배포: 미실행(운영 배포 승인 대기).
