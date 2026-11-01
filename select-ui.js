@@ -253,7 +253,10 @@
       }
       function matches(item) {
         if (!q) return true;
-        return (item.group + " " + item.text + " " + item.status).toLowerCase().indexOf(q) !== -1;
+        var haystack = (item.group + " " + item.text + " " + item.status).toLowerCase();
+        var compactQuery = q.replace(/[\s\u00a0]+/g, "");
+        var compactHaystack = haystack.replace(/[\s\u00a0]+/g, "");
+        return haystack.indexOf(q) !== -1 || compactHaystack.indexOf(compactQuery) !== -1;
       }
       var matched = items.filter(matches);
       var visible = matched.filter(function (item) {

@@ -68,9 +68,9 @@
     "연료탱크": { kind: "info", unit: "L", name: "연료탱크", plain: "기름을 채우는 통의 크기예요.", big: "더 큽니다", say: "크면 한 번 주유로 더 멀리 갈 수 있어요." },
     "연료": { kind: "text", name: "연료", plain: "차를 움직이는 에너지예요." },
     "구동": { kind: "text", name: "구동 방식", plain: "엔진·모터의 힘이 어느 바퀴로 가는지예요.", say: "사륜구동은 네 바퀴에 힘을 나눠 젖은 길이나 눈길 출발에 도움이 될 수 있어요." },
-    "변속기": { kind: "text", name: "변속기", plain: "속도에 맞춰 기어를 바꾸는 장치예요." },
+    "변속기": { kind: "text", name: "변속기", plain: "속도에 맞춰 기어를 바꾸는 장치예요.", say: "전기차 1단 감속기는 기어를 바꾸지 않아 구조가 단순하고 부드럽지만, 모든 속도에서 한 가지 기어비를 씁니다. 2단 변속기는 출발용과 빠른 주행용 기어를 나눠 가속이나 고속 효율을 도울 수 있지만, 부품과 제어가 더 복잡합니다. 실제 차이는 차의 무게와 모터·기어 설정에 따라 달라요." },
     "엔진": { kind: "text", name: "엔진", plain: "엔진의 형식이에요." },
-    "타이어": { kind: "text", name: "타이어 규격", plain: "폭/높이 비율 R 휠 크기(인치) 순서예요. 앞·뒤가 다르면 두 개를 적어요." },
+    "타이어": { kind: "text", name: "타이어 규격", plain: "예: 225/45 R 18은 타이어 폭 225mm, 옆면 높이가 폭의 45%, 휠 지름 18인치예요. 숫자가 모두 작거나 크다고 더 좋지는 않아요. 앞·뒤가 다르면 두 규격을 적어요." },
     "서스펜션": { kind: "text", name: "서스펜션", plain: "노면 충격을 걸러 주는 장치예요. 승차감은 숫자로 비교할 수 없어 시승으로 확인하세요." },
     "브레이크": { kind: "text", name: "브레이크", plain: "차를 멈추는 장치의 형식이에요." },
     "승차 정원": { kind: "info", unit: "인", name: "승차 정원", plain: "탈 수 있는 사람 수예요.", big: "더 많습니다" },
@@ -155,13 +155,13 @@
 
   /* 우세를 붙이지 않는 이유 */
   function blocker(meta, ca, cb, sa, sb) {
-    if ((sa && sa.reference) || (sb && sb.reference)) return { stop: true, why: "제조사 참고 사양이 포함되어 있어 국내 해당 연식의 확정 제원으로 우열을 판정하지 않아요." };
+    if ((sa && sa.reference) || (sb && sb.reference)) return { stop: false, why: "해외 또는 다른 연식의 제조사 자료를 참고해 직접 비교합니다. 국내 판매 사양과 차이가 있을 수 있어요." };
     if (sa && sb && sa.basis && sb.basis && sa.basis !== sb.basis) return { stop: true, why: "측정 기준이 달라(" + sa.basis + " · " + sb.basis + ") 비교하지 않아요." };
     var unclear = [sa, sb].filter(function (s) { return s && /미표기/.test(s.basis || ""); })[0];
     if (meta.basisCheck && unclear) return { stop: true, why: "한쪽 값의 측정 기준(" + unclear.basis + ")이 확인되지 않아 차이를 계산하지 않아요." };
-    if (meta.range && (ca.pt !== "ev" || cb.pt !== "ev")) return { stop: true, why: "전기차끼리만 비교하는 항목이에요." };
+    if (meta.range && (ca.pt !== "ev" || cb.pt !== "ev")) return { stop: false, why: "한쪽 또는 양쪽이 전기차가 아니므로 주행거리 수치는 참고 비교예요." };
     if (meta.perf && ca.pt !== cb.pt) return { stop: false, why: "동력 방식이 달라(" + PT_LABEL[ca.pt] + " · " + PT_LABEL[cb.pt] + ") 우열을 가리지 않고 차이만 적었어요." };
-    if (ca.my !== cb.my) return { stop: false, why: "연식이 달라(" + ca.my.replace("MY", "") + "년식 · " + cb.my.replace("MY", "") + "년식) 우열을 가리지 않고 차이만 적었어요." };
+    if (ca.my !== cb.my) return { stop: false, why: "연식이 다르지만 공개된 수치끼리 직접 비교합니다(" + ca.my.replace("MY", "") + "년식 · " + cb.my.replace("MY", "") + "년식)." };
     if (meta.perf && ca.drive && cb.drive && ca.drive !== cb.drive) return { stop: false, why: "구동 방식이 달라 우열을 가리지 않고 차이만 적었어요." };
     return null;
   }
@@ -380,12 +380,13 @@
       ["1", "길이", "전장 (차 길이)", "차 앞끝에서 뒤끝까지의 길이예요. 길면 실내와 트렁크에 여유가 생길 수 있고, 짧으면 주차와 좁은 길에서 편할 수 있어요."],
       ["2", "너비", "전폭 (차 너비)", "차 왼쪽 끝에서 오른쪽 끝까지예요. 보통 제원표는 사이드미러를 뺀 차체 폭을 적지만, 자료마다 기준이 달라요. 이 화면의 너비는 출처에 미러 포함 여부가 적혀 있지 않으면 '기준 미표기'로 봐 주세요."],
       ["3", "높이", "전고 (차 높이)", "땅에서 지붕까지의 높이예요. 지붕 위 루프랙이나 안테나를 넣고 재는지는 자료마다 다를 수 있어요. 지하주차장 높이 제한을 볼 때 확인하세요."],
-      ["4", "휠베이스", "휠베이스 (앞뒤 바퀴 사이)", "앞바퀴 중심에서 뒷바퀴 중심까지의 거리예요. 길면 앞뒤 좌석 배치와 실내 공간 설계에 여유를 줄 수 있어요. 다만 이 수치 하나만으로 실내 공간이 결정되지는 않아요."]
+      ["4", "휠베이스", "휠베이스 (앞뒤 바퀴 사이)", "앞바퀴 중심에서 뒷바퀴 중심까지의 거리예요. 길면 앞뒤 좌석 배치와 실내 공간 설계에 여유를 줄 수 있어요. 다만 이 수치 하나만으로 실내 공간이 결정되지는 않아요."],
+      ["5", "타이어", "타이어 숫자 읽는 법", "예: 225/45 R 18은 타이어 폭 225mm, 옆면 높이가 폭의 45%, 휠 지름 18인치라는 뜻이에요. 폭이 넓으면 접지에 도움이 될 수 있지만 노면 소음과 효율도 달라질 수 있어요. 숫자만으로 승차감이나 안전을 단정할 수는 없어요."]
     ];
     var list = items.map(function (it) {
       return '<li><span class="sp-fig-n" aria-hidden="true">' + it[0] + '</span><div><strong>' + esc(it[2]) + "</strong><p>" + esc(it[3]) + '</p><p class="sp-fig-vals">왼쪽 차 <b>' + esc(val(it[1], "left")) + "</b> · 오른쪽 차 <b>" + esc(val(it[1], "right")) + "</b></p></div></li>";
     }).join("");
-    return '<section class="sp-fig" aria-labelledby="sp-fig-h"><h4 id="sp-fig-h">길이·너비·높이·휠베이스는 이렇게 잽니다</h4>' +
+    return '<section class="sp-fig" aria-labelledby="sp-fig-h"><h4 id="sp-fig-h">차 크기와 타이어 숫자는 이렇게 봅니다</h4>' +
       '<p class="sp-fig-lead">그림은 이해를 돕는 가상의 SUV예요. 실제 차 모양과 비율은 달라요.</p>' +
       '<div class="sp-fig-pics">' + side + front + "</div><ol class=\"sp-fig-list\">" + list + "</ol></section>";
   }

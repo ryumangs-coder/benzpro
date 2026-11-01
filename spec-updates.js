@@ -197,5 +197,7 @@
   verified(27, "MY26", ["GLC 220"], ["Coup", "electric"], {"승차 정원": "5인승", "공차중량": "1965kg"});
   add("MY27",["AMG SL 63"],[],{"최고출력":"585ps"},reference("메르세데스-벤츠 코리아 · SL 63 출시 제원","https://www.mercedes-benz.co.kr/passengercars/brand/news-events/news-story/2023/news-230613.html","현행 R232 구동계 참고 · MY27 확정 수치와 다를 수 있음"));
   add("MY27",["GLC 220"],["Coup","electric"],{"최고출력":"197ps","배기량":"1993cc","최대토크":"44.9kg·m","변속기":"9G-TRONIC","0-100km/h":"8초","최고속도":"219km/h"},reference("메르세데스-벤츠 코리아 · X254 GLC 220 d 출시 제원","https://www.mercedes-benz.co.kr/passengercars/brand/news-events/news-story/2023/news-20230608.html","현행 X254 구동계 참고 · MY27 확정 제원과 다를 수 있음"));
+  /* C 200 파이널 에디션: 국내 MY26 C 200 출시자료의 1,999cc 엔진 사양 */
+  add("MY26", ["C 200"], ["CLA", "CLE", "E 200"], {"배기량":"1999cc"}, reference("메르세데스-벤츠 코리아 · C 200 국내 출시자료", "https://www.mercedes-benz.co.kr/passengercars/brand/news-events/news-story/2024/news-20240617.html", "MY26 C 200 국내 판매 사양 · 파이널 에디션 포함"));
   window.SPEC_UPDATES = rules;
 }());

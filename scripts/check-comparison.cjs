@@ -69,7 +69,7 @@ const glbImage = context.window.BenzVisual.modelInfo({name:'GLB 250+ electric',m
 assert.match(glbImage.trim.front, /^https:\/\/api\.media\.mercedes-benz\.com\//);
 const cs = context.window.BenzSpecs;
 const reference = {by:'제조사 해외 참고', reference:true};
-assert.equal(cs.row('0-100km/h','4.2초','5초',reference,null,{my:'MY27',pt:'gas'},{my:'MY27',pt:'gas'},false).judge.type, 'stop');
+assert.equal(cs.row('0-100km/h','4.2초','5초',reference,null,{my:'MY27',pt:'gas'},{my:'MY27',pt:'gas'},false).judge.type, 'plain');
 assert.equal(cs.row('변속기','9G-TRONIC','자동 9단',null,null,{my:'MY27',pt:'gas'},{my:'MY27',pt:'gas'},false).judge.type, 'same');
 const hiddenSource = cs.row('변속기','9G-TRONIC','9G-TRONIC',{by:'HS효성 더클래스 송파 어프로치북 · 8쪽'},{by:'출처 없음'}, {my:'MY27',pt:'gas'},{my:'MY27',pt:'gas'},false).html;
 assert.doesNotMatch(hiddenSource, /송파|어프로치북|출처 기록 없음/);
