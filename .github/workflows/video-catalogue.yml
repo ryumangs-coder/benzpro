@@ -2,6 +2,10 @@ name: Update relevant vehicle videos
 on:
   schedule:
     - cron: '17 21 * * *'
+  push:
+    paths:
+      - '.github/workflows/video-catalogue.yml'
+      - 'scripts/sync-videos.py'
   workflow_dispatch:
 permissions:
   contents: write
