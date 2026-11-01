@@ -51,7 +51,7 @@
     if (file === "prices") return "prices";
     if (file === "quote") return "quote";
     if (file === "models") return "models";
-    if (file === "preorder") return "preorder";
+    if (file === "preorder" || file === "glb-electric") return "preorder";
     return "";
   }
   function item(href, key, icon, label, extra) {
