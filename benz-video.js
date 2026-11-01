@@ -5,7 +5,7 @@
   function tokens(s) { return (norm(s).match(/(?:CLA|CLE|GLA|GLB|GLC|GLE|GLS|EQA|EQB|EQE|EQS|GT|SL|[ACEGSV])\d{2,3}/) || [''])[0]; }
   function profile(name) {
     var s=norm(name), model=tokens(s), family=(s.match(/CLA|CLE|GLA|GLB|GLC|GLE|GLS|EQA|EQB|EQE|EQS|GT|SL|[ACEGSV](?=\d|클래스)/)||[''])[0];
-    return {name:s,model:model,family:family,ev:!/가솔린|전기차대신/.test(s)&&/ELECTRIC|일렉트릭|전기|EQ[ABES]|G580|CLA250\+/.test(s),suv:/GL[ABCES]|EQ[AB]|SUV|G(?:450|580|63)|지바겐|G바겐|마이바흐EQS|MAYBACHEQS|V300/.test(s)};
+    return {name:s,model:model,family:family,ev:!/가솔린|전기차대신/.test(s)&&/ELECTRIC|일렉트릭|전기|EQ[ABES]|G580|CLA250\+|GLB250\+/.test(s),suv:/GL[ABCES]|EQ[AB]|SUV|G(?:450|580|63)|지바겐|G바겐|마이바흐EQS|MAYBACHEQS|V300/.test(s)};
   }
   function relevance(name,v) {
     var p=profile(name), t=norm(v.title), q=profile(t), score=0,reason='';
@@ -14,7 +14,7 @@
     var mentioned=t.match(/(?:CLA|CLE|GLA|GLB|GLC|GLE|GLS|EQA|EQB|EQE|EQS|GT|SL|[ACEGSV])\d{2,3}/g)||[];
     var modelMatch=p.model && mentioned.indexOf(p.model)>=0;
     var wrongGLC=p.family==='GLC' && q.family==='GLC' && (p.ev ? /가솔린/.test(t) || !/일렉트릭|전기/.test(t) : /일렉트릭/.test(t)&&!/가솔린/.test(t));
-    if(wrongGLC) return {score:0,reason:''};
+    if(wrongGLC || (sameFamily && /^(GLB|CLA)$/.test(p.family) && p.ev!==q.ev)) return {score:0,reason:''};
     if(modelMatch && (!/^AMG/.test(p.name)||/AMG/.test(t))) {score=100;reason='선택 차량 실물·비교';}
     else if(sameFamily && p.ev===q.ev) {score=70;reason='같은 차종 살펴보기';}
     else if(p.ev && q.ev) {score=p.suv===q.suv?40:25;reason=p.suv&&q.suv?'함께 비교할 전기 SUV':'함께 살펴볼 전기차';}

@@ -12,6 +12,7 @@ assert.match(v.card('',['E 200 Exclusive']),/bp-youtube-button/);
 assert.ok(!v.pick(['E 200 Exclusive']).some(x=>x.id==='TJKyxSxc7OQ'));
 assert.ok(!v.pick(['GLB 250+ electric']).some(x=>x.id==='Fh7FCkGI2NE'));
 assert.equal(v.pick(['E 200 Exclusive','E 200 AMG Line'])[0].id,'Qt8mBPC-qPo');
+assert.ok(!moduleFor([{id:'aaaaaaaaaaa',title:'벤츠 GLB 250 4MATIC 가솔린 실물 리뷰'},...data.videos]).pick(['GLB 250+ electric']).some(x=>x.id==='aaaaaaaaaaa'));
 const related=data.videos.filter(x=>/E200/.test(x.title.replace(/\s/g,''))).slice(0,2);
 assert.equal(moduleFor(related).pick(['E 200']).length,2);
 assert.equal(moduleFor(related.slice(0,1)).pick(['E 200']).length,0);
