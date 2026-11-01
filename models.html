@@ -809,7 +809,7 @@
             });
             specExtra = S.figure(dims) + S.battery(a, b, mapA, mapB, ctxA, ctxB) + S.generation(a, b, mapA, mapB);
           }
-          var carriedYear = pa.borrowed || pb.borrowed;
+          var carriedYear = (a.my === "MY27" && pa.borrowed) || (b.my === "MY27" && pb.borrowed);
           var filledNote = leftSpecs.filled || rightSpecs.filled || carriedYear
             ? '<p class="mt-1 text-[15px] leading-relaxed text-[#A4AAAE]">' + (carriedYear ? 'MY27에 별도 공개되지 않은 항목은 같은 모델의 MY26 제원을 참고해 채웠고, 각 숫자에 참고 연식을 표시합니다. CLA·GLB 일렉트릭·GLC 일렉트릭은 신형이라 MY26 값을 승계하지 않습니다. ' : '') + '공개 제조사 자료와 확인된 제원으로 보완했습니다. 해외·다른 연식 참고값은 국내 확정 제원과 구분합니다.</p>'
             : "";
