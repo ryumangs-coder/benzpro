@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="chrome.css?v=20261025e" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
     <link rel="stylesheet" href="compare-visual.css?v=20261102a" />
-    <link rel="stylesheet" href="benz-video.css?v=20261102a" />
+    <link rel="stylesheet" href="benz-video.css?v=20261102-relevant" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -85,13 +85,13 @@
     <script src="approach-options.js?v=20261029a"></script>
     <script src="preorder-guides.js?v=20261028b"></script>
     <script src="spec-fill.js?v=20261028d"></script>
-    <script src="spec-updates.js?v=20261101a"></script>
-    <script src="compare-specs.js?v=20261102a"></script>
+    <script src="spec-updates.js?v=20261102-complete"></script>
+    <script src="compare-specs.js?v=20261102-complete"></script>
     <script src="option-concepts.js?v=20261026c"></script>
     <script src="option-words.js?v=20261028a"></script>
     <script src="tech-data.js?v=20261029b"></script>
     <script src="compare-visual.js?v=20261102a"></script>
-    <script src="benz-video.js?v=20261102a"></script>
+    <script src="benz-video.js?v=20261102-relevant"></script>
     <script src="colors.js?v=20261022a"></script>
     <script src="pick.js?v=20261023c"></script>
     <script>
@@ -647,6 +647,40 @@
             have[label] = true;
             extra.push([label, tidySpec(label, pair[1]), pair[2] || bookSrc]);
           });
+          // Carry over the fully resolved MY26 record, including independently sourced supplements.
+          // Copying only GUIDE_DATA omitted tank, weight and seats supplied by SPEC_UPDATES.
+          if (row.my === "MY27" && !/^(?:CLA\b|GLB\b.*electric|GLC\b.*electric)/i.test(row.name)) {
+            var priorRow = { name: row.name, my: "MY26", seg: row.seg };
+            var marketed = (window.OCTOBER_2026.models || []).filter(function (r) {
+              return r[1] === "MY26" && specIdentity(r[2]) === specIdentity(row.name);
+            });
+            var exact = marketed.filter(function (r) { return normName(r[2]) === normName(row.name); });
+            if (exact.length) priorRow.name = exact[0][2];
+            else if (marketed.length === 1) priorRow.name = marketed[0][2];
+            var priorGuide = featureRecord(priorRow).spec;
+            var priorSpecs = mergedSpecs(priorGuide && priorGuide.specs, priorRow).rows;
+            if (marketed.length > 1) {
+              var alternatives = marketed.map(function(r) {
+                var oldRow={name:r[2],my:"MY26",seg:r[0]};
+                var g=featureRecord(oldRow).spec;
+                return mergedSpecs(g && g.specs,oldRow).rows;
+              });
+              var seenPrior={}; priorSpecs.forEach(function(p){seenPrior[p[0]]=true;});
+              alternatives.forEach(function(list){list.forEach(function(p){
+                if(seenPrior[p[0]]) return;
+                var values=alternatives.map(function(items){return items.filter(function(x){return x[0]===p[0];})[0];}).filter(Boolean);
+                if(values.length===alternatives.length && values.every(function(x){return x[1]===p[1];})) {priorSpecs.push(p);seenPrior[p[0]]=true;}
+              });});
+            }
+
+            priorSpecs.forEach(function (pair) {
+              if (have[pair[0]] || missingSpec(pair[1])) return;
+              have[pair[0]] = true;
+              var source = Object.assign({}, pair[2] || {}, { my: "MY26 참고값 · MY27 연식 변경", reference: true });
+              source.by = (source.by || "동일 모델 제원") + " · MY26 참고";
+              extra.push([pair[0], pair[1], source]);
+            });
+          }
           var combined = rows.concat(extra);
           function entry(label) { return combined.filter(function (p) { return p[0] === label; })[0]; }
           var fuel = entry("연료");
@@ -1874,6 +1908,7 @@
           lastRight = right.value;
           drawCompare();
         });
+        document.addEventListener("benz-videos-ready", drawCompare);
         var lastLeft = left.value;
         var lastRight = right.value;
         left.addEventListener("change", function (event) {

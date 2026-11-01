@@ -59,7 +59,7 @@ assert.equal(specs('AMG GLC 53 4MATIC+', 'MY27')['변속기'], 'AMG SPEEDSHIFT T
 // MY27 PDF numbers must not silently fill different years.
 assert.equal(specs('CLE 450 4MATIC Cabriolet')['트렁크'], '295–385L');
 assert.equal(specs('CLE 450 4MATIC Cabriolet')['공차중량'], '2,025kg');
-assert.equal(specs('AMG E 53 4MATIC+', 'MY27')['공차중량'], undefined);
+assert.ok(specs('AMG E 53 4MATIC+', 'MY27')['공차중량']);
 assert.equal(specs('CLE 450 4MATIC Cabriolet', 'MY27')['트렁크'], '295–385L');
 const fuelFallback = context.mergedSpecs([['연료', '확인 필요']], {my:'MY26',name:'C 200 Avantgarde'}).rows;
 assert.equal(fuelFallback.find(p => p[0] === '연료')[1], '가솔린');
@@ -123,3 +123,28 @@ if (process.argv.includes('--audit')) {
 }
 
 assert.equal(cs.row('트렁크','540L','540–1715L',null,null,{my:'MY26',pt:'gas'},{my:'MY26',pt:'gas'},false).judge.type, 'ref');
+
+// MY27 must preserve every resolved MY26 field, including supplemental rules.
+for (const row of models.filter(r => r.my === 'MY27' && !/^(CLA\b|GLB\b.*electric|GLC\b.*electric)/i.test(r.name))) {
+  const prior = models.find(r => r.my === 'MY26' && r.name === row.name);
+  if (!prior) continue;
+  const latest = specs(row.name, 'MY27');
+  for (const pair of result(prior)) assert.ok(latest[pair[0]], `MY26 field lost: ${row.name}: ${pair[0]}`);
+}
+for (const name of ['E 200 Exclusive', 'E 300 4MATIC AMG Line', 'CLE 450 Coupé']) {
+  const values = specs(name, 'MY27');
+  for (const label of ['공차중량','연료탱크','승차 정원']) assert.ok(values[label], `${name}: ${label}`);
+}
+console.log('MY27 fully resolved MY26 carryover regression checks passed.');
+
+const coreLabels=['길이','너비','높이','휠베이스','배기량','연료','변속기','구동','최고출력','최대토크','복합연비','연료탱크','트렁크','공차중량','승차 정원','타이어'];
+let carriedTrims=0;
+for(const row of models.filter(r=>r.my==='MY27'&&!/^(CLA\b|GLB\b.*electric|GLC\b.*electric)/i.test(r.name))){
+ const map=specs(row.name,'MY27');
+ for(const label of coreLabels){
+  if(map['연료']==='전기' && ['배기량','연료탱크'].includes(label))continue;
+  assert.ok(map[label]&&!/확인 필요|정보가 아직/.test(map[label]), `MY27 core missing: ${row.name} ${label}`);
+ }
+ carriedTrims++;
+}
+console.log(`${carriedTrims} carryover MY27 trims: all 16 core fields populated or inapplicable.`);

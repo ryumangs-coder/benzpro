@@ -1,32 +1,34 @@
-/* 견적·비교 흐름에 벤츠프로 실제 유튜브 영상을 소개합니다. */
+/* Relevant vehicle videos only. No generic latest-video promotion. */
 (function () {
-  var CHANNEL = "https://www.youtube.com/@benzpro.official/videos";
-  var VIDEO = "https://www.youtube.com/watch?v=kP_GP68aIuA";
-  var VIDEO_ID = "kP_GP68aIuA";
-  var TITLE = "2억 3,500만원 마이바흐 EQS 680 실물 리뷰｜뒷좌석을 보면 이유가 보입니다";
-  function esc(s) {
-    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  var videos = [], current = null;
+  function norm(s) { return String(s || '').normalize('NFC').toUpperCase().replace(/\s+/g, ''); }
+  function tokens(name) {
+    var s = norm(name), m = s.match(/(CLA|CLE|GLA|GLB|GLC|GLE|GLS|EQA|EQB|EQE|EQS|GT|SL|[ACEGSV])\d{2,3}/);
+    return m ? m[0] : '';
   }
-  function card(context, names) {
-    var isMaybach = (names || []).some(function (name) { return /Maybach EQS 680/i.test(name || ""); });
-    var href = isMaybach ? VIDEO : CHANNEL;
-    var action = isMaybach ? "이 차 실물 영상 보기" : "벤츠프로 영상 더 보기";
-    var kicker = isMaybach ? (context ? context + " · " : "견적 차량 · ") + "실물 리뷰" : "벤츠프로 최신 영상";
-    var note = isMaybach ? "뒷좌석 공간과 실제 차량 분위기를 영상으로 살펴보세요." : "벤츠프로 채널에서 다른 차종의 실물 영상도 살펴보세요.";
-    return '<section class="bp-video-card" aria-label="벤츠프로 유튜브 영상"><div class="bp-video-copy"><p>' + esc(kicker || "차량 이야기") + '</p><h3>' + esc(TITLE) + '</h3><span>' + note + '</span><a href="' + href + '" target="_blank" rel="noopener noreferrer">' + action + ' <b aria-hidden="true">↗</b></a></div><a class="bp-video-thumb" href="' + href + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc(TITLE) + ' 영상 열기"><img src="https://i.ytimg.com/vi/' + VIDEO_ID + '/hqdefault.jpg" alt="' + esc(TITLE) + ' 유튜브 썸네일" loading="lazy" decoding="async"><span aria-hidden="true">▶</span></a></section>';
+  function pick(names) {
+    var keys = names.map(tokens).filter(Boolean);
+    return videos.map(function(v,i) {
+      var title = norm(v.title), matches = keys.filter(function(k) { return title.indexOf(k) >= 0; }).length;
+      // Distinguish electric GLC and combustion GLC, as well as AMG variants.
+      var relevant = names.some(function(n) {
+        if (!tokens(n)) return false;
+        var electricGLC = /GLC/.test(norm(n)) && /ELECTRIC/.test(norm(n));
+        if (title.indexOf(tokens(n)) < 0 && !(electricGLC && /GLC/.test(title))) return false;
+        if (electricGLC && (!/일렉트릭|전기/.test(title) || /가솔린/.test(title))) return false;
+        if (/GLC/.test(norm(n)) && !electricGLC && /일렉트릭/.test(title) && !/가솔린/.test(title)) return false;
+        return !/^AMG/.test(norm(n)) || title.indexOf('AMG') >= 0;
+      });
+      return {v:v, score: relevant ? Math.max(1,matches) * 10 + (/VS|비교/.test(title) && keys.length > 1 ? 3 : 0) : 0, index:i};
+    }).filter(function(x){return x.score > 0;}).sort(function(a,b){return b.score-a.score || a.index-b.index;}).slice(0,1).map(function(x){return x.v;});
   }
-  function mountQuote() {
-    var slot = document.getElementById("q-video");
-    var select = document.getElementById("car");
-    if (!slot || !select) return;
-    function paint() {
-      var option = select.options[select.selectedIndex];
-      slot.innerHTML = card("", [option && option.textContent]);
-    }
-    paint();
-    select.addEventListener("change", paint);
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function card(context,names) {
+    var selected=pick(names || []);
+    return selected.map(function(v){var url='https://www.youtube.com/watch?v='+encodeURIComponent(v.id);return '<aside class="bp-video-card" aria-label="선택한 차 관련 영상"><a class="bp-video-thumb" href="'+url+'" target="_blank" rel="noopener noreferrer" data-video-id="'+esc(v.id)+'"><img src="https://i.ytimg.com/vi/'+esc(v.id)+'/mqdefault.jpg" alt="'+esc(v.title)+'" loading="lazy"><span aria-hidden="true">▶</span></a><div class="bp-video-copy"><p>사진 다음엔, 실물로 살펴보세요</p><h3>'+esc(v.title)+'</h3><span>선택한 차와 관련된 벤츠프로 영상 · 촬영 당시 연식·사양 기준</span><a href="'+url+'" target="_blank" rel="noopener noreferrer" data-video-id="'+esc(v.id)+'">실내·외관 영상 보기 ↗</a></div></aside>';}).join('');
   }
-  window.BenzVideo = { card: card };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountQuote);
-  else mountQuote();
+  function paint(){var slot=document.getElementById('q-video'),select=document.getElementById('car');if(slot&&select)slot.innerHTML=card('',[select.options[select.selectedIndex]?.textContent]);}
+  window.BenzVideo={card:card,pick:pick};
+  function start(){paint();var select=document.getElementById('car');if(select)select.addEventListener('change',paint);fetch('/benz-videos.json?v='+new Date().toISOString().slice(0,10)).then(function(r){if(!r.ok)throw Error('feed');return r.json();}).then(function(data){videos=data.videos.filter(function(v){return /^[\w-]{11}$/.test(v.id)&&v.title;});paint();document.dispatchEvent(new Event('benz-videos-ready'));}).catch(function(){/* Keep irrelevant promotions hidden when the feed is unavailable. */});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();

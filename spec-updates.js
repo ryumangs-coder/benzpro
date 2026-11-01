@@ -199,5 +199,28 @@
   add("MY27",["GLC 220"],["Coup","electric"],{"최고출력":"197ps","배기량":"1993cc","최대토크":"44.9kg·m","변속기":"9G-TRONIC","0-100km/h":"8초","최고속도":"219km/h"},reference("메르세데스-벤츠 코리아 · X254 GLC 220 d 출시 제원","https://www.mercedes-benz.co.kr/passengercars/brand/news-events/news-story/2023/news-20230608.html","현행 X254 구동계 참고 · MY27 확정 제원과 다를 수 있음"));
   /* C 200 파이널 에디션: 국내 MY26 C 200 출시자료의 1,999cc 엔진 사양 */
   add("MY26", ["C 200"], ["CLA", "CLE", "E 200"], {"배기량":"1999cc"}, reference("메르세데스-벤츠 코리아 · C 200 국내 출시자료", "https://www.mercedes-benz.co.kr/passengercars/brand/news-events/news-story/2024/news-20240617.html", "MY26 C 200 국내 판매 사양 · 파이널 에디션 포함"));
+
+  /* 2026-11-02: missing MY27 values verified against manufacturer sources. */
+  var auditTW = reference("Mercedes-Benz Taiwan · GLC 53 SUV/Coupé 제원", "https://www.mercedes-benz.com.tw/passengercars/brand/news-events/new-cars/glc-53-20260929.html", "해외 제조사 참고 · 국내 인증 및 장비 구성과 다를 수 있음");
+  add("MY27",["AMG GLC 53"],["Coup"],{"길이":"4749mm","너비":"1920mm","높이":"1635mm","휠베이스":"2888mm","트렁크":"620–1680L","공차중량":"2050kg"},auditTW);
+  add("MY27",["AMG GLC 53","Coup"],[],{"길이":"4792mm","너비":"1920mm","높이":"1603mm","휠베이스":"2888mm","트렁크":"545–1490L","공차중량":"2080kg"},auditTW);
+  add("MY27",["AMG GLC 53"],[],{"타이어":"앞 265/45 R 20 · 뒤 295/40 R 20","복합연비":"9.4km/L (미국 EPA 22mpg 환산)","승차 정원":"5인승"},reference("MBUSA · MY27 GLC 53 제조사 제원", "https://media.mbusa.com/news/2027-mercedes-amg-glc-53-coupe-quick-reference-guide", "미국 EPA 복합연비 22mpg × 0.425144 = 9.4km/L · 국내 연비와 측정 기준이 다름"));
+  add("MY27",["Maybach SL 680"],[],{"공차중량":"2050kg","승차 정원":"2인승"},reference("Mercedes-Benz · Maybach SL 글로벌 공개", "https://media.mercedes-benz.com/en/article/962710f4-bf55-4d7c-a958-c4e548397d57"));
+  add("MY27",["Maybach S 680"],[],{"트렁크":"343L"},reference("MBUSA · MY27 Maybach S 680", "https://media.mbusa.com/news/2027-mercedes-maybach-s-class-quick-reference-guide", "미국 12.1cu ft × 28.31685 = 약 343L · 해외 적재 측정 기준 참고"));
+  add("MY27",["AMG E 53"],[],{"타이어":"앞 265/40 R 20 · 뒤 295/35 R 20"},reference("MBUSA · E 53 HYBRID", "https://www.mbusa.com/en/vehicles/model/e-class/sedan/e53ew4"));
+  add("MY27",["AMG GT 43"],["4MATIC"],{"타이어":"앞 255/45 R 19 · 뒤 285/40 R 19"},reference("MBUSA · GT 43 2도어", "https://www.mbusa.com/en/vehicles/model/gt/coupe/amggt43"));
+  add("MY27",["AMG GT 55"],[],{"타이어":"앞 295/30 R 20 · 뒤 305/30 R 20"},reference("MBUSA · GT 55", "https://www.mbusa.com/en/vehicles/model/gt/coupe/amggt55"));
+  add("MY27",["GLC 300","Coup"],["electric"],{"타이어":"앞 235/55 R 19 · 뒤 255/50 R 19"},reference("MBUSA · GLC 300 Coupé", "https://www.mbusa.com/en/vehicles/model/glc/coupe/glc300c4", "미국 기본 휠 사양 참고 · 국내 트림 휠은 옵션표를 함께 확인"));
+  add("MY27",["GLC 300"],["Coup","electric"],{"공차중량":"1910kg"},reference("Mercedes-Benz Canada · MY26 GLC 300 4MATIC", "https://www.mercedes-benz.ca/en/vehicles/model/glc/suv/glc300w4", "MY26 캐나다 제조사 참고 · 국내 장비 구성과 다를 수 있음"));
+
+  add("MY27",["AMG GLC 53"],[],{"연료탱크":"62L"},reference("Mercedes-Benz · GLC 53 공식 구조카드", "https://rk.mb-qr.com/en/254.674/"));
+  add("MY27",["AMG SL 63"],[],{"휠베이스":"2700mm","연료탱크":"70L","트렁크":"212L","공차중량":"1985kg","승차 정원":"4인승"},reference("MBUSA · MY27 SL 63", "https://www.mbusa.com/en/vehicles/model/sl/roadster/sl63r4", "미국 제조사 참고 · 106.3in×25.4≈2700mm, 18.5US gal×3.7854≈70L, 7.5cu ft×28.3168≈212L, 4376lb×0.453592≈1985kg"));
+  add("MY27",["AMG GT 43"],["4MATIC"],{"복합연비":"9.7km/L (WLTP 환산)"},reference("Mercedes-Benz · GT 43 글로벌 공개", "https://media.mercedes-benz.com/en/article/05fd1632-1c2f-468b-9b5b-0a56cea453de", "WLTP 10.3L/100km → 100÷10.3=9.7km/L · 국내 인증 연비와 다름"));
+  add("MY27",["G 580"],[],{"복합연비":"3.3–3.6km/kWh (WLTP 환산)"},reference("Mercedes-Benz · 전기 G 글로벌 공개", "https://media.mercedes-benz.com/en/press-kit/e3fb1e08-0558-4228-adb8-534c42940074", "WLTP 30.3–27.7kWh/100km → 100÷소비전력량=3.3–3.6km/kWh · 국내 인증 전비와 다름"));
+  add("MY27",["AMG GT 63","E Performance"],[],{"타이어":"앞 295/35 R 20 · 뒤 305/35 R 20"},reference("MBUSA · GT 63 S E PERFORMANCE 글로벌 공개", "https://media.mbusa.com/news/world-premiere-of-the-new-flagship-mercedes-amg-gt-63-s-e-performance"));
+
+  add("MY27",["AMG SL 63"],[],{"타이어":"앞 265/40 R 20 · 뒤 295/35 R 20"},reference("MBUSA · MY27 SL 63 타이어", "https://www.mbusa.com/en/vehicles/model/sl/roadster/sl63r4"));
+  add("MY27",["GLC 300"],["Coup","electric"],{"타이어":"앞·뒤 235/60 R 18"},reference("Mercedes-Benz Canada · GLC 300 4MATIC", "https://www.mercedes-benz.ca/en/vehicles/model/glc/suv/glc300w4", "해외 기본 휠 참고 · 국내 트림 휠 크기는 옵션표에서 확인"));
+  add("MY27",["AMG GT 63","E Performance"],[],{"복합연비":"12.2km/L · 7.9km/kWh (WLTP 가중 복합)"},reference("Mercedes-Benz · GT 63 S E PERFORMANCE 공개 제원", "https://media.mercedes-benz.it/a-shanghai-lanteprima-mondiale-della-nuova-mercedes-amg-gt-63-s-e-performance/", "WLTP 가중 복합 8.2L/100km + 12.6kWh/100km를 각각 역수 환산 · 배터리 방전 시 12.3L/100km · 국내 연비와 직접 우열 비교 불가"));
   window.SPEC_UPDATES = rules;
 }());
