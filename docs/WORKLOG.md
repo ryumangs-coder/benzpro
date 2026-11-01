@@ -62,3 +62,5 @@
 - 검증: check.sh, check-comparison.cjs --audit 통과. 로컬 E200 EX/AMG, GLE450/GLS580, GLB electric/E200 화면 확인. 390px 모바일 가로 넘침 없음.
 - 미해결 자료: 주요 5개 항목에서 트렁크 11, 공차중량 54, 연료탱크 47, 승차 정원 61칸(총 173칸)은 해당 연식/트림 자료 확인 필요. 출력 누락 0. 기타 항목을 포함한 전체 현황은 docs/spec-audit.csv. 전 조합 렌더링 통과는 모든 숫자의 정확성/완전성 검증을 의미하지 않음.
 - 배포: 사용자 명시 승인에 따라 GitHub main 및 Cloudflare 자동 배포 진행. 운영 자산 확인 결과는 후속 기록.
+- 운영 확인 완료: 코드 커밋 aef5e77. /models.html → /models 정상 이동 후 새 스크립트 버전 및 displayValue 적용 확인. 운영 spec-updates.js·compare-specs.js는 로컬 파일과 바이트 일치. 운영 브라우저에서 GLE450/GLS580의 탱크·중량·정원 양쪽 표시 확인.
+- 추가로 잘못 연결됐던 CLE200 쿠페/카브리올레의 높이·연비, A220 Hatch 가속 기록을 차체에 맞게 분리. 자료 대조로 E350e 탱크 50L, EQE350+ SUV 모터 215kW 보완 기록 반영.
