@@ -7,10 +7,11 @@
     return m ? m[0] : '';
   }
   function pick(names) {
-    var keys = names.map(tokens).filter(Boolean);
+    var keys = names.map(tokens).filter(function(k,i,a){return k && a.indexOf(k)===i;});
     return videos.map(function(v,i) {
       var title = norm(v.title), matches = keys.filter(function(k) { return title.indexOf(k) >= 0; }).length;
       // Distinguish electric GLC and combustion GLC, as well as AMG variants.
+      var extraModels = (title.match(/(?:CLA|CLE|GLA|GLB|GLC|GLE|GLS|EQA|EQB|EQE|EQS|GT|SL|[ACEGSV])\d{2,3}/g)||[]).filter(function(k){return keys.indexOf(k)<0;}).length;
       var relevant = names.some(function(n) {
         if (!tokens(n)) return false;
         var electricGLC = /GLC/.test(norm(n)) && /ELECTRIC/.test(norm(n));
@@ -19,7 +20,7 @@
         if (/GLC/.test(norm(n)) && !electricGLC && /일렉트릭/.test(title) && !/가솔린/.test(title)) return false;
         return !/^AMG/.test(norm(n)) || title.indexOf('AMG') >= 0;
       });
-      return {v:v, score: relevant ? Math.max(1,matches) * 10 + (/VS|비교/.test(title) && keys.length > 1 ? 3 : 0) : 0, index:i};
+      return {v:v, score: relevant ? Math.max(1,matches) * 10 - extraModels * 5 + (/VS|비교/.test(title) && keys.length > 1 ? 3 : 0) : 0, index:i};
     }).filter(function(x){return x.score > 0;}).sort(function(a,b){return b.score-a.score || a.index-b.index;}).slice(0,1).map(function(x){return x.v;});
   }
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
