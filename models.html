@@ -832,7 +832,7 @@
           var specExtra = "";
           if (S && specHtml) {
             var dims = {};
-            ["길이", "너비", "높이", "휠베이스"].forEach(function (label) {
+            ["길이", "너비", "높이", "휠베이스", "타이어"].forEach(function (label) {
               dims[label] = { left: mapA[label] && mapA[label].text, right: mapB[label] && mapB[label].text };
             });
             var priceA = pack(a).priceMan;
