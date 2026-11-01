@@ -205,6 +205,46 @@
       '<div class="vs-grid">' + cards + "</div>" + tail + "</div>";
   }
 
+  function specDiffSection(rowsA, rowsB, a, b) {
+    var left = {};
+    var right = {};
+    (rowsA || []).forEach(function (p) { left[p[0]] = p[1]; });
+    (rowsB || []).forEach(function (p) { right[p[0]] = p[1]; });
+    var specs = [
+      ["트렁크", "짐 공간", "숫자가 큰 쪽은 같은 측정 기준에서 짐을 더 실을 여지가 있어요. 뒷좌석을 접었을 때 수치는 따로 비교합니다."],
+      ["승차 정원", "가족 인원", "탈 수 있는 사람 수예요. 실제로 편하게 탈 수 있는지는 좌석 크기와 카시트 공간도 함께 봐야 해요."],
+      ["공차중량", "차 무게", "무게 차이예요. 가벼우면 효율에 유리할 수 있고, 무거운 차는 타이어·구동계 등 다른 조건도 함께 봐야 해요."],
+      ["연료탱크", "한 번에 담는 연료", "탱크가 크면 주유 전까지 더 많은 연료를 담을 수 있어요. 실제 주행거리는 연비와 운전 조건에 따라 달라요."],
+      ["최고출력", "힘의 크기", "출력은 가속 성능을 가늠하는 한 가지 숫자예요. 차 무게와 구동 방식도 함께 영향을 줍니다."],
+      ["모터 최고출력", "전기 모터의 힘", "모터 출력은 순간적으로 낼 수 있는 힘을 나타내요. 배터리 상태와 차 무게에 따라 실제 가속감은 달라요."],
+      ["배터리", "전기 에너지 저장량", "kWh는 배터리에 저장할 수 있는 전기의 양이에요. 큰 쪽이 더 멀리 갈 가능성이 있지만, 차체 크기와 효율도 중요해요."],
+      ["1회 충전 주행거리", "충전 후 거리", "같은 시험 기준의 수치끼리만 비교해요. 실제 거리는 날씨, 속도, 난방·에어컨에 따라 달라집니다."],
+      ["길이", "주차 공간", "긴 차는 실내나 짐 공간 설계에 여유를 줄 수 있어요. 짧은 차는 주차할 때 다루기 편할 수 있습니다."],
+      ["너비", "차체 폭", "넓은 차는 좌우 공간 설계에 여유를 줄 수 있지만, 좁은 주차장이나 골목에서는 폭이 부담이 될 수 있어요."],
+      ["휠베이스", "앞뒤 좌석 공간", "앞바퀴와 뒷바퀴 사이 거리예요. 길면 실내 공간 설계에 도움이 될 수 있지만 좌석 공간을 직접 결정하진 않아요."],
+      ["타이어", "타이어 크기", "폭·옆면 높이·휠 지름이 달라요. 아래 숫자를 같이 보고 접지, 승차감, 효율, 휠 보호의 균형을 살펴보세요."]
+    ];
+    function numeric(s) {
+      var m = String(s || "").replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+      return m ? Number(m[0]) : null;
+    }
+    var cards = [];
+    specs.forEach(function (s) {
+      var x = String(left[s[0]] || "").trim();
+      var y = String(right[s[0]] || "").trim();
+      if (!x || !y || /정보가 아직 없습니다|확인 필요|해당 없음|^—$/.test(x + y) || x === y) return;
+      if (s[0] === "1회 충전 주행거리" && !/WLTP/.test(x + y)) return;
+      var nx = numeric(x);
+      var ny = numeric(y);
+      var gap = nx == null || ny == null ? "" : Math.abs(nx - ny).toLocaleString("ko-KR", { maximumFractionDigits: 1 });
+      var units = { "트렁크": "L", "승차 정원": "명", "공차중량": "kg", "연료탱크": "L", "최고출력": "ps", "모터 최고출력": "kW", "배터리": "kWh", "1회 충전 주행거리": "km", "길이": "mm", "너비": "mm", "휠베이스": "mm" };
+      var difference = gap ? "첫 숫자 기준 " + gap + (units[s[0]] ? units[s[0]] + " 차이" : " 차이") : "규격이 달라요";
+      cards.push('<article class="vs-spec-card"><p class="vs-spec-kicker">' + esc(s[1]) + '</p><h4>' + esc(s[0]) + '</h4><div class="vs-spec-values"><span><small>왼쪽 · ' + esc(a && a.my || "") + '</small><b>' + esc(x) + '</b></span><i>↔</i><span><small>오른쪽 · ' + esc(b && b.my || "") + '</small><b>' + esc(y) + '</b></span></div><p class="vs-spec-delta">' + esc(difference) + '</p><p class="vs-spec-explain">' + esc(s[2]) + '</p></article>');
+    });
+    if (!cards.length) return "";
+    return '<section class="vs-sec vs-spec-sec" id="vs-spec-diff"><h3>숫자로 보는 차이</h3><p class="vs-lead">제원표에 있는 주요 수치 중 두 차가 다른 부분을 골랐어요. 숫자만으로 우열을 정하기 어려운 항목은 선택할 때의 장단점을 쉽게 적었습니다.</p><div class="vs-spec-grid">' + cards.slice(0, 10).join("") + '</div></section>';
+  }
+
   /* ---------- 차종별 트림 얼굴 · 실내 · 휠 · 실내 장식 ---------- */
   function modelSection(rows) {
     var list = rows || [];
@@ -475,6 +515,7 @@
   window.BenzVisual = {
     hero: hero,
     diffSection: diffSection,
+    specDiffSection: specDiffSection,
     trimSection: trimSection,
     modelSection: modelSection,
     modelInfo: modelInfo,
