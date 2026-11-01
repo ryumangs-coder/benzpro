@@ -11,11 +11,11 @@ for (const file of ['october-2026.js', 'guide-data.js', 'approach-specs.js', 'pr
 }
 const html = fs.readFileSync(path.join(root, 'models.html'), 'utf8');
 const functions = html.slice(html.indexOf('        function normName('), html.indexOf('        function hasPair(')) +
-  html.slice(html.indexOf('        function nameHas('), html.indexOf('        function gearState('));
+  html.slice(html.indexOf('        function usefulOptions('), html.indexOf('        function gearState('));
 vm.runInContext(functions, context);
 const models = context.window.OCTOBER_2026.models.map(r => ({my: r[1], name: r[2], seg: r[0]}));
 function result(row) {
-  const guide = context.guideOf(row);
+  const guide = context.featureRecord(row).spec;
   return context.mergedSpecs(guide && guide.specs, row).rows;
 }
 function specs(name, my = 'MY26') {
@@ -57,7 +57,9 @@ assert.equal(electricGLC['전면 트렁크'], '128L');
 assert.equal(specs('AMG GLC 53 4MATIC+', 'MY27')['배기량'], '2,999cc');
 assert.equal(specs('AMG GLC 53 4MATIC+', 'MY27')['변속기'], 'AMG SPEEDSHIFT TCT 9G');
 // MY27 PDF numbers must not silently fill different years.
-assert.equal(specs('CLE 450 4MATIC Cabriolet')['트렁크'], undefined);
+assert.equal(specs('CLE 450 4MATIC Cabriolet')['트렁크'], '295–385L');
+assert.equal(specs('CLE 450 4MATIC Cabriolet')['공차중량'], '2,025kg');
+assert.equal(specs('AMG E 53 4MATIC+', 'MY27')['공차중량'], undefined);
 assert.equal(specs('CLE 450 4MATIC Cabriolet', 'MY27')['트렁크'], '295–385L');
 const fuelFallback = context.mergedSpecs([['연료', '확인 필요']], {my:'MY26',name:'C 200 Avantgarde'}).rows;
 assert.equal(fuelFallback.find(p => p[0] === '연료')[1], '가솔린');
@@ -74,3 +76,50 @@ assert.doesNotMatch(hiddenSource, /송파|어프로치북|출처 기록 없음/)
 assert.doesNotMatch(html, /어프로치북/);
 assert.equal(context.tidyGearbox('AMG SPEEDSHIFT DCT 7G'), 'AMG SPEEDSHIFT DCT 7G');
 console.log(`Comparison checks passed: ${models.length} trims, ${ordinary} ordinary C/E/CLE variants, AMG gearboxes, EV isolation, year scoping, fallback and source metadata.`);
+
+// All marketed pairs: both cells must render, preserve values and reject unsupported comparisons.
+const datasets = models.map((r, i) => {
+  const pairs = result(r);
+  const map = Object.fromEntries(pairs.map(p => [p[0], {text:p[1], src:p[2]}]));
+  assert.ok(map['최고출력'], `Missing power: ${r.my} ${r.name}`);
+  return {row:r, pairs, map, ctx:cs.ctx(r, map)};
+});
+let comparisons = 0, cells = 0;
+for (let a = 0; a < datasets.length; a++) {
+  for (let b = a; b < datasets.length; b++) {
+    const x = datasets[a], y = datasets[b];
+    for (const label of new Set([...Object.keys(x.map), ...Object.keys(y.map)])) {
+      const left = x.map[label], right = y.map[label];
+      const view = context.harmonize(label, left?.text, right?.text);
+      const va = cs.displayValue(label, view.a, x.ctx);
+      const vb = cs.displayValue(label, view.b, y.ctx);
+      const rendered = cs.row(label, va, vb, left?.src, right?.src, x.ctx, y.ctx, a === b);
+      assert.equal((rendered.html.match(/class="sp-v /g) || []).length, 2);
+      assert.doesNotMatch(rendered.html, /<b>\s*<\/b>|undefined|NaN/);
+      if (/확인 필요|해당 없음|미공개/.test(va + vb)) assert.notEqual(rendered.judge.type, 'win');
+      if (left) assert.equal(view.a, context.tidySpec(label, left.text));
+      if (right) assert.equal(view.b, context.tidySpec(label, right.text));
+      cells += 2;
+    }
+    comparisons++;
+  }
+}
+assert.equal(context.canonSpec('승차정원'), '승차 정원');
+assert.equal(context.canonSpec('연료 탱크'), '연료탱크');
+assert.equal(context.harmonize('트렁크','540L','540–1715L').a, '540L');
+assert.equal(context.harmonize('트렁크','540L','540–1715L').b, '540–1,715L');
+assert.equal(specs('E 200 Exclusive')['연료탱크'], '66L');
+assert.equal(specs('E 200 AMG Line')['승차 정원'], '5인승');
+assert.equal(specs('GLB 250+ electric', 'MY27')['최고출력'], '271.9ps (모터 출력 환산)');
+assert.equal(specs('GLE 450 4MATIC')['최고출력'], '381ps');
+assert.equal(specs('GLE 450 4MATIC Coupé')['공차중량'], '2,325kg');
+assert.equal(specs('GLE 450 d 4MATIC Coupé')['공차중량'], '2,390kg');
+console.log(`All-pair rendering checks: ${comparisons} combinations including self, ${cells} non-empty cells. Unknown data remains explicitly identified.`);
+if (process.argv.includes('--audit')) {
+  const labels = [...new Set(datasets.flatMap(d => Object.keys(d.map)))].sort();
+  const escape = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const records = [['연식','차량',...labels], ...datasets.map(d => [d.row.my,d.row.name,...labels.map(l => d.map[l]?.text || cs.displayValue(l, '', d.ctx))])];
+  fs.writeFileSync(path.join(root,'docs/spec-audit.csv'), '\ufeff' + records.map(r=>r.map(escape).join(',')).join('\n') + '\n');
+}
+
+assert.equal(cs.row('트렁크','540L','540–1715L',null,null,{my:'MY26',pt:'gas'},{my:'MY26',pt:'gas'},false).judge.type, 'ref');

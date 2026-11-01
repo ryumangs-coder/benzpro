@@ -42,7 +42,7 @@
       small: function (s) { return s + " 차가 더 가벼워 연비·전비에 유리할 수 있어요. 무게만으로 좋고 나쁨을 정하지는 않아요."; } },
     "배기량": { kind: "size", unit: "cc", name: "배기량 (엔진 크기)", plain: "엔진의 크기예요. 국내 자동차세를 매기는 기준이기도 해요.", big: "더 큽니다",
       say: "배기량이 크다고 무조건 힘이 센 것은 아니에요. 터보·하이브리드 같은 기술에 따라 힘이 달라져요." },
-    "최고출력": { kind: "up", unit: "ps", perf: true, name: "최고출력 (낼 수 있는 최대 힘)", plain: "엔진이 낼 수 있는 가장 큰 힘이에요. 단위는 마력(ps)이에요.", more: "더 높습니다", short: "최고출력",
+    "최고출력": { kind: "up", unit: "ps", perf: true, name: "최고출력 (낼 수 있는 최대 힘)", plain: "내연기관은 엔진, 전기차는 모터 출력이에요. 하이브리드는 엔진·시스템 출력 표기를 확인하세요. 단위는 마력(ps)이에요.", more: "더 높습니다", short: "최고출력",
       say: "높으면 고속 추월이나 오르막에서 여유가 생길 수 있어요. 실제 가속감은 무게와 변속기에 따라 달라요." },
     "모터 최고출력": { kind: "up", unit: "kW", perf: true, name: "모터 최고출력", plain: "전기 모터가 낼 수 있는 가장 큰 힘이에요. 1kW는 약 1.36마력이에요.", more: "더 높습니다", short: "모터 출력",
       say: "높으면 가속과 고속에서 여유가 생길 수 있어요." },
@@ -60,7 +60,7 @@
       say: "국내 실주행거리가 아니에요. 기온·속도·휠 사양에 따라 실제 거리는 달라져요." },
     "배터리": { kind: "ref", unit: "kWh", name: "배터리 용량", plain: "전기를 담는 배터리의 크기예요.", big: "더 큽니다",
       say: "'사용 가능 용량'인지 '전체 용량'인지 표기가 없어 참고용으로만 차이를 적었어요." },
-    "트렁크": { kind: "ref", unit: "L", name: "트렁크 (뒤쪽 짐 공간)", plain: "앞 숫자는 기본, 뒤 숫자는 뒷좌석을 접었을 때예요.", big: "더 큽니다",
+    "트렁크": { kind: "ref", unit: "L", name: "트렁크 (뒤쪽 짐 공간)", plain: "용량 범위는 좌석을 접거나 지붕을 여닫는 등 차량 구성에 따라 달라져요. 기본 용량과 최대 용량을 구분해 보세요.", big: "더 큽니다",
       say: "재는 방법 표기가 없어 기본 용량 기준으로 참고만 하세요." },
     "전면 트렁크": { kind: "ref", unit: "L", name: "전면 트렁크 (앞쪽 짐 공간)", plain: "엔진 대신 앞쪽에 둔 작은 짐 공간이에요.", big: "더 큽니다", say: "충전 케이블 같은 작은 짐을 넣기 좋아요." },
     "급속 충전": { kind: "text", name: "급속 충전", plain: "휴게소 같은 빠른 충전기로 충전할 때의 최대 속도예요." },
@@ -88,6 +88,14 @@
   var MISSING = /^(—|-|)$|정보가 아직 없습니다|확인 필요/;
   function isMissing(v) {
     return MISSING.test(String(v == null ? "" : v).trim());
+  }
+  function displayValue(label, value, ctx) {
+    if (!isMissing(value)) return value;
+    var ev = ctx && ctx.pt === "ev";
+    var combustion = ctx && (ctx.pt === "gas" || ctx.pt === "diesel");
+    if (ev && ["연료탱크", "배기량", "엔진"].indexOf(label) !== -1) return "해당 없음 (전기차)";
+    if (combustion && ["1회 충전 주행거리", "WLTP 주행거리", "급속 충전", "전기 아키텍처"].indexOf(label) !== -1) return "해당 없음 (외부 충전 미지원)";
+    return (ctx && ctx.my ? ctx.my + " · " : "") + "해당 트림 자료 확인 필요";
   }
   function notPublic(v) {
     return /미공개/.test(String(v || ""));
@@ -162,6 +170,11 @@
   function judge(label, va, vb, sa, sb, ca, cb) {
     var meta = metaOf(label);
     var out = { label: label, meta: meta, a: va, b: vb, type: "none", side: null, text: "", say: "", tag: "" };
+    if (/해당 없음/.test(va) || /해당 없음/.test(vb)) {
+      out.type = "stop";
+      out.text = "동력 방식에 따라 적용되지 않는 항목이에요.";
+      return out;
+    }
     var missA = isMissing(va) || notPublic(va);
     var missB = isMissing(vb) || notPublic(vb);
     if (missA || missB) {
@@ -213,6 +226,11 @@
       out.text = stop.why;
       return out;
     }
+    if (label === "트렁크" && Math.abs(x.n - y.n) < 1e-9 && va !== vb) {
+      out.type = "ref";
+      out.text = "앞에 표시된 용량은 같지만 전체 용량 표기는 달라요. 좌석·지붕 상태와 최대 용량을 확인하세요.";
+      return out;
+    }
     if (Math.abs(x.n - y.n) < 1e-9) {
       out.type = "same";
       out.text = "두 차가 같아요.";
@@ -252,7 +270,7 @@
   }
   function valueCell(side, v, win) {
     var miss = isMissing(v);
-    var shown = miss ? "공식 자료 확인 필요" : v;
+    var shown = miss && !/해당 트림/.test(v) ? "공식 자료 확인 필요" : v;
     return '<div class="sp-v ' + side + (win ? " is-win" : "") + (miss || notPublic(v) ? " is-miss" : "") + '"><small>' + (side === "left" ? "왼쪽 차" : "오른쪽 차") + "</small><b>" + esc(shown) + "</b>" +
       (win ? '<em class="sp-badge">✔ 우세</em>' : "") + "</div>";
   }
@@ -480,6 +498,7 @@
   }
 
   window.BenzSpecs = {
+    displayValue: displayValue,
     META: META,
     SOURCES: SOURCES,
     ctx: ctxOf,
