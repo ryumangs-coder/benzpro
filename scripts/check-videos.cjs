@@ -1,0 +1,11 @@
+const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');
+const data=JSON.parse(fs.readFileSync(path.join(root,'benz-videos.json'),'utf8'));
+const c={window:{},document:{readyState:'loading',addEventListener(){}}};vm.createContext(c);
+vm.runInContext(fs.readFileSync(path.join(root,'benz-video.js'),'utf8').replace('var videos = [], current = null;','var videos = '+JSON.stringify(data.videos)+';'),c);
+const v=c.window.BenzVideo;
+assert.equal(v.pick(['E 200 Exclusive','E 300 4MATIC AMG Line'])[0].id,'y8sx0CCegQ0');
+assert.equal(v.pick(['GLC 300 4MATIC electric'])[0].id,'tsaprIcuEis');
+assert.equal(v.pick(['AMG GT 55 4MATIC+']).length,0);
+assert.doesNotMatch(v.card('',['E 200 Exclusive']),/kP_GP68aIuA/);
+console.log('Related video matching, EV isolation and unrelated-video suppression passed.');

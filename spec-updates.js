@@ -211,7 +211,7 @@
   add("MY27",["AMG GT 43"],["4MATIC"],{"타이어":"앞 255/45 R 19 · 뒤 285/40 R 19"},reference("MBUSA · GT 43 2도어", "https://www.mbusa.com/en/vehicles/model/gt/coupe/amggt43"));
   add("MY27",["AMG GT 55"],[],{"타이어":"앞 295/30 R 20 · 뒤 305/30 R 20"},reference("MBUSA · GT 55", "https://www.mbusa.com/en/vehicles/model/gt/coupe/amggt55"));
   add("MY27",["GLC 300","Coup"],["electric"],{"타이어":"앞 235/55 R 19 · 뒤 255/50 R 19"},reference("MBUSA · GLC 300 Coupé", "https://www.mbusa.com/en/vehicles/model/glc/coupe/glc300c4", "미국 기본 휠 사양 참고 · 국내 트림 휠은 옵션표를 함께 확인"));
-  add("MY27",["GLC 300"],["Coup","electric"],{"공차중량":"1910kg"},reference("Mercedes-Benz Canada · MY26 GLC 300 4MATIC", "https://www.mercedes-benz.ca/en/vehicles/model/glc/suv/glc300w4", "MY26 캐나다 제조사 참고 · 국내 장비 구성과 다를 수 있음"));
+  add("MY27",["GLC 300"],["Coup","electric","Avantgarde"],{"공차중량":"1910kg"},reference("Mercedes-Benz Canada · MY26 GLC 300 4MATIC", "https://www.mercedes-benz.ca/en/vehicles/model/glc/suv/glc300w4", "MY26 캐나다 제조사 참고 · 국내 장비 구성과 다를 수 있음"));
 
   add("MY27",["AMG GLC 53"],[],{"연료탱크":"62L"},reference("Mercedes-Benz · GLC 53 공식 구조카드", "https://rk.mb-qr.com/en/254.674/"));
   add("MY27",["AMG SL 63"],[],{"휠베이스":"2700mm","연료탱크":"70L","트렁크":"212L","공차중량":"1985kg","승차 정원":"4인승"},reference("MBUSA · MY27 SL 63", "https://www.mbusa.com/en/vehicles/model/sl/roadster/sl63r4", "미국 제조사 참고 · 106.3in×25.4≈2700mm, 18.5US gal×3.7854≈70L, 7.5cu ft×28.3168≈212L, 4376lb×0.453592≈1985kg"));
