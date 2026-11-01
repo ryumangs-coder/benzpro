@@ -25,10 +25,10 @@ for(let a=0;a<names.length;a++)for(let b=a+1;b<names.length;b++){
  pairs++;
 }
 const html=fs.readFileSync(path.join(root,'preorder.html'),'utf8');
-const other=html.slice(html.indexOf('<section id="others"'),html.indexOf('<section id="sclass"'));
+const other=html.slice(html.indexOf('<section id="others"'),html.indexOf('<section id="reserve"'));
 assert.doesNotMatch(other,/GLB/);
 assert.match(html,/<section id="glb"/);
-assert.match(html,/value="일렉트릭 GLB"/);
+assert.match(html,/value="GLB 일렉트릭"/);
 assert.ok((html.match(/data-benz-videos=/g)||[]).length>=5);
 assert.ok(fs.existsSync(path.join(root,'glb-electric.html')));
 console.log(`Video checks passed: ${pairs} vehicle pairs have 3–4 unique relevant recommendations; two-video and singleton behavior; GLB navigation and preorder slots.`);
