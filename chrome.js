@@ -62,7 +62,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261025e";
+    css.href = "chrome.css?v=20261102-ux2";
     document.head.appendChild(css);
   }
 
@@ -202,6 +202,7 @@
     var lift = 0;
     Array.prototype.forEach.call(bars, function (bar) {
       if (bar === dock || bar.id === "bp-drawer" || bar.id === "bp-head") return;
+      if (bar.id === "cta" && document.body.classList.contains("hp-home")) return;
       var style = window.getComputedStyle(bar);
       if (style.position !== "fixed") return;
       Array.prototype.forEach.call(bar.querySelectorAll('a[href*="open.kakao.com"], a[href*="pf.kakao.com"], a[href*="/chat"]'), function (link) {

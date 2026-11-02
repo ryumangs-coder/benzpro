@@ -194,7 +194,7 @@
       body =
         '<p class="hp-meta">차량가 ' + esc(manText(view.q.basis)) + "</p>" +
         dealHtml(view) +
-        '<p class="hp-num" data-count data-count-key="hero-final-' + esc(name) + '">' + esc(manText(view.after)) + "</p>" +
+        '<p class="hp-num">' + esc(manText(view.after)) + "</p>" +
         '<p class="hp-note">할인 적용 차량가. 취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
         basis +
         '<p class="hp-note">' + esc(view.lines.map(function (line) { return line.label + " " + line.pct + "%"; }).join(" · ")) + "</p>";
