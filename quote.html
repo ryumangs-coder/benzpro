@@ -465,6 +465,7 @@
           if (state.pay === "rental" && view.q.campaign) note = "MBMK 장기렌탈은 판매 채널에 따라 조건이 달라 별도 견적을 확인합니다. 운용리스·할부와 구분합니다.";
           if (state.pay === "care") note = "안심보장할부와 운용리스는 신차보상·타이어 교환 3년이 안내돼 있습니다. 일반 할부는 신차보상 3년입니다." + " 기존 월납 지원 상품은 종료되었습니다. 상품별 보장과 금리는 11월 금융 안내에서 확인하세요.";
           if (view.q.campaignNote) note += " " + view.q.campaignNote;
+          if(note.indexOf("월납 지원 상품은 종료")===-1)note+=" 기존 월납 지원 상품은 종료되었습니다.";
           document.getElementById("pay-note").textContent = note;
         }
         function opt(key, title, detail, tag, enabled) {
