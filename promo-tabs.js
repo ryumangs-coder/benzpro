@@ -14,7 +14,7 @@
     shield: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 13.6-3.4-3.4 1.4-1.4 2 2 4.6-4.6 1.4 1.4-6 6z"/></svg>'
   };
   var tabs = [
-    { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["promo-board", "finder"] },
+    { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["finder"] },
     { id: "extra", label: "추가 혜택", icon: icons.plus, ids: ["owned", "benefit-slot"] },
     { id: "mou", label: "MOU 할인", icon: icons.mou, ids: ["company"] },
     { id: "fleet", label: "법인 할인", icon: icons.fleet, ids: ["fleet-slot"] },
@@ -56,9 +56,7 @@
   var highlights = document.getElementById("highlights");
   if (!highlights || !window.OCTOBER_2026) return;
 
-  var board = document.createElement("section");
-  board.id = "promo-board";
-  board.className = "jump mt-6";
+  var board = document.getElementById("finder");
   highlights.parentNode.insertBefore(board, highlights);
 
   var tire = document.getElementById("tire-card");
@@ -367,16 +365,6 @@
     );
   }
 
-  var activeFamily=families.find(function(f){var p=new URLSearchParams(location.search);return p.get('prefix')===f.prefix&&(p.get('has')||'')===(f.has||'')&&(p.get('kind')||'base')===(f.kind||'base');})||families.find(function(f){return f.name==='E클래스';});
-  var activeGroup=activeFamily.group;
-  function paintFamilyBoard(sync){
-    var picks=families.filter(function(f){return f.group===activeGroup;});
-    board.innerHTML='<h2 class="text-[26px] font-bold">보고 싶은 차종을 골라보세요</h2><div class="vehicle-filters">'+window.BenzCatalogue.chips('promo-group',groupMeta.map(function(g){return[g.id,g.label];}),activeGroup,'분류')+window.BenzCatalogue.chips('promo-family',picks.map(function(f){return[f.name,f.name];}),activeFamily.name,'차종')+'</div><div class="promo-selected-family">'+card(activeFamily)+'</div>';
-    if(sync)document.dispatchEvent(new CustomEvent('benz-family-filter',{detail:activeFamily}));
-  }
-  board.addEventListener('click',function(e){var b=e.target.closest('button[data-vfilter]');if(!b)return;if(b.dataset.vfilter==='promo-group'){activeGroup=b.dataset.value;activeFamily=families.find(function(f){return f.group===activeGroup;});}else if(b.dataset.vfilter==='promo-family'){activeFamily=families.find(function(f){return f.name===b.dataset.value;});}paintFamilyBoard(true);});
-  paintFamilyBoard();
-
   var loadedBenefit = false;
   function loadBenefit() {
     if (loadedBenefit) return;
@@ -492,7 +480,7 @@
     var hashId = tab.id === "care" ? (careSub === "tire" ? "tire-card" : "care-card") : (scrollId || tab.id);
     if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + hashId);
     var target = tab.id === "care" && scrollId ? "care-switch" : scrollId;
-    if(tab.id==="cars" && target==="highlights")target="promo-board";
+    if(tab.id==="cars" && (target==="highlights"||target==="promo-board"))target="finder";
     if(tab.id==="cars" && (target==="how"||target==="examples")){var detail=document.getElementById(target);if(detail)detail.classList.remove("promo-off");}
     if (target && document.getElementById(target)) {
       document.getElementById(target).scrollIntoView({ behavior: "smooth", block: "start" });
