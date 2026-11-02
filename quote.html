@@ -23,7 +23,7 @@
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="벤츠프로" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="chrome.css?v=20261102-ux2" />
+    <link rel="stylesheet" href="chrome.css?v=20261102-ux2b" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
 <link rel="stylesheet" href="benz-video.css?v=20261102-nav" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,7 +35,7 @@
         background: #10222c;
         padding: 1.1rem 1.15rem 1.2rem;
       }
-      .sheet-kicker { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #e4cb86; }
+      .sheet-kicker { font-size: 16px; font-weight: 700; letter-spacing: 0.03em; color: #f3e2b0; }
       .rowline {
         display: flex;
         align-items: baseline;
@@ -67,21 +67,21 @@
         border-top: 1px solid rgba(228, 203, 134, 0.4);
       }
       .final span { color: #e4cb86; font-size: 16px; font-weight: 800; }
-      .final strong { color: #e4cb86; font-size: 36px; line-height: 1; letter-spacing: -0.04em; }
-      .fine { margin-top: 0.35rem; font-size: 13px; line-height: 1.5; color: #8b969c; }
+      .final strong { color: #e4cb86; font-size: clamp(1.45rem, 7vw, 2.25rem); line-height: 1.1; letter-spacing: -0.04em; overflow-wrap: anywhere; }
+      .fine { margin-top: 0.35rem; font-size: 16px; line-height: 1.6; color: #c5ced3; }
       .q-perks {
         margin-top: 0.7rem;
         padding: 0.75rem 0.9rem 0.8rem;
         border-radius: 0.9rem;
         background: rgba(228, 203, 134, 0.12);
       }
-      .q-perks b { display: block; color: #e4cb86; font-size: 15px; }
+      .q-perks b { display: block; color: #e4cb86; font-size: 17px; }
       .q-perks ul {
         margin: 0.4rem 0 0;
         padding-left: 1.15rem;
         color: #f4f7f8;
-        font-size: 15px;
-        line-height: 1.5;
+        font-size: 16px;
+        line-height: 1.6;
       }
       .q-perks li { margin: 0.25rem 0; }
       .q-perks li::marker { color: #e4cb86; }
@@ -111,7 +111,7 @@
       }
       .opt input { width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; flex: none; accent-color: #e4cb86; }
       .opt b { display: block; font-size: 17px; line-height: 1.35; }
-      .opt small { display: block; margin-top: 0.2rem; font-size: 14px; line-height: 1.45; color: #8b969c; }
+      .opt small { display: block; margin-top: 0.25rem; font-size: 16px; line-height: 1.55; color: #c5ced3; }
       .opt em {
         margin-left: auto;
         flex: none;
@@ -120,7 +120,8 @@
         color: #e4cb86;
         font-size: 16px;
       }
-      .opt.off { opacity: 0.55; }
+      .opt.off { opacity: 1; border-color: rgba(164, 170, 174, 0.35); background: #0c1a24; }
+      .opt.off input { opacity: 0.7; }
       .field {
         width: 100%;
         border-radius: 1rem;
@@ -152,11 +153,13 @@
       a.more-link small {
         display: block;
         margin-top: 0.1rem;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 600;
         color: #c5ced3;
       }
       .q-pick h2 { margin: 0; font-size: 1.45rem; line-height: 1.35; }
+      .bp-quote-title { font-size: clamp(1.75rem, 8vw, 2rem) !important; }
+      @media (max-width: 360px) { .bp-quote-title { font-size: 1.6rem !important; } }
       .q-pick > p { margin: 0.4rem 0 0.75rem; color: #c5ced3; font-size: 1rem; line-height: 1.5; }
       .q-pick-card {
         display: grid;
@@ -181,16 +184,16 @@
         background: rgba(228, 203, 134, 0.1);
       }
       .q-pick-card:focus-visible { outline: 2px solid #e4cb86; outline-offset: 3px; }
-      .q-pick-k { grid-area: k; color: #a4aaae; font-size: 13px; font-weight: 700; }
+      .q-pick-k { grid-area: k; color: #c5ced3; font-size: 16px; font-weight: 700; }
       .q-pick-name { grid-area: name; font-size: clamp(1.15rem, 3vw, 1.45rem); font-weight: 800; line-height: 1.3; word-break: keep-all; }
-      .q-pick-year { grid-area: year; color: #e4cb86; font-size: 15px; font-weight: 750; }
+      .q-pick-year { grid-area: year; color: #f3e2b0; font-size: 16px; font-weight: 750; }
       .q-pick-change {
         grid-area: change;
         display: inline-flex;
         align-items: center;
         gap: 0.25rem;
         color: #f3e2b0;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 800;
         white-space: nowrap;
       }
@@ -209,7 +212,7 @@
         border-radius: 1rem;
         background: #0c1a24;
       }
-      .q-pick-panel label { display: block; font-size: 14px; font-weight: 750; }
+      .q-pick-panel label { display: block; font-size: 16px; font-weight: 750; }
       #car-search {
         width: 100%;
         min-height: 48px;
@@ -222,7 +225,7 @@
         font-size: 16px;
       }
       #car-list { max-height: min(50vh, 24rem); margin-top: 0.55rem; overflow: auto; }
-      .q-group { margin: 0.55rem 0 0.2rem; color: #e4cb86; font-size: 13px; font-weight: 800; }
+      .q-group { margin: 0.55rem 0 0.2rem; color: #f3e2b0; font-size: 16px; font-weight: 800; }
       .q-option {
         display: flex;
         align-items: center;
@@ -241,18 +244,18 @@
       }
       .q-option[aria-selected="true"] { background: rgba(228, 203, 134, 0.16); }
       .q-option:hover, .q-option:focus-visible { background: rgba(228, 203, 134, 0.22); outline: none; }
-      .q-option small { color: #a4aaae; }
-      #car-empty { color: #c5ced3; font-size: 15px; }
+      .q-option small { color: #c5ced3; font-size: 15px; }
+      #car-empty { color: #c5ced3; font-size: 16px; }
     </style>
-      <link rel="stylesheet" href="ready-stock.css?v=20261102f" />
+      <link rel="stylesheet" href="ready-stock.css?v=20261102-ux2" />
 <link rel="stylesheet" href="november-benefits.css?v=20261102-rentalfix" /><link rel="stylesheet" href="vehicle-ui.css?v=20261102-nav"></head>
-  <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
+  <body class="bp-inline-contact bg-[#F6F3EE] text-[#1C1917] antialiased">
 <script src="chrome.js?v=20261102-ux2"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
       <p class="text-[15px] font-semibold text-[#E4CB86]">2026년 11월 · 견적 확인</p>
-      <h1 class="mt-2 text-[2rem] font-bold leading-tight"><span class="bp-mark">조건을 체크하면</span><br />금액이 바로 바뀝니다</h1>
+      <h1 class="bp-quote-title mt-2 font-bold leading-tight"><span class="bp-mark">조건을 체크하면</span><br />금액이 바로 바뀝니다</h1>
       <p class="mt-3 max-w-2xl text-[18px] leading-relaxed text-[#C5CED3]">기본 할인과 금융 할인이 먼저 빠져 있습니다. 해당하는 항목만 켜 보세요. 재고와 심사에 따라 최종 금액은 달라질 수 있습니다.</p>
 
       <div class="mt-6 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
@@ -278,6 +281,16 @@
             </div>
           </section>
 
+          <details class="mt-4 rounded-2xl border border-white/15 bg-[#10222c] p-4">
+            <summary class="min-h-[48px] cursor-pointer content-center text-[17px] font-bold text-[#F3E2B0]">구매 용어를 쉽게 설명해 드립니다</summary>
+            <dl class="mt-3 space-y-3 text-[16px] leading-relaxed text-[#C5CED3]">
+              <div><dt class="font-bold text-white">세부 모델(트림)</dt><dd>같은 차종 안에서 장비나 외관 구성이 다른 모델입니다.</dd></div>
+              <div><dt class="font-bold text-white">운용리스</dt><dd>계약 기간 동안 차를 이용하는 방식입니다. 만기 후 반납·인수 등은 계약 조건에 따릅니다.</dd></div>
+              <div><dt class="font-bold text-white">회사·단체 제휴 할인(MOU)</dt><dd>제휴 대상 회사나 단체의 임직원 및 가족에게 적용될 수 있으며, 대상 여부를 확인합니다.</dd></div>
+              <div><dt class="font-bold text-white">기존 차량 판매 후 신차 구매 혜택</dt><dd>보유 차량을 인증 중고차로 판매하는 등 정해진 조건을 충족해야 적용됩니다.</dd></div>
+            </dl>
+          </details>
+
           <section id="q-benefit">
             <h2 class="text-[22px] font-bold">해당하는 <span class="bp-mark">혜택</span></h2>
             <p class="mt-1 text-[15px] leading-relaxed text-[#8b969c]">지금 벤츠를 타는 혜택과 다른 브랜드 혜택은 둘 중 하나입니다. 전시·수리·주행거리는 그 차일 때만 빠지고, 상담에서 확인합니다.</p>
@@ -287,33 +300,34 @@
           <form id="lead" class="rounded-3xl border border-white/10 bg-[#10222c] p-5" novalidate>
             <h2 class="text-[22px] font-bold">이 견적으로 <span class="bp-mark">상담 받기</span></h2>
             <p id="ended-note" class="mt-2 hidden text-[16px] leading-relaxed text-[#ffb4ae]">이 숫자는 지난 프로모션입니다. 새 연식 조건을 확인해 보세요.</p>
-            <p class="mt-1 text-[15px] leading-relaxed text-[#8b969c]">성함과 연락처만 있으면 됩니다. 이메일은 있으시면 적어 주세요.</p>
+            <p id="lead-context" class="mt-2 rounded-xl border border-[#E4CB86]/35 bg-[#0c1a24] px-3 py-3 text-[16px] font-semibold leading-relaxed text-[#F3E2B0]" aria-live="polite"></p>
+            <p class="mt-2 text-[16px] leading-relaxed text-[#C5CED3]">성함과 연락처만 적어 주세요. 이메일은 선택 사항입니다.</p>
             <div class="mt-4 space-y-3">
               <div data-q="name">
                 <label for="name" class="text-[15px] font-bold">성함</label>
                 <input id="name" name="name" class="field mt-1" autocomplete="name" placeholder="성함" />
-                <p class="error mt-1 hidden text-[13px] text-[#F87171]">성함을 적어 주세요.</p>
+                <p class="error mt-1 hidden text-[15px] text-[#F87171]">성함을 적어 주세요.</p>
               </div>
               <div data-q="phone">
                 <label for="phone" class="text-[15px] font-bold">연락처</label>
                 <input id="phone" name="phone" class="field mt-1" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" />
-                <p class="error mt-1 hidden text-[13px] text-[#F87171]">연락처를 적어 주세요.</p>
+                <p class="error mt-1 hidden text-[15px] text-[#F87171]">연락처를 적어 주세요.</p>
               </div>
               <div data-q="email">
                 <label for="email" class="text-[15px] font-bold">이메일</label>
                 <input id="email" name="email" type="email" class="field mt-1" autocomplete="email" placeholder="있으시면 적어 주세요" />
-                <p class="error mt-1 hidden text-[13px] text-[#F87171]">이메일 형식을 확인해 주세요.</p>
+                <p class="error mt-1 hidden text-[15px] text-[#F87171]">이메일 형식을 확인해 주세요.</p>
               </div>
               <div data-q="privacy" class="rounded-xl border border-white/15 px-3 py-3">
                 <div class="bp-consent-row">
-                  <label class="flex items-center gap-2 text-[14px] text-white">
-                    <input id="privacy" name="privacyAgree" type="checkbox" value="동의" class="h-4 w-4 shrink-0" />
+                  <label class="flex min-h-[48px] items-center gap-3 text-[16px] leading-relaxed text-white">
+                    <input id="privacy" name="privacyAgree" type="checkbox" value="동의" class="h-5 w-5 shrink-0" />
                     <span class="font-semibold">개인정보 수집 및 이용 동의 (필수)</span>
                   </label>
                   <button type="button" class="bp-consent-toggle" data-consent-toggle aria-expanded="false" aria-controls="privacy-detail">내용보기</button>
                 </div>
                 <div id="privacy-detail" class="bp-consent-detail" hidden><p>수집 항목: 성함, 연락처, 이메일, 희망 차종과 견적 조건 · 수집 목적: 견적 안내 및 상담 · 보유 기간: 상담 종료 후 1년 이내 파기. 동의를 거부하실 수 있으나, 동의하지 않으면 견적 안내가 어렵습니다.</p></div>
-                <p class="error mt-2 hidden text-[13px] text-[#F87171]">개인정보 수집 및 이용에 동의해 주세요.</p>
+                <p class="error mt-2 hidden text-[15px] text-[#F87171]">개인정보 수집 및 이용에 동의해 주세요.</p>
               </div>
             </div>
             <button id="send" type="submit" class="mt-4 flex min-h-[56px] w-full items-center justify-center rounded-2xl bg-[#1C69D4] text-[18px] font-bold">견적 상담 받기</button>
@@ -483,9 +497,9 @@
           document.getElementById("opts").innerHTML =
             opt("early", "7월 1일 이전 통관 재고", earlyOn ? "개소세 인하 " + won(q.tax) + "이 할인 뒤에 한 번 더 빠집니다." : "이 차는 개소세 인하 재고 금액이 없습니다.", earlyOn ? "−" + won(q.tax) : "없음", earlyOn) +
             opt("retain", "지금 벤츠를 타고 계시면", view.retainRate ? "사는 달에서 거꾸로 세 달 안에 보유한 기록이 있으면 됩니다." : "이 차는 이번 달 재구매 안내가 없습니다.", view.retainRate ? "+" + view.retainRate + "%" : "없음", !!view.retainRate) +
-            opt("trade", "타던 벤츠를 인증 중고로 넘기면", "지금 벤츠를 타는 혜택과 같이 켜집니다. 다른 브랜드 혜택과는 같이 안 됩니다.", "+1%", !!view.retainRate) +
+            opt("trade", "기존 차량 판매 후 신차 구매 혜택", "타던 벤츠를 인증 중고차로 판매할 때 적용될 수 있습니다. 다른 브랜드 혜택과는 함께 적용되지 않습니다.", "+1%", !!view.retainRate) +
             opt("conquest", "다른 고급 브랜드를 타고 계시면", (view.conqRate || (view.q.campaign && view.q.campaign.conquestEW)) ? "BMW(미니 제외), 아우디, 제네시스, 볼보, 포르쉐, 랜드로버, 렉서스가 대상입니다. 해당 S클래스·마이바흐 프로그램은 롤스로이스·벤틀리도 확인합니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.", (view.q.campaign && view.q.campaign.conquestEW) ? "보증 +1년·3만km" : (view.conqRate ? "+" + view.conqRate + "%" : "없음"), !!(view.conqRate || (view.q.campaign && view.q.campaign.conquestEW))) +
-            opt("mou", "MOU 제휴사 임직원이시면", "본인, 배우자, 부모, 자녀까지 됩니다.", "+2%", true) +
+            opt("mou", "회사·단체 제휴 할인(MOU)", "본인·배우자·부모·자녀까지 대상이 될 수 있으며, 제휴 여부와 자격을 확인합니다.", "+2%", true) +
             '<a class="more-link" href="mou.html#search"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V9l8-5 8 5v11h-6v-6H10v6H4z"/></svg><span>회사 이름으로 찾아보기<small>제휴사인지 이 페이지에서 바로 검색합니다</small></span></a>' +
             opt("repair", "수리 이력이 공개되는 차", "계약 전에 수리 이력을 알려야 하는 차만 1%입니다.", "+1%", true) +
             opt("mile", "도착 주행거리가 100km 이상", "전시장 시승차와 데모 차는 빠집니다.", "+1%", true) +
@@ -546,10 +560,10 @@
             '<h2 class="mt-1 text-[22px] font-bold leading-snug">' + showName(current.name) + "</h2>" +
             '<p class="fine">' + current.my + "</p>" + (window.BenzFinance ? window.BenzFinance.badges(current) : "") +
             perkHtml +
-            '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
+            '<div class="rowline mt-2"><span>정상 판매가</span><b>' + won(q.basis) + "</b></div>" +
             '<div class="rowline cut"><span>할인 합계' + (view.rate ? '<em class="rate-pill">' + view.rate + "% 할인</em>" : "") + "</span><b>" + (view.saved == null ? "상담 시 확인" : "−" + won(view.saved)) + "</b></div>" +
             breakdown +
-            '<div class="final"><span>할인 적용 차량가</span><strong data-count data-count-key="quote-final">' + won(view.after) + "</strong></div>" +
+            '<div class="final"><span>예상 구매 가격</span><strong data-count data-count-key="quote-final">' + won(view.after) + "</strong></div>" +
             '<p class="fine">취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
             (notice ? '<p class="fine">' + notice + "</p>" : "") +
             monthLine + view.blocks.map(function(t){return '<p class="fine">' + t + "</p>";}).join("");
@@ -582,6 +596,7 @@
             paintPays(view);
             paintOpts(view);
           }
+          document.getElementById("lead-context").textContent = showName(current.name) + " · " + current.my + " · " + payLabel() + " 조건으로 상담합니다.";
           paintSheet(view);
           if (window.BenzNovemberBenefits) document.getElementById("sheet").insertAdjacentHTML("beforeend", window.BenzNovemberBenefits.html(current, state));
           if (window.BenzReadyStock) document.getElementById("sheet").insertAdjacentHTML("beforeend", window.BenzReadyStock.card(current));

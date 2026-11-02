@@ -510,6 +510,20 @@ body.bp-lock {
 .bp-dock a:focus-visible {
   transform: translateY(-1px);
 }
+@media (max-width: 500px) {
+  .bp-dock {
+    right: 50%;
+    bottom: calc(0.6rem + env(safe-area-inset-bottom));
+    flex-direction: row;
+    gap: 0.55rem;
+    transform: translateX(50%);
+  }
+  body .bp-dock a.bp-dock-yt,
+  body .bp-dock button.bp-dock-top { display: none !important; }
+  body.bp-has-toc main { padding-left: 1rem; }
+  .bp-toc-open { display: none; }
+  body.bp-inline-contact .bp-dock { display: none; }
+}
 .bp-dock.is-low {
   bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }

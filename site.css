@@ -883,7 +883,7 @@ a.spec-jump {
 }
 .wr-timeline div:first-child { background: rgba(158, 201, 232, 0.16); }
 .wr-timeline b { display: block; font-size: 17px; font-weight: 800; line-height: 1.25; }
-.wr-timeline span { display: block; margin-top: 0.2rem; font-size: 13px; line-height: 1.35; color: #c5ced3; }
+.wr-timeline span { display: block; margin-top: 0.2rem; font-size: 16px; line-height: 1.5; color: #d5dde1; }
 .wr-price {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -897,9 +897,9 @@ a.spec-jump {
   background: #0c1a24;
   text-align: center;
 }
-.wr-price span { display: block; font-size: 13px; color: #a4aaae; }
+.wr-price span { display: block; font-size: 16px; line-height: 1.4; color: #d5dde1; }
 .wr-price b { display: block; margin-top: 0.15rem; font-size: 18px; font-weight: 800; color: #e4cb86; }
-.wr-price em { display: block; margin-top: 0.1rem; font-style: normal; font-size: 13px; color: #a4aaae; }
+.wr-price em { display: block; margin-top: 0.1rem; font-style: normal; font-size: 15px; line-height: 1.4; color: #c5ced3; }
 .wr-posts { display: grid; gap: 0.6rem; }
 @media (min-width: 640px) { .wr-posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 a.wr-post {
@@ -923,4 +923,4 @@ a.wr-post img {
 }
 a.wr-post span { min-width: 0; font-size: 16px; font-weight: 700; line-height: 1.4; word-break: keep-all; overflow-wrap: break-word; }
 .wr-price em, .wr-timeline span, .care-pick button span { word-break: keep-all; }
-a.wr-post small { display: block; margin-top: 0.2rem; font-size: 13px; font-weight: 600; color: #e4cb86; }
+a.wr-post small { display: block; margin-top: 0.2rem; font-size: 15px; line-height: 1.4; font-weight: 600; color: #f3e2b0; }

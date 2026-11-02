@@ -305,8 +305,8 @@
           '<p class="mt-2 text-[16px] leading-relaxed text-[#C5CED3]">할인 프로모션은 아직 없습니다. ' + showName(best.name) + " 기준입니다.</p>"
         : '<div class="price-hit">' +
           (best.cashWon ? '<b class="save">100만원 할인</b>' : best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
-          '<span class="k was-k">정상가격</span>' +
-          '<span class="k now-k">할인 적용 차량가</span>' +
+          '<span class="k was-k">정상 판매가</span>' +
+          '<span class="k now-k">예상 구매 가격</span>' +
           '<b class="was">' + won(best.priceMan) + "</b>" +
           '<span class="arrow" aria-hidden="true">→</span>' +
           '<b class="now">' + won(best.maxMan) + "</b>" +
@@ -345,7 +345,7 @@
       '<article class="rounded-3xl bg-white p-5">' +
       (bestRow && window.BenzPhoto ? window.BenzPhoto.html(bestRow[2], "wide mb-3") : "") +
       '<p class="text-[14px] font-semibold text-[#E4CB86]">' +
-      (noDeal ? "할인 정보가 아직 없습니다" : liveRows.length + "개 트림") +
+      (noDeal ? "할인 정보가 아직 없습니다" : liveRows.length + "개 세부 모델") +
       "</p>" +
       '<h3 class="mt-1 text-[24px] font-bold leading-snug">' +
       f.name +
