@@ -38,44 +38,61 @@
     for (var i = 0; i < tones.length; i++) if (text.indexOf(tones[i][0]) >= 0) return tones[i];
     return ['', '색상 상담 확인', '#dedede'];
   }
+  function colorName(text) {
+    var name = text.replace(/마누팍투어|마이바흐|익스클루시브|AMG 라인 플러스|AMG|아티코|인조 가죽|나파 가죽|마이크로컷 마이크로파이버|마이크로파이버|다이나미카|가죽|레더|투톤/g, '').replace(/\s+/g, ' ').replace(/^[\s,\/]+|[\s,\/]+$/g, '').replace(/\s*\/\s*/g, ' / ');
+    return name || text;
+  }
   function swatch(text) {
     var parts = text.split('/'), colors = parts.map(tone).filter(function (c) { return c[0]; });
     if (!colors.length) colors = [tone(text)];
     var label = colors.map(function (c) { return c[1]; }).join(' / ');
     var fill = colors.length > 1 ? 'linear-gradient(135deg,' + colors[0][2] + ' 50%,' + colors[1][2] + ' 50%)' : colors[0][2];
-    return '<span class="ready-color"><i aria-hidden="true" style="background:' + fill + '">' + (text.indexOf('상담 확인') >= 0 ? '?' : '') + '</i><span><b>' + esc(label) + '</b><small>' + esc(text) + '</small></span></span>';
+    return '<span class="ready-color" title="' + esc(text) + '"><i aria-hidden="true" style="background:' + fill + '">' + (text.indexOf('상담 확인') >= 0 ? '?' : '') + '</i><span><b>' + esc(label) + '</b><small>' + esc(colorName(text)) + '</small></span></span>';
   }
   function consult(r) {
     var note = r.name + ' ' + r.my + ' 즉시 출고 상담 · 외장 ' + r.exterior + ' · 내장 ' + r.interior;
     return 'index.html?' + new URLSearchParams({name:r.name, my:r.my, note:note}).toString() + '#consulting';
   }
+  function searchText(text) { return String(text || '').normalize('NFKC').toLowerCase().replace(/\s+/g, ''); }
+  function searchMatches(r, query) {
+    var text = r.name + ' ' + r.my + ' ' + r.my.replace('MY', '20') + '년식 ' + r.exterior + ' ' + r.interior + ' ' + tone(r.exterior)[1] + ' ' + tone(r.interior)[1];
+    return searchText(text).indexOf(searchText(query)) >= 0;
+  }
   function combo(r) {
-    return '<li class="ready-combo"><div><span class="ready-label">외장</span>' + swatch(r.exterior) + '</div><div><span class="ready-label">내장</span>' + swatch(r.interior) + '</div><a class="ready-ask" href="' + esc(consult(r)) + '">이 색상 조합으로 상담 예약 <span aria-hidden="true">→</span></a></li>';
+    var accent = Number(r.accent) || 0, classes = '';
+    [1, 2, 4, 8].forEach(function (bit) { if (accent & bit) classes += ' ready-a' + bit; });
+    var label = r.name + ' ' + r.my + ', 외장 ' + r.exterior + ', 실내 ' + r.interior + ' 조합으로 상담 예약';
+    return '<tr class="ready-combo' + classes + '"><td>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">상담<span>예약</span></a></td></tr>';
+  }
+  function table(rows, label, grouped) {
+    var previous = '';
+    return '<div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">상담</th></tr></thead><tbody>' + rows.map(function (r) {
+      var heading = '', name = r.name + ' · ' + r.my.replace('MY', '20') + '년식';
+      if (grouped && previous !== name) { heading = '<tr class="ready-group"><th colspan="3" scope="rowgroup">' + esc(name) + '</th></tr>'; previous = name; }
+      return heading + combo(r);
+    }).join('') + '</tbody></table></div>';
   }
   function card(row) {
     if (!snapshot().asOf) return '';
     var rows = matches(row), date = snapshot().asOf.replace(/-/g, '.');
     if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(date) + ' 재고표에서 즉시 출고 가능한 조합이 확인되지 않았습니다.</p></section>';
     var model = row.name || row[2], year = String(row.my || row[1]).replace(/MY(\d+)/, '20$1년식');
-    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + ' · ' + esc(year) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준</p><p class="ready-lead">마음에 드는 내외장으로, 기다림을 줄여 보세요.</p><ul>' + rows.slice(0, 2).map(combo).join('') + '</ul>' + (rows.length > 2 ? '<details><summary>나머지 ' + (rows.length - 2) + '가지 색상 조합 보기</summary><ul>' + rows.slice(2).map(combo).join('') + '</ul></details>' : '') + '<p class="ready-note">계약 상황에 따라 달라질 수 있습니다. 상담 예약 시 재고와 실제 출고일을 최종 확인해 드립니다. 색상 아이콘은 이해를 돕는 참고색입니다.</p></section>';
+    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + ' · ' + esc(year) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준</p>' + table(rows, model + ' 출고 가능 색상 조합', false) + (rows.length > 2 ? '<p class="ready-scroll-hint">표 안을 아래로 내려 나머지 조합도 보세요.</p>' : '') + '<p class="ready-note">원하는 색상 줄의 ‘상담 예약’을 누르세요. 재고·출고일은 상담 시 최종 확인합니다. 아이콘은 참고색입니다.</p></section>';
   }
   function family(rows) {
     var available = rows.filter(function (r) { return matches(r).length; });
     return available.length ? '<div class="ready-family"><b>즉시 출고 가능 내외장 조합 확인</b><p>' + available.length + '개 트림의 색상 조합이 있습니다.</p><a href="prices.html#ready-stock-catalogue">출고 가능 차량과 색상 찾아보기 →</a></div>' : '';
   }
-  window.BenzReadyStock = {matches:matches, card:card, family:family, key:key, swatch:swatch};
+  window.BenzReadyStock = {matches:matches, card:card, family:family, key:key, swatch:swatch, searchMatches:searchMatches, table:table};
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
-    host.innerHTML = '<details class="ready-catalogue"><summary>즉시 출고 가능한 차량 · 내외장 조합 전체 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 원하는 차종이나 색상으로 찾아보세요.</p><label>차종·색상 검색<input type="search" placeholder="예: E 200, 베이지, 화이트" aria-label="출고 가능 차량과 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div></details>';
+    host.innerHTML = '<details class="ready-catalogue"><summary>즉시 출고 가능한 차량 · 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄이 실제 선택 가능한 차 밖·실내 색상 조합입니다.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="출고 가능 차량과 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 상담 예약을 누르시면 됩니다.</p></details>';
     var details = host.querySelector('details'), input = host.querySelector('input'), grid = host.querySelector('.ready-catalogue-grid');
     function render() {
-      var query = input.value.toLowerCase().trim();
-      var rows = snapshot().combinations.filter(function (r) { return (r.name + ' ' + r.my + ' ' + r.exterior + ' ' + r.interior + ' ' + tone(r.exterior)[1] + ' ' + tone(r.interior)[1]).toLowerCase().indexOf(query) >= 0; });
-      var groups = {};
-      rows.forEach(function (r) { var k = r.name + ' ' + r.my; if (!groups[k]) groups[k] = []; groups[k].push(r); });
+      var rows = snapshot().combinations.filter(function (r) { return searchMatches(r, input.value); });
       host.querySelector('.ready-results').textContent = rows.length ? rows.length + '가지 색상 조합' : '해당 조합이 없습니다. 차종이나 색상 이름을 바꿔 보세요.';
-      grid.innerHTML = Object.keys(groups).map(function (k) { return '<section class="ready-stock"><h3>' + esc(k.replace(/MY(\d+)/, '20$1년식')) + '</h3><ul>' + groups[k].map(combo).join('') + '</ul></section>'; }).join('');
+      grid.innerHTML = rows.length ? table(rows, '전체 출고 가능 차량과 색상 조합', true) : '';
     }
     input.addEventListener('input', render);
     details.addEventListener('toggle', function () { if (details.open) render(); });

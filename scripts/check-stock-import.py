@@ -18,7 +18,7 @@ for number, updates in enumerate([
     {'J':'50000'}, {'J':''}, {'AL':'예정 물량'}, {'AP':'선적'}
 ]):
     rows.append(dict(base, N=str(number), **updates))
-secondary = [dict(H='one', L='E 200 EXCLUSIVE', R='2026', E='', F='46000')]
+secondary = [dict(H='one', L='E 200 EXCLUSIVE', R='2026', E='', F='46000', C='전시차재고', B='Hot Car [+1%] 전시차특별할인프로그램', O='PRIVATE MEMO')]
 secondary += [dict(H='sold', L='E 200', E='판매완료', F='46000'), dict(H='demo', L='E 200', E='데모카완료', F='46000')]
 with tempfile.TemporaryDirectory() as directory:
     root = Path(directory)
@@ -35,5 +35,7 @@ with tempfile.TemporaryDirectory() as directory:
     payload = json.loads(output.split('=', 1)[1].strip().rstrip(';'))
     assert len(payload['combinations']) == 1
     assert payload['combinations'][0]['count'] == 1
+    assert payload['combinations'][0]['accent'] == 14
     assert 'PRIVATE' not in output
+    assert 'Hot Car' not in output and '전시차' not in output and '1%' not in output
 print('Import fixtures passed: allocations, contracts, sales, restrictions, future/unknown dates, shipping, duplicates and private columns.')

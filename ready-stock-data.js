@@ -7,2142 +7,2448 @@ window.BENZ_READY_STOCK = {
       "my": "MY26",
       "exterior": "코스모스 블랙",
       "interior": "아티코 인조 가죽/다이나미카 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 2
     },
     {
       "name": "AMG A 45 S 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽/다이나미카, 블랙/크리스탈 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 2
     },
     {
       "name": "AMG CLE 53 4MATIC+ Cabriolet",
       "my": "MY26",
       "exterior": "마누팍투어 그라파이트 그레이 마그노",
       "interior": "AMG 나파 가죽, 투톤 파워 레드/ 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Cabriolet",
       "my": "MY27",
       "exterior": "마누팍투어 그라파이트 그레이 마그노",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Cabriolet",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트",
       "interior": "AMG 나파 가죽, 투톤 파워 레드/ 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Cabriolet",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Cabriolet",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 투톤 파워 레드/ 블랙",
-      "count": 19
+      "count": 19,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "마누팍투어 오팔라이트 화이트",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Coupe",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "AMG 나파 가죽, 투톤 파워 레드/ 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG CLE 53 4MATIC+ Coupe",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "그라파이트 그레이",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "그라파이트 그레이",
       "interior": "AMG 투톤 나파 가죽, 실버 펄/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "그라파이트 그레이",
       "interior": "AMG 투톤 나파 가죽, 통카 브라운/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "AMG 투톤 나파 가죽, 실버 펄/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 12
+      "count": 12,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 투톤 나파 가죽, 실버 펄/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 투톤 나파 가죽, 통카 브라운/블랙",
-      "count": 12
+      "count": 12,
+      "accent": 10
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 투톤 나파 가죽, 실버 펄/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 투톤 나파 가죽, 통카 브라운/블랙",
-      "count": 6
+      "count": 6,
+      "accent": 10
     },
     {
       "name": "AMG E 53 HYBRID 4MATIC+",
       "my": "MY26",
       "exterior": "하이 테크 실버",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG G 63",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "모하비 실버",
       "interior": "나파 가죽, 트러플 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "셀레나이트 그레이",
       "interior": "나파 가죽, 트러플 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 6
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 6
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 트러플 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 마키아토 베이지/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 6
     },
     {
       "name": "AMG G 63",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 트러플 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
       "exterior": "마운틴 그레이 메탈릭",
       "interior": "아티코 가죽/다이나미카 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
       "exterior": "제트 블랙",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
       "exterior": "코스모스 블랙",
       "interior": "가죽, 투톤 레드 페퍼 / 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
       "exterior": "코스모스 블랙",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
       "exterior": "코스모스 블랙",
       "interior": "아티코 가죽/다이나미카 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "AMG GLC 43 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "블랙, AMG 가죽",
-      "count": 10
+      "count": 10,
+      "accent": 10
     },
     {
       "name": "AMG GLC 43 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "블랙, AMG 가죽",
-      "count": 7
+      "count": 7,
+      "accent": 10
     },
     {
       "name": "AMG GLE 53 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 내추럴 베이지",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 레드 페퍼/블랙",
-      "count": 5
+      "count": 5,
+      "accent": 1
     },
     {
       "name": "AMG GLE 53 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 80
+      "count": 80,
+      "accent": 2
     },
     {
       "name": "AMG GLE 53 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 내추럴 베이지",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 레드 페퍼/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "셀레나이트 그레이",
       "interior": "AMG 나파 가죽, 레드 페퍼/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 내추럴 베이지",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 레드 페퍼/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 마키아토 베이지/블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 45
+      "count": 45,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 내추럴 베이지",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 레드 페퍼/블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 마키아토 베이지/블랙",
-      "count": 5
+      "count": 5,
+      "accent": 0
     },
     {
       "name": "AMG GLE 53 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 나파 가죽, 블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "AMG GLS 63 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 익스클루시브 나파 가죽 블랙",
-      "count": 5
+      "count": 5,
+      "accent": 0
     },
     {
       "name": "AMG GLS 63 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 익스클루시브 나파 가죽, 마키아토 베이지/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "AMG GLS 63 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 익스클루시브 나파 가죽 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GLS 63 4MATIC+",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "AMG 익스클루시브 나파 가죽, 마키아토 베이지/블랙",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "AMG GT 43",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 레드 페퍼/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GT 43",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "AMG GT 43",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 시에나 브라운/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 메탈릭",
       "interior": "나파 가죽, 레드 페퍼/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 메탈릭",
       "interior": "나파 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+",
       "my": "MY27",
       "exterior": "셀레나이트 그레이",
       "interior": "나파 가죽, 레드 페퍼/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 레드 페퍼/블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG GT 55 4MATIC+ Coupe",
       "my": "MY26",
       "exterior": "엘바이트 그린 메탈릭",
       "interior": "나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG S 63 E Performance",
       "my": "MY25",
       "exterior": "옵시디안 블랙",
       "interior": "AMG 익스클루시브 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "AMG SL 43",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 레드 페퍼/블랙",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "AMG SL 43",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "AMG SL 63 4MATIC+",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 레드 페퍼/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "C 200 AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 2
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "셀레나이트 그레이",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "셀레나이트 그레이",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 22
+      "count": 22,
+      "accent": 0
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 8
+      "count": 8,
+      "accent": 1
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "count": 27
+      "count": 27,
+      "accent": 3
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 25
+      "count": 25,
+      "accent": 0
     },
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 65
+      "count": 65,
+      "accent": 3
     },
     {
       "name": "CLE 200 Cabriolet",
       "my": "MY26",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "아티코 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 2
     },
     {
       "name": "CLE 200 Cabriolet",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 2
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 파워 레드/블랙",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 5
+      "count": 5,
+      "accent": 2
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 파워 레드/블랙",
-      "count": 5
+      "count": 5,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 파워 레드/블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 59
+      "count": 59,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 블랙",
-      "count": 5
+      "count": 5,
+      "accent": 0
     },
     {
       "name": "CLE 200 Cabriolet AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 9
+      "count": 9,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 파워 레드/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 파워 레드/블랙",
-      "count": 5
+      "count": 5,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 19
+      "count": 19,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 마키아토 베이지/블랙",
-      "count": 22
+      "count": 22,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "CLE 200 Coupe AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 25
+      "count": 25,
+      "accent": 2
     },
     {
       "name": "CLE 450 4MATIC Cabriolet",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Cabriolet",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 통카 브라운/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "가죽, 통카 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 파워 레드/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 200 AMG Line",
       "my": "MY26",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 베이지",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 200 AMG Line",
       "my": "MY26",
       "exterior": "노틱 블루",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 1
     },
     {
       "name": "E 200 AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운/블랙",
-      "count": 11
+      "count": 11,
+      "accent": 0
     },
     {
       "name": "E 200 AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 베이지",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 200 Exclusive",
       "my": "MY26",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 200 Exclusive",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 가죽, 통카 브라운",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "E 200 Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 마키아토 베이지",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "E 200 Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 200 Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운",
-      "count": 15
+      "count": 15,
+      "accent": 0
     },
     {
       "name": "E 220 d 4MATIC Exclusive",
       "my": "MY26",
       "exterior": "그라파이트 그레이",
       "interior": "아티코 가죽, 통카 브라운",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 220 d 4MATIC Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 마키아토 베이지",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 220 d 4MATIC Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "E 220 d 4MATIC Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운",
-      "count": 30
+      "count": 30,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이",
       "interior": "가죽, 블랙",
-      "count": 38
+      "count": 38,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 9
+      "count": 9,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이",
       "interior": "가죽, 블랙",
-      "count": 29
+      "count": 29,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 26
+      "count": 26,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 블랙",
-      "count": 100
+      "count": 100,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 67
+      "count": 67,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 186
+      "count": 186,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 15
+      "count": 15,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 통카 브라운",
-      "count": 2
+      "count": 2,
+      "accent": 2
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이",
       "interior": "가죽, 블랙",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이",
       "interior": "가죽, 통카 브라운",
-      "count": 41
+      "count": 41,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 통카 브라운",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 40
+      "count": 40,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 블랙",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 통카 브라운",
-      "count": 119
+      "count": 119,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 39
+      "count": 39,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 21
+      "count": 21,
+      "accent": 0
     },
     {
       "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 통카 브라운",
-      "count": 166
+      "count": 166,
+      "accent": 0
     },
     {
       "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지",
-      "count": 1
+      "count": 1,
+      "accent": 2
     },
     {
       "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 통카 브라운",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 15
+      "count": 15,
+      "accent": 0
     },
     {
       "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 통카 브라운",
-      "count": 48
+      "count": 48,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 통카 브라운",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "가죽, 통카 브라운",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 10
+      "count": 10,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 통카 브라운",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 통카 브라운",
-      "count": 30
+      "count": 30,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "나파 가죽, 네바 그레이/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "나파 가죽, 헤이즐넛 브라운/에스프레소 브라운",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 네바 그레이/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 네바 그레이/블랙",
-      "count": 16
+      "count": 16,
+      "accent": 0
     },
     {
       "name": "E 450 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 헤이즐넛 브라운/에스프레소 브라운",
-      "count": 29
+      "count": 29,
+      "accent": 0
     },
     {
       "name": "EQS 580 4MATIC SUV",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 마키아토 베이지/스페이스 그레이",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "EQS 580 4MATIC SUV",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙/발라오 브라운",
-      "count": 13
+      "count": 13,
+      "accent": 2
     },
     {
       "name": "EQS 580 4MATIC SUV",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙/스페이스 그레이",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "EQS 580 4MATIC SUV",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 블랙/발라오 브라운",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "EQS 580 4MATIC SUV",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 블랙/스페이스 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "G 580 with EQ Technology",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 트러플 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLA 250 4MATIC",
       "my": "MY27",
       "exterior": "제트 블랙",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLA 250 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLA 250 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽/다이나미카 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 2
     },
     {
       "name": "GLB 250 4MATIC",
       "my": "MY26",
       "exterior": "마운틴 그레이 메탈릭",
       "interior": "아티코 가죽/다이나미카 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 2
     },
     {
       "name": "GLB 250 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 2
     },
     {
       "name": "GLB 250 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽/다이나미카 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLC 220 d 4MATIC",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 220 d 4MATIC",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLC 220 d 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLC 220 d 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 10
+      "count": 10,
+      "accent": 0
     },
     {
       "name": "GLC 220 d 4MATIC",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 10
+      "count": 10,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 14
+      "count": 14,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 59
+      "count": 59,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 투톤 인조 가죽, 시에나 브라운/블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 8
+      "count": 8,
+      "accent": 1
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 투톤 인조 가죽, 시에나 브라운/블랙",
-      "count": 21
+      "count": 21,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "count": 17
+      "count": 17,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 투톤 인조 가죽, 시에나 브라운/블랙",
-      "count": 21
+      "count": 21,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC AMG Line",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "아티코 투톤 인조 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 20
+      "count": 20,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 16
+      "count": 16,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 45
+      "count": 45,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Avantgarde",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 8
+      "count": 8,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 35
+      "count": 35,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 38
+      "count": 38,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 17
+      "count": 17,
+      "accent": 0
     },
     {
       "name": "GLC 300 4MATIC Coupe Avantgarde",
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "count": 81
+      "count": 81,
+      "accent": 1
     },
     {
       "name": "GLE 350 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLE 350 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 바히아 브라운/블랙",
-      "count": 15
+      "count": 15,
+      "accent": 0
     },
     {
       "name": "GLE 350 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLE 350 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "count": 15
+      "count": 15,
+      "accent": 0
     },
     {
       "name": "GLE 350 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 바히아 브라운/블랙",
-      "count": 29
+      "count": 29,
+      "accent": 0
     },
     {
       "name": "GLE 350 4MATIC",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 11
+      "count": 11,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "나파 가죽, 블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC Coupe AMG Line",
       "my": "MY26",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "나파 가죽, 블랙",
-      "count": 31
+      "count": 31,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC Coupe AMG Line",
       "my": "MY26",
       "exterior": "셀레나이트 그레이",
       "interior": "나파 가죽, 블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC Coupe AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 26
+      "count": 26,
+      "accent": 0
     },
     {
       "name": "GLE 450 4MATIC Coupe AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 블랙",
-      "count": 84
+      "count": 84,
+      "accent": 1
     },
     {
       "name": "GLE 450 d 4MATIC Coupe AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 14
+      "count": 14,
+      "accent": 0
     },
     {
       "name": "GLE 450 d 4MATIC Coupe AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "count": 40
+      "count": 40,
+      "accent": 0
     },
     {
       "name": "GLS 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 바히아 브라운/블랙",
-      "count": 27
+      "count": 27,
+      "accent": 1
     },
     {
       "name": "GLS 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 블랙",
-      "count": 33
+      "count": 33,
+      "accent": 0
     },
     {
       "name": "GLS 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLS 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 바히아 브라운/블랙",
-      "count": 9
+      "count": 9,
+      "accent": 0
     },
     {
       "name": "GLS 450 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "GLS 450 d 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "마누팍투어 알파인 그레이 솔리드",
       "interior": "나파 가죽, 블랙",
-      "count": 51
+      "count": 51,
+      "accent": 0
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 7
+      "count": 7,
+      "accent": 10
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 바히아 브라운/블랙",
-      "count": 10
+      "count": 10,
+      "accent": 10
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 마키아토 베이지/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 바히아 브라운/블랙",
-      "count": 6
+      "count": 6,
+      "accent": 0
     },
     {
       "name": "GLS 580 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "Maybach EQS 680 SUV",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "마이바흐 익스클루시브 나파 가죽, 마키아토 베이지/브론즈 브라운 펄",
-      "count": 14
+      "count": 14,
+      "accent": 2
     },
     {
       "name": "Maybach EQS 680 SUV",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 자바",
-      "count": 12
+      "count": 12,
+      "accent": 0
     },
     {
       "name": "Maybach EQS 680 SUV",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 헬리오스",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach EQS 680 SUV",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "익스클루시브 나파 가죽, 자바",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach EQS 680 SUV",
       "my": "MY26",
       "exterior": "하이테크 실버 / 옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 자바",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach GLS 600",
       "my": "MY26",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "익스클루시브 나파 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "Maybach GLS 600",
       "my": "MY26",
       "exterior": "셀레나이트 그레이",
       "interior": "익스클루시브 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach GLS 600",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "Maybach GLS 600",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 자바",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "Maybach GLS 600 MANUFAKTUR",
       "my": "MY26",
       "exterior": "옵시디안 블랙 / 칼라하리 골드",
       "interior": "익스클루시브 나파 가죽, 자바",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach GLS 600 MANUFAKTUR",
       "my": "MY26",
       "exterior": "하이 테크 실버 / 노틱 블루 메탈릭",
       "interior": "익스클루시브 나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "Maybach S 580 4MATIC",
       "my": "MY26",
       "exterior": "마누팍투어 그라파이트 그레이",
       "interior": "마누팍투어 익스클루시브 나파 가죽, 트러플 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach S 580 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "마이바흐 익스클루시브 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach S 580 MANUFAKTUR",
       "my": "MY27",
       "exterior": "옵시디안 블랙 / 하이 테크 실버",
       "interior": "마누팍투어 마이바흐 익스클루시브 나파 레더, 토바코/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "Maybach S 680",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 10
     },
     {
       "name": "Maybach S 680 4MATIC",
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "익스클루시브 나파 가죽, 자바",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "Maybach SL 680 Monogram Series",
       "my": "MY26",
       "exterior": "마누팍투어 가넷 레드 메탈릭",
       "interior": "마누팍투어 익스클루시브 나파 가죽, 크리스탈 화이트",
-      "count": 7
+      "count": 7,
+      "accent": 0
     },
     {
       "name": "Maybach SL 680 Monogram Series",
       "my": "MY26",
       "exterior": "마누팍투어 오팔라이트 화이트 마그노",
       "interior": "마누팍투어 익스클루시브 나파 가죽, 크리스탈 화이트",
-      "count": 19
+      "count": 19,
+      "accent": 0
     },
     {
       "name": "Maybach SL 680 Monogram Series",
       "my": "MY26",
       "exterior": "마누팍투어 익스클루시브 코트 다 쥐르 블루 메탈릭",
       "interior": "마누팍투어 익스클루시브 나파 가죽, 크리스탈 화이트",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 브라운/블랙",
-      "count": 5
+      "count": 5,
+      "accent": 2
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 마키아토 베이지/마그마 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "가죽, 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "가죽, 브라운/블랙",
-      "count": 10
+      "count": 10,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/마그마 그레이",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "S 350 d 4MATIC",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 브라운/블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "S 450 4MATIC Long AMG Line",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "나파 가죽, AMG 라인 플러스, 블랙",
-      "count": 15
+      "count": 15,
+      "accent": 6
     },
     {
       "name": "S 450 4MATIC Long Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 450 4MATIC Long Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "S 450 4MATIC Long Exclusive",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "가죽, 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 450 4MATIC Long Exclusive",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 마키아토 베이지/마그마 그레이",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "S 450 4MATIC Long Exclusive",
       "my": "MY27",
       "exterior": "웜 그레이",
       "interior": "가죽, 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 2
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "나파 가죽, 마키아토 베이지/마그마 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "나파 가죽, 브라운/블랙",
-      "count": 2
+      "count": 2,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "나파 가죽, 마키아토 베이지/마그마 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "노틱 블루",
       "interior": "나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "마누팍투어 스파클링 블랙 에디션",
       "interior": "익스클루시브 나파 가죽, 마키아토 베이지/마그마 그레이",
-      "count": 10
+      "count": 10,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "나파 가죽, 브라운/블랙",
-      "count": 11
+      "count": 11,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "나파 가죽, 블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "색상 상담 확인",
       "interior": "색상 상담 확인",
-      "count": 1
+      "count": 1,
+      "accent": 6
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 마키아토 베이지/마그마 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 블랙",
-      "count": 2
+      "count": 2,
+      "accent": 6
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "웜 그레이",
       "interior": "나파 가죽, 브라운/블랙",
-      "count": 4
+      "count": 4,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "웜 그레이",
       "interior": "나파 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "나파 가죽, 마키아토 베이지/마그마 그레이",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "나파 가죽, 브라운/블랙",
-      "count": 1
+      "count": 1,
+      "accent": 0
     },
     {
       "name": "S 500 4MATIC Long",
       "my": "MY27",
       "exterior": "하이 테크 실버",
       "interior": "나파 가죽, 블랙",
-      "count": 3
+      "count": 3,
+      "accent": 0
     }
   ]
 };

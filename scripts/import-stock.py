@@ -84,12 +84,16 @@ def main():
     def blocked(r):
         return r.get('B') == '배정재고' or r.get('AN') in ('계약 확정', '가계약 체결') or r.get('AS') != '판매 가능'
     units = {}
+    marks = {}
+    def mark(category, benefit=''):
+        return (1 if '위탁' in category else 0) | (2 if '전시' in category else 0) | (4 if re.search(r'hot\s*car|핫카', benefit, re.I) else 0) | (8 if re.search(r'\+?\s*1\s*[%％]', benefit) and ('전시' in category or '전시' in benefit) else 0)
     for r in primary:
         if not r.get('N') or blocked(r) or r.get('AK') != '미배정' or r.get('AN') != '미배정':
             continue
         if r.get('AL') != '입고 물량' or r.get('AP') in ('선적', 'Vehicle produced', 'Purchase order created', 'Invoice verification created') or not due(r.get('J')):
             continue
         units[r['N']] = (normalize(r['P']), 'MY' + r['W'][-2:], korean(r.get('Y', '')) + (' / ' + korean(r['Z']) if r.get('Z') else ''), korean(r.get('AA', '')))
+        marks[r['N']] = mark(r.get('B', '') + r.get('AG', ''))
     added = 0
     for r in secondary:
         if not r.get('H') or not r.get('L') or r.get('E', '') != '' or not due(r.get('F')):
@@ -97,6 +101,7 @@ def main():
         p = by_id.get(r['H'])
         if p and blocked(p):
             continue
+        marks[r['H']] = marks.get(r['H'], 0) | mark(r.get('C', ''), r.get('B', ''))
         if r['H'] in units:
             continue
         model = normalize(r['L'])
@@ -108,6 +113,11 @@ def main():
         added += 1
     groups = collections.Counter(units.values())
     rows = [dict(zip(('name', 'my', 'exterior', 'interior', 'count'), (*key, count))) for key, count in sorted(groups.items())]
+    group_marks = collections.defaultdict(int)
+    for unit, combination in units.items():
+        group_marks[combination] |= marks.get(unit, 0)
+    for row, combination in zip(rows, sorted(groups)):
+        row['accent'] = group_marks[combination]
     assert rows, '출고 가능한 재고가 없어 교체 중단'
     payload = {'asOf': args.as_of.isoformat(), 'combinations': rows}
     pending = ROOT / 'ready-stock-data.js.tmp'
