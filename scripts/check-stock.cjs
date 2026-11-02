@@ -55,6 +55,26 @@ assert.doesNotMatch(marked.replace(/href="[^"]*"/g, ''), /전시|위탁|핫카|1
 assert.match(marked, /<th scope="col">차 밖 색상/);
 assert.match(marked, /<th scope="col">실내 색상/);
 assert.doesNotMatch(api.card(data.combinations[0]), /<details|<li/);
+// Cross-year display must not turn another year's stock into the selected year's availability.
+const fixture = [
+  {...compact, my:'MY26', count:1, accent:0},
+  {...compact, my:'MY27', exterior:'옵시디안 블랙', count:1, accent:0},
+  {...compact, name:'GLB 250 4MATIC (140주년)', my:'MY27', count:1, accent:0}
+];
+c.window.BENZ_READY_STOCK = {asOf:data.asOf, combinations:fixture};
+const bothYears = api.card(compact);
+assert.match(bothYears, /2026년식 · 1가지 조합/);
+assert.match(bothYears, /2027년식 · 1가지 조합/);
+assert.equal(api.matches(compact).length, 1);
+assert.doesNotMatch(bothYears, /140주년/);
+const yearLinks = [...bothYears.matchAll(/href="([^"]+)"/g)].map(m => new URL(m[1].replace(/&amp;/g, '&'), 'https://benzpro.co.kr/').searchParams.get('my'));
+assert.deepEqual(yearLinks, ['MY26', 'MY27']);
+c.window.BENZ_READY_STOCK = {asOf:data.asOf, combinations:[fixture[0]]};
+assert.match(api.card(compact), /2027년식 · 0가지 조합/);
+assert.match(api.card(compact), /확인된 즉시 출고 조합이 없습니다/);
+assert.equal(api.matches({...compact,my:'MY27'}).length, 0);
+c.window.BENZ_READY_STOCK = data;
+for (const [bit, color] of [[1,'#3b82f6'],[2,'#c99a36'],[4,'#ef4444'],[8,'#fff000']]) assert.ok(css.includes(`.ready-rail-${bit}.on{background:${color}}`));
 for (const file of ['prices.html', 'quote.html', 'models.html', 'promotion.html', 'index.html']) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   for (const match of html.matchAll(/<script(?![^>]*src=)([^>]*)>([\s\S]*?)<\/script>/g)) {

@@ -74,20 +74,26 @@
     var label = r.name + ' ' + r.my + ', 외장 ' + r.exterior + ', 실내 ' + r.interior + ' 조합으로 상담 예약';
     return '<tr class="ready-combo' + classes + '"><td><span class="ready-rails" aria-hidden="true">' + rails + '</span>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">상담<span>예약</span></a></td></tr>';
   }
-  function table(rows, label, grouped) {
+  function table(rows, label, grouped, years) {
     var previous = '';
-    return '<div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">상담</th></tr></thead><tbody>' + rows.map(function (r) {
+    var body = years ? years.map(function (year) {
+      var available = rows.filter(function (r) { return r.my === year; });
+      return '<tr class="ready-group ready-year"><th colspan="3" scope="rowgroup">' + esc(year.replace('MY', '20')) + '년식 · ' + available.length + '가지 조합</th></tr>' + (available.length ? available.map(combo).join('') : '<tr class="ready-year-empty"><td colspan="3">확인된 즉시 출고 조합이 없습니다.</td></tr>');
+    }).join('') : rows.map(function (r) {
       var heading = '', name = r.name + ' · ' + r.my.replace('MY', '20') + '년식';
       if (grouped && previous !== name) { heading = '<tr class="ready-group"><th colspan="3" scope="rowgroup">' + esc(name) + '</th></tr>'; previous = name; }
       return heading + combo(r);
-    }).join('') + '</tbody></table></div>';
+    }).join('');
+    return '<div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">상담</th></tr></thead><tbody>' + body + '</tbody></table></div>';
   }
   function card(row) {
     if (!snapshot().asOf) return '';
-    var rows = matches(row), date = snapshot().asOf.replace(/-/g, '.');
-    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(date) + ' 재고표에서 즉시 출고 가능한 조합이 확인되지 않았습니다.</p></section>';
-    var model = row.name || row[2], year = String(row.my || row[1]).replace(/MY(\d+)/, '20$1년식');
-    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + ' · ' + esc(year) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준</p>' + table(rows, model + ' 출고 가능 색상 조합', false) + (rows.length > 2 ? '<p class="ready-scroll-hint">표 안을 아래로 내려 나머지 조합도 보세요.</p>' : '') + '<p class="ready-note">원하는 색상 줄의 ‘상담 예약’을 누르세요. 재고·출고일은 상담 시 최종 확인합니다. 아이콘은 참고색입니다.</p></section>';
+    var model = row.name || row[2], selectedYear = row.my || row[1];
+    var years = /^(MY26|MY27)$/.test(selectedYear) ? ['MY26', 'MY27'] : [selectedYear];
+    var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
+    var date = snapshot().asOf.replace(/-/g, '.');
+    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(years.map(function (y) { return y.replace('MY', '20') + '년식'; }).join(' · ')) + ' 모두 ' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
+    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-scroll-hint">표 안을 아래로 내려 다른 연식과 조합도 보세요.</p><p class="ready-note">원하는 색상 줄의 ‘상담 예약’을 누르세요. 선택한 연식으로 상담을 연결합니다. 연식별 가격·할인은 다를 수 있습니다. 재고·출고일은 상담 시 최종 확인합니다. 아이콘은 참고색입니다.</p></section>';
   }
   function family(rows) {
     var available = rows.filter(function (r) { return matches(r).length; });
