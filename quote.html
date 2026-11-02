@@ -337,7 +337,7 @@
       </div>
     </main>
 
-    <script src="october-2026.js?v=20261028a"></script><script src="november-2026.js?v=20261102a"></script>
+    <script src="october-2026.js?v=20261028a"></script><script src="november-2026.js?v=20261102b"></script>
     <script src="quote.js?v=20261102-nov"></script>
     <script src="benz-video.js?v=20261102-gallery"></script>
     <script src="ready-stock-data.js?v=20261102c"></script><script src="ready-stock.js?v=20261102f"></script><script src="stock.js?v=20261102b"></script>
@@ -480,7 +480,8 @@
           var month = support(current.name);
           var note = "현금은 기본 할인만 적용됩니다. 할부와 안심보장할부는 금융 할인이 더 붙습니다.";
           if (view.q.altAdd) note = "운용리스는 " + view.q.altRate + "%입니다. 할부는 " + ((view.q.cash || 0) + (leaseOnly(current) ? 0 : view.q.finAdd || 0)) + "%입니다.";
-          if (month && state.pay !== "care") note += " 안심보장할부를 고르면 월 " + month + "만원 × 6개월 지원과 신차교환 3년, 타이어 교환이 따라옵니다.";
+          if (state.pay === "rental" && view.q.campaign) note = "MBMK 장기렌탈은 총 " + view.rate + "%입니다. 운용리스·할부 조건과 구분합니다.";
+          if (month && state.pay !== "care") note += " 직전 월납 지원 자료는 월 " + month + "만원 × 6개월이며, 11월 적용 여부는 상담에서 확인합니다.";
           if (state.pay === "care") note = "할부금융에는 신차보상 3년이 안내돼 있습니다. 타이어 교환 3년은 운용리스 조건과 구분합니다." + (month ? " 월 " + month + "만원 × 6개월이 따로 지원됩니다." : " 이 차종은 이번 달 월납 지원 목록에 없습니다.");
           if (view.q.campaignNote) note += " " + view.q.campaignNote;
           document.getElementById("pay-note").textContent = note;
