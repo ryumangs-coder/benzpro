@@ -29,9 +29,28 @@ const compact = {name:'GLB 250 4MATIC', my:'MY26', exterior:'폴라 화이트', 
 for (const q of ['GLB250', 'glb 250', 'GLB　250', 'ＧＬＢ２５０', 'GLB\t250']) assert.ok(api.searchMatches(compact, q), q);
 assert.ok(api.searchMatches(compact, '2026년식'));
 assert.ok(!api.searchMatches(compact, 'GLB350'));
+const model = name => ({...compact, name});
+for (const [query, yes, no] of [
+  ['E200', 'E 200 Exclusive', 'CLE 200 Coupe'],
+  ['E 200', 'E 200 AMG Line', 'GLE 200'],
+  ['C200', 'C 200 AMG Line', 'GLC 200'],
+  ['E450', 'E 450 4MATIC', 'GLE 450 4MATIC'],
+  ['A250', 'A 250', 'GLA 250'],
+  ['AMG E53', 'AMG E 53 HYBRID 4MATIC+', 'AMG GLE 53 4MATIC+'],
+  ['CLE200', 'CLE 200 Coupe AMG Line', 'E 200 Exclusive']
+]) {
+  assert.ok(api.searchMatches(model(yes), query), `${query} should find ${yes}`);
+  assert.ok(!api.searchMatches(model(no), query), `${query} must not find ${no}`);
+}
+assert.ok(data.combinations.filter(r => api.searchMatches(r, 'E200')).every(r => /^E 200\b/.test(r.name)));
 assert.equal(data.combinations.filter(r => api.searchMatches(r, 'GLB250')).length, data.combinations.filter(r => api.searchMatches(r, 'GLB 250')).length);
 const marked = api.table([{...compact, accent:15}], 'fixture', false);
 for (const bit of [1, 2, 4, 8]) assert.match(marked, new RegExp('ready-a' + bit));
+assert.match(marked, /class="ready-rails" aria-hidden="true"/);
+for (const bit of [1, 2, 4, 8]) assert.match(marked, new RegExp('ready-rail-' + bit + ' on'));
+const css = fs.readFileSync(path.join(root, 'ready-stock.css'), 'utf8');
+assert.doesNotMatch(css, /\.ready-a[1248]\s/);
+assert.match(css, /\.ready-rails\{/);
 assert.doesNotMatch(marked.replace(/href="[^"]*"/g, ''), /전시|위탁|핫카|1%/);
 assert.match(marked, /<th scope="col">차 밖 색상/);
 assert.match(marked, /<th scope="col">실내 색상/);

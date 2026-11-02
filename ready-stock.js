@@ -54,15 +54,25 @@
     return 'index.html?' + new URLSearchParams({name:r.name, my:r.my, note:note}).toString() + '#consulting';
   }
   function searchText(text) { return String(text || '').normalize('NFKC').toLowerCase().replace(/\s+/g, ''); }
+  function modelSearchMatches(name, query) {
+    var family = /(?:^|[^a-z])(cla|cle|gla|glb|glc|gle|gls|eqa|eqb|eqe|eqs|gt|sl|[acegs])(\d{2,3})/;
+    var asked = searchText(query).replace(/^mercedes-?/, '').replace(/^amg|^maybach/, '').match(family);
+    var actual = searchText(name).replace(/^amg|^maybach/, '').match(family);
+    return !asked || !!(actual && asked[1] === actual[1] && asked[2] === actual[2]);
+  }
   function searchMatches(r, query) {
+    if (!modelSearchMatches(r.name, query)) return false;
     var text = r.name + ' ' + r.my + ' ' + r.my.replace('MY', '20') + '년식 ' + r.exterior + ' ' + r.interior + ' ' + tone(r.exterior)[1] + ' ' + tone(r.interior)[1];
     return searchText(text).indexOf(searchText(query)) >= 0;
   }
   function combo(r) {
-    var accent = Number(r.accent) || 0, classes = '';
-    [1, 2, 4, 8].forEach(function (bit) { if (accent & bit) classes += ' ready-a' + bit; });
+    var accent = Number(r.accent) || 0, classes = '', rails = '';
+    [1, 2, 4, 8].forEach(function (bit) {
+      if (accent & bit) classes += ' ready-a' + bit;
+      rails += '<i class="ready-rail-' + bit + (accent & bit ? ' on' : '') + '"></i>';
+    });
     var label = r.name + ' ' + r.my + ', 외장 ' + r.exterior + ', 실내 ' + r.interior + ' 조합으로 상담 예약';
-    return '<tr class="ready-combo' + classes + '"><td>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">상담<span>예약</span></a></td></tr>';
+    return '<tr class="ready-combo' + classes + '"><td><span class="ready-rails" aria-hidden="true">' + rails + '</span>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">상담<span>예약</span></a></td></tr>';
   }
   function table(rows, label, grouped) {
     var previous = '';
@@ -83,7 +93,7 @@
     var available = rows.filter(function (r) { return matches(r).length; });
     return available.length ? '<div class="ready-family"><b>즉시 출고 가능 내외장 조합 확인</b><p>' + available.length + '개 트림의 색상 조합이 있습니다.</p><a href="prices.html#ready-stock-catalogue">출고 가능 차량과 색상 찾아보기 →</a></div>' : '';
   }
-  window.BenzReadyStock = {matches:matches, card:card, family:family, key:key, swatch:swatch, searchMatches:searchMatches, table:table};
+  window.BenzReadyStock = {matches:matches, card:card, family:family, key:key, swatch:swatch, searchMatches:searchMatches, modelSearchMatches:modelSearchMatches, table:table};
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
