@@ -4,14 +4,14 @@ const ids=['glb','glc','cla','vclass','sclass'];const labels=['GLB 일렉트릭'
 const cards=html.match(/<section[^>]*aria-label="사전예약 차"[^>]*>([\s\S]*?)<\/section>/)[1];
 assert.deepEqual([...cards.matchAll(/<article\b[\s\S]*?<a href="#([^"]+)"/g)].map(x=>x[1]),ids);
 assert.deepEqual([...html.matchAll(/<section id="([^"]+)"/g)].map(x=>x[1]).filter(x=>ids.includes(x)),ids);
-const aside=html.match(/<aside\b[\s\S]*?<\/aside>/)[0];
-assert.deepEqual([...aside.matchAll(/href="#([^"]+)"/g)].map(x=>x[1]).filter(x=>ids.includes(x)),ids);
+const aside=html.match(/<nav class="preorder-toc"[\s\S]*?<\/nav>/)[0];
+assert.deepEqual([...aside.matchAll(/href="#([^"]+)"/g)].map(x=>x[1]).filter(x=>ids.includes(x)),['glb','glc','vclass','cla','sclass']);
 assert.deepEqual([...html.matchAll(/name="carModel" value="([^"]+)"/g)].slice(0,5).map(x=>x[1]),labels);
 const ctx={window:{},document:{readyState:'loading',addEventListener(){}}};vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(root,'glb-details.js'),'utf8'),ctx);
 const detail=ctx.window.BenzGLBDetails;
 assert.ok(detail.optionCount>=25);
 assert.equal(detail.comparisonRows.length,10);
 const out=detail.render();assert.match(out,/국내 GLB 일렉트릭은 5인승/);assert.match(out,/추후 업데이트 예정/);assert.match(out,/국내 MCT/);assert.match(out,/WLTP 최대 631km/);assert.match(out,/미기재/);
-assert.ok(!/undefined|NaN/.test(out));
+assert.ok(!/undefined|NaN/.test(out));assert.doesNotMatch(out,/사양 근거:/);
 for(const f of ['preorder.html','glb-electric.html'])assert.match(fs.readFileSync(path.join(root,f),'utf8'),/data-glb-details/);
 console.log(`Preorder checks passed: four category surfaces in requested order; ${detail.optionCount} explained options; 10 sourced Model Y comparisons; five-seat and digital-key disclosure.`);

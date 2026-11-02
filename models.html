@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="chrome.css?v=20261025e" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
     <link rel="stylesheet" href="compare-visual.css?v=20261102a" />
-    <link rel="stylesheet" href="benz-video.css?v=20261102-full" />
+    <link rel="stylesheet" href="benz-video.css?v=20261102-nav" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
     </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/models","name":"차량 가이드 | 벤츠프로","description":"메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script>    <link rel="stylesheet" href="ready-stock.css?v=20261102f" />
-<link rel="stylesheet" href="november-benefits.css?v=20261102-full" /></head>
+<link rel="stylesheet" href="november-benefits.css?v=20261102-nav" /><link rel="stylesheet" href="vehicle-ui.css?v=20261102-nav"></head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
 <script src="chrome.js?v=20261102-glb"></script>
     
@@ -78,8 +78,8 @@
     </aside>
 
 
-    <script src="october-2026.js?v=20261028a"></script><script src="november-retail.js?v=20261102-full"></script><script src="november-2026.js?v=20261102-full"></script><script src="november-benefits.js?v=20261102-full"></script>
-    <script src="quote.js?v=20261102-full"></script>
+    <script src="october-2026.js?v=20261028a"></script><script src="november-retail.js?v=20261102-full"></script><script src="november-2026.js?v=20261102-full"></script><script src="vehicle-catalogue.js?v=20261102-nav"></script><script src="november-finance.js?v=20261102-nav"></script><script src="november-benefits.js?v=20261102-nav"></script>
+    <script src="quote.js?v=20261102-nav"></script>
     <script src="ready-stock-data.js?v=20261102c"></script><script src="ready-stock.js?v=20261102f"></script><script src="stock.js?v=20261102b"></script>
     <script src="guide-data.js?v=20261026b"></script>
     <script src="approach-specs.js?v=20261016b"></script>
@@ -92,7 +92,7 @@
     <script src="option-words.js?v=20261028a"></script>
     <script src="tech-data.js?v=20261029b"></script>
     <script src="compare-visual.js?v=20261102a"></script>
-    <script src="benz-video.js?v=20261102-full"></script>
+    <script src="benz-video.js?v=20261102-nav"></script>
     <script src="colors.js?v=20261022a"></script>
     <script src="pick.js?v=20261102-nov"></script>
     <script>
@@ -1834,6 +1834,7 @@
               claPowerSection(a, b) +
               window.BenzVisual.modelSection([a, b])
             : yearHtml + claPowerSection(a, b);
+          if (window.BenzFinance) visual += '<div class="grid gap-4 sm:grid-cols-2"><div><b>'+showName(a.name)+'</b><br>'+(!isEnded(a)?window.BenzFinance.badges(a):'')+'</div><div><b>'+showName(b.name)+'</b><br>'+(!isEnded(b)?window.BenzFinance.badges(b):'')+'</div></div>';
           if (window.BenzVideo) visual += window.BenzVideo.card("비교 중인 차와 벤츠 영상", [a.name, b.name]);
           var sentence = function (row, d) {
             var st = window.BenzStock ? window.BenzStock.of(row) : { code: "live" };
@@ -2018,5 +2019,5 @@
         });
       })();
     </script>
-  <script src="site-ui.js?v=20261023y"></script></body>
+  <script src="site-ui.js?v=20261023y"></script><script src="vehicle-ui.js?v=20261102-nav"></script></body>
 </html>

@@ -223,22 +223,7 @@
     return { add: q.finAdd || 0, label: pay === "care" ? "안심보장할부" : "할부" };
   }
   function careMonth(name) {
-    if (window.NOVEMBER_RETAIL) return 0;
-    name = String(name || "");
-    if (name.indexOf("S 63") !== -1) return 200;
-    if (name.indexOf("GLS 63") !== -1) return 145;
-    if (name.indexOf("GLE 53") !== -1) return 115;
-    if (name.indexOf("E 53") !== -1) return 100;
-    if (name.indexOf("GLB 35") !== -1) return 50;
-    if (name.indexOf("GLE 450") !== -1) return 60;
-    if (name.indexOf("electric") !== -1) return 0;
-    if (name.indexOf("GLC 300") !== -1 && name.indexOf("AMG") !== -1) return 45;
-    if (name.indexOf("GLC 300") !== -1 && name.toLowerCase().indexOf("avant") !== -1) return 40;
-    if (name.indexOf("E 300") !== -1) return 45;
-    if (name.indexOf("E 200") !== -1 && name.indexOf("AMG") !== -1) return 37;
-    if (name.indexOf("E 200") !== -1 && name.indexOf("Exclusive") !== -1) return 35;
-    if (name.indexOf("C 200") !== -1) return 30;
-    return 0;
+    return 0; // 월납 지원 상품 종료 (11월 확정 금융 안내).
   }
   function defaultPay(row) {
     var q = of(row);

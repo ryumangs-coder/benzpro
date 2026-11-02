@@ -203,7 +203,7 @@
       '<article class="hp-card">' +
       photo(name, state.year, true) + photoNote +
       "<h3>" + esc(name) + "</h3>" +
-      "<p>" + esc(ko) + " · " + esc(yearLabel(row.my)) + "</p>" + warn + body +
+      "<p>" + esc(ko) + " · " + esc(yearLabel(row.my)) + "</p>" + (window.BenzFinance && stock.code !== "soldout" ? window.BenzFinance.badges(row) : "") + warn + body +
       '<p class="hp-note">' + esc(period) + "</p>" +
       '<div class="hp-actions"><button type="button" class="hp-btn" data-open-calc="' + esc(name) + '">내 조건으로 견적 보기</button><a class="hp-btn-line" href="#trim">트림 차이 보기</a></div>' +
       "</article>"
@@ -483,6 +483,7 @@
         '<article class="hp-link-card">' + photo(item.name, item.my, false) +
         '<p class="hp-note">' + esc(item.line) + "</p><strong>" + esc(showName(item.name)) + "</strong>" +
         "<p>" + esc(yearLabel(item.my)) + (basis ? " · " + esc(basis) : "") + "</p>" +
+        (row && window.BenzFinance && stock.code !== "soldout" ? window.BenzFinance.badges(row) : "") +
         (view && view.status === "ok" && stock.code !== "soldout" ? dealHtml(view) : "") +
         '<p class="hp-num" style="font-size:1.6rem">' + esc(price) + "</p>" +
         '<a class="hp-btn" href="' + esc(href) + '" data-model-quote="' + esc(item.name) + '">이 차로 견적 보기</a></article>'

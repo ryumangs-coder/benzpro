@@ -14,7 +14,7 @@
     shield: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 13.6-3.4-3.4 1.4-1.4 2 2 4.6-4.6 1.4 1.4-6 6z"/></svg>'
   };
   var tabs = [
-    { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["promo-board", "highlights", "raised", "finder", "how", "examples"] },
+    { id: "cars", label: "차종별 할인", icon: icons.car, ids: ["promo-board", "finder"] },
     { id: "extra", label: "추가 혜택", icon: icons.plus, ids: ["owned", "benefit-slot"] },
     { id: "mou", label: "MOU 할인", icon: icons.mou, ids: ["company"] },
     { id: "fleet", label: "법인 할인", icon: icons.fleet, ids: ["fleet-slot"] },
@@ -28,6 +28,7 @@
   ];
   var hashTab = {
     finder: "cars",
+    "promo-board": "cars",
     highlights: "cars",
     raised: "cars",
     how: "cars",
@@ -322,11 +323,12 @@
       : "";
     var seeHref = f.href || (function () {
       var params = new URLSearchParams();
+      if(bestRow){params.set("name",bestRow[2]);params.set("my",bestRow[1]);}
       params.set("prefix", f.prefix);
       params.set("kind", f.kind || "base");
       if (f.has) params.set("has", f.has);
       if (f.not) params.set("not", Array.isArray(f.not) ? f.not.join(",") : f.not);
-      return "prices.html?" + params.toString() + "#finder";
+      return "prices.html?" + params.toString() + (bestRow ? "#offer-"+encodeURIComponent(bestRow[1]+"-"+bestRow[2]) : "#finder");
     })();
     var quoteHref = bestRow
       ? "quote.html?name=" + encodeURIComponent(bestRow[2]) + "&my=" + encodeURIComponent(bestRow[1])
@@ -354,6 +356,7 @@
       f.line +
       "</p>" +
       voucher +
+      (bestRow && window.BenzFinance ? window.BenzFinance.badges(bestRow) : "") +
       (window.BenzReadyStock ? window.BenzReadyStock.family(liveRows) : "") +
       priceHtml +
       '<div class="promo-actions">' +
@@ -364,19 +367,15 @@
     );
   }
 
-  var html = '<h2 class="text-[26px] font-bold">차종을 고르면 실구매가가 보입니다</h2>';
-  html += '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">정상가격과 기본·해당 금융 할인을 반영한 차량가입니다. 재구매·인증중고 매각·카드 혜택은 대상 여부에 따라 별도로 확인합니다. 트림별 조건은 같은 화면 아래에서 이어집니다.</p>';
-  groupMeta.forEach(function (g) {
-    var cards = families.filter(function (f) { return f.group === g.id; }).map(card).filter(Boolean);
-    if (!cards.length) return;
-    html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
-    if (g.id === "ev") {
-      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">11월 MBMK EQ 전 모델은 충전 바우처 100만원을 별도 확인하세요. 신형 CLA·GLB 전기차 대상 모델은 차량가 정액 100만원 할인을 확인합니다. 서로 다른 상품 혜택으로 자동 합산하지 않습니다. 자세한 조건은 11월 전체 혜택 안내에서 확인하세요.</p>';
-    }
-    html += "</section>";
-  });
-  html += '<p class="mt-4 text-[16px]"><a class="font-bold text-[#E4CB86] underline" href="models.html">전 트림을 나란히 비교하려면 차량 가이드</a></p>';
-  board.innerHTML = html;
+  var activeFamily=families.find(function(f){var p=new URLSearchParams(location.search);return p.get('prefix')===f.prefix&&(p.get('has')||'')===(f.has||'')&&(p.get('kind')||'base')===(f.kind||'base');})||families.find(function(f){return f.name==='E클래스';});
+  var activeGroup=activeFamily.group;
+  function paintFamilyBoard(sync){
+    var picks=families.filter(function(f){return f.group===activeGroup;});
+    board.innerHTML='<h2 class="text-[26px] font-bold">보고 싶은 차종을 골라보세요</h2><div class="vehicle-filters">'+window.BenzCatalogue.chips('promo-group',groupMeta.map(function(g){return[g.id,g.label];}),activeGroup,'분류')+window.BenzCatalogue.chips('promo-family',picks.map(function(f){return[f.name,f.name];}),activeFamily.name,'차종')+'</div><div class="promo-selected-family">'+card(activeFamily)+'</div>';
+    if(sync)document.dispatchEvent(new CustomEvent('benz-family-filter',{detail:activeFamily}));
+  }
+  board.addEventListener('click',function(e){var b=e.target.closest('button[data-vfilter]');if(!b)return;if(b.dataset.vfilter==='promo-group'){activeGroup=b.dataset.value;activeFamily=families.find(function(f){return f.group===activeGroup;});}else if(b.dataset.vfilter==='promo-family'){activeFamily=families.find(function(f){return f.name===b.dataset.value;});}paintFamilyBoard(true);});
+  paintFamilyBoard();
 
   var loadedBenefit = false;
   function loadBenefit() {
@@ -456,7 +455,7 @@
   }
 
   function allIds() {
-    var ids = ["promo-board", "benefit-slot", "fleet-slot", "golden-slot", "rental-slot", "programs", "care-card", "tire-card"];
+    var ids = ["highlights", "how", "examples", "promo-board", "benefit-slot", "fleet-slot", "golden-slot", "rental-slot", "programs", "care-card", "tire-card"];
     tabs.forEach(function (tab) {
       tab.ids.forEach(function (id) {
         if (ids.indexOf(id) === -1) ids.push(id);
@@ -493,6 +492,8 @@
     var hashId = tab.id === "care" ? (careSub === "tire" ? "tire-card" : "care-card") : (scrollId || tab.id);
     if (history.replaceState) history.replaceState(null, "", "prices.html" + location.search + "#" + hashId);
     var target = tab.id === "care" && scrollId ? "care-switch" : scrollId;
+    if(tab.id==="cars" && target==="highlights")target="promo-board";
+    if(tab.id==="cars" && (target==="how"||target==="examples")){var detail=document.getElementById(target);if(detail)detail.classList.remove("promo-off");}
     if (target && document.getElementById(target)) {
       document.getElementById(target).scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -517,7 +518,9 @@
     if (href.charAt(0) === "#") id = href.slice(1);
     else if (/prices\.html(?:\?[^#]*)?#/.test(href)) id = href.split("#")[1] || "";
     else if (href === "care.html" || href === "tire.html" || href === "warranty.html") id = href.replace(".html", "");
+    if (id.indexOf("offer-")===0 && /prices\.html\?/.test(href)) return;
     if (!id || !hashTab[id]) return;
+    if (/prices\.html\?/.test(href)) return;
     e.preventDefault();
     var tabId = hashTab[id];
     var scrollId = id;
@@ -528,5 +531,5 @@
   });
 
   var start = (location.hash || "").replace("#", "");
-  activate(hashTab[start] || "cars", hashTab[start] ? start : "");
+  activate(hashTab[start] || "cars", hashTab[start] || start.indexOf("offer-")===0 ? start : "");
 })();
