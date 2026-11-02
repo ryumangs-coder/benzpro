@@ -6,3 +6,4 @@
 [data-year-decorated]{display:inline-flex;align-items:center;white-space:nowrap}
 .vehicle-filters h3{font-size:21px;font-weight:800;color:#fff;margin-bottom:6px}
 @media(max-width:1199px){.preorder-toc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;overflow:visible;padding:10px 12px}.preorder-toc strong{grid-column:1/-1}.preorder-toc a{font-size:14px;white-space:normal;border:1px solid #63808d;border-radius:8px;padding:8px 5px;text-align:center;min-height:42px;line-height:1.5}}
+@media(max-width:1199px){body:has(.preorder-toc) .jump{scroll-margin-top:230px}}
