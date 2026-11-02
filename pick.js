@@ -1,7 +1,7 @@
 /* 차종·연식·구매 방식·혜택만 기억합니다. 성함과 연락처는 넣지 않습니다. */
 (function () {
   var KEY = "benzpro-pick";
-  var PAYS = { cash: 1, install: 1, care: 1, lease: 1 };
+  var PAYS = { cash: 1, install: 1, care: 1, lease: 1, rental: 1 };
   var FLAGS = ["retain", "trade", "conquest", "mou"];
 
   function esc(s) {

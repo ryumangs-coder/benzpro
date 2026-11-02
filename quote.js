@@ -136,7 +136,7 @@
     var found;
     while ((found = re.exec(s))) nums.push(parseFloat(found[1]));
     if (s.indexOf("할부") !== -1 && nums.length >= 2) {
-      return { add: nums[0], alt: nums[1], altLabel: "운용리스·장기렌트" };
+      return { add: nums[0], alt: nums[1], altLabel: "운용리스" };
     }
     if (nums.length) return { add: nums[0], alt: 0, altLabel: "" };
     return { add: 0, alt: 0, altLabel: "" };
@@ -164,6 +164,8 @@
     var basis = vehicle == null ? null : vehicle + option;
     var cash = cashPct(row.cash);
     var fin = finance(row.mbm);
+    var campaign = window.BenzCampaign ? window.BenzCampaign.of(row) : null;
+    if (campaign) fin = {add:campaign.mbm, alt:campaign.leaseAdd, altLabel:'운용리스'};
     var rate = cash == null && !fin.add ? null : (cash || 0) + fin.add;
     var altRate = fin.alt ? (cash || 0) + fin.alt : null;
     var afterPct = basis == null || rate == null ? basis : floorWon(basis * (1 - rate / 100));
@@ -189,7 +191,11 @@
       early: tax && normal != null ? normal - tax : null,
       altNormal: altNormal,
       altEarly: tax && altNormal != null ? altNormal - tax : null,
-      tax: tax
+      tax: tax,
+      campaign: campaign,
+      campaignNote: window.BenzCampaign ? window.BenzCampaign.note(row) : '',
+      rentalRate: campaign ? (cash || 0) + campaign.rentalAdd : null,
+      rentalNormal: campaign ? applyRate(basis, (cash || 0) + campaign.rentalAdd, extra) : null
     };
   }
   function pctOf(s) {
@@ -203,9 +209,11 @@
   }
   function payAdd(row, pay, q) {
     if (pay === "cash") return { add: 0, label: "현금 구매" };
+    if (pay === 'rental') return {add:q.campaign ? q.campaign.rentalAdd : 0, label:'MBMK 장기렌탈'};
     if (pay === "lease") {
+      if (q.campaign) return {add:q.campaign.leaseAdd, label:'운용리스'};
       var add = q.altAdd || (leaseOnly(row) ? q.finAdd : 0);
-      return { add: add || 0, label: "운용리스·장기렌트" };
+      return { add: add || 0, label: "운용리스" };
     }
     if (leaseOnly(row)) return { add: 0, label: pay === "care" ? "안심보장할부" : "할부" };
     return { add: q.finAdd || 0, label: pay === "care" ? "안심보장할부" : "할부" };
@@ -242,6 +250,7 @@
     var fin = payAdd(row, pay, q);
     var lines = [];
     var blocks = [];
+    if (pay === 'rental' && !q.campaign) blocks.push('이 차종의 11월 장기렌탈 조건은 상담에서 확인합니다.');
     if (q.cash) lines.push({ label: "기본 할인", pct: q.cash });
     if (fin.add) lines.push({ label: fin.label, pct: fin.add });
     var extra = 0;
@@ -285,6 +294,7 @@
     var month = pay === "care" ? careMonth(row.name) : 0;
     var status = "ok";
     if (q.basis == null || !has) status = "need";
+    if (pay === 'rental' && !q.campaign) status = 'need';
     return {
       q: q,
       fin: fin,

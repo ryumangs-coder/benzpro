@@ -371,7 +371,7 @@
     if (!cards.length) return;
     html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
     if (g.id === "ev") {
-      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">27년식 EQA, EQS, 마이바흐 EQS, G 580을 10월에 벤츠 금융으로 사면 충전 바우처 100만원입니다. 26년식 EQA와 EQE는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요. EQB는 26년식 재고가 소진되었고, 27년식 할인은 최신 정보가 확인되면 업데이트됩니다. SK일렉링크에서 쓰고, 계약이 실행된 뒤 휴대폰으로 가입 링크가 옵니다.</p>';
+      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">직전 10월 확인 자료에서는 27년식 EQA, EQS, 마이바흐 EQS, G 580을 벤츠 금융으로 사면 충전 바우처 100만원입니다. 26년식 EQA와 EQE는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요. EQB는 26년식 재고가 소진되었고, 27년식 할인은 최신 정보가 확인되면 업데이트됩니다. 11월 바우처 적용 여부·금액은 상담에서 확인합니다. 직전 안내 바우처는 SK일렉링크에서 쓰며 계약 실행 뒤 가입 링크를 받는 방식입니다.</p>';
     }
     html += "</section>";
   });

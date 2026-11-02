@@ -154,7 +154,7 @@
     if (!row || !row.name) return {};
     return { vehicle_series: SERIES[row.seg] || undefined, model_id: slug(row.name), model_year: row.my };
   }
-  var PAYS = { cash: "cash", install: "install", care: "care", lease: "lease" };
+  var PAYS = { cash: "cash", install: "install", care: "care", lease: "lease", rental: "rental" };
   /* 견적에서 켜고 끄는 혜택 */
   var BENEFITS = {
     retain: "retain", trade: "trade_in", conquest: "conquest", mou: "mou",

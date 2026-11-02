@@ -78,13 +78,14 @@
     var previous = '';
     var body = years ? years.map(function (year) {
       var available = rows.filter(function (r) { return r.my === year; });
-      return '<tr class="ready-group ready-year"><th colspan="3" scope="rowgroup">' + esc(year.replace('MY', '20')) + '년식 · ' + available.length + '가지 조합</th></tr>' + (available.length ? available.map(combo).join('') : '<tr class="ready-year-empty"><td colspan="3">확인된 즉시 출고 조합이 없습니다.</td></tr>');
+      if (!available.length) return '';
+      return '<tr class="ready-group ready-year"><th colspan="3" scope="rowgroup">' + esc(year.replace('MY', '20')) + '년식 · ' + available.length + '가지 조합</th></tr>' + available.map(combo).join('');
     }).join('') : rows.map(function (r) {
       var heading = '', name = r.name + ' · ' + r.my.replace('MY', '20') + '년식';
       if (grouped && previous !== name) { heading = '<tr class="ready-group"><th colspan="3" scope="rowgroup">' + esc(name) + '</th></tr>'; previous = name; }
       return heading + combo(r);
     }).join('');
-    return '<div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">상담</th></tr></thead><tbody>' + body + '</tbody></table></div>';
+    return '<div class="ready-table-block"><div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">상담</th></tr></thead><tbody>' + body + '</tbody></table></div><div class="ready-scroll-actions"><button type="button" class="ready-scroll-next"><span aria-hidden="true">↓</span> 아래 조합 더 보기</button><span class="ready-scroll-end" hidden>마지막 조합입니다</span><button type="button" class="ready-scroll-top" hidden>↑ 처음으로</button></div></div>';
   }
   function card(row) {
     if (!snapshot().asOf) return '';
@@ -92,7 +93,7 @@
     var years = /^(MY26|MY27)$/.test(selectedYear) ? ['MY26', 'MY27'] : [selectedYear];
     var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
     var date = snapshot().asOf.replace(/-/g, '.');
-    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(years.map(function (y) { return y.replace('MY', '20') + '년식'; }).join(' · ')) + ' 모두 ' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
+    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
     return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-scroll-hint">표 안을 아래로 내려 다른 연식과 조합도 보세요.</p><p class="ready-note">원하는 색상 줄의 ‘상담 예약’을 누르세요. 선택한 연식으로 상담을 연결합니다. 연식별 가격·할인은 다를 수 있습니다. 재고·출고일은 상담 시 최종 확인합니다. 아이콘은 참고색입니다.</p></section>';
   }
   function family(rows) {
@@ -100,6 +101,42 @@
     return available.length ? '<div class="ready-family"><b>즉시 출고 가능 내외장 조합 확인</b><p>' + available.length + '개 트림의 색상 조합이 있습니다.</p><a href="prices.html#ready-stock-catalogue">출고 가능 차량과 색상 찾아보기 →</a></div>' : '';
   }
   window.BenzReadyStock = {matches:matches, card:card, family:family, key:key, swatch:swatch, searchMatches:searchMatches, modelSearchMatches:modelSearchMatches, table:table};
+  function mountScrollControls() {
+    var observers = new Map(), scheduled = false;
+    function update(block, pane) {
+      var overflow = pane.scrollHeight > pane.clientHeight + 3;
+      var more = overflow && pane.scrollTop + pane.clientHeight < pane.scrollHeight - 3;
+      block.querySelector('.ready-scroll-actions').hidden = !overflow;
+      block.querySelector('.ready-scroll-next').hidden = !more;
+      block.querySelector('.ready-scroll-end').hidden = more;
+      block.querySelector('.ready-scroll-top').hidden = pane.scrollTop < 5;
+      block.classList.toggle('ready-has-more', more);
+    }
+    function scan() {
+      scheduled = false;
+      observers.forEach(function (observer, pane) { if (!pane.isConnected) { if (observer) observer.disconnect(); observers.delete(pane); } });
+      document.querySelectorAll('.ready-table-block').forEach(function (block) {
+        var pane = block.querySelector('.ready-table-scroll');
+        if (!observers.has(pane)) {
+          var callback = function () { update(block, pane); };
+          pane.addEventListener('scroll', callback, {passive:true});
+          var observer = typeof ResizeObserver === 'function' ? new ResizeObserver(callback) : null;
+          if (observer) observer.observe(pane);
+          observers.set(pane, observer);
+        }
+        update(block, pane);
+      });
+    }
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('.ready-scroll-next, .ready-scroll-top');
+      if (!button) return;
+      var pane = button.closest('.ready-table-block').querySelector('.ready-table-scroll');
+      var top = button.classList.contains('ready-scroll-top') ? 0 : pane.scrollTop + Math.max(100, pane.clientHeight - 60);
+      pane.scrollTo({top:top, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    });
+    new MutationObserver(function () { if (!scheduled) { scheduled = true; requestAnimationFrame(scan); } }).observe(document.body, {childList:true, subtree:true});
+    scan();
+  }
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
@@ -113,5 +150,5 @@
     input.addEventListener('input', render);
     details.addEventListener('toggle', function () { if (details.open) render(); });
   }
-  if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded', mount);
+  if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded', function () { mount(); mountScrollControls(); });
 })();

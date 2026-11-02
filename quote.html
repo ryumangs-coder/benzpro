@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="dark" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261030b"></script>
+    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261102-nov"></script>
     <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
     <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -10,7 +10,7 @@
     <link rel="canonical" href="https://benzpro.co.kr/quote" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1f2a" />
-    <meta name="description" content="2026년 10월 벤츠 견적. 재구매, MOU, 전시차 조건을 체크하면 최종 차량가가 바로 바뀝니다. 벤츠프로, 김민구 차장." />
+    <meta name="description" content="2026년 11월 벤츠 견적. 재구매, MOU, 전시차 조건을 체크하면 최종 차량가가 바로 바뀝니다. 벤츠프로, 김민구 차장." />
     <title>견적 확인 | 벤츠프로</title>
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="벤츠프로" />
@@ -244,14 +244,14 @@
       .q-option small { color: #a4aaae; }
       #car-empty { color: #c5ced3; font-size: 15px; }
     </style>
-      <link rel="stylesheet" href="ready-stock.css?v=20261102e" />
+      <link rel="stylesheet" href="ready-stock.css?v=20261102f" />
 </head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
 <script src="chrome.js?v=20261102-glb"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8">
-      <p class="text-[15px] font-semibold text-[#E4CB86]">2026년 10월 · 견적 확인</p>
+      <p class="text-[15px] font-semibold text-[#E4CB86]">2026년 11월 · 견적 확인</p>
       <h1 class="mt-2 text-[2rem] font-bold leading-tight"><span class="bp-mark">조건을 체크하면</span><br />금액이 바로 바뀝니다</h1>
       <p class="mt-3 max-w-2xl text-[18px] leading-relaxed text-[#C5CED3]">기본 할인과 금융 할인이 먼저 빠져 있습니다. 해당하는 항목만 켜 보세요. 재고와 심사에 따라 최종 금액은 달라질 수 있습니다.</p>
 
@@ -331,17 +331,17 @@
           </div>
         </section>
 
-        <aside class="order-1 lg:sticky lg:top-24 lg:order-2">
+        <aside class="order-1 lg:order-2">
           <div id="sheet" class="sheet" aria-live="polite"></div>
         </aside>
       </div>
     </main>
 
-    <script src="october-2026.js?v=20261028a"></script>
-    <script src="quote.js?v=20261026b"></script>
+    <script src="october-2026.js?v=20261028a"></script><script src="november-2026.js?v=20261102a"></script>
+    <script src="quote.js?v=20261102-nov"></script>
     <script src="benz-video.js?v=20261102-gallery"></script>
-    <script src="ready-stock-data.js?v=20261102c"></script><script src="ready-stock.js?v=20261102e"></script><script src="stock.js?v=20261102b"></script>
-    <script src="pick.js?v=20261023c"></script>
+    <script src="ready-stock-data.js?v=20261102c"></script><script src="ready-stock.js?v=20261102f"></script><script src="stock.js?v=20261102b"></script>
+    <script src="pick.js?v=20261102-nov"></script>
     <script src="car-photo.js?v=20261026a"></script>
     <script>
       (function () {
@@ -400,7 +400,7 @@
           if (pay === "cash") return { add: 0, label: "현금 구매" };
           if (pay === "lease") {
             var add = q.altAdd || (leaseOnly(row) ? q.finAdd : 0);
-            return { add: add || 0, label: "운용리스·장기렌트" };
+            return { add: add || 0, label: "운용리스" };
           }
           if (leaseOnly(row)) return { add: 0, label: pay === "care" ? "안심보장할부" : "할부" };
           return { add: q.finAdd || 0, label: pay === "care" ? "안심보장할부" : "할부" };
@@ -471,16 +471,18 @@
             ["cash", "현금"],
             ["install", "할부"],
             ["care", "안심보장할부"],
-            ["lease", "운용리스·장기렌트"]
+            ["lease", "운용리스"],
+            ["rental", "MBMK 장기렌탈"]
           ];
           document.getElementById("pays").innerHTML = items.map(function (item) {
             return '<button type="button" class="pay' + (state.pay === item[0] ? " on" : "") + '" data-pay="' + item[0] + '">' + item[1] + "</button>";
           }).join("");
           var month = support(current.name);
           var note = "현금은 기본 할인만 적용됩니다. 할부와 안심보장할부는 금융 할인이 더 붙습니다.";
-          if (view.q.altAdd) note = "운용리스·장기렌트는 " + view.q.altRate + "%입니다. 할부는 " + ((view.q.cash || 0) + (leaseOnly(current) ? 0 : view.q.finAdd || 0)) + "%입니다.";
+          if (view.q.altAdd) note = "운용리스는 " + view.q.altRate + "%입니다. 할부는 " + ((view.q.cash || 0) + (leaseOnly(current) ? 0 : view.q.finAdd || 0)) + "%입니다.";
           if (month && state.pay !== "care") note += " 안심보장할부를 고르면 월 " + month + "만원 × 6개월 지원과 신차교환 3년, 타이어 교환이 따라옵니다.";
-          if (state.pay === "care") note = "안심보장할부에는 신차교환 3년과 타이어 교환이 포함됩니다." + (month ? " 월 " + month + "만원 × 6개월이 따로 지원됩니다." : " 이 차종은 이번 달 월납 지원 목록에 없습니다.");
+          if (state.pay === "care") note = "할부금융에는 신차보상 3년이 안내돼 있습니다. 타이어 교환 3년은 운용리스 조건과 구분합니다." + (month ? " 월 " + month + "만원 × 6개월이 따로 지원됩니다." : " 이 차종은 이번 달 월납 지원 목록에 없습니다.");
+          if (view.q.campaignNote) note += " " + view.q.campaignNote;
           document.getElementById("pay-note").textContent = note;
         }
         function opt(key, title, detail, tag, enabled) {
@@ -597,7 +599,7 @@
             paintOpts(view);
           }
           paintSheet(view);
-          if (window.BenzReadyStock) document.getElementById("sheet").insertAdjacentHTML("afterbegin", window.BenzReadyStock.card(current));
+          if (window.BenzReadyStock) document.getElementById("sheet").insertAdjacentHTML("beforeend", window.BenzReadyStock.card(current));
           var endedNote = document.getElementById("ended-note");
           var send = document.getElementById("send");
           if (endedNote) {
@@ -682,7 +684,7 @@
         if (askedName && !fromUrl) notice = "주소의 차종이나 연식을 찾지 못했습니다. 기본 차종으로 열었습니다.";
         if (!fromUrl && !askedName) fromUrl = exactCar(stored.name || "", stored.my || "");
         current = fromUrl || exactCar("E 200 Exclusive", "MY27") || rows[0];
-        var payOk = { cash: 1, install: 1, care: 1, lease: 1 };
+        var payOk = { cash: 1, install: 1, care: 1, lease: 1, rental: 1 };
         if (payOk[params.get("pay")]) state.pay = params.get("pay");
         else if (payOk[stored.pay]) state.pay = stored.pay;
         else state.pay = defaultPay(current);
@@ -753,7 +755,7 @@
           return "상담 후 결정";
         }
         function payLabel() {
-          return { cash: "현금", install: "할부", care: "할부", lease: "운용리스" }[state.pay] || "아직 미정";
+          return { cash: "현금", install: "할부", care: "할부", lease: "운용리스", rental: "장기렌트" }[state.pay] || "아직 미정";
         }
         function currentCar() {
           if (state.retain) return "벤츠 보유";

@@ -9,9 +9,10 @@
     ["cash", "현금"],
     ["install", "할부"],
     ["care", "안심보장할부"],
-    ["lease", "운용리스·장기렌트"]
+    ["lease", "운용리스"],
+            ["rental", "MBMK 장기렌탈"]
   ];
-  var PAY_OK = { cash: 1, install: 1, care: 1, lease: 1 };
+  var PAY_OK = { cash: 1, install: 1, care: 1, lease: 1, rental: 1 };
   var OTHERS = [
     { line: "E클래스", name: "E 300 4MATIC Exclusive", my: "MY27" },
     { line: "C클래스", name: "C 200 AMG Line", my: "MY26" },
@@ -125,7 +126,7 @@
     return findRow(state.model, state.modelYear || state.year);
   }
   function financeBasis(pay) {
-    return pay === "install" || pay === "care" || pay === "lease";
+    return pay === "install" || pay === "care" || pay === "lease" || pay === "rental";
   }
   function pickPayload(name, my) {
     return {
@@ -306,6 +307,7 @@
         html += '<p class="hp-note">월 납입 지원 ' + shown.month + "만원 × 6개월. 월 납입금이 아니며, 차량가에 더하지 않았습니다.</p>";
       }
     }
+    if (shown.q && shown.q.campaignNote) html += '<p class="hp-note">' + esc(shown.q.campaignNote) + "</p>";
     if (shown.blocks && shown.blocks.length && shown.status !== "sold") {
       html += '<p class="hp-note">확인이 필요한 조건</p><ul class="hp-note">' + shown.blocks.map(function (line) {
         return "<li>" + esc(line) + "</li>";
@@ -408,7 +410,7 @@
     });
     var method = document.getElementById("field-method");
     if (method && !method.dataset.touched) {
-      var map = { cash: "현금", install: "할부", care: "할부", lease: "운용리스" };
+      var map = { cash: "현금", install: "할부", care: "할부", lease: "운용리스", rental: "장기렌트" };
       method.value = map[state.pay] || "";
     }
     var owned = document.getElementById("field-owned");
@@ -957,7 +959,7 @@
     }
     var method = form.querySelector("#field-method").value;
     if (!method) {
-      method = { cash: "현금", install: "할부", care: "할부", lease: "운용리스" }[state.pay] || "";
+      method = { cash: "현금", install: "할부", care: "할부", lease: "운용리스", rental: "장기렌트" }[state.pay] || "";
     }
     var owned = form.querySelector("#field-owned").value;
     var body = new URLSearchParams();
