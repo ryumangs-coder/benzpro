@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const context = { window: {}, document: { addEventListener() {}, getElementById() { return null; }, readyState: 'loading' } };
 vm.createContext(context);
-for (const file of ['october-2026.js', 'november-2026.js', 'guide-data.js', 'approach-specs.js', 'preorder-guides.js', 'spec-fill.js', 'spec-updates.js', 'compare-specs.js', 'tech-data.js', 'compare-visual.js']) {
+for (const file of ['october-2026.js', 'november-retail.js', 'november-2026.js', 'guide-data.js', 'approach-specs.js', 'preorder-guides.js', 'spec-fill.js', 'spec-updates.js', 'compare-specs.js', 'tech-data.js', 'compare-visual.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context, { filename: file });
 }
 const html = fs.readFileSync(path.join(root, 'models.html'), 'utf8');

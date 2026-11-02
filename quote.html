@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="chrome.css?v=20261025e" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
-<link rel="stylesheet" href="benz-video.css?v=20261102-gallery" />
+<link rel="stylesheet" href="benz-video.css?v=20261102-full" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif; }
@@ -245,7 +245,7 @@
       #car-empty { color: #c5ced3; font-size: 15px; }
     </style>
       <link rel="stylesheet" href="ready-stock.css?v=20261102f" />
-</head>
+<link rel="stylesheet" href="november-benefits.css?v=20261102-full" /></head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
 <script src="chrome.js?v=20261102-glb"></script>
     
@@ -256,7 +256,7 @@
       <p class="mt-3 max-w-2xl text-[18px] leading-relaxed text-[#C5CED3]">기본 할인과 금융 할인이 먼저 빠져 있습니다. 해당하는 항목만 켜 보세요. 재고와 심사에 따라 최종 금액은 달라질 수 있습니다.</p>
 
       <div class="mt-6 grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
-        <section class="order-2 space-y-6 lg:order-1">
+        <section class="order-2 min-w-0 space-y-6 lg:order-1">
           <div class="q-pick" id="q-car">
             <h2>어떤 벤츠의 <span class="bp-mark">견적</span>을 확인할까요?</h2>
             <p>아래 차종을 누르면 다른 모델로 바꿀 수 있습니다.</p>
@@ -337,9 +337,9 @@
       </div>
     </main>
 
-    <script src="october-2026.js?v=20261028a"></script><script src="november-2026.js?v=20261102b"></script>
-    <script src="quote.js?v=20261102-nov"></script>
-    <script src="benz-video.js?v=20261102-gallery"></script>
+    <script src="october-2026.js?v=20261028a"></script><script src="november-retail.js?v=20261102-full"></script><script src="november-2026.js?v=20261102-full"></script><script src="november-benefits.js?v=20261102-full"></script>
+    <script src="quote.js?v=20261102-full"></script>
+    <script src="benz-video.js?v=20261102-full"></script>
     <script src="ready-stock-data.js?v=20261102c"></script><script src="ready-stock.js?v=20261102f"></script><script src="stock.js?v=20261102b"></script>
     <script src="pick.js?v=20261102-nov"></script>
     <script src="car-photo.js?v=20261026a"></script>
@@ -377,6 +377,7 @@
           return Math.floor(n / 10000) * 10000;
         }
         function support(name) {
+          if (window.NOVEMBER_RETAIL) return 0;
           if (name.indexOf("S 63") !== -1) return 200;
           if (name.indexOf("GLS 63") !== -1) return 145;
           if (name.indexOf("GLE 53") !== -1) return 115;
@@ -480,9 +481,9 @@
           var month = support(current.name);
           var note = "현금은 기본 할인만 적용됩니다. 할부와 안심보장할부는 금융 할인이 더 붙습니다.";
           if (view.q.altAdd) note = "운용리스는 " + view.q.altRate + "%입니다. 할부는 " + ((view.q.cash || 0) + (leaseOnly(current) ? 0 : view.q.finAdd || 0)) + "%입니다.";
-          if (state.pay === "rental" && view.q.campaign) note = "MBMK 장기렌탈은 총 " + view.rate + "%입니다. 운용리스·할부 조건과 구분합니다.";
+          if (state.pay === "rental" && view.q.campaign) note = "MBMK 장기렌탈은 판매 채널에 따라 조건이 달라 별도 견적을 확인합니다. 운용리스·할부와 구분합니다.";
           if (month && state.pay !== "care") note += " 직전 월납 지원 자료는 월 " + month + "만원 × 6개월이며, 11월 적용 여부는 상담에서 확인합니다.";
-          if (state.pay === "care") note = "할부금융에는 신차보상 3년이 안내돼 있습니다. 타이어 교환 3년은 운용리스 조건과 구분합니다." + (month ? " 월 " + month + "만원 × 6개월이 따로 지원됩니다." : " 이 차종은 이번 달 월납 지원 목록에 없습니다.");
+          if (state.pay === "care") note = "안심보장할부와 운용리스는 신차보상·타이어 교환 3년이 안내돼 있습니다. 일반 할부는 신차보상 3년입니다." + (month ? " 월 " + month + "만원 × 6개월이 따로 지원됩니다." : " 상품별 보장과 금리는 11월 금융 안내에서 확인하세요.");
           if (view.q.campaignNote) note += " " + view.q.campaignNote;
           document.getElementById("pay-note").textContent = note;
         }
@@ -502,7 +503,7 @@
             opt("early", "7월 1일 이전 통관 재고", earlyOn ? "개소세 인하 " + won(q.tax) + "이 할인 뒤에 한 번 더 빠집니다." : "이 차는 개소세 인하 재고 금액이 없습니다.", earlyOn ? "−" + won(q.tax) : "없음", earlyOn) +
             opt("retain", "지금 벤츠를 타고 계시면", view.retainRate ? "사는 달에서 거꾸로 세 달 안에 보유한 기록이 있으면 됩니다." : "이 차는 이번 달 재구매 안내가 없습니다.", view.retainRate ? "+" + view.retainRate + "%" : "없음", !!view.retainRate) +
             opt("trade", "타던 벤츠를 인증 중고로 넘기면", "지금 벤츠를 타는 혜택과 같이 켜집니다. 다른 브랜드 혜택과는 같이 안 됩니다.", "+1%", !!view.retainRate) +
-            opt("conquest", "다른 고급 브랜드를 타고 계시면", view.conqRate ? "BMW, 아우디, 제네시스, 볼보, 포르쉐, 랜드로버, 렉서스입니다. 미니는 빠집니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.", view.conqRate ? "+" + view.conqRate + "%" : "없음", !!view.conqRate) +
+            opt("conquest", "다른 고급 브랜드를 타고 계시면", (view.conqRate || (view.q.campaign && view.q.campaign.conquestEW)) ? "BMW(미니 제외), 아우디, 제네시스, 볼보, 포르쉐, 랜드로버, 렉서스가 대상입니다. 해당 S클래스·마이바흐 프로그램은 롤스로이스·벤틀리도 확인합니다." : "이 차종은 다른 브랜드 혜택 대상이 아닙니다.", (view.q.campaign && view.q.campaign.conquestEW) ? "보증 +1년·3만km" : (view.conqRate ? "+" + view.conqRate + "%" : "없음"), !!(view.conqRate || (view.q.campaign && view.q.campaign.conquestEW))) +
             opt("mou", "MOU 제휴사 임직원이시면", "본인, 배우자, 부모, 자녀까지 됩니다.", "+2%", true) +
             '<a class="more-link" href="mou.html#search"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V9l8-5 8 5v11h-6v-6H10v6H4z"/></svg><span>회사 이름으로 찾아보기<small>제휴사인지 이 페이지에서 바로 검색합니다</small></span></a>' +
             opt("repair", "수리 이력이 공개되는 차", "계약 전에 수리 이력을 알려야 하는 차만 1%입니다.", "+1%", true) +
@@ -553,6 +554,7 @@
               q.points.map(function (line) { return "<li>" + line + "</li>"; }).join("") +
               "</ul></div>";
           }
+          if (q.cashWon) breakdown += '<div class="rowline cut"><span>정액 할인</span><b>−' + won(q.cashWon) + "</b></div>";
           if (q.extra) breakdown += '<div class="rowline cut"><span>옵션 추가 할인</span><b>−' + won(q.extra) + "</b></div>";
           if (view.tax) breakdown += '<div class="rowline cut"><span>개소세 인하</span><b>−' + won(view.tax) + "</b></div>";
           var monthLine = "";
@@ -564,12 +566,12 @@
             '<p class="fine">' + current.my + "</p>" +
             perkHtml +
             '<div class="rowline mt-2"><span>차량가</span><b>' + won(q.basis) + "</b></div>" +
-            '<div class="rowline cut"><span>할인 합계' + (view.rate ? '<em class="rate-pill">' + view.rate + "% 할인</em>" : "") + "</span><b>" + (view.rate ? "−" + won(q.basis - window.BenzQuote.floorWon(q.basis * (1 - view.rate / 100))) : "0만원") + "</b></div>" +
+            '<div class="rowline cut"><span>할인 합계' + (view.rate ? '<em class="rate-pill">' + view.rate + "% 할인</em>" : "") + "</span><b>" + (view.saved == null ? "상담 시 확인" : "−" + won(view.saved)) + "</b></div>" +
             breakdown +
             '<div class="final"><span>할인 적용 차량가</span><strong data-count data-count-key="quote-final">' + won(view.after) + "</strong></div>" +
             '<p class="fine">취득세, 등록비, 보험료, 금융 이자는 포함되지 않습니다.</p>' +
             (notice ? '<p class="fine">' + notice + "</p>" : "") +
-            monthLine;
+            monthLine + view.blocks.map(function(t){return '<p class="fine">' + t + "</p>";}).join("");
         }
         function syncRules() {
           if (!state.retain) state.trade = false;
@@ -577,7 +579,7 @@
             state.retain = false;
             state.trade = false;
           }
-          if (!pct(current.conquest)) state.conquest = false;
+          if (!pct(current.conquest) && !(window.BenzQuote.of(current).campaign || {}).conquestEW) state.conquest = false;
           if (!window.BenzQuote.of(current).tax) state.early = false;
         }
         function draw() {
@@ -600,6 +602,7 @@
             paintOpts(view);
           }
           paintSheet(view);
+          if (window.BenzNovemberBenefits) document.getElementById("sheet").insertAdjacentHTML("beforeend", window.BenzNovemberBenefits.html(current, state));
           if (window.BenzReadyStock) document.getElementById("sheet").insertAdjacentHTML("beforeend", window.BenzReadyStock.card(current));
           var endedNote = document.getElementById("ended-note");
           var send = document.getElementById("send");

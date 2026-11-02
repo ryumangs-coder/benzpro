@@ -1,74 +1,57 @@
-/* User-supplied joint campaign, confirmed as November despite the October heading.
- * Existing catalogue prices remain dated 2026-10-27. Unlisted terms are not renewed.
- */
+/* November 2 partner package: customer retail terms only. Prices remain 2026-10-27. */
 (function () {
-  var rules = {};
-  function rule(cash, mbm, leaseExtra, rentalMbm, note) {
-    return {cash:cash, mbm:mbm || 0, leaseAdd:(mbm || 0) + (leaseExtra || 0), rentalAdd:(rentalMbm == null ? (mbm || 0) : rentalMbm) + (leaseExtra || 0) + 3, note:note || ''};
+  var rules = {}, source = window.NOVEMBER_RETAIL || [];
+  function normalize(name) {
+    return String(name).toUpperCase().replace(/M-AMG/g,'AMG').replace(/^MM /,'MAYBACH ')
+      .replace(/4MATIC/g,'4M').replace(/COUPÉ|\bCP\b/g,'COUPE').replace(/\bEX\b/g,'EXCLUSIVE').replace(/\bAV\b/g,'AVANTGARDE')
+      .replace(/AMGLINE/g,'AMG LINE').replace(/AMG LINE COUPE/g,'COUPE AMG LINE').replace(/SEDAN/g,'')
+      .replace(/\((?:C192|X290|별도 구성|이후 생산)\)/g,'').replace(/140주년 EDITION/g,'140주년').replace(/ROF EDITION/g,'ROF')
+      .replace(/\s+/g,'').replace(/^AMGA45S4M\+$/,'AMGA45S4M').replace(/^AMGCLA45S4M\+$/,'AMGCLA45S4M').replace(/^AMGSL634M\+$/,'AMGSL63');
   }
-  function lookup(row) {
-    var year = row.my || row[1], name = row.name || row[2], r = null;
-    if (/^GLA 250 4MATIC$/.test(name) && /MY26|MY27/.test(year)) r = rule(9,4);
-    if (year === 'MY26') {
-      if (name === 'GLB 250 4MATIC') r = rule(13,4);
-      if (name === 'AMG GLB 35 4MATIC') r = rule(9,4);
-      if (name === 'AMG A 45 S 4MATIC+') r = rule(7,4);
-      if (/^C 200 (Avantgarde|AMG Line|Final Edition)$/.test(name)) r = rule(10,4);
-      if (name === 'E 200 Exclusive') r = rule(15,5);
-      if (/^E 200 AMG Line(?: \(RoF Edition\))?$/.test(name)) r = rule(15,4);
-      if (/^E 300 (?:4MATIC (?:Exclusive|AMG Line)|AMG Line \(140주년\))$/.test(name)) r = rule(10,4);
-      if (name === 'AMG E 53 4MATIC+') r = rule(10,0);
-      if (name === 'S 450 4MATIC (SWB)') r = rule(7,4,2);
-      if (name === 'AMG S 63 E Performance') r = rule(10,0);
-      if (/^Maybach S (580|680) 4MATIC$/.test(name)) r = rule(9,0,2);
-      if (name === 'GLC 300 4MATIC Avantgarde') r = rule(7,4);
-      if (/^GLC 300 4MATIC AMG Line(?: \((?:RoF|140주년)\))?$/.test(name)) r = rule(12,4);
-      if (/^GLC 300 4MATIC Coupé AMG Line(?: \((?:RoF|140주년)\))?$/.test(name)) r = rule(9,4);
-      if (name === 'GLE 350 4MATIC') r = rule(10,0);
-      if (/^GLE 450 4MATIC(?: AMG Line)?(?: \(140주년\))?$/.test(name)) r = rule(12,4);
-      if (name === 'GLE 450 d 4MATIC Coupé') r = rule(12,0);
-      if (/^GLE 450 4MATIC (?:Coupé(?: \(140주년\))?|AMG Line Coupé)$/.test(name)) r = rule(15,4);
-      if (name === 'AMG GLE 53 4MATIC+') r = rule(8,0);
-      if (name === 'AMG GLE 53 4MATIC+ Coupé') r = rule(5,0);
-      if (name === 'GLS 450 4MATIC AMG Line') r = rule(8,0);
-      if (/^GLS 580 4MATIC(?: \(140주년\))?$/.test(name)) r = rule(9,0);
-      if (name === 'Maybach GLS 600') r = rule(5,0);
-      if (name === 'AMG G 63') r = rule(null,0);
-      if (/^EQE (350\+(?: SUV)?|500 4MATIC)$/.test(name) || /^EQS (450|580) 4MATIC SUV$/.test(name)) r = rule(10,0,0,null,'장기렌탈 충전 바우처는 상담에서 확인합니다.');
-    }
-    if (/MY26|MY27/.test(year) && name === 'AMG GLS 63 4MATIC+') r = rule(1,0);
-    if (year === 'MY27') {
-      if (name === 'E 200 Exclusive') r = rule(14,4);
-      if (name === 'E 200 AMG Line') r = rule(14,3);
-      if (/^E 300 4MATIC (Exclusive|AMG Line)$/.test(name)) r = rule(8,4);
-      if (/^S (350 d 4MATIC|450 4MATIC(?: Long (?:AMG Line|Exclusive))?|500 4MATIC Long|580 4MATIC Long)$/.test(name) || /^Maybach S (580(?: MANUFAKTUR)?|680)$/.test(name)) r = rule(null,0,0,null,'재구매 특별 금융은 운용리스·장기렌트 대상이며 별도 확인이 필요합니다.');
-      if (/^GLC 300 4MATIC(?: Avantgarde| AMG Line)?$/.test(name)) r = rule(7,1);
-      if (/^GLC 300 4MATIC Coupé(?: Avantgarde| AMG Line(?: \(이후 생산\))?)?$/.test(name)) r = rule(7,1,0,0,'장기렌탈은 MBM 추가 1%를 중복 적용하지 않습니다.');
-    }
-    return r;
+  function names(r) {
+    var n=r.name;
+    if (/^EQA 250 \(/.test(n)) return ['EQA 250 Progressive','EQA 250 AMG Line'];
+    if (/^EQB 300 4M \(/.test(n)) return ['EQB 300 4MATIC Progressive','EQB 300 4MATIC AMG Line'];
+    if (/^G 450 d \(/.test(n)) return ['G 450 d','G 450 d MANUFAKTUR'];
+    if (/^G 580 \(/.test(n)) return ['G 580','G 580 MANUFAKTUR'];
+    if (/^M-AMG G 63 \(/.test(n)) return ['AMG G 63','AMG G 63 MANUFAKTUR'];
+    if (/^MM GLS 600 \(/.test(n)) return ['Maybach GLS 600','Maybach GLS 600 MANUFAKTUR'];
+    if (/^MM S 580.*(?:MANUFAKTUR|Incl)/.test(n)) return r.my==='MY26' ? ['Maybach S 580 4MATIC'] : ['Maybach S 580','Maybach S 580 MANUFAKTUR'];
+    if (n==='MM EQS 680 4M') return ['Maybach EQS 680 SUV'];
+    if (/^CLA220 \(ICE\)/.test(n)) return ['CLA 220','CLA 220 AMG Line'];
+    if (/^CLA 200 \(Incl/.test(n)) return ['CLA 200 electric Essential','CLA 200 electric Advanced','CLA 200 electric AMG Line'];
+    if (/^CLA 250\+ \(Incl/.test(n)) return ['CLA 250+ electric','CLA 250+ electric AMG Line'];
+    if (/^GLC 300 4M electric/.test(n)) return ['GLC 300 4MATIC electric','GLC 300 4MATIC electric AMG Line','GLC 300 4MATIC electric AMG Line+'];
+    return [n];
   }
-  var data = window.OCTOBER_2026;
-  if (data) {
-    data.asOfPromo = '2026.11.02';
-    if (!data.models.some(function (r) { return r[1] === 'MY27' && r[2] === 'AMG GLS 63 4MATIC+'; })) {
-      data.models.push(['SUV','MY27','AMG GLS 63 4MATIC+',null,'1%','','','','','','11월 표 기본 할인 1%. 이 연식의 차량가는 상담에서 확인합니다.']);
-    }
-    data.models.forEach(function (row) {
-      var r = lookup(row);
-      if (!r) return;
-      rules[row[1] + '|' + row[2]] = r;
-      row[4] = r.cash == null ? '—' : r.cash + '%';
-      row[5] = r.leaseAdd !== r.mbm ? '할부 +' + r.mbm + '% · 운용리스 +' + r.leaseAdd + '%' : (r.mbm ? '+' + r.mbm + '%' : '');
-      if (row[1] === 'MY27' && /^GLC 300 4MATIC Coupé/.test(row[2])) {
-        row[10] = String(row[10] || '').replace('할인은 이후 생산분과 같은 5%', '11월 기본 할인 7%, MBM 추가 1% (장기렌탈 제외)').replace('2026.10.22 프로모션 5%', '11월 기본 할인 7%, MBM 추가 1% (장기렌탈 제외)');
-      }
+  var byName={};
+  source.forEach(function(r){names(r).forEach(function(n){byName[r.my+'|'+normalize(n)]=r;});});
+  var data=window.OCTOBER_2026;
+  if(data){
+    data.asOfPromo='2026.11.02';
+    data.models.forEach(function(row){
+      var s=byName[row[1]+'|'+normalize(row[2])];
+      if(!s && row[1]==='MY27' && row[2]==='GLC 300 4MATIC Coupé')s=byName['MY27|'+normalize('GLC 300 4MATIC Coupé AV')];
+      if(!s && /^(GLE|GLS) /.test(row[2]))s=byName[row[1]+'|'+normalize(row[2].replace(' (140주년)',''))];
+      if(!s)return;
+      var r=Object.assign({},s,{rentalAdd:null,rentalNeedQuote:true});
+      // Rental Fleet 3% is channel-dependent, not an automatic retail add-on (pp.33–37).
+      if(row[1]==='MY26' && /^Maybach S /.test(row[2]))r.rentalProductAdd=2;
+      else if(s.mbm)r.rentalProductAdd=s.leaseAdd;
+      else r.rentalProductAdd=0;
+      rules[row[1]+'|'+row[2]]=r;
+      row[4]=s.cashWon ? '100만원' : s.cash==null ? '—' : s.cash+'%';
+      row[5]=s.leaseAdd!==s.mbm ? '할부 +'+s.mbm+'% · 운용리스 +'+s.leaseAdd+'%' : s.mbm ? '+'+s.mbm+'%' : '';
+      row[7]=s.retain ? '+'+s.retain+'%' : '';
+      row[8]=s.conquest ? '+'+s.conquest+'%' : '';
+      if(row[1]==='MY27' && /^GLC 300 4MATIC Coupé/.test(row[2]))row[10]=String(row[10]||'').replace('할인은 이후 생산분과 같은 5%','11월 기본 할인 7%, 금융 추가 1%').replace('2026.10.22 프로모션 5%','11월 기본 할인 7%, 금융 추가 1%');
     });
   }
-  window.BenzCampaign = {
-    of:function (row) { return rules[(row.my || row[1]) + '|' + (row.name || row[2])] || null; },
-    note:function (row) {
-      var r = this.of(row);
-      return r ? '11월 확인 조건입니다. MBMK 장기렌탈 추가 3%는 해당 상품에만 적용합니다. 월납 지원 등 별도 혜택은 상담에서 확인합니다. ' + r.note : '이 차종의 11월 조건은 확인 중입니다. 표시 금액은 직전 확인 조건이며, 최종 조건은 상담에서 확인합니다.';
-    }
+  window.BenzCampaign={
+    of:function(row){return rules[(row.my||row[1])+'|'+(row.name||row[2])]||null;},
+    isS27:function(row){return (row.my||row[1])==='MY27' && /^(S |Maybach S )/.test(row.name||row[2]);},
+    note:function(row){var r=this.of(row);return r ? '2026년 11월 확인 조건입니다. 장기렌탈은 판매 채널에 따라 조건이 달라 별도 견적을 확인합니다.' : '이 차종은 11월 상세 조건을 상담에서 확인합니다. 표시 금액은 직전 확인 자료입니다.';},
+    source:source,
+    normalize:normalize
   };
 })();

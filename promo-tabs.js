@@ -19,7 +19,7 @@
     { id: "mou", label: "MOU 할인", icon: icons.mou, ids: ["company"] },
     { id: "fleet", label: "법인 할인", icon: icons.fleet, ids: ["fleet-slot"] },
     { id: "rental", label: "렌터카", icon: icons.key, ids: ["rental-slot"] },
-    { id: "support", label: "6개월 지원", icon: icons.cal, ids: ["support"] },
+    { id: "support", label: "금융·보장", icon: icons.cal, ids: ["support"] },
     { id: "care", label: "신차교환·타이어", icon: icons.swap, ids: ["care-switch", "care-slot", "tire-slot"] },
     { id: "warranty", label: "보증연장", icon: icons.shield, ids: ["warranty"] },
     { id: "welcome", label: "출고 기프트", icon: icons.welcome, ids: ["welcome"] },
@@ -147,7 +147,7 @@
     if (!window.BenzQuote || row[3] == null) return null;
     var q = window.BenzQuote.of({ seg: row[0], my: row[1], name: row[2], price: row[3], cash: row[4], mbm: row[5] });
     var man = window.BenzQuote.man;
-    return { priceMan: man(q.basis), basicMan: man(q.normal), maxMan: man(q.normal), earlyMan: q.early == null ? null : man(q.early), rate: q.rate, name: row[2] };
+    return { priceMan: man(q.basis), basicMan: man(q.normal), maxMan: man(q.normal), earlyMan: q.early == null ? null : man(q.early), rate: q.rate, cashWon: q.cashWon, name: row[2] };
   }
 
   var families = [
@@ -298,14 +298,14 @@
       );
     }
     if (!f.staticPrice && !best) return "";
-    var noDeal = best && !best.rate;
+    var noDeal = best && !best.rate && !best.cashWon;
     var priceHtml = f.staticPrice
       ? '<p class="mt-3 text-[20px] font-bold">' + (f.priceLead == null ? "정상가격 " : f.priceLead) + f.staticPrice + "</p>"
       : noDeal
         ? '<p class="mt-3 text-[20px] font-bold">정상가격 ' + won(best.priceMan) + "</p>" +
           '<p class="mt-2 text-[16px] leading-relaxed text-[#C5CED3]">할인 프로모션은 아직 없습니다. ' + showName(best.name) + " 기준입니다.</p>"
         : '<div class="price-hit">' +
-          (best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
+          (best.cashWon ? '<b class="save">100만원 할인</b>' : best.rate ? '<b class="save">' + best.rate + "% 할인</b>" : "") +
           '<span class="k was-k">정상가격</span>' +
           '<span class="k now-k">할인 적용 차량가</span>' +
           '<b class="was">' + won(best.priceMan) + "</b>" +
@@ -318,7 +318,7 @@
           (best.earlyMan != null ? " · 7월 1일 이전 통관 " + won(best.earlyMan) : "") +
           "</p>";
     var voucher = (f.group === "ev" && !f.staticPrice && !soldOutOnly) || f.name === "마이바흐 EQS"
-      ? '<p class="mt-2 text-[16px] font-semibold text-[#E4CB86]">벤츠 금융으로 사면 충전 바우처 100만원</p>'
+      ? '<p class="mt-2 text-[16px] font-semibold text-[#E4CB86]">MBMK EQ 대상 상품: 충전 바우처 100만원</p>'
       : "";
     var seeHref = f.href || (function () {
       var params = new URLSearchParams();
@@ -365,13 +365,13 @@
   }
 
   var html = '<h2 class="text-[26px] font-bold">차종을 고르면 실구매가가 보입니다</h2>';
-  html += '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">정상가격과, 재구매·인증 중고·신한카드까지 맞을 때의 최대 실구매가입니다. 트림별 조건은 같은 화면 아래에서 이어집니다.</p>';
+  html += '<p class="mt-2 text-[17px] leading-relaxed text-[#C5CED3]">정상가격과 기본·해당 금융 할인을 반영한 차량가입니다. 재구매·인증중고 매각·카드 혜택은 대상 여부에 따라 별도로 확인합니다. 트림별 조건은 같은 화면 아래에서 이어집니다.</p>';
   groupMeta.forEach(function (g) {
     var cards = families.filter(function (f) { return f.group === g.id; }).map(card).filter(Boolean);
     if (!cards.length) return;
     html += '<section class="mt-6"><h3 class="text-[20px] font-bold">' + g.label + '</h3><div class="mt-3 grid gap-3 sm:grid-cols-2">' + cards.join("") + "</div>";
     if (g.id === "ev") {
-      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">직전 10월 확인 자료에서는 27년식 EQA, EQS, 마이바흐 EQS, G 580을 벤츠 금융으로 사면 충전 바우처 100만원입니다. 26년식 EQA와 EQE는 재고가 소진되었습니다. 27년식 EQA 조건을 확인해 보세요. EQB는 26년식 재고가 소진되었고, 27년식 할인은 최신 정보가 확인되면 업데이트됩니다. 11월 바우처 적용 여부·금액은 상담에서 확인합니다. 직전 안내 바우처는 SK일렉링크에서 쓰며 계약 실행 뒤 가입 링크를 받는 방식입니다.</p>';
+      html += '<p class="mt-3 text-[16px] leading-relaxed text-[#C5CED3]">11월 MBMK EQ 전 모델은 충전 바우처 100만원을 별도 확인하세요. 신형 CLA·GLB 전기차 대상 모델은 차량가 정액 100만원 할인을 확인합니다. 서로 다른 상품 혜택으로 자동 합산하지 않습니다. 자세한 조건은 11월 전체 혜택 안내에서 확인하세요.</p>';
     }
     html += "</section>";
   });
@@ -389,6 +389,7 @@
         var doc = new DOMParser().parseFromString(html, "text/html");
         var main = doc.querySelector("main");
         slot.innerHTML = main ? main.innerHTML : "";
+        if(window.BenzNovemberBenefits) window.BenzNovemberBenefits.mount();
       })
       .catch(function () {
         slot.innerHTML = '<p class="text-[17px]"><a class="font-bold text-[#E4CB86] underline" href="benefit.html">추가 혜택 페이지 보기</a></p>';
@@ -406,6 +407,7 @@
         var doc = new DOMParser().parseFromString(html, "text/html");
         var main = doc.querySelector("main");
         fleetSlot.innerHTML = main ? main.innerHTML : "";
+        if(window.BenzNovemberBenefits) window.BenzNovemberBenefits.mount();
       })
       .catch(function () {
         fleetSlot.innerHTML = '<p class="text-[17px]"><a class="font-bold text-[#E4CB86] underline" href="fleet.html">법인 구매 특별 할인 보기</a></p>';
@@ -422,6 +424,7 @@
         var doc = new DOMParser().parseFromString(html, "text/html");
         var main = doc.querySelector("main");
         el.innerHTML = main ? main.innerHTML : "";
+        if(window.BenzNovemberBenefits) window.BenzNovemberBenefits.mount();
         if (done) done(el);
       })
       .catch(function () {

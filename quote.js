@@ -7,7 +7,7 @@
  */
 (function () {
   var EDITIONS = {
-    "MY26|E 200 AMG Line (RoF Edition)": { option: 930000, extra: 220000, optionLabel: "RoF 옵션" },
+    "MY26|E 200 AMG Line (RoF Edition)": { option: 930000, extra: 200000, optionLabel: "RoF 옵션" },
     "MY26|GLC 300 4MATIC AMG Line (RoF)": { option: 1260000, extra: 0, optionLabel: "RoF 옵션" },
     "MY26|GLC 300 4MATIC Coupé AMG Line (RoF)": { option: 1260000, extra: 0, optionLabel: "RoF 옵션" },
     "MY26|E 300 AMG Line (140주년)": {
@@ -166,11 +166,14 @@
     var fin = finance(row.mbm);
     var campaign = window.BenzCampaign ? window.BenzCampaign.of(row) : null;
     if (campaign) fin = {add:campaign.mbm, alt:campaign.leaseAdd, altLabel:'운용리스'};
-    var rate = cash == null && !fin.add ? null : (cash || 0) + fin.add;
+    var rate = cash == null && !fin.add && !(campaign && campaign.cashWon) ? null : (cash || 0) + fin.add;
     var altRate = fin.alt ? (cash || 0) + fin.alt : null;
     var afterPct = basis == null || rate == null ? basis : floorWon(basis * (1 - rate / 100));
     var normal = applyRate(basis, rate, extra);
     var altNormal = altRate == null ? null : applyRate(basis, altRate, extra);
+    var cashWon = campaign ? campaign.cashWon || 0 : 0;
+    if (normal != null) normal -= cashWon;
+    if (altNormal != null) altNormal -= cashWon;
     var tax = taxWon(vehicle, row);
     return {
       vehicle: vehicle,
@@ -181,6 +184,7 @@
       pointsTitle: edition && edition.pointsTitle ? edition.pointsTitle : "140주년 에디션에 더 들어간 사양",
       basis: basis,
       cash: cash,
+      cashWon: cashWon,
       finAdd: fin.add,
       altAdd: fin.alt,
       altLabel: fin.altLabel,
@@ -194,8 +198,8 @@
       tax: tax,
       campaign: campaign,
       campaignNote: window.BenzCampaign ? window.BenzCampaign.note(row) : '',
-      rentalRate: campaign ? (cash || 0) + campaign.rentalAdd : null,
-      rentalNormal: campaign ? applyRate(basis, (cash || 0) + campaign.rentalAdd, extra) : null
+      rentalRate: campaign && !campaign.rentalNeedQuote ? (cash || 0) + campaign.rentalAdd : null,
+      rentalNormal: campaign && !campaign.rentalNeedQuote ? applyRate(basis, (cash || 0) + campaign.rentalAdd, extra) : null
     };
   }
   function pctOf(s) {
@@ -209,7 +213,7 @@
   }
   function payAdd(row, pay, q) {
     if (pay === "cash") return { add: 0, label: "현금 구매" };
-    if (pay === 'rental') return {add:q.campaign ? q.campaign.rentalAdd : 0, label:'MBMK 장기렌탈'};
+    if (pay === 'rental') return {add:q.campaign && !q.campaign.rentalNeedQuote ? q.campaign.rentalAdd : 0, label:'MBMK 장기렌탈'};
     if (pay === "lease") {
       if (q.campaign) return {add:q.campaign.leaseAdd, label:'운용리스'};
       var add = q.altAdd || (leaseOnly(row) ? q.finAdd : 0);
@@ -219,6 +223,7 @@
     return { add: q.finAdd || 0, label: pay === "care" ? "안심보장할부" : "할부" };
   }
   function careMonth(name) {
+    if (window.NOVEMBER_RETAIL) return 0;
     name = String(name || "");
     if (name.indexOf("S 63") !== -1) return 200;
     if (name.indexOf("GLS 63") !== -1) return 145;
@@ -250,7 +255,7 @@
     var fin = payAdd(row, pay, q);
     var lines = [];
     var blocks = [];
-    if (pay === 'rental' && !q.campaign) blocks.push('이 차종의 11월 장기렌탈 조건은 상담에서 확인합니다.');
+    if (pay === 'rental') blocks.push('장기렌탈은 판매 채널·Fleet 조건에 따라 별도 견적을 확인합니다. 3%를 일반 차량가 할인에 자동 가산하지 않습니다.');
     if (q.cash) lines.push({ label: "기본 할인", pct: q.cash });
     if (fin.add) lines.push({ label: fin.label, pct: fin.add });
     var extra = 0;
@@ -262,7 +267,7 @@
     var retainRate = pctOf(row.retain);
     var conqRate = pctOf(row.conquest);
     if (state.retain && !retainRate) blocks.push("이 연식은 지금 타는 벤츠 혜택이 없습니다.");
-    if (state.conquest && !conqRate) blocks.push("이 차종은 다른 브랜드 혜택 대상이 아닙니다.");
+    if (state.conquest && !conqRate && !(q.campaign && q.campaign.conquestEW)) blocks.push("이 차종은 다른 브랜드 혜택 대상이 아닙니다.");
     if (state.retain && state.conquest && retainRate) {
       blocks.push("지금 타는 벤츠 혜택과 다른 브랜드 혜택은 같이 적용되지 않습니다. 지금 타는 벤츠 혜택만 반영했습니다.");
     }
@@ -272,7 +277,9 @@
     add(state.retain && retainRate, "지금 타는 벤츠", retainRate);
     add(state.trade && state.retain && retainRate, "인증 중고로 매각", 1);
     add(state.conquest && conqRate && !(state.retain && retainRate), "다른 브랜드", conqRate);
-    add(state.mou, "MOU 제휴", 2);
+    add(state.mou && !state.conquest, "MOU 제휴", 2);
+    if (state.mou && state.conquest) blocks.push('다른 브랜드 혜택과 Fleet·제휴 할인은 중복 적용하지 않습니다.');
+    if (state.conquest && q.campaign && q.campaign.conquestEW) blocks.push('2027년식 S클래스 다른 브랜드 혜택: 보증연장 +1년·3만km. 현금 할인율은 추가하지 않으며 재구매 혜택과 중복되지 않습니다.');
     add(state.repair, "수리 이력 공개", 1);
     add(state.mile, "도착 주행거리", 1);
     add(state.showcar, "오래 전시된 차", 1);
@@ -284,17 +291,18 @@
       blocks.push(q.tax ? "7월 1일 이전 통관 재고인지 확인이 필요합니다." : "이 차는 개소세 인하 재고 금액이 없습니다.");
     }
     var rate = (q.cash || 0) + fin.add + extra;
-    var has = q.cash != null || fin.add || extra;
+    var has = q.cash != null || fin.add || extra || q.cashWon;
     var after = q.basis;
     if (after != null && has) after = floorWon(q.basis * (1 - rate / 100));
     if (after != null && q.extra) after -= q.extra;
+    if (after != null && q.cashWon) after -= q.cashWon;
     var tax = state.early && q.tax ? q.tax : 0;
     if (after != null && tax) after -= tax;
     var saved = q.basis != null && after != null ? q.basis - after : null;
     var month = pay === "care" ? careMonth(row.name) : 0;
     var status = "ok";
     if (q.basis == null || !has) status = "need";
-    if (pay === 'rental' && !q.campaign) status = 'need';
+    if (pay === 'rental' && (!q.campaign || q.campaign.rentalNeedQuote)) { status = 'need'; after = null; saved = null; }
     return {
       q: q,
       fin: fin,
