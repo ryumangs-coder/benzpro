@@ -102,3 +102,5 @@
 - 반복 업데이트용 import-stock.py와 docs/INVENTORY.md 추가. 데이터 원자적 교체와 no-cache 재검증. 구조가 달라지면 검토하도록 열 검증.
 - 검증: check-stock.cjs, check-stock-import.py, check.sh 통과. 비교 153트림/11,781조합/437,370칸 회귀 검사 통과. 모바일 390px 견적·전체 검색·비교 가로 넘침 없음, GLB의 3조합과 상담 폼에 색상 전달 확인. 실제 상담 제출 없음.
 - 사용자 사이트 업데이트 요청에 따라 기존 GitHub main → Cloudflare 운영 배포 경로로 반영 예정. 운영 확인 결과는 후속 기록.
+
+- 운영 반영 확인: 76aae59 main push 완료. benzpro.co.kr/ready-stock-data.js 및 ready-stock.js가 검증한 로컬 파일과 바이트 일치. 운영 /quote의 MY26 GLB 250 4MATIC에서 3가지 조합·한글 색상·상담 예약 표시 확인.
