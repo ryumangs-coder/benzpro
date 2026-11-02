@@ -34,7 +34,7 @@ var rows=[
 ['2026 GLC 220 d·GLE 300 d·GLS 450 d·G 450 d',7.43,7.03,7.16,6.76,'—']
 ];
 window.BenzNovemberFinance=rows;
-document.addEventListener('DOMContentLoaded',function(){var el=document.getElementById('nov-finance');if(!el)return;el.innerHTML='<p>각 금리: 일반 고객 / 재구매 고객 · 모두 연 금리(%)</p><div class="nov-retail-scroll" tabindex="0" aria-label="차종별 금융 금리 표, 위아래 스크롤"><table><thead><tr><th>차종·연식</th><th>일반 할부</th><th>안심보장할부</th><th>별도 무이자<br>가능 개월</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(2)+' / '+r[2].toFixed(2)+'</td><td>'+r[3].toFixed(2)+' / '+r[4].toFixed(2)+'</td><td>'+r[5]+'</td></tr>';}).join('')+'</tbody></table></div><p class="nov-small">무이자는 각 기간별 별도 선수금 조건을 충족해야 합니다. 표의 30% 선수금·60개월 유이자 예시와 조건이 다릅니다. 세부 트림·연식·심사·약정에 따라 적용 여부를 확인하세요.</p>';});
+document.addEventListener('DOMContentLoaded',function(){var el=document.getElementById('nov-finance');if(!el)return;el.innerHTML='<p>각 금리: 일반 고객 / 재구매 고객 · 모두 연 금리(%)</p><div class="nov-retail-scroll" tabindex="0" aria-label="차종별 금융 금리 표, 위아래 스크롤"><table><thead><tr><th>차종·연식</th><th>일반 할부<br>연 %</th><th>안심 할부<br>연 %</th><th>무이자<br>개월</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(2)+' / '+r[2].toFixed(2)+'</td><td>'+r[3].toFixed(2)+' / '+r[4].toFixed(2)+'</td><td>'+r[5]+'</td></tr>';}).join('')+'</tbody></table></div><p class="nov-small">무이자는 각 기간별 별도 선수금 조건을 충족해야 합니다. 표의 30% 선수금·60개월 유이자 예시와 조건이 다릅니다. 세부 트림·연식·심사·약정에 따라 적용 여부를 확인하세요.</p>';});
 })();
 /* Confirmed MBFSK November finance notice, pp.2–4. Conditions for down payment differ by model. */
 (function(){
