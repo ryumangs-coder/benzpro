@@ -244,7 +244,8 @@
       .q-option small { color: #a4aaae; }
       #car-empty { color: #c5ced3; font-size: 15px; }
     </style>
-  </head>
+      <link rel="stylesheet" href="ready-stock.css?v=20261102a" />
+</head>
   <body class="bg-[#F6F3EE] text-[#1C1917] antialiased">
 <script src="chrome.js?v=20261102-glb"></script>
     
@@ -339,7 +340,7 @@
     <script src="october-2026.js?v=20261028a"></script>
     <script src="quote.js?v=20261026b"></script>
     <script src="benz-video.js?v=20261102-gallery"></script>
-    <script src="stock.js?v=20261026a"></script>
+    <script src="ready-stock-data.js?v=20261102a"></script><script src="ready-stock.js?v=20261102a"></script><script src="stock.js?v=20261102b"></script>
     <script src="pick.js?v=20261023c"></script>
     <script src="car-photo.js?v=20261026a"></script>
     <script>
@@ -596,6 +597,7 @@
             paintOpts(view);
           }
           paintSheet(view);
+          if (window.BenzReadyStock) document.getElementById("sheet").insertAdjacentHTML("afterbegin", window.BenzReadyStock.card(current));
           var endedNote = document.getElementById("ended-note");
           var send = document.getElementById("send");
           if (endedNote) {

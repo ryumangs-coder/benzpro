@@ -76,6 +76,7 @@
    * S·GLC·GLA·CLA는 기존처럼 AMG를 빼 둡니다. GLB 2026년식은 AMG 포함입니다.
    * 마이바흐 S 580·680만 26년식 S 재고입니다. AMG A 45는 재고 소진에서 빼 둡니다. */
   function of(row) {
+    if (window.BenzReadyStock && window.BenzReadyStock.matches(row).length) return liveStatus();
     var my = yearOf(row);
     var name = nameOf(row);
     var year = yearNum(my);

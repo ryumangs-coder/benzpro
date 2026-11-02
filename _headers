@@ -4,3 +4,7 @@
 
 /chat/
   Cache-Control: no-store
+
+# Replace the stock snapshot after every authorized daily import.
+/ready-stock-data.js
+  Cache-Control: no-cache, must-revalidate

@@ -157,9 +157,9 @@
     { group: "sedan", name: "E클래스", line: "가족 세단의 기준입니다. 이번 달 현금 할인이 크게 보입니다.", prefix: "E ", car: "E-Class" },
     { group: "sedan", name: "S클래스", line: "26년식 일반 모델은 판매가 끝났습니다. 지금 고르는 차는 27년식입니다.", prefix: "S ", car: "S-Class" },
     { group: "suv", name: "GLA", line: "26년식은 재고가 없습니다. 27년식 GLA만 선택할 수 있습니다.", prefix: "GLA ", car: "A, CLA, GLA, GLB" },
-    { group: "suv", name: "GLB", line: "26년식 GLB는 재고가 소진되었습니다. 27년식은 신형 일렉트릭 GLB 250+입니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
-    { group: "suv", name: "GLC", line: "26년식 일반 모델은 판매가 끝났습니다. AMG 43만 남아 있고, 일반 GLC는 27년식만 선택할 수 있습니다.", prefix: "GLC ", not: ["Coup", "electric"], car: "GLC" },
-    { group: "suv", name: "GLC 쿠페", line: "26년식 일반 쿠페는 판매가 끝났습니다. AMG 43 쿠페만 남아 있고, 일반 쿠페는 27년식만 선택할 수 있습니다.", prefix: "GLC ", has: "Coup", not: "electric", car: "GLC" },
+    { group: "suv", name: "GLB", line: "가솔린 GLB와 신형 일렉트릭 GLB를 연식별로 비교해 보세요. 출고 가능한 내외장 조합은 최신 재고표 기준으로 안내합니다.", prefix: "GLB ", car: "A, CLA, GLA, GLB" },
+    { group: "suv", name: "GLC", line: "일반 GLC와 AMG를 연식별로 비교하고, 출고 가능한 색상 조합을 확인해 보세요.", prefix: "GLC ", not: ["Coup", "electric"], car: "GLC" },
+    { group: "suv", name: "GLC 쿠페", line: "GLC의 쿠페형입니다. 연식별 출고 가능 색상 조합을 확인해 보세요.", prefix: "GLC ", has: "Coup", not: "electric", car: "GLC" },
     { group: "suv", name: "GLE", line: "공간이 더 필요한 중대형 SUV입니다.", prefix: "GLE ", not: "Coup", car: "GLE" },
     { group: "suv", name: "GLE 쿠페", line: "GLE의 쿠페형입니다.", prefix: "GLE ", has: "Coup", car: "GLE" },
     { group: "suv", name: "GLS", line: "큰 3열 SUV입니다.", prefix: "GLS ", car: "GLS" },
@@ -173,7 +173,7 @@
     { group: "coupe", name: "CLE 카브리올레", line: "지붕이 열리는 CLE입니다.", prefix: "CLE ", has: "Cabriolet", car: "상담 후 결정" },
     { group: "amg", name: "AMG A클래스", line: "A클래스의 고성능입니다.", prefix: "AMG A", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG CLA", line: "CLA의 고성능입니다.", prefix: "AMG CLA", kind: "amg", car: "AMG" },
-    { group: "amg", name: "AMG GLB", line: "26년식 AMG GLB는 재고가 소진되었습니다. 다른 연식은 등록된 판매 조건이 있을 때만 고릅니다.", prefix: "AMG GLB", kind: "amg", car: "AMG" },
+    { group: "amg", name: "AMG GLB", line: "고성능 AMG GLB입니다. 최신 재고표에서 확인된 출고 가능 조합을 살펴보세요.", prefix: "AMG GLB", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG E클래스", line: "E클래스의 고성능입니다.", prefix: "AMG E", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG S클래스", line: "S클래스의 고성능입니다.", prefix: "AMG S ", kind: "amg", car: "AMG" },
     { group: "amg", name: "AMG GLC", line: "GLC의 고성능입니다.", prefix: "AMG GLC", kind: "amg", car: "AMG" },
@@ -354,6 +354,7 @@
       f.line +
       "</p>" +
       voucher +
+      (window.BenzReadyStock ? window.BenzReadyStock.family(liveRows) : "") +
       priceHtml +
       '<div class="promo-actions">' +
       '<a class="act-gold" href="' + seeHref + '">' + ico + "<span>" + (f.href ? "차 설명 보기" : "할인 확인") + "</span></a>" +
