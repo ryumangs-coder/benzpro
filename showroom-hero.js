@@ -2,6 +2,23 @@
   'use strict';
   var hero = document.querySelector('.showroom-hero');
   if (!hero) return;
+  // Keep mobile contact shortcuts out of the hero, including when returning to it.
+  var contactFrame = false;
+  function updateContactBar() {
+    contactFrame = false;
+    var header = document.querySelector('.bp-head');
+    var headerBottom = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+    document.body.classList.toggle('showroom-in-view', hero.getBoundingClientRect().bottom > headerBottom);
+  }
+  function scheduleContactBar() {
+    if (contactFrame) return;
+    contactFrame = true;
+    requestAnimationFrame(updateContactBar);
+  }
+  window.addEventListener('scroll', scheduleContactBar, { passive: true });
+  window.addEventListener('resize', scheduleContactBar);
+  window.addEventListener('pageshow', scheduleContactBar);
+  updateContactBar();
   var video = hero.querySelector('video');
   var playButton = hero.querySelector('.showroom-play');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)');
