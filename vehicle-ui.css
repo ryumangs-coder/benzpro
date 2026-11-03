@@ -7,3 +7,17 @@
 .vehicle-filters h3{font-size:21px;font-weight:800;color:#fff;margin-bottom:6px}
 @media(max-width:1199px){.preorder-toc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;overflow:visible;padding:10px 12px}.preorder-toc strong{grid-column:1/-1}.preorder-toc a{font-size:14px;white-space:normal;border:1px solid #63808d;border-radius:8px;padding:8px 5px;text-align:center;min-height:42px;line-height:1.5}}
 @media(max-width:1199px){body:has(.preorder-toc) .jump{scroll-margin-top:230px}}
+
+/* Quote: clear category controls and naturally sized trim cards. */
+.bp-quote-page .quote-category-tabs{border-bottom:1px solid #63808d;margin-bottom:12px;padding-bottom:6px}
+.bp-quote-page .quote-category-tabs .vehicle-filter-row{display:block;margin-top:0}
+.bp-quote-page .quote-category-tabs b{display:block;padding:0;margin-bottom:8px}
+.bp-quote-page .quote-category-tabs .vehicle-filter-row>div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.bp-quote-page .quote-category-tabs button{text-align:center;padding:9px 4px;font-size:15px;border-radius:10px;min-height:44px}
+.bp-quote-page #family{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-height:none;overflow:visible;align-items:stretch;padding:4px 0}
+.bp-quote-page #family>button{min-width:0;min-height:48px;padding:10px 12px;font-size:16px;line-height:1.45;overflow-wrap:anywhere}
+.bp-quote-page #family small{margin-top:3px;font-size:14px;line-height:1.5}
+.bp-quote-page #family .finance-zero{font-size:13px;padding:3px 6px;margin:5px 0 0}
+.bp-quote-page #family .finance-zero-note{margin-bottom:0}
+@media(min-width:1280px){.bp-quote-page #family{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+@media(max-width:600px){.bp-quote-page #family{grid-template-columns:1fr}}

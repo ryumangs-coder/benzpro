@@ -233,7 +233,7 @@
 
   function mountToc() {
     var file = pageFile();
-    if (file !== "models" && file !== "prices" && file !== "quote") return;
+    if (file !== "models" && file !== "prices") return;
     if (document.querySelector(".bp-toc-open")) return;
     var links = {
       prices: [

@@ -94,7 +94,7 @@
     var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
     var date = snapshot().asOf.replace(/-/g, '.');
     if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
-    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-scroll-hint">표 안을 아래로 내려 다른 연식과 조합도 보세요.</p><p class="ready-note">원하는 색상 줄의 ‘상담 예약’을 누르세요. 선택한 연식으로 상담을 연결합니다. 연식별 가격·할인은 다를 수 있습니다. 재고·출고일은 상담 시 최종 확인합니다. 아이콘은 참고색입니다.</p></section>';
+    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 실시간 재고에 따라 배정 일정이 상이할 수 있으며, 정확한 출고일은 상담 시 확정됩니다.</p></section>';
   }
   function family(rows) {
     var available = rows.filter(function (r) { return matches(r).length; });

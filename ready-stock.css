@@ -11,3 +11,9 @@
 .ready-year th{font-size:16px!important;color:#f4dda0;background:#2a4437}.ready-year-empty td{font-size:15px;text-align:left!important;color:#c6d1c9;padding:12px 8px!important;width:auto!important}
 
 .ready-table-block{position:relative}.ready-table-scroll{scrollbar-width:auto;scrollbar-color:#e4cb86 #20382d}.ready-table-scroll::-webkit-scrollbar{width:12px}.ready-table-scroll::-webkit-scrollbar-track{background:#20382d}.ready-table-scroll::-webkit-scrollbar-thumb{background:#e4cb86;border:3px solid #20382d;border-radius:8px}.ready-has-more:after{content:'';position:absolute;left:1px;right:14px;bottom:58px;height:32px;background:linear-gradient(transparent,#132b27);pointer-events:none}.ready-scroll-actions{min-height:52px;display:flex;gap:8px;align-items:center;justify-content:center;padding:8px 0 0}.ready-scroll-actions[hidden],.ready-scroll-actions [hidden]{display:none!important}.ready-scroll-next,.ready-scroll-top{border:1px solid #b8a66c;border-radius:10px;color:#f4dda0;background:#294637;min-height:44px;padding:9px 12px;font-size:15px;font-weight:700;cursor:pointer}.ready-scroll-next{flex:1}.ready-scroll-next span{display:inline-block;font-size:20px;animation:ready-down 1.6s ease-in-out 3}.ready-scroll-top{font-size:15px}.ready-scroll-end{font-size:14px;color:#c6d1c9;flex:1;text-align:center}@keyframes ready-down{50%{transform:translateY(4px)}}@media(prefers-reduced-motion:reduce){.ready-scroll-next span{animation:none}}
+
+/* Give multi-line color names room above and below each combination. */
+.ready-table tbody td{padding-top:15px;padding-bottom:15px;line-height:1.6}
+.ready-color>span{min-width:0}
+.ready-color b,.ready-color small{line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+.ready-disclaimer{margin:10px 0 0;color:#c6d1c9;font-size:13px;line-height:1.6;font-weight:400}
