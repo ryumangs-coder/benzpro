@@ -62,7 +62,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261103-visibility";
+    css.href = "chrome.css?v=20261104-preorder-nav";
     document.head.appendChild(css);
   }
 
@@ -232,70 +232,72 @@
   }
 
   function mountToc() {
+    // The in-content chips and existing right sidebar share the same anchors.
+    var main = document.querySelector("main");
+    if (!main) return;
     var file = pageFile();
-    if (file !== "models" && file !== "prices") return;
-    if (document.querySelector(".bp-toc-open")) return;
-    var links = {
-      prices: [
-        ["#highlights", "이번 달 차값"],
-        ["#how", "할인 계산"],
-        ["#raised", "할인이 오른 차"],
-        ["#support", "6개월 지원"],
-        ["#programs", "금융 보장"],
-        ["#care-card", "신차교환"],
-        ["#tire-card", "타이어"],
-        ["#examples", "세 대 비교"],
-        ["#owned", "보유 차량 혜택"],
-        ["#company", "MOU 할인"],
-        ["#paycard", "카드 결제"],
-        ["#finder", "차종별 가격"]
-      ],
-      quote: [
-        ["#q-car", "차 고르기"],
-        ["#q-pay", "구매 방식"],
-        ["#q-benefit", "해당하는 혜택"],
-        ["#lead", "상담 남기기"],
-        ["#sheet", "견적 요약"]
-      ]
-    }[file] || [];
-    var live = links.filter(function (item) { return !!document.querySelector(item[0]); });
-    if (file !== "models" && !live.length) return;
-    var button = document.createElement("button");
-    button.type = "button";
-    button.className = "bp-toc-open";
-    button.setAttribute("aria-expanded", "false");
-    button.setAttribute("aria-controls", "bp-toc");
-    button.setAttribute("aria-label", "이 페이지에서 이동");
-    button.textContent = "페이지 목차";
-    var panel = document.createElement("nav");
-    panel.id = "bp-toc";
-    panel.className = "bp-toc";
-    panel.hidden = true;
-    panel.setAttribute("aria-label", "이 페이지에서 이동");
-    panel.innerHTML = '<p>이 페이지에서 이동</p><div class="bp-toc-row"></div>';
-    panel.querySelector(".bp-toc-row").innerHTML = live.map(function (item) {
-      return '<a href="' + item[0] + '">' + item[1] + "</a>";
-    }).join("");
-    function setOpen(open) {
-      panel.hidden = !open;
-      button.setAttribute("aria-expanded", open ? "true" : "false");
-      button.textContent = open ? "닫기" : "페이지 목차";
+    if (file === "index" || file === "prices") {
+      var old = main.querySelector('nav[aria-label="이 페이지 바로가기"]');
+      if (old) old.remove();
+      var home = file === "index";
+      var items = home ? [
+        ["#november-promo", "11월 혜택"], ["prices.html#ready-stock-catalogue", "즉시출고 재고"],
+        ["#models", "차종별 할인"], ["prices.html#programs", "금융·보증"], ["prices.html#welcome", "출고 사은품"]
+      ] : [
+        ["#november-shortcuts", "11월 혜택"], ["#ready-stock-catalogue", "즉시출고 재고"],
+        ["#highlights", "차종별 할인"], ["#programs", "금융·보증"], ["#welcome", "출고 사은품"]
+      ];
+      var chips = document.createElement("nav");
+      chips.className = "bp-shortcuts";
+      chips.setAttribute("aria-label", "페이지 바로가기");
+      chips.innerHTML = items.map(function (item) {
+        return '<a data-spy href="' + item[0] + '">' + item[1] + '</a>';
+      }).join("");
+      var hero = main.querySelector(".showroom-hero");
+      if (hero) hero.after(chips);
+      else {
+        var heading = main.querySelector("h1");
+        var intro = heading && heading.nextElementSibling;
+        if (intro) intro.after(chips);
+      }
     }
-    button.addEventListener("click", function () { setOpen(panel.hidden); });
-    panel.addEventListener("click", function (event) {
-      if (event.target.closest("a")) setOpen(false);
-    });
+    var pending = false;
+    function update() {
+      pending = false;
+      var groups = document.querySelectorAll('aside nav, .bp-shortcuts');
+      groups.forEach(function (nav) {
+        var links = Array.from(nav.querySelectorAll('a[data-spy][href^="#"]'));
+        var targets = links.map(function (link) {
+          return { link: link, target: document.getElementById(link.hash.slice(1)) };
+        }).filter(function (item) { return item.target && item.target.getClientRects().length; });
+        targets.sort(function (a, b) { return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top; });
+        var current = targets[0];
+        targets.forEach(function (item) {
+          if (item.target.getBoundingClientRect().top <= 150) current = item;
+        });
+        links.forEach(function (link) {
+          if (current && link === current.link) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      });
+    }
+    function schedule() {
+      if (!pending) { pending = true; requestAnimationFrame(update); }
+    }
     document.addEventListener("click", function (event) {
-      if (panel.hidden) return;
-      if (event.target.closest("#bp-toc, .bp-toc-open")) return;
-      setOpen(false);
+      var link = event.target.closest('.bp-shortcuts a, aside a[data-spy]');
+      if (!link || !link.getAttribute("href").startsWith("#") || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      var target = document.getElementById(link.hash.slice(1));
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? "instant" : "smooth", block: "start" });
+      history.replaceState(null, "", link.hash);
     });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !panel.hidden) setOpen(false);
-    });
-    document.body.classList.add("bp-has-toc");
-    document.body.appendChild(button);
-    document.body.appendChild(panel);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    window.addEventListener("load", schedule);
+    if (window.ResizeObserver) new ResizeObserver(schedule).observe(main);
+    update();
   }
 
   /* 카카오톡 상담 링크: 공통 설정 주소(/chat)로 맞추고, 새 창으로 열리는 링크에는 rel과 안내를 붙입니다. */
@@ -562,3 +564,4 @@
     });
   }
 })();
+
