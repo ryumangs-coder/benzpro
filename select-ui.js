@@ -174,7 +174,7 @@
 
     function place() {
       box.classList.remove("is-up", "is-fixed");
-      var anchor = pastBtn.hidden ? trigger : pastBtn;
+      var anchor = pastBtn.hidden || !pastBtn.getClientRects().length ? trigger : pastBtn;
       var rect = anchor.getBoundingClientRect();
       var below = window.innerHeight - rect.bottom;
       var above = rect.top;
