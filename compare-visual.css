@@ -1014,3 +1014,31 @@
   .sp-v b { font-size: 18px; }
   .sp-head strong { font-size: 18px; }
 }
+
+/* 비교 첫 화면: 연식 제어 통합 및 가격까지 이어지는 간결한 배치 */
+body[data-page="compare"] .bp-toc-open,
+body[data-page="compare"] .bp-toc,
+body[data-page="compare"] .cmp-jump-open,
+body[data-page="compare"] .cmp-jump,
+#compare-page .bp-past-toggle { display: none !important; }
+#compare-page { padding-top: .75rem; }
+#compare-page h1 { font-size: clamp(1.65rem, 3vw, 1.8rem); }
+.compare-intro { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; margin-top: .5rem; color: #c5ced3; font-size: 14px; line-height: 1.5; }
+.compare-price-help { position: relative; }
+.compare-price-help summary { min-height: 32px; display: flex; align-items: center; cursor: pointer; color: #e4cb86; font-size: 13px; }
+.compare-price-help summary:focus-visible { outline: 2px solid #e4cb86; outline-offset: 3px; }
+.compare-price-help > p { position: absolute; top: 100%; right: 0; z-index: 45; width: min(340px, 80vw); padding: .85rem; border: 1px solid #647783; border-radius: .75rem; background: #10222c; box-shadow: 0 8px 24px #0006; }
+#compare-page .compare-selectors { margin-top: .65rem; }
+#compare-page .q-pick-card { min-height: 64px; padding: .6rem .8rem; }
+#compare-page .compare-archive { margin-top: .5rem; font-size: 14px; line-height: 1.4; }
+#compare-page .compare-archive span span { display: inline; margin-left: .5rem; font-size: 13px; }
+#compare-page #compare { margin-top: .75rem; padding: .75rem; }
+#compare-page .vs-photo { aspect-ratio: 80 / 51; }
+#compare-page .vs-info { padding: .6rem .7rem .7rem; }
+#compare-page .vs-info h2 { font-size: clamp(16px, 2.5vw, 20px); }
+#compare-page .vs-price { margin-top: .4rem; }
+@media (max-width: 767px) {
+  #compare-page .compare-selectors { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .5rem; }
+  #compare-page .q-pick-name { font-size: 15px; }
+  #compare-page .compare-archive span span { display: block; margin-left: 0; }
+}
