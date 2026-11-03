@@ -16,3 +16,6 @@ node_modules/
 *.key
 .DS_Store
 **/.DS_Store
+
+# Original 4K reference is local-only; serve the optimized showroom clips
+참고 영상.MP4
