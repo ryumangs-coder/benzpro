@@ -62,7 +62,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261102-ux2";
+    css.href = "chrome.css?v=20261103-visibility";
     document.head.appendChild(css);
   }
 
@@ -121,9 +121,9 @@
   dock.setAttribute("aria-label", "문의");
   dock.innerHTML =
     '<button type="button" class="bp-dock-top" aria-label="맨 위로" title="맨 위로">' + I.up + "</button>" +
-    '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브" title="유튜브">' + I.yt + "</a>" +
-    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 카카오톡 채널 상담" title="벤츠프로 카카오톡 채널 상담">' + I.talk + "</a>" +
-    '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의" title="전화 문의">' + I.phone + "</a>";
+    '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브" title="유튜브">' + I.yt + '<span class="bp-dock-label" aria-hidden="true">유튜브</span></a>' +
+    '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 카카오톡 채널 상담" title="벤츠프로 카카오톡 채널 상담">' + I.talk + '<span class="bp-dock-label" aria-hidden="true">카톡</span></a>' +
+    '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의" title="전화 문의">' + I.phone + '<span class="bp-dock-label" aria-hidden="true">전화</span></a>';
 
   var parent = document.body || document.documentElement;
   parent.insertBefore(dock, parent.firstChild);

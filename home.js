@@ -215,8 +215,11 @@
     var grid = document.getElementById("e-cards");
     if (!host || !grid) return;
     host.innerHTML =
+      '<fieldset class="hp-filter-group"><legend>구매 방식 선택</legend><div class="hp-filter-options">' +
+      PAYS.map(function (item) { return chip("pay", item[0], item[1], item[0] === state.pay); }).join("") +
+      '</div></fieldset><fieldset class="hp-filter-group"><legend>연식 선택</legend><div class="hp-filter-options">' +
       eYears().map(function (my) { return chip("year", my, yearLabel(my), my === state.year); }).join("") +
-      PAYS.map(function (item) { return chip("pay", item[0], item[1], item[0] === state.pay); }).join("");
+      '</div></fieldset>';
     grid.innerHTML = card(E_EX) + card(E_AMG);
   }
 
