@@ -1111,3 +1111,14 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
   body.hp-home:has(#cta:not(.is-away)) .bp-dock .bp-dock-kakao,
   body.hp-home:has(#cta:not(.is-away)) .bp-dock .bp-dock-tel { display: none !important; }
 }
+
+/* 3차 검토안: 구매 동선을 유지하며 담당자와 오너 가이드 연결. */
+.hp-hero .hp-advisor { color: #eef3f5; }
+.hp-owner-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-top: .75rem; }
+.hp-owner-nav a { display: inline-flex; align-items: center; min-height: 48px; color: #f0d990; text-decoration: underline; text-underline-offset: .25em; }
+.hp-owner-guides { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+.hp-owner-guides .hp-link-card { display: flex; flex-direction: column; min-width: 0; }
+.hp-owner-guides .hp-go { margin-top: auto; padding-top: .75rem; }
+.hp-insight-title { margin: 1.5rem 0 .75rem; font-size: 1.25rem; font-weight: 700; }
+.hp-owner-nav a:focus-visible, .hp-owner-guides a:focus-visible { outline: 3px solid #f0d990; outline-offset: 4px; }
+@media (max-width: 759px) { .hp-owner-guides { grid-template-columns: 1fr; } }

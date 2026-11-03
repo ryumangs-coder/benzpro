@@ -1018,7 +1018,7 @@
     if (!track || !view || !box) return;
     var CACHE = "benzpro-insights-v1";
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var userPaused = reduce;
+    var userPaused = true;
     var dragMoved = false;
 
     function card(post, clone) {
@@ -1057,7 +1057,7 @@
       box.classList.toggle("is-paused", paused);
       box.classList.toggle("is-manual", paused);
       if (pauseBtn) {
-        pauseBtn.hidden = reduce;
+        pauseBtn.hidden = reduce || !track.children.length;
         pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
         pauseBtn.textContent = paused ? "재생" : "일시정지";
       }
@@ -1079,7 +1079,9 @@
     function normalize(list) {
       var seen = {};
       return (list || []).filter(function (post) {
-        if (!post || post.status !== "published" || !post.slug || !post.title) return false;
+        // Public posts API omits status; cached entries include published.
+        // Explicit non-public states must never appear in the list.
+        if (!post || (post.status != null && post.status !== "published") || !post.slug || !post.title) return false;
         if (seen[post.slug]) return false;
         seen[post.slug] = true;
         return true;
@@ -1142,7 +1144,7 @@
         render(posts);
       })
       .catch(function () {
-        if (!cached.length && fallback) fallback.hidden = false;
+        if (!cached.length) render([]);
       });
   }
 })();
