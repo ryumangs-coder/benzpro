@@ -268,7 +268,9 @@
       groups.forEach(function (nav) {
         var links = Array.from(nav.querySelectorAll('a[data-spy][href^="#"]'));
         var targets = links.map(function (link) {
-          return { link: link, target: document.getElementById(link.hash.slice(1)) };
+          var id = link.hash.slice(1);
+          if (file === "prices") id = ({ highlights: "finder", programs: "care-switch", "care-card": "care-switch" })[id] || id;
+          return { link: link, target: document.getElementById(id) };
         }).filter(function (item) { return item.target && item.target.getClientRects().length; });
         targets.sort(function (a, b) { return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top; });
         var current = targets[0];
@@ -286,7 +288,7 @@
     }
     document.addEventListener("click", function (event) {
       var link = event.target.closest('.bp-shortcuts a, aside a[data-spy]');
-      if (!link || !link.getAttribute("href").startsWith("#") || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (event.defaultPrevented || !link || !link.getAttribute("href").startsWith("#") || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       var target = document.getElementById(link.hash.slice(1));
       if (!target) return;
       event.preventDefault();
@@ -297,6 +299,7 @@
     window.addEventListener("resize", schedule);
     window.addEventListener("load", schedule);
     if (window.ResizeObserver) new ResizeObserver(schedule).observe(main);
+    if (window.MutationObserver) new MutationObserver(schedule).observe(main, { subtree: true, attributes: true, attributeFilter: ["class"] });
     update();
   }
 
