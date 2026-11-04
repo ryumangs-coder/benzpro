@@ -183,7 +183,6 @@
     var stock = stockOf(row);
     var view = plainScene(row);
     var period = "가격표 " + (dateLabel(data.asOfPrice) || "확인 필요") + " · 할인 " + (dateLabel(data.asOfPromo) || "확인 필요");
-    var photoNote = state.year === "MY26" ? "" : '<p class="hp-photo-note">사진은 26년식 카탈로그의 이 트림입니다. ' + esc(yearLabel(state.year)) + " 전용 사진은 없습니다.</p>";
     var body;
     if (stock.code === "soldout") {
       body = '<p class="hp-num">재고 소진</p><p class="hp-note">' + esc(stock.reason || "이 연식은 현재 구매 가격으로 보여 드리지 않습니다.") + "</p>";
@@ -201,7 +200,7 @@
     }
     return (
       '<article class="hp-card">' +
-      photo(name, state.year, true) + photoNote +
+      photo(name, state.year, true) +
       "<h3>" + esc(name) + "</h3>" +
       "<p>" + esc(ko) + " · " + esc(yearLabel(row.my)) + "</p>" + (window.BenzFinance && stock.code !== "soldout" ? window.BenzFinance.badges(row) : "") + warn + body +
       '<p class="hp-note">' + esc(period) + "</p>" +
