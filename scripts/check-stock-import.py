@@ -13,7 +13,7 @@ main = module['main']
 base = dict(N='one', B='전국재고', AN='미배정', AK='미배정', AS='판매 가능', AL='입고 물량', AP='PDI 완료', J='46000', P='E 200 EXCLUSIVE', W='2026', Y='폴라 화이트', AA='가죽, 블랙', Q='PRIVATE MEMO', D='PRIVATE LOCATION')
 rows = [base]
 for number, updates in enumerate([
-    {'B':'배정재고'}, {'AN':'계약 확정'}, {'AN':'가계약 체결'},
+    {'B':'배정재고'}, {'AN':'계약 확정'}, {'AN':'가계약 체결'}, {'AO':'YES'},
     {'AS':'판매 제한'}, {'AK':'배정', 'AN':'배정 완료'},
     {'J':'50000'}, {'J':''}, {'AL':'예정 물량'}, {'AP':'선적'}
 ]):
