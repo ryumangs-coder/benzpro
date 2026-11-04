@@ -4,7 +4,7 @@ const ids=['glb','glc','cla','vclass','sclass'];const labels=['GLB 일렉트릭'
 const cards=html.match(/<section[^>]*aria-label="사전예약 차"[^>]*>([\s\S]*?)<\/section>/)[1];
 assert.deepEqual([...cards.matchAll(/<article\b[\s\S]*?<a href="#([^"]+)"/g)].map(x=>x[1]),ids);
 assert.deepEqual([...html.matchAll(/<section id="([^"]+)"/g)].map(x=>x[1]).filter(x=>ids.includes(x)),ids);
-const aside=html.match(/<nav class="preorder-toc"[\s\S]*?<\/nav>/)[0];
+const aside=html.match(/<details class="preorder-toc"[\s\S]*?<\/details>/)[0];
 assert.deepEqual([...aside.matchAll(/href="#([^"]+)"/g)].map(x=>x[1]).filter(x=>ids.includes(x)),['glb','glc','vclass','cla','sclass']);
 assert.deepEqual([...html.matchAll(/name="carModel" value="([^"]+)"/g)].slice(0,5).map(x=>x[1]),labels);
 const ctx={window:{},document:{readyState:'loading',addEventListener(){}}};vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(root,'glb-details.js'),'utf8'),ctx);

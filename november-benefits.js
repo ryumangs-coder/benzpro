@@ -9,7 +9,7 @@
   }
   function html(row,state){
     state=state||{};var name=row.name||row[2]||'',year=row.my||row[1];
-    if(isS(row))return sClass(!!state.compact) + (/^Maybach /.test(name) ? '<section class="nov-benefit"><h3>마이바흐 고객 문화 혜택</h3><p>11~12월 구매 고객은 오페라의 유령 프리미엄석 2매를 확인하세요. 한국여자오픈 특별 라운딩은 100명 추첨입니다.</p><a class="nov-link" href="november.html">공연·추첨 상세 조건 보기 →</a></section>' : '');
+    if(isS(row))return '<details class="nov-disclosure"><summary><strong>S클래스 재구매 · 보증연장 조건</strong><span>눌러서 내 구매 이력에 맞는 혜택 보기</span></summary>'+sClass(!!state.compact)+'</details>' + (/^Maybach /.test(name) ? '<section class="nov-benefit"><h3>마이바흐 고객 문화 혜택</h3><p>11~12월 구매 고객은 오페라의 유령 프리미엄석 2매를 확인하세요. 한국여자오픈 특별 라운딩은 100명 추첨입니다.</p><a class="nov-link" href="november.html">공연·추첨 상세 조건 보기 →</a></section>' : '');
     var items=[];
     var campaign=window.BenzCampaign&&window.BenzCampaign.of(row);
     if(campaign&&campaign.cashWon)items.push('<b>차량가 100만원 정액 할인</b> — 할인율로 바꾸지 않고 한 번만 반영합니다.');
