@@ -63,7 +63,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261104-preorder-nav";
+    css.href = "chrome.css?v=20261104-insights";
     document.head.appendChild(css);
   }
 
@@ -79,7 +79,8 @@
     item("preorder.html", "preorder", I.cal, "사전예약") +
     item("https://benzpro.co.kr/warranty", "warranty", I.shield, "보증연장") +
     item("https://benzpro.co.kr/cards", "cards", I.tag, "카드결제") +
-    item("https://benzpro.co.kr/mou", "mou", I.calc, "MOU 할인") +
+    item("https://benzpro.co.kr/mou", "mou", I.calc, "MOU할인") +
+    item("https://mercedes.benzpro.co.kr", "insights", I.doc, "인사이트", ' class="bp-insights" target="_blank" rel="noopener noreferrer" aria-label="인사이트 (새 창)"') +
     "</nav>" +
     '<div class="bp-tools">' +
     '<a class="bp-icon bp-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 유튜브 채널" title="벤츠프로 유튜브 채널">' + I.yt + "</a>" +
@@ -105,7 +106,7 @@
     item("preorder.html", "preorder", I.cal, "사전예약") +
     '<div class="bp-sub">' +
     item("warranty.html", "", I.shield, "보증 연장") +
-    item("https://mercedes.benzpro.co.kr", "", I.doc, "인사이트", ' target="_blank" rel="noopener noreferrer"') +
+    item("https://mercedes.benzpro.co.kr", "", I.doc, "인사이트", ' class="bp-insights" target="_blank" rel="noopener noreferrer" aria-label="인사이트 (새 창)"') +
     "</div>" +
     '<div class="bp-extra">' +
     '<p>혜택 더 보기</p>' +
