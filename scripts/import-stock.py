@@ -82,7 +82,7 @@ def main():
         except (ValueError, TypeError):
             return False
     def blocked(r):
-        return r.get('B') == '배정재고' or r.get('AN') in ('계약 확정', '가계약 체결') or r.get('AS') != '판매 가능' or str(r.get('AO', '')).strip().upper() == 'YES'
+        return r.get('B') == '배정재고' or r.get('AN') in ('계약 확정', '가계약 체결', '배정 완료') or r.get('AK') == '배정' or r.get('AS') != '판매 가능' or str(r.get('AO', '')).strip().upper() == 'YES'
     units = {}
     marks = {}
     def mark(category, benefit=''):
