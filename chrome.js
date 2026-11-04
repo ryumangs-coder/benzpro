@@ -52,6 +52,7 @@
     if (file === "quote") return "quote";
     if (file === "models") return "models";
     if (file === "preorder" || file === "glb-electric") return "preorder";
+    if (file === "warranty" || file === "cards" || file === "mou") return file;
     return "";
   }
   function item(href, key, icon, label, extra) {
@@ -76,6 +77,9 @@
     item("quote.html", "quote", I.calc, "내 견적", ' id="bp-quote"') +
     item("models.html", "models", I.car, "차종 비교") +
     item("preorder.html", "preorder", I.cal, "사전예약") +
+    item("https://benzpro.co.kr/warranty", "warranty", I.shield, "보증연장") +
+    item("https://benzpro.co.kr/cards", "cards", I.tag, "카드결제") +
+    item("https://benzpro.co.kr/mou", "mou", I.calc, "MOU 할인") +
     "</nav>" +
     '<div class="bp-tools">' +
     '<a class="bp-icon bp-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 유튜브 채널" title="벤츠프로 유튜브 채널">' + I.yt + "</a>" +
