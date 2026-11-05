@@ -34,7 +34,11 @@ def read_book(path):
         return primary[1:], secondary[1:]
 
 def normalize(s):
-    return re.sub(r'\s+', ' ', s.replace('Mercedes-', '').replace('Coupé', 'Coupe').replace('EXCLUSIVE', 'Exclusive').replace('AVANTGARDE', 'Avantgarde').replace('Hybrid', 'HYBRID')).strip()
+    name = re.sub(r'\s+', ' ', s.replace('Mercedes-', '').replace('Coupé', 'Coupe').replace('EXCLUSIVE', 'Exclusive').replace('AVANTGARDE', 'Avantgarde').replace('Hybrid', 'HYBRID')).strip()
+    if name.casefold() in ('c 200 final edition', 'c 200 amg line special edition'):
+        return 'C 200 AMG Line Special Edition'
+    return name
+
 
 TRANSLATIONS = {
     'ARTICO man-made leather / DINAMICA microfibre black with crystal grey': '아티코 인조 가죽/다이나미카, 블랙/크리스탈 그레이',

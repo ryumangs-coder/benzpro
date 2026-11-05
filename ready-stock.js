@@ -4,7 +4,7 @@
   function key(s) {
     s = String(s || '').toLowerCase().replace('mercedes-', '').replace(/coupé/g, 'coupe').replace(/with eq hybrid technology/g, '').replace(/with eq technology/g, '').replace(/\s+/g, ' ').trim();
     var aliases = {
-      'c 200 amg line special edition': 'c 200 final edition',
+      'c 200 final edition': 'c 200 amg line special edition',
       'amg e 53 hybrid 4matic+': 'amg e 53 4matic+',
       'e 220 d 4matic exclusive': 'e 220 d 4matic',
       'e 220 d 4matic avantgarde': 'e 220 d 4matic',
@@ -93,7 +93,7 @@
     var years = /^(MY26|MY27)$/.test(selectedYear) ? ['MY26', 'MY27'] : [selectedYear];
     var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
     var date = snapshot().asOf.replace(/-/g, '.');
-    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p>' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
+    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
     return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 실시간 재고에 따라 배정 일정이 상이할 수 있으며, 정확한 출고일은 상담 시 확정됩니다.</p></section>';
   }
   function family(rows) {

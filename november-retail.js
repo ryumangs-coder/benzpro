@@ -158,7 +158,7 @@ window.NOVEMBER_RETAIL = [
   },
   {
     "my": "MY26",
-    "name": "C 200 Final Edition",
+    "name": "C 200 AMG Line Special Edition",
     "cash": 10,
     "cashWon": 0,
     "mbm": 4,

@@ -102,7 +102,7 @@
  "AMG G 63 MANUFAKTUR": "images/tech/a-ag-front-sm.webp",
  "Maybach EQS 680 SUV": "images/tech/my-eqs-front-sm.webp",
  "AMG S 63 E Performance": "images/tech/m-s-amg-front-sm.webp",
- "C 200 Final Edition": "images/colors/c-class/149U.webp",
+ "C 200 AMG Line Special Edition": "images/colors/c-class/149U.webp",
  "EQA 250 Progressive": "images/tech/q-eqa-prog-front-sm.webp",
  "EQA 250 AMG Line": "images/tech/q-eqa-amg-front-sm.webp",
  "EQB 300 4MATIC Progressive": "images/tech/q-eqb-prog-front-sm.webp",

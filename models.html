@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="chrome.css?v=20261104-insights" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
-    <link rel="stylesheet" href="compare-visual.css?v=20261103-compact" />
+    <link rel="stylesheet" href="compare-visual.css?v=20261105-special" />
     <link rel="stylesheet" href="benz-video.css?v=20261102-nav" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -18,6 +18,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/models","name":"차량 가이드 | 벤츠프로","description":"메르세데스-벤츠 전 트림 비교. 정상가격과 최대 프로모션 적용 실구매가. 벤츠프로.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/og.png"},"inLanguage":"ko-KR"}]}</script>    <link rel="stylesheet" href="ready-stock.css?v=20261102-ux2" />
 <link rel="stylesheet" href="november-benefits.css?v=20261104-theme" /><link rel="stylesheet" href="vehicle-ui.css?v=20261104-theme"></head>
   <body data-page="compare" class="bg-[#F6F3EE] text-[#1C1917] antialiased">
+<script src="select-ui.js?v=20261105-special" defer></script>
 <script src="chrome.js?v=20261104-insights"></script>
     
 
@@ -32,7 +33,7 @@
         </details>
       </div>
 
-      <div class="compare-selectors mt-6 grid items-end gap-3 md:grid-cols-[1fr_auto_1fr]">
+      <div id="compare-selectors" class="compare-selectors mt-6 grid items-end gap-3 md:grid-cols-[1fr_auto_1fr]">
         <label class="block">
           <span class="mb-2 flex items-center gap-2 text-[14px] font-bold text-[#7EB6FF]">왼쪽 차</span>
           <select id="left" class="guide-pick" data-pick-kicker="왼쪽 차" data-pick-action="차종 변경" data-pick-search="차종명 검색" data-pick-placeholder="모델명 또는 연식" data-pick-past="page"></select>
@@ -49,6 +50,10 @@
       </label>
 
 
+      <nav class="compare-jump" aria-label="비교 페이지 목차">
+        <label for="compare-jump-target">항목 바로가기</label>
+        <select id="compare-jump-target" data-pick-native><option value="">이동할 항목 선택</option></select>
+      </nav>
       <section id="compare" class="mt-6 rounded-3xl bg-white p-4 sm:p-5"></section>
       <div id="color-lightbox" class="color-lightbox" hidden>
         <button type="button" class="color-lightbox-close" aria-label="닫기">닫기</button>
@@ -82,10 +87,10 @@
     </aside>
 
 
-    <script src="october-2026.js?v=20261028a"></script><script src="november-retail.js?v=20261102-full"></script><script src="november-2026.js?v=20261102-full"></script><script src="vehicle-catalogue.js?v=20261102-nav"></script><script src="november-finance.js?v=20261102-tables"></script><script src="november-benefits.js?v=20261104-theme"></script>
-    <script src="quote.js?v=20261102-nav"></script>
-    <script src="ready-stock-data.js?v=20261103a"></script><script src="ready-stock.js?v=20261102f"></script><script src="stock.js?v=20261102b"></script>
-    <script src="guide-data.js?v=20261026b"></script>
+    <script src="october-2026.js?v=20261105-special"></script><script src="november-retail.js?v=20261105-special"></script><script src="november-2026.js?v=20261102-full"></script><script src="vehicle-catalogue.js?v=20261102-nav"></script><script src="november-finance.js?v=20261105-special"></script><script src="november-benefits.js?v=20261104-theme"></script>
+    <script src="quote.js?v=20261105-special"></script>
+    <script src="ready-stock-data.js?v=20261103a"></script><script src="ready-stock.js?v=20261105-special"></script><script src="stock.js?v=20261102b"></script>
+    <script src="guide-data.js?v=20261105-special"></script>
     <script src="approach-specs.js?v=20261016b"></script>
     <script src="approach-options.js?v=20261029a"></script>
     <script src="preorder-guides.js?v=20261102-five-seats"></script>
@@ -95,7 +100,7 @@
     <script src="option-concepts.js?v=20261026c"></script>
     <script src="option-words.js?v=20261028a"></script>
     <script src="tech-data.js?v=20261029b"></script>
-    <script src="compare-visual.js?v=20261102a"></script>
+    <script src="compare-visual.js?v=20261105-special"></script>
     <script src="benz-video.js?v=20261102-nav"></script>
     <script src="colors.js?v=20261022a"></script>
     <script src="pick.js?v=20261102-nov"></script>
@@ -206,6 +211,9 @@
           if (String(row.name || "").indexOf("electric") !== -1) return "";
           return row.seg === "EQ" ? " 벤츠 금융으로 사면 충전 바우처 100만원입니다." : "";
         }
+        function modelAlias(name) {
+          return name === "C 200 Final Edition" ? "C 200 AMG Line Special Edition" : name;
+        }
         function normName(s) {
           return String(s || "")
             .toUpperCase()
@@ -216,10 +224,10 @@
             .replace(/[^A-Z0-9가-힣]/g, "");
         }
         function specIdentity(s) {
-          return normName(s).replace(/AMGLINE|EXCLUSIVE|AVANTGARDE|PROGRESSIVE|PREMIUM|ESSENTIAL|ADVANCED|FINALEDITION|LIMITEDEDITION|EDITION|MANUFAKTUR/g, "");
+          return normName(s).replace(/AMGLINE|EXCLUSIVE|AVANTGARDE|PROGRESSIVE|PREMIUM|ESSENTIAL|ADVANCED|SPECIALEDITION|FINALEDITION|LIMITEDEDITION|EDITION|MANUFAKTUR/g, "");
         }
         function coreName(s) {
-          return s.replace(/HYBRID|WITHEQTECHNOLOGY|LONG|HATCHBACK|HATCH|SEDAN|COUPE|CABRIOLET|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
+          return s.replace(/HYBRID|WITHEQTECHNOLOGY|LONG|HATCHBACK|HATCH|SEDAN|COUPE|CABRIOLET|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|SPECIALEDITION|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
         }
         function guideOf(row) {
           var book = window.GUIDE_DATA || {};
@@ -322,7 +330,7 @@
         right.value = String(findIndex("E 200 AMG Line", "MY27"));
         (function openFromPromo() {
           var query = new URLSearchParams(location.search);
-          var pickName = query.get("pick");
+          var pickName = modelAlias(query.get("pick"));
           var pickYear = query.get("my");
           if (query.get("archive") === "1") {
             showArchive = true;
@@ -339,7 +347,7 @@
             fillSelects(true);
           }
           if (picked) left.value = String(picked.i);
-          var vsName = query.get("vs");
+          var vsName = modelAlias(query.get("vs"));
           var vsYear = query.get("vsmy") || pickYear;
           var other = vsName && rows.filter(function (row) {
             return row.name === vsName && (!vsYear || row.my === vsYear);
@@ -967,7 +975,7 @@
           return specSection + optSection;
         }
         function lineupCore(s) {
-          return s.replace(/HYBRID|WITHEQTECHNOLOGY|HATCHBACK|HATCH|SEDAN|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|PROGRESSIVE|ESSENTIAL|ADVANCED|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
+          return s.replace(/HYBRID|WITHEQTECHNOLOGY|HATCHBACK|HATCH|SEDAN|MANUFAKTUR|PREMIUM|AMGLINE|EXCLUSIVE|AVANTGARDE|PROGRESSIVE|ESSENTIAL|ADVANCED|SPECIALEDITION|FINALEDITION|LIMITEDEDITION|EDITION/g, "");
         }
         function bodySide(name) {
           var raw = String(name || "");
@@ -978,7 +986,7 @@
         }
         function basisName(name) {
           var shown = showName(name)
-            .replace(/Avantgarde|Exclusive|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Manufaktur|Final Edition/gi, "")
+            .replace(/Avantgarde|Exclusive|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Manufaktur|Special Edition|Final Edition/gi, "")
             .replace(/\(\s*\)/g, "")
             .replace(/\s+/g, " ")
             .trim();
@@ -1043,7 +1051,7 @@
           if (n.indexOf("PROGRESSIVE") !== -1) return "프로그레시브";
           if (n.indexOf("ADVANCED") !== -1) return "어드밴스드";
           if (n.indexOf("ESSENTIAL") !== -1) return "에센셜";
-          if (n.indexOf("FINAL EDITION") !== -1) return "파이널 에디션";
+          if (n.indexOf("SPECIAL EDITION") !== -1) return "스페셜 에디션";
           return "기본";
         }
         function lineupRank(label) {
@@ -1057,7 +1065,7 @@
         }
         function lineupTitle(row) {
           var shown = showName(row.name)
-            .replace(/Avantgarde|AVANTGARDE|Exclusive|EXCLUSIVE|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Manufaktur|Final Edition/gi, "")
+            .replace(/Avantgarde|AVANTGARDE|Exclusive|EXCLUSIVE|AMG Line|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Manufaktur|Special Edition|Final Edition/gi, "")
             .replace(/\(\s*\)/g, "")
             .replace(/\s+/g, " ")
             .trim();
@@ -1160,7 +1168,7 @@
         function familyStem(name) {
           return String(name)
             .replace(/\(.*?\)/g, "")
-            .replace(/Avantgarde|Exclusive|AMG Line\+?|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Final Edition|Cabriolet|Coupé|Coupe|Long/gi, "")
+            .replace(/Avantgarde|Exclusive|AMG Line\+?|Progressive|Essential|Advanced|Premium|MANUFAKTUR|Special Edition|Final Edition|Cabriolet|Coupé|Coupe|Long/gi, "")
             .replace(/\s+/g, " ")
             .trim();
         }
@@ -1365,12 +1373,12 @@
               );
             }
           }
-          if (/Final Edition/.test(row.name)) {
-            var amgC = mates.filter(function (item) { return /AMG Line/.test(item.name); })[0];
+          if (row.name === "C 200 AMG Line Special Edition") {
+            var amgC = mates.filter(function (item) { return item.name === "C 200 AMG Line"; })[0];
             add(
               "final",
               name + "는 AMG Line과 무엇이 다른가요?",
-              "파이널 에디션은 가격표와 제품 자료에 C 200 AMG Line Special Edition으로 적힌 차입니다. AMG Line 외관에 헤드업 디스플레이와 어드밴스드 사운드 시스템이 더 들어 있습니다. 정상가격은 " + won(man(q.vehicle)) + "입니다." +
+              "스페셜 에디션은 AMG Line 외관에 헤드업 디스플레이와 어드밴스드 사운드 시스템이 더 들어 있습니다. 정상가격은 " + won(man(q.vehicle)) + "입니다." +
                 (amgC ? " AMG Line은 " + won(window.BenzQuote.man(amgC.price)) + "이고, " + (amgC.cash === row.cash ? "기본 할인은 둘 다 " + row.cash + "입니다." : "AMG Line 기본 할인은 " + amgC.cash + "입니다.") : "")
             );
           }
@@ -1830,15 +1838,13 @@
           var yearHtml = window.BenzStock
             ? window.BenzStock.yearSection(a, b, { showName: showName, won: won })
             : "";
-          var yearJump = document.querySelector('a[href="#year-change"]');
-          if (yearJump) yearJump.hidden = !yearHtml;
           var visual = window.BenzVisual
             ? yearHtml +
               window.BenzVisual.hero([heroCar(a, da), heroCar(b, db)]) +
               claPowerSection(a, b) +
               window.BenzVisual.modelSection([a, b])
             : yearHtml + claPowerSection(a, b);
-          if (window.BenzFinance) visual += '<div class="grid gap-4 sm:grid-cols-2"><div><b>'+showName(a.name)+'</b><br>'+(!isEnded(a)?window.BenzFinance.badges(a):'')+'</div><div><b>'+showName(b.name)+'</b><br>'+(!isEnded(b)?window.BenzFinance.badges(b):'')+'</div></div>';
+          if (window.BenzFinance) visual += '<div id="compare-finance" class="grid gap-4 sm:grid-cols-2"><div><b>'+showName(a.name)+'</b><br>'+(!isEnded(a)?window.BenzFinance.badges(a):'')+'</div><div><b>'+showName(b.name)+'</b><br>'+(!isEnded(b)?window.BenzFinance.badges(b):'')+'</div></div>';
           if (window.BenzVideo) visual += window.BenzVideo.card("비교 중인 차와 벤츠 영상", [a.name, b.name]);
           var sentence = function (row, d) {
             var st = window.BenzStock ? window.BenzStock.of(row) : { code: "live" };
@@ -1862,7 +1868,7 @@
           document.getElementById("compare").innerHTML =
             visual +
             '<div class="grid gap-4 sm:grid-cols-2">' + (window.BenzNovemberBenefits ? window.BenzNovemberBenefits.html(a, {compact:true}) + window.BenzNovemberBenefits.html(b, {compact:true}) : '') + '</div>' +
-            '<div class="grid gap-4 sm:grid-cols-2">' + (window.BenzReadyStock ? window.BenzReadyStock.card(a) + window.BenzReadyStock.card(b) : '') + '</div>' +
+            '<div id="compare-stock" class="grid gap-4 sm:grid-cols-2">' + (window.BenzReadyStock ? window.BenzReadyStock.card(a) + window.BenzReadyStock.card(b) : '') + '</div>' +
             '<div id="price-compare" class="mt-8 grid gap-4 sm:grid-cols-2">' +
             '<div><p class="text-[20px] font-bold">' + showName(a.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(a, da) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + quoteHref(a) + '">' + (isEnded(a) ? "지난 조건 보기" : "이 차 견적 확인") + '</a></div>' +
             '<div><p class="text-[20px] font-bold">' + showName(b.name) + '</p><p class="mt-2 text-[16px] leading-relaxed">' + sentence(b, db) + '</p><a class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 text-[15px] font-bold text-[#0B1F2A]" href="' + quoteHref(b) + '">' + (isEnded(b) ? "지난 조건 보기" : "이 차 견적 확인") + '</a></div>' +
@@ -1924,13 +1930,17 @@
         var lastRight = right.value;
         left.addEventListener("change", function (event) {
           var changed = left.value !== lastLeft;
+          if (changed && left.value === right.value) right.value = lastLeft;
           lastLeft = left.value;
+          lastRight = right.value;
           drawCompare();
           if (changed) track(function (T) { if (T.isUser(event)) T.vehicleSelect(rows[Number(left.value)], "comparison_left"); });
         });
         right.addEventListener("change", function (event) {
           var changed = right.value !== lastRight;
+          if (changed && right.value === left.value) left.value = lastRight;
           lastRight = right.value;
+          lastLeft = left.value;
           drawCompare();
           if (changed) track(function (T) { if (T.isUser(event)) T.vehicleSelect(rows[Number(right.value)], "comparison_right"); });
         });
@@ -1942,18 +1952,43 @@
           lastRight = right.value;
           drawCompare();
         });
+        var jump = document.getElementById("compare-jump-target");
+        var jumpNav = jump.closest("nav");
+        var header = document.getElementById("bp-head");
+        function measureJump() {
+          var top = header ? header.offsetHeight : 0;
+          document.documentElement.style.setProperty("--compare-header", top + "px");
+          document.documentElement.style.setProperty("--compare-jump-offset", (top + jumpNav.offsetHeight + 10) + "px");
+        }
+        if (window.ResizeObserver) {
+          var jumpObserver = new ResizeObserver(measureJump);
+          jumpObserver.observe(jumpNav);
+          if (header) jumpObserver.observe(header);
+        }
+        jump.addEventListener("change", function () {
+          var id = jump.value;
+          jump.value = "";
+          var target = document.getElementById(id);
+          if (!target) return;
+          target.setAttribute("tabindex", "-1");
+          target.focus({preventScroll:true});
+          target.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
+        });
         function fillJump() {
-          var row = document.querySelector(".bp-toc-row");
-          if (!row) return;
           var links = [
+            ["#compare-selectors", "차종 선택"],
             ["#vs-hero", "두 차 한눈에"],
             ["#cla-power", "CLA 엔진·전기"],
             ["#year-change", "연식이 바뀐 점"],
+            ["#compare-stock", "즉시 출고 재고"],
+            ["#compare-finance", "금융 혜택"],
             ["#price-compare", "가격"],
             ["#spec-compare", "제원 비교"],
             ["#opt-compare", "옵션 비교"],
             ["#opt-shared", "기본으로 들어 있는 사양"],
             ["#vs-trims", "트림·휠·실내"],
+            ["#vs-trims-1", "다른 차의 트림·휠·실내"],
+            ["#vs-spec-diff", "숫자로 보는 차이"],
             ["#vs-diff", "눈으로 보는 차이"],
             ["#color-board", "외장·내장 색"],
             ["#lineup-board", "라인업별 옵션"],
@@ -1961,13 +1996,18 @@
             ["#mb-history", "벤츠의 역사"],
             ["#faq", "이 두 차에 질문"]
           ];
-          row.innerHTML = links.filter(function (item) {
+          jump.innerHTML = '<option value="">이동할 항목 선택</option>' + links.filter(function (item) {
             return !!document.querySelector(item[0]);
           }).map(function (item) {
-            return '<a href="' + item[0] + '">' + item[1] + "</a>";
+            return '<option value="' + item[0].slice(1) + '">' + item[1] + "</option>";
           }).join("");
         }
-        document.addEventListener("DOMContentLoaded", fillJump);
+        document.addEventListener("DOMContentLoaded", function () {
+          header = document.getElementById("bp-head");
+          if (header && window.ResizeObserver) jumpObserver.observe(header);
+          fillJump();
+          measureJump();
+        });
         drawCompare();
         var colorLight = document.getElementById("color-lightbox");
         var colorLightImg = colorLight.querySelector("img");

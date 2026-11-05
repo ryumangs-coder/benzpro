@@ -1042,3 +1042,36 @@ body[data-page="compare"] .cmp-jump,
   #compare-page .q-pick-name { font-size: 15px; }
   #compare-page .compare-archive span span { display: block; margin-left: 0; }
 }
+
+/* A single native chooser keeps the contents reachable without a floating panel. */
+html:has(body[data-page="compare"]) {
+  scroll-padding-top: var(--compare-jump-offset, 7rem);
+}
+.compare-jump {
+  position: sticky;
+  top: var(--compare-header, 60px);
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  margin-top: .75rem;
+  padding: .25rem .65rem;
+  border: 1px solid #52656f;
+  border-radius: .75rem;
+  background: #102630;
+  color: #e4cb86;
+}
+.compare-jump label { flex: none; font-size: .875rem; font-weight: 700; }
+.compare-jump select {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  max-width: 18rem;
+  padding: 0 .5rem;
+  border: 1px solid #647783;
+  border-radius: .5rem;
+  background: #0b1f2a;
+  color: #f4f7f8;
+  font-size: 16px;
+}
+.compare-jump select:focus-visible { outline: 2px solid #e4cb86; outline-offset: 2px; }

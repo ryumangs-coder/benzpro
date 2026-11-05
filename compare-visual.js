@@ -274,7 +274,7 @@
           var code = ((String(w.label || "").match(/\(([A-Z0-9]{2,5})\)/) || String(w.id || "").match(/-([a-z0-9]+)$/i) || [])[1] || "").toUpperCase();
           return '<button type="button" class="vs-wheel-card color-shot' + (on ? " on" : "") + '" data-src="' + esc(src(w.id, "lg")) + '" data-name="' + esc(w.label + " · " + w.base) + '" data-code="' + esc(code) + '">' +
             '<img src="' + esc(src(w.id, "sm")) + '" alt="' + esc(w.label) + '" loading="lazy" decoding="async">' +
-            (on ? '<i class="vs-mine">지금 비교 중인 차</i>' : "") +
+            (on ? '<i class="vs-mine">비교 차량의 기본 사양</i>' : "") +
             "<b>" + esc(w.label) + "</b><span>" + esc(w.base) + "</span></button>";
         }).join("");
       }

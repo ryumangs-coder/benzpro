@@ -73,6 +73,12 @@ c.window.BENZ_READY_STOCK = {asOf:data.asOf, combinations:[fixture[0]]};
 assert.doesNotMatch(api.card(compact), /2027년식/);
 assert.doesNotMatch(api.card(compact), /0가지 조합/);
 assert.equal(api.matches({...compact,my:'MY27'}).length, 0);
+const special = {name:'C 200 AMG Line Special Edition', my:'MY26'};
+c.window.BENZ_READY_STOCK = {asOf:data.asOf, combinations:[{...fixture[0], ...special}]};
+assert.equal(api.matches(special).length, 1);
+assert.equal(api.matches({...special, name:'C 200 Final Edition'}).length, 1);
+assert.equal(api.matches({...special, name:'C 200 AMG Line'}).length, 0);
+assert.equal(api.matches({...special, my:'MY27'}).length, 0);
 c.window.BENZ_READY_STOCK = data;
 for (const [bit, color] of [[1,'#3b82f6'],[2,'#c99a36'],[4,'#ef4444'],[8,'#fff000']]) assert.ok(css.includes(`.ready-rail-${bit}.on{background:${color}}`));
 for (const file of ['prices.html', 'quote.html', 'models.html', 'promotion.html', 'index.html']) {

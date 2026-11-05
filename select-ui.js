@@ -56,7 +56,7 @@
   }
 
   function enhance(select) {
-    if (!select || select.dataset.pickReady || select.multiple) return;
+    if (!select || select.dataset.pickReady || select.hasAttribute("data-pick-native") || select.multiple) return;
     if (select.closest(".q-pick-panel")) return;
     select.dataset.pickReady = "1";
     var kicker = kickerText(select);

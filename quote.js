@@ -90,7 +90,7 @@
         "외장은 알파인 그레이 100대입니다."
       ]
     },
-    "MY26|C 200 Final Edition": {
+    "MY26|C 200 AMG Line Special Edition": {
       option: 0,
       extra: 0,
       optionLabel: "",

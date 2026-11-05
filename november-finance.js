@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded',function(){var el=document.getEleme
 (function(){
  function of(row){var n=row.name||row[2]||'',y=row.my||row[1],z=false,z36=false;
  if(y==='MY26'){
-  z=/^C 200 (Avantgarde|AMG Line)$|^E 200 (Exclusive|AMG Line)|^E 300 |^AMG E 53 |^AMG S 63 |^GLB 250 4MATIC$|^AMG GLB 35 |^GLC 300 |^GLE 350 |^GLE 450 |^GLE 450 d .*Coup|^AMG GLE 53 |^GLS (450 4MATIC AMG Line|580 4MATIC)|^AMG GLS 63 |^Maybach GLS 600|^AMG G 63|^EQE (350\+|500)|^EQS (450|580)/.test(n)||n==='S 450 4MATIC (SWB)';
+  z=/^C 200 (Avantgarde|AMG Line(?: Special Edition)?)$|^E 200 (Exclusive|AMG Line)|^E 300 |^AMG E 53 |^AMG S 63 |^GLB 250 4MATIC$|^AMG GLB 35 |^GLC 300 |^GLE 350 |^GLE 450 |^GLE 450 d .*Coup|^AMG GLE 53 |^GLS (450 4MATIC AMG Line|580 4MATIC)|^AMG GLS 63 |^Maybach GLS 600|^AMG G 63|^EQE (350\+|500)|^EQS (450|580)/.test(n)||n==='S 450 4MATIC (SWB)';
   z36=/^AMG (E 53|S 63|GLB 35|GLE 53|GLS 63|G 63)|^GLE (350|450)|^GLS (450 4MATIC AMG Line|580)|^Maybach GLS 600|^EQE (350\+|500)|^EQS (450|580)/.test(n);
  }
  if(y==='MY27'){z=/^E 200 (Exclusive|AMG Line)|^GLC 300 .*Coup|^AMG G 63|^EQS (400|450|580)/.test(n);z36=/^AMG G 63|^EQS (400|450|580)/.test(n);}

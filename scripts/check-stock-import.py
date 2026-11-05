@@ -10,6 +10,8 @@ import tempfile
 
 module = runpy.run_path(str(Path(__file__).with_name('import-stock.py')))
 main = module['main']
+assert module['normalize']('Mercedes-C 200 Final Edition') == 'C 200 AMG Line Special Edition'
+assert module['normalize']('C 200 AMG Line') == 'C 200 AMG Line'
 base = dict(N='one', B='전국재고', AN='미배정', AK='미배정', AS='판매 가능', AL='입고 물량', AP='PDI 완료', J='46000', P='E 200 EXCLUSIVE', W='2026', Y='폴라 화이트', AA='가죽, 블랙', Q='PRIVATE MEMO', D='PRIVATE LOCATION')
 rows = [base]
 for number, updates in enumerate([

@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const c={window:{},document:{addEventListener(){}}};vm.createContext(c);for(const f of ['vehicle-catalogue.js','november-finance.js','october-2026.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c);
 const cat=c.window.BenzCatalogue,fin=c.window.BenzFinance;
 for(const [name,my,zero] of [
-['C 200 Avantgarde','MY26',true],['C 200 Final Edition','MY26',false],['E 200 Exclusive','MY27',true],['E 300 4MATIC Exclusive','MY27',false],
+['C 200 Avantgarde','MY26',true],['C 200 AMG Line Special Edition','MY26',true],['C 200 AMG Line Special Edition','MY27',false],['E 200 Exclusive','MY27',true],['E 300 4MATIC Exclusive','MY27',false],
 ['GLB 250 4MATIC','MY26',true],['GLB 250+ electric','MY27',false],['GLC 300 4MATIC','MY27',false],['GLC 300 4MATIC Coupé AMG Line','MY27',true],
 ['AMG G 63 MANUFAKTUR','MY27',true],['AMG GLS 63 4MATIC+','MY27',false],['GLS 580 4MATIC','MY26',true],['EQE 350+ SUV','MY26',true],['EQA 250 AMG Line','MY27',false]])assert.equal(fin.of({name,my}).zero24,zero,`${my} ${name}`);
 assert.equal(cat.family({name:'AMG GLC 43 4MATIC'}),'GLC');assert.equal(cat.family({name:'CLE 200 Coupé'}),'CLE');assert.equal(cat.model({name:'GLE 450 d 4MATIC Coupé'}),'GLE 450d');assert.equal(cat.model({name:'GLB 250+ electric'}),'GLB 250+');
