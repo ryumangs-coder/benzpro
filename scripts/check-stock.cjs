@@ -10,7 +10,7 @@ for (const r of data.combinations) {
   assert.equal(Object.keys(r).sort().join(','), 'accent,count,exterior,incomingCount,interior,my,name,readyCount');
   assert.ok(Number.isInteger(r.accent) && r.accent >= 0 && r.accent <= 15);
   assert.ok([r.readyCount,r.incomingCount].every(n => Number.isInteger(n) && n >= 0));
-  assert.ok(r.readyCount + r.incomingCount <= r.count);
+  assert.equal(r.readyCount + r.incomingCount, r.count);
   assert.ok(r.count > 0 && Number.isInteger(r.count));
   assert.ok(!/[a-z]{3,}/.test(r.exterior + ' ' + r.interior));
   assert.ok(!/MEMO|VIN|전시장|위탁|배정|W1[K-N][A-Z0-9]{14}/.test(JSON.stringify(r)));

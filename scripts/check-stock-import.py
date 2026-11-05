@@ -18,7 +18,7 @@ for number, updates in enumerate([
     {'B':'배정재고'}, {'AN':'계약 확정'}, {'AN':'가계약 체결'}, {'AO':'YES'},
     {'B':'위탁재고', 'AN':'배정 완료'}, {'B':'전시차재고', 'AN':'배정 완료'},
     {'AS':'판매 제한'}, {'AK':'배정', 'AN':'배정 완료'},
-    {'J':'50000'}, {'J':''}, {'AL':'예정 물량'}, {'AP':'선적'}
+    {'J':'50000'}, {'J':''}, {'AL':'예정 물량', 'AO':'YES'}, {'AP':'선적'}
 ]):
     rows.append(dict(base, N=str(number), **updates))
 secondary = [dict(H='one', L='E 200 EXCLUSIVE', R='2026', E='', F='46000', C='전시차재고', B='Hot Car [+1%] 전시차특별할인프로그램', O='PRIVATE MEMO')]
@@ -39,7 +39,7 @@ with tempfile.TemporaryDirectory() as directory:
     output = (root / 'ready-stock-data.js').read_text()
     payload = json.loads(output.split('=', 1)[1].strip().rstrip(';'))
     assert len(payload['combinations']) == 1
-    assert payload['combinations'][0]['count'] == 6
+    assert payload['combinations'][0]['count'] == 3
     assert payload['combinations'][0]['readyCount'] == 1
     assert payload['combinations'][0]['incomingCount'] == 2
     assert payload['combinations'][0]['accent'] == 14

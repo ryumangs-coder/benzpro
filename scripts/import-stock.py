@@ -102,7 +102,9 @@ def main():
         if not incoming and r.get('AL') != '입고 물량':
             continue
         restricted = r.get('AO', '').strip().upper() == 'YES'
-        timing[r['N']] = 'incoming' if incoming else 'ready' if not restricted and due(r.get('J')) else 'confirm'
+        if not incoming and (restricted or not due(r.get('J'))):
+            continue
+        timing[r['N']] = 'incoming' if incoming else 'ready'
         units[r['N']] = (normalize(r['P']), 'MY' + r['W'][-2:], korean(r.get('Y', '')) + (' / ' + korean(r['Z']) if r.get('Z') else ''), korean(r.get('AA', '')))
         marks[r['N']] = mark(r.get('B', '') + r.get('AG', ''))
     added = 0

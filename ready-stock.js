@@ -68,8 +68,7 @@
   function timingLabel(r) {
     var ready = r.readyCount == null ? r.count : r.readyCount;
     var incoming = r.incomingCount || 0;
-    var confirm = r.count - ready - incoming;
-    return '즉시 출고 ' + ready + '대 · 입고 완료(배정·출고일 확인) ' + confirm + '대 · 입고 예정 ' + incoming + '대';
+    return '즉시 출고 ' + ready + '대 · 입고 예정 ' + incoming + '대';
   }
   function combo(r) {
     var accent = Number(r.accent) || 0, classes = '', rails = '';
@@ -99,8 +98,8 @@
     var years = /^(MY26|MY27)$/.test(selectedYear) ? ['MY26', 'MY27'] : [selectedYear];
     var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
     var date = snapshot().asOf.replace(/-/g, '.');
-    if (!rows.length) return '<section class="ready-stock ready-empty"><b>재고 0대 · 즉시 출고 0대</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표에서 재고 조합이 확인되지 않았습니다.</p></section>';
-    return '<section class="ready-stock"><div class="ready-heading"><b>색상별 재고 현황</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 대수는 색상 조합별 재고표 기준입니다. 입고 완료 차량의 배정 가능 여부와 출고일은 상담에서 확인합니다.</p></section>';
+    if (!rows.length) return '<section class="ready-stock ready-empty"><b>즉시 출고 0대 · 입고 예정 0대</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표 기준</p></section>';
+    return '<section class="ready-stock"><div class="ready-heading"><b>색상별 재고 현황</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + (matches(row).length ? '' : '<p class="ready-date">' + esc(selectedYear) + ' · 즉시 출고 0대 · 입고 예정 0대</p>') + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 대수는 색상 조합별 재고표 기준입니다. 입고 예정 차량의 배정 가능 여부와 예상 출고일은 상담에서 확인합니다.</p></section>';
   }
   function family(rows) {
     var available = rows.filter(function (r) { return matches(r).length; });
@@ -146,11 +145,11 @@
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
-    host.innerHTML = '<details class="ready-catalogue"><summary>입고·예정 재고 차량 · 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고일은 상담에서 확인합니다.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="출고 가능 차량과 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 상담 예약을 누르시면 됩니다.</p></details>';
+    host.innerHTML = '<details class="ready-catalogue"><summary>입고·예정 재고 차량 · 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 입고 예정 차량의 배정 가능 여부와 예상 출고일은 상담에서 확인합니다.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="출고 가능 차량과 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 상담 예약을 누르시면 됩니다.</p></details>';
     var details = host.querySelector('details'), input = host.querySelector('input'), grid = host.querySelector('.ready-catalogue-grid');
     function render() {
       var rows = snapshot().combinations.filter(function (r) { return searchMatches(r, input.value); });
-      host.querySelector('.ready-results').textContent = rows.length ? rows.length + '가지 색상 조합' : '해당 조합이 없습니다. 차종이나 색상 이름을 바꿔 보세요.';
+      host.querySelector('.ready-results').textContent = rows.length ? rows.length + '가지 색상 조합' : '검색 결과에 해당하는 즉시 출고 및 입고 예정 차량이 각각 0대입니다.';
       grid.innerHTML = rows.length ? table(rows, '전체 출고 가능 차량과 색상 조합', true) : '';
     }
     input.addEventListener('input', render);
