@@ -39,7 +39,7 @@ with tempfile.TemporaryDirectory() as directory:
     output = (root / 'ready-stock-data.js').read_text()
     payload = json.loads(output.split('=', 1)[1].strip().rstrip(';'))
     assert len(payload['combinations']) == 1
-    assert json.loads(summary.getvalue())['timing'] == {'ready': 1, 'incoming': 2}
+    assert json.loads(summary.getvalue())['timing'] == {'ready': 1, 'consultation': 3, 'incoming': 2}
     assert set(payload['combinations'][0]) == {'name', 'my', 'exterior', 'interior', 'accent'}
     assert payload['combinations'][0]['accent'] == 14
     assert 'PRIVATE' not in output
