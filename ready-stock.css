@@ -17,3 +17,5 @@
 .ready-color>span{min-width:0}
 .ready-color b,.ready-color small{line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
 .ready-disclaimer{margin:10px 0 0;color:#c6d1c9;font-size:13px;line-height:1.6;font-weight:400}
+
+.ready-timing{display:block;margin-top:.3rem;font-size:.78rem;line-height:1.4;color:inherit}

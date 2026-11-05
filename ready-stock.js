@@ -50,7 +50,7 @@
     return '<span class="ready-color" title="' + esc(text) + '"><i aria-hidden="true" style="background:' + fill + '">' + (text.indexOf('상담 확인') >= 0 ? '?' : '') + '</i><span><b>' + esc(label) + '</b><small>' + esc(colorName(text)) + '</small></span></span>';
   }
   function consult(r) {
-    var note = r.name + ' ' + r.my + ' 즉시 출고 상담 · 외장 ' + r.exterior + ' · 내장 ' + r.interior;
+    var note = r.name + ' ' + r.my + ' 재고·출고 상담 · 외장 ' + r.exterior + ' · 내장 ' + r.interior;
     return 'index.html?' + new URLSearchParams({name:r.name, my:r.my, note:note}).toString() + '#consulting';
   }
   function searchText(text) { return String(text || '').normalize('NFKC').toLowerCase().replace(/\s+/g, ''); }
@@ -65,6 +65,16 @@
     var text = r.name + ' ' + r.my + ' ' + r.my.replace('MY', '20') + '년식 ' + r.exterior + ' ' + r.interior + ' ' + tone(r.exterior)[1] + ' ' + tone(r.interior)[1];
     return searchText(text).indexOf(searchText(query)) >= 0;
   }
+  function timingLabel(r) {
+    var ready = r.readyCount == null ? r.count : r.readyCount;
+    var incoming = r.incomingCount || 0;
+    var confirm = r.count - ready - incoming;
+    var labels = [];
+    if (ready) labels.push('즉시 출고 ' + ready + '대');
+    if (confirm) labels.push('출고 상담 ' + confirm + '대');
+    if (incoming) labels.push('입고 예정 ' + incoming + '대');
+    return labels.join(' · ');
+  }
   function combo(r) {
     var accent = Number(r.accent) || 0, classes = '', rails = '';
     [1, 2, 4, 8].forEach(function (bit) {
@@ -72,7 +82,7 @@
       rails += '<i class="ready-rail-' + bit + (accent & bit ? ' on' : '') + '"></i>';
     });
     var label = r.name + ' ' + r.my + ', 외장 ' + r.exterior + ', 실내 ' + r.interior + ' 조합으로 상담 예약';
-    return '<tr class="ready-combo' + classes + '"><td><span class="ready-rails" aria-hidden="true">' + rails + '</span>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">상담<span>예약</span></a></td></tr>';
+    return '<tr class="ready-combo' + classes + '"><td><span class="ready-rails" aria-hidden="true">' + rails + '</span>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '<small class="ready-timing">' + esc(timingLabel(r)) + '</small></td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">상담<span>예약</span></a></td></tr>';
   }
   function table(rows, label, grouped, years) {
     var previous = '';
@@ -93,12 +103,12 @@
     var years = /^(MY26|MY27)$/.test(selectedYear) ? ['MY26', 'MY27'] : [selectedYear];
     var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
     var date = snapshot().asOf.replace(/-/g, '.');
-    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표에서 즉시 출고 조합이 확인되지 않았습니다.</p></section>';
-    return '<section class="ready-stock"><div class="ready-heading"><b>즉시 출고 가능 조합</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 실시간 재고에 따라 배정 일정이 상이할 수 있으며, 정확한 출고일은 상담 시 확정됩니다.</p></section>';
+    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표에서 재고 조합이 확인되지 않았습니다.</p></section>';
+    return '<section class="ready-stock"><div class="ready-heading"><b>재고 있음 · 입고 및 예정</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 재고표 기준입니다. 배정 가능 여부와 정확한 출고일은 상담에서 확인합니다.</p></section>';
   }
   function family(rows) {
     var available = rows.filter(function (r) { return matches(r).length; });
-    return available.length ? '<div class="ready-family"><b>즉시 출고 가능 내외장 조합 확인</b><p>' + available.length + '개 트림의 색상 조합이 있습니다.</p><a href="prices.html#ready-stock-catalogue">출고 가능 차량과 색상 찾아보기 →</a></div>' : '';
+    return available.length ? '<div class="ready-family"><b>입고·예정 재고의 내외장 조합 확인</b><p>' + available.length + '개 트림의 색상 조합이 있습니다.</p><a href="prices.html#ready-stock-catalogue">출고 가능 차량과 색상 찾아보기 →</a></div>' : '';
   }
   window.BenzReadyStock = {matches:matches, card:card, family:family, key:key, swatch:swatch, searchMatches:searchMatches, modelSearchMatches:modelSearchMatches, table:table};
   function mountScrollControls() {
@@ -140,7 +150,7 @@
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
-    host.innerHTML = '<details class="ready-catalogue"><summary>즉시 출고 가능한 차량 · 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄이 실제 선택 가능한 차 밖·실내 색상 조합입니다.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="출고 가능 차량과 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 상담 예약을 누르시면 됩니다.</p></details>';
+    host.innerHTML = '<details class="ready-catalogue"><summary>입고·예정 재고 차량 · 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고일은 상담에서 확인합니다.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="출고 가능 차량과 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 상담 예약을 누르시면 됩니다.</p></details>';
     var details = host.querySelector('details'), input = host.querySelector('input'), grid = host.querySelector('.ready-catalogue-grid');
     function render() {
       var rows = snapshot().combinations.filter(function (r) { return searchMatches(r, input.value); });

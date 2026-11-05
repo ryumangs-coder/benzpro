@@ -1,3 +1,4 @@
+AGENTS.md
 # Keep development and handoff files out of public static assets
 .git/
 .github/

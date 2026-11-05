@@ -1,4 +1,4 @@
-"""Fixture regression: exclude allocations, sales, restrictions, future dates; dedupe."""
+"""Fixture regression: exclude allocations and sales; classify restricted and scheduled stock."""
 import contextlib
 import datetime as dt
 import io
@@ -22,6 +22,8 @@ for number, updates in enumerate([
 ]):
     rows.append(dict(base, N=str(number), **updates))
 secondary = [dict(H='one', L='E 200 EXCLUSIVE', R='2026', E='', F='46000', C='전시차재고', B='Hot Car [+1%] 전시차특별할인프로그램', O='PRIVATE MEMO')]
+for matched in ('3', '4', '5', '10'):
+    secondary.append(dict(H=matched, L='E 200 EXCLUSIVE', R='2026', E='', F='46000'))
 secondary += [dict(H='sold', L='E 200', E='판매완료', F='46000'), dict(H='demo', L='E 200', E='데모카완료', F='46000')]
 with tempfile.TemporaryDirectory() as directory:
     root = Path(directory)
@@ -37,8 +39,10 @@ with tempfile.TemporaryDirectory() as directory:
     output = (root / 'ready-stock-data.js').read_text()
     payload = json.loads(output.split('=', 1)[1].strip().rstrip(';'))
     assert len(payload['combinations']) == 1
-    assert payload['combinations'][0]['count'] == 1
+    assert payload['combinations'][0]['count'] == 6
+    assert payload['combinations'][0]['readyCount'] == 1
+    assert payload['combinations'][0]['incomingCount'] == 2
     assert payload['combinations'][0]['accent'] == 14
     assert 'PRIVATE' not in output
     assert 'Hot Car' not in output and '전시차' not in output and '1%' not in output
-print('Import fixtures passed: allocations, contracts, sales, restrictions, future/unknown dates, shipping, duplicates and private columns.')
+print('Import fixtures passed: allocations, sales, restricted and scheduled stock, shipping, duplicates and private columns.')

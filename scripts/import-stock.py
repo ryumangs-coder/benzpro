@@ -41,6 +41,8 @@ def normalize(s):
 
 
 TRANSLATIONS = {
+    'AMG Imola grey': 'AMG 이몰라 그레이',
+    'MANUFAKTUR special upholstery in Exclusive nappa leather MANUFAKTUR ex': '마누팍투어 익스클루시브 나파 가죽 · 색상 상담 확인',
     'ARTICO man-made leather / DINAMICA microfibre black with crystal grey': '아티코 인조 가죽/다이나미카, 블랙/크리스탈 그레이',
     'elbaite green metallic': '엘바이트 그린 메탈릭', 'lavender silver metallic': '라벤더 실버 메탈릭',
     'ARTICO man-made leather beige': '아티코 인조 가죽, 베이지',
@@ -86,16 +88,21 @@ def main():
         except (ValueError, TypeError):
             return False
     def blocked(r):
-        return r.get('B') == '배정재고' or r.get('AN') in ('계약 확정', '가계약 체결', '배정 완료') or r.get('AK') == '배정' or r.get('AS') != '판매 가능' or str(r.get('AO', '')).strip().upper() == 'YES'
+        return r.get('B') == '배정재고' or r.get('AN') in ('계약 확정', '가계약 체결', '배정 완료') or r.get('AK') == '배정' or r.get('AS') != '판매 가능'
     units = {}
     marks = {}
+    timing = {}
+    in_transit = {'선적', 'Vehicle produced', 'Purchase order created', 'Invoice verification created'}
     def mark(category, benefit=''):
         return (1 if '위탁' in category else 0) | (2 if '전시' in category else 0) | (4 if re.search(r'hot\s*car|핫카', benefit, re.I) else 0) | (8 if re.search(r'\+?\s*1\s*[%％]', benefit) and ('전시' in category or '전시' in benefit) else 0)
     for r in primary:
         if not r.get('N') or blocked(r) or r.get('AK') != '미배정' or r.get('AN') != '미배정':
             continue
-        if r.get('AL') != '입고 물량' or r.get('AP') in ('선적', 'Vehicle produced', 'Purchase order created', 'Invoice verification created') or not due(r.get('J')):
+        incoming = r.get('AL') == '예정 물량' or r.get('AP') in in_transit
+        if not incoming and r.get('AL') != '입고 물량':
             continue
+        restricted = r.get('AO', '').strip().upper() == 'YES'
+        timing[r['N']] = 'incoming' if incoming else 'ready' if not restricted and due(r.get('J')) else 'confirm'
         units[r['N']] = (normalize(r['P']), 'MY' + r['W'][-2:], korean(r.get('Y', '')) + (' / ' + korean(r['Z']) if r.get('Z') else ''), korean(r.get('AA', '')))
         marks[r['N']] = mark(r.get('B', '') + r.get('AG', ''))
     added = 0
@@ -103,7 +110,7 @@ def main():
         if not r.get('H') or not r.get('L') or r.get('E', '') != '' or not due(r.get('F')):
             continue
         p = by_id.get(r['H'])
-        if p and blocked(p):
+        if p and (blocked(p) or p.get('AK') != '미배정' or p.get('AN') != '미배정' or r['H'] not in units):
             continue
         marks[r['H']] = marks.get(r['H'], 0) | mark(r.get('C', ''), r.get('B', ''))
         if r['H'] in units:
@@ -114,14 +121,19 @@ def main():
         if p and p.get('Z'):
             exterior += ' / ' + p['Z']
         units[r['H']] = (model, 'MY' + r['R'][-2:], korean(exterior), korean(interior))
+        timing[r['H']] = 'ready'
         added += 1
     groups = collections.Counter(units.values())
     rows = [dict(zip(('name', 'my', 'exterior', 'interior', 'count'), (*key, count))) for key, count in sorted(groups.items())]
     group_marks = collections.defaultdict(int)
+    group_timing = collections.defaultdict(collections.Counter)
     for unit, combination in units.items():
         group_marks[combination] |= marks.get(unit, 0)
+        group_timing[combination][timing[unit]] += 1
     for row, combination in zip(rows, sorted(groups)):
         row['accent'] = group_marks[combination]
+        row['readyCount'] = group_timing[combination]['ready']
+        row['incomingCount'] = group_timing[combination]['incoming']
     assert rows, '출고 가능한 재고가 없어 교체 중단'
     payload = {'asOf': args.as_of.isoformat(), 'combinations': rows}
     pending = ROOT / 'ready-stock-data.js.tmp'
