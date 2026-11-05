@@ -69,11 +69,7 @@
     var ready = r.readyCount == null ? r.count : r.readyCount;
     var incoming = r.incomingCount || 0;
     var confirm = r.count - ready - incoming;
-    var labels = [];
-    if (ready) labels.push('즉시 출고 ' + ready + '대');
-    if (confirm) labels.push('출고 상담 ' + confirm + '대');
-    if (incoming) labels.push('입고 예정 ' + incoming + '대');
-    return labels.join(' · ');
+    return '즉시 출고 ' + ready + '대 · 입고 완료(배정·출고일 확인) ' + confirm + '대 · 입고 예정 ' + incoming + '대';
   }
   function combo(r) {
     var accent = Number(r.accent) || 0, classes = '', rails = '';
@@ -103,8 +99,8 @@
     var years = /^(MY26|MY27)$/.test(selectedYear) ? ['MY26', 'MY27'] : [selectedYear];
     var rows = snapshot().combinations.filter(function (r) { return key(model) === key(r.name) && years.indexOf(r.my) >= 0; });
     var date = snapshot().asOf.replace(/-/g, '.');
-    if (!rows.length) return '<section class="ready-stock ready-empty"><b>출고 가능 조합을 상담으로 확인해 보세요</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표에서 재고 조합이 확인되지 않았습니다.</p></section>';
-    return '<section class="ready-stock"><div class="ready-heading"><b>재고 있음 · 입고 및 예정</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 재고표 기준입니다. 배정 가능 여부와 정확한 출고일은 상담에서 확인합니다.</p></section>';
+    if (!rows.length) return '<section class="ready-stock ready-empty"><b>재고 0대 · 즉시 출고 0대</b><p class="ready-model">' + esc(model) + ' · ' + esc(selectedYear) + '</p><p>' + esc(date) + ' 재고표에서 재고 조합이 확인되지 않았습니다.</p></section>';
+    return '<section class="ready-stock"><div class="ready-heading"><b>색상별 재고 현황</b><span>' + rows.length + '가지 조합</span></div><p class="ready-model">' + esc(model) + '</p><p class="ready-date">' + esc(date) + ' 재고표 기준 · 연식별로 확인하세요</p>' + table(rows, model + ' 연식별 출고 가능 색상 조합', false, years) + '<p class="ready-disclaimer">※ 대수는 색상 조합별 재고표 기준입니다. 입고 완료 차량의 배정 가능 여부와 출고일은 상담에서 확인합니다.</p></section>';
   }
   function family(rows) {
     var available = rows.filter(function (r) { return matches(r).length; });
