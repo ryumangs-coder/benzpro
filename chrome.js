@@ -246,10 +246,10 @@
       if (old) old.remove();
       var home = file === "index";
       var items = home ? [
-        ["#november-promo", "11월 혜택"], ["prices.html#ready-stock-catalogue", "입고·예정 재고"],
+        ["#november-promo", "11월 혜택"], ["prices.html#ready-stock-catalogue", "재고 색상 조합"],
         ["#models", "차종별 할인"], ["prices.html#programs", "금융·보증"], ["prices.html#welcome", "출고 사은품"]
       ] : [
-        ["#november-shortcuts", "11월 혜택"], ["#ready-stock-catalogue", "입고·예정 재고"],
+        ["#november-shortcuts", "11월 혜택"], ["#ready-stock-catalogue", "재고 색상 조합"],
         ["#highlights", "차종별 할인"], ["#programs", "금융·보증"], ["#welcome", "출고 사은품"]
       ];
       var chips = document.createElement("nav");

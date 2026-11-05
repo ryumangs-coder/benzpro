@@ -16,6 +16,7 @@ for (const r of data.combinations) {
   assert.ok(!/MEMO|VIN|전시장|위탁|배정|W1[K-N][A-Z0-9]{14}/.test(JSON.stringify(r)));
   assert.equal(c.window.BenzStock.of(r).code, 'live');
   assert.match(api.card(r), /상담 예약/);
+  assert.doesNotMatch(api.card(r), /즉시 출고|입고 예정|[0-9]+대/);
   const notes = [...api.card(r).matchAll(/href="([^"]+)"/g)].map(m => new URL(m[1].replace(/&amp;/g, '&'), 'https://benzpro.co.kr/').searchParams.get('note'));
   assert.ok(notes.some(note => note.includes(r.exterior) && note.includes(r.interior)));
 }
@@ -65,8 +66,8 @@ const fixture = [
 ];
 c.window.BENZ_READY_STOCK = {asOf:data.asOf, combinations:fixture};
 const bothYears = api.card(compact);
-assert.match(bothYears, /2026년식 · 1가지 조합/);
-assert.match(bothYears, /2027년식 · 1가지 조합/);
+assert.match(bothYears, /2026년식/);
+assert.match(bothYears, /2027년식/);
 assert.equal(api.matches(compact).length, 1);
 assert.doesNotMatch(bothYears, /140주년/);
 const yearLinks = [...bothYears.matchAll(/href="([^"]+)"/g)].map(m => new URL(m[1].replace(/&amp;/g, '&'), 'https://benzpro.co.kr/').searchParams.get('my'));
