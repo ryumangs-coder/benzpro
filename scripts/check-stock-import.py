@@ -32,16 +32,15 @@ with tempfile.TemporaryDirectory() as directory:
     original = sys.argv
     sys.argv = ['import-stock.py', 'fixture.xlsx', '--as-of', '2026-10-30']
     try:
-        with contextlib.redirect_stdout(io.StringIO()):
+        with contextlib.redirect_stdout(io.StringIO()) as summary:
             main()
     finally:
         sys.argv = original
     output = (root / 'ready-stock-data.js').read_text()
     payload = json.loads(output.split('=', 1)[1].strip().rstrip(';'))
     assert len(payload['combinations']) == 1
-    assert payload['combinations'][0]['count'] == 3
-    assert payload['combinations'][0]['readyCount'] == 1
-    assert payload['combinations'][0]['incomingCount'] == 2
+    assert json.loads(summary.getvalue())['timing'] == {'ready': 1, 'incoming': 2}
+    assert set(payload['combinations'][0]) == {'name', 'my', 'exterior', 'interior', 'accent'}
     assert payload['combinations'][0]['accent'] == 14
     assert 'PRIVATE' not in output
     assert 'Hot Car' not in output and '전시차' not in output and '1%' not in output

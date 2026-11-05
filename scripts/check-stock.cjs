@@ -7,11 +7,8 @@ for (const name of ['ready-stock-data.js', 'ready-stock.js', 'stock.js', 'octobe
 const api = c.window.BenzReadyStock, data = c.window.BENZ_READY_STOCK;
 assert.match(data.asOf, /^\d{4}-\d{2}-\d{2}$/);
 for (const r of data.combinations) {
-  assert.equal(Object.keys(r).sort().join(','), 'accent,count,exterior,incomingCount,interior,my,name,readyCount');
+  assert.equal(Object.keys(r).sort().join(','), 'accent,exterior,interior,my,name');
   assert.ok(Number.isInteger(r.accent) && r.accent >= 0 && r.accent <= 15);
-  assert.ok([r.readyCount,r.incomingCount].every(n => Number.isInteger(n) && n >= 0));
-  assert.equal(r.readyCount + r.incomingCount, r.count);
-  assert.ok(r.count > 0 && Number.isInteger(r.count));
   assert.ok(!/[a-z]{3,}/.test(r.exterior + ' ' + r.interior));
   assert.ok(!/MEMO|VIN|전시장|위탁|배정|W1[K-N][A-Z0-9]{14}/.test(JSON.stringify(r)));
   assert.equal(c.window.BenzStock.of(r).code, 'live');
