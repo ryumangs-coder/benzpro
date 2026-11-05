@@ -30,6 +30,7 @@ def read_book(path):
             return result
         primary, secondary = read(1), read(2)
         assert primary[0].get('P') == '모델명' and primary[0].get('AK') == '재고 상태', '원본 열 구조 확인 필요'
+        assert primary[0].get('AD', '').strip().upper() == 'STS', '원본 STS 열 확인 필요'
         assert secondary[0].get('L') == 'Model' and secondary[0].get('E') == '판매여부', '원본 열 구조 확인 필요'
         return primary[1:], secondary[1:]
 
@@ -67,6 +68,10 @@ def main():
     primary, secondary = read_book(args.workbook)
     serial = (args.as_of - dt.date(1899, 12, 30)).days
     by_id = {r.get('N'): r for r in primary if r.get('N')}
+    sts_no_ids = {
+        r['N'] for r in primary
+        if r.get('N') and r.get('AD', '').strip().upper() == 'NO'
+    }
     colors = json.loads((ROOT / 'colors.js').read_text().split('=', 1)[1].strip().rstrip(';'))
     def color_name(model, code, kind):
         family = re.search(r'GLA|GLB|GLC|GLE|GLS|EQA|EQB|EQE|EQS|CLE|CLA|GT|SL|[ACEGS](?= )', model).group()
@@ -96,7 +101,7 @@ def main():
     def mark(category, benefit=''):
         return (1 if '위탁' in category else 0) | (2 if '전시' in category else 0) | (4 if re.search(r'hot\s*car|핫카', benefit, re.I) else 0) | (8 if re.search(r'\+?\s*1\s*[%％]', benefit) and ('전시' in category or '전시' in benefit) else 0)
     for r in primary:
-        if not r.get('N') or blocked(r) or r.get('AK') != '미배정' or r.get('AN') != '미배정':
+        if not r.get('N') or r['N'] in sts_no_ids or blocked(r) or r.get('AK') != '미배정' or r.get('AN') != '미배정':
             continue
         incoming = r.get('AL') == '예정 물량' or r.get('AP') in in_transit
         if not incoming and r.get('AL') != '입고 물량':
@@ -112,7 +117,7 @@ def main():
         marks[r['N']] = mark(r.get('B', '') + r.get('AG', ''))
     added = 0
     for r in secondary:
-        if not r.get('H') or not r.get('L') or r.get('E', '') != '' or not due(r.get('F')):
+        if not r.get('H') or r['H'] in sts_no_ids or not r.get('L') or r.get('E', '') != '' or not due(r.get('F')):
             continue
         p = by_id.get(r['H'])
         if p and (blocked(p) or p.get('AK') != '미배정' or p.get('AN') != '미배정' or r['H'] not in units):

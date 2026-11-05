@@ -285,13 +285,6 @@ window.BENZ_READY_STOCK = {
     {
       "name": "AMG GLB 35 4MATIC",
       "my": "MY26",
-      "exterior": "코스모스 블랙",
-      "interior": "아티코 가죽/다이나미카 블랙",
-      "accent": 0
-    },
-    {
-      "name": "AMG GLB 35 4MATIC",
-      "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
       "accent": 0
@@ -438,20 +431,6 @@ window.BENZ_READY_STOCK = {
     },
     {
       "name": "AMG GT 43",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "나파 가죽, 레드 페퍼/블랙",
-      "accent": 0
-    },
-    {
-      "name": "AMG GT 43",
-      "my": "MY26",
-      "exterior": "하이 테크 실버",
-      "interior": "나파 가죽, 레드 페퍼/블랙",
-      "accent": 0
-    },
-    {
-      "name": "AMG GT 43",
       "my": "MY27",
       "exterior": "옵시디안 블랙",
       "interior": "나파 가죽, 레드 페퍼/블랙",
@@ -544,13 +523,6 @@ window.BENZ_READY_STOCK = {
     {
       "name": "AMG SL 43",
       "my": "MY27",
-      "exterior": "마누팍투어 알파인 그레이 솔리드",
-      "interior": "나파 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "AMG SL 43",
-      "my": "MY27",
       "exterior": "마누팍투어 오팔라이트 화이트 브라이트",
       "interior": "나파 가죽, 레드 페퍼/블랙",
       "accent": 0
@@ -586,42 +558,7 @@ window.BENZ_READY_STOCK = {
     {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
-      "exterior": "그라파이트 그레이 메탈릭",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
-      "exterior": "그라파이트 그레이 메탈릭",
-      "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
       "exterior": "셀레나이트 그레이",
-      "interior": "아티코 인조 가죽, 네바 그레이/블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
-      "exterior": "셀레나이트 그레이",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
-      "exterior": "셀레나이트 그레이",
-      "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
       "interior": "아티코 인조 가죽, 네바 그레이/블랙",
       "accent": 0
     },
@@ -657,20 +594,6 @@ window.BENZ_READY_STOCK = {
       "name": "C 200 AMG Line Special Edition",
       "my": "MY26",
       "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
-      "exterior": "하이 테크 실버",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "C 200 AMG Line Special Edition",
-      "my": "MY26",
-      "exterior": "하이 테크 실버",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
       "accent": 0
     },
@@ -829,13 +752,6 @@ window.BENZ_READY_STOCK = {
       "accent": 0
     },
     {
-      "name": "CLE 450 4MATIC Cabriolet",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "가죽, 블랙",
-      "accent": 0
-    },
-    {
       "name": "CLE 450 4MATIC Coupe AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
@@ -879,41 +795,6 @@ window.BENZ_READY_STOCK = {
     },
     {
       "name": "E 200 AMG Line",
-      "my": "MY26",
-      "exterior": "그라파이트 그레이 메탈릭",
-      "interior": "아티코 인조 가죽, 베이지",
-      "accent": 0
-    },
-    {
-      "name": "E 200 AMG Line",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 가죽, 통카 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "E 200 AMG Line",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 인조 가죽, 베이지",
-      "accent": 0
-    },
-    {
-      "name": "E 200 AMG Line",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 가죽, 통카 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "E 200 AMG Line",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 베이지",
-      "accent": 0
-    },
-    {
-      "name": "E 200 AMG Line",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 블랙",
@@ -1012,48 +893,6 @@ window.BENZ_READY_STOCK = {
     },
     {
       "name": "E 200 Exclusive",
-      "my": "MY26",
-      "exterior": "그라파이트 그레이 메탈릭",
-      "interior": "아티코 가죽, 마키아토 베이지",
-      "accent": 0
-    },
-    {
-      "name": "E 200 Exclusive",
-      "my": "MY26",
-      "exterior": "그라파이트 그레이 메탈릭",
-      "interior": "아티코 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "E 200 Exclusive",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 가죽, 통카 브라운",
-      "accent": 0
-    },
-    {
-      "name": "E 200 Exclusive",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 가죽, 마키아토 베이지",
-      "accent": 0
-    },
-    {
-      "name": "E 200 Exclusive",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "E 200 Exclusive",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 가죽, 통카 브라운",
-      "accent": 0
-    },
-    {
-      "name": "E 200 Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이 메탈릭",
       "interior": "아티코 가죽, 블랙",
@@ -1106,27 +945,6 @@ window.BENZ_READY_STOCK = {
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 가죽, 통카 브라운",
-      "accent": 0
-    },
-    {
-      "name": "E 220 d 4MATIC Avantgarde",
-      "my": "MY27",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 가죽, 통카 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "E 220 d 4MATIC Exclusive",
-      "my": "MY26",
-      "exterior": "그라파이트 그레이",
-      "interior": "아티코 가죽, 통카 브라운",
-      "accent": 0
-    },
-    {
-      "name": "E 220 d 4MATIC Exclusive",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 가죽, 블랙",
       "accent": 0
     },
     {
@@ -1257,13 +1075,6 @@ window.BENZ_READY_STOCK = {
     },
     {
       "name": "E 300 4MATIC Exclusive",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "가죽, 마키아토 베이지",
-      "accent": 0
-    },
-    {
-      "name": "E 300 4MATIC Exclusive",
       "my": "MY27",
       "exterior": "그라파이트 그레이",
       "interior": "가죽, 마키아토 베이지/블랙",
@@ -1337,13 +1148,6 @@ window.BENZ_READY_STOCK = {
       "my": "MY26",
       "exterior": "옵시디안 블랙",
       "interior": "가죽, 통카 브라운",
-      "accent": 0
-    },
-    {
-      "name": "E 350 e 4MATIC Exclusive with EQ HYBRID Technology",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "가죽, 마키아토 베이지",
       "accent": 0
     },
     {
@@ -1592,34 +1396,6 @@ window.BENZ_READY_STOCK = {
       "accent": 0
     },
     {
-      "name": "GLB 250 4MATIC",
-      "my": "MY26",
-      "exterior": "나이트 블랙",
-      "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLB 250 4MATIC",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 가죽 / 마이크로컷 마이크로파이버 바이아 브라운 / 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLB 250 4MATIC",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 가죽/다이나미카 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 220 d 4MATIC",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "accent": 0
-    },
-    {
       "name": "GLC 220 d 4MATIC",
       "my": "MY27",
       "exterior": "폴라 화이트",
@@ -1974,111 +1750,6 @@ window.BENZ_READY_STOCK = {
       "my": "MY27",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 시에나 브라운/블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line",
-      "my": "MY27",
-      "exterior": "마누팍투어 알파인 그레이 솔리드",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line",
-      "my": "MY27",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line",
-      "my": "MY27",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "라벤더 실버 메탈릭",
-      "interior": "아티코 인조 가죽, 실크 베이지/블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "라벤더 실버 메탈릭",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "마누팍투어 알파인 그레이 솔리드",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "마누팍투어 알파인 그레이 솔리드",
-      "interior": "아티코 인조 가죽, 실크 베이지/블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "마누팍투어 알파인 그레이 솔리드",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 인조 가죽, 실크 베이지/블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 실크 베이지/블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "폴라 화이트",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "하이 테크 실버",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLC 300 4MATIC electric AMG Line+",
-      "my": "MY27",
-      "exterior": "하이 테크 실버",
-      "interior": "아티코 인조 가죽, 에스프레소 브라운/마그마 그레이",
       "accent": 0
     },
     {
@@ -2086,13 +1757,6 @@ window.BENZ_READY_STOCK = {
       "my": "MY26",
       "exterior": "셀레나이트 그레이",
       "interior": "아티코 인조 가죽, 마키아토 베이지/블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLE 350 4MATIC",
-      "my": "MY26",
-      "exterior": "셀레나이트 그레이",
-      "interior": "아티코 인조 가죽, 바히아 브라운/블랙",
       "accent": 0
     },
     {
@@ -2135,34 +1799,6 @@ window.BENZ_READY_STOCK = {
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLE 450 4MATIC",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLE 450 4MATIC AMG Line",
-      "my": "MY26",
-      "exterior": "마누팍투어 알파인 그레이 솔리드",
-      "interior": "나파 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLE 450 4MATIC AMG Line",
-      "my": "MY26",
-      "exterior": "셀레나이트 그레이",
-      "interior": "나파 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLE 450 4MATIC AMG Line",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "나파 가죽, 블랙",
       "accent": 0
     },
     {
@@ -2212,13 +1848,6 @@ window.BENZ_READY_STOCK = {
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "아티코 인조 가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLS 450 4MATIC AMG Line",
-      "my": "MY26",
-      "exterior": "셀레나이트 그레이",
-      "interior": "가죽, 바히아 브라운/블랙",
       "accent": 0
     },
     {
@@ -2251,20 +1880,6 @@ window.BENZ_READY_STOCK = {
     },
     {
       "name": "GLS 450 4MATIC AMG Line",
-      "my": "MY26",
-      "exterior": "폴라 화이트",
-      "interior": "가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLS 450 d 4MATIC AMG Line",
-      "my": "MY26",
-      "exterior": "옵시디안 블랙",
-      "interior": "가죽, 블랙",
-      "accent": 0
-    },
-    {
-      "name": "GLS 450 d 4MATIC AMG Line",
       "my": "MY26",
       "exterior": "폴라 화이트",
       "interior": "가죽, 블랙",
