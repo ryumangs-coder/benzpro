@@ -176,15 +176,15 @@
       return;
     }
 
-    function colorCell(color, delay, animate) {
-      return '<div class="hp-stock-roll"' + (animate ? ' style="--stock-delay:' + delay + 'ms"' : '') + '>' +
-        '<div' + (animate ? ' class="hp-stock-roll-in"' : '') + '>' + swatch(color) + '</div></div>';
+    function colorCell(color, animate) {
+      return '<div class="hp-stock-roll' + (animate ? ' hp-stock-roll-active' : '') + '">' +
+        '<div class="hp-stock-roll-face">' + swatch(color) + '</div></div>';
     }
     var body = groups.map(function (group) {
       var r = group[0], year = r.my.replace('MY', '20') + '년식';
       var badge = r.my === 'MY27' ? ' <em class="bp-new">NEW</em>' : '';
       return '<tr><th scope="row"><strong>' + esc(r.name) + '</strong><small data-year-decorated>' + esc(year) + badge + '</small></th>' +
-        '<td>' + colorCell(r.exterior, 0, false) + '</td><td>' + colorCell(r.interior, 0, false) + '</td>' +
+        '<td>' + colorCell(r.exterior, false) + '</td><td>' + colorCell(r.interior, false) + '</td>' +
         '<td><a class="ready-ask" href="' + esc(consult(r)) + '" aria-label="' + esc(r.name + ' ' + year + ' 배정 신청') + '">배정 신청</a></td></tr>';
     }).join('');
     host.innerHTML = date + '<table class="hp-featured-stock"><caption class="ready-sr">대표 차종의 외장·실내 색상 조합</caption>' +
@@ -198,23 +198,32 @@
     control.className = 'hp-stock-pause';
     host.append(control);
     var paused = motion.matches;
-    var round = 0;
+    var positions = groups.map(function () { return 0; });
     function syncButton() { control.textContent = paused ? '색상 순환 시작' : '색상 순환 일시정지'; }
     syncButton();
     control.addEventListener('click', function () { paused = !paused; syncButton(); });
     motion.addEventListener('change', function (event) { if (event.matches) { paused = true; syncButton(); } });
 
-    window.setInterval(function () {
+    function canRotate() {
       var bounds = host.getBoundingClientRect();
-      if (paused || document.hidden || (host.contains(document.activeElement) && document.activeElement !== control) ||
-          host.querySelector('table:hover') || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
-      round++;
+      return !paused && !document.hidden &&
+        (!host.contains(document.activeElement) || document.activeElement === control) &&
+        !host.querySelector('table:hover') && bounds.bottom > 0 && bounds.top < window.innerHeight;
+    }
+
+    window.setInterval(function () {
+      if (!canRotate()) return;
       rows.forEach(function (row, index) {
-        var group = groups[index], current = group[round % group.length];
+        var group = groups[index];
         if (group.length < 2) return;
-        row.cells[1].innerHTML = colorCell(current.exterior, index * 90, !motion.matches);
-        row.cells[2].innerHTML = colorCell(current.interior, index * 90, !motion.matches);
-        row.querySelector('.ready-ask').href = consult(current);
+        window.setTimeout(function () {
+          if (!canRotate()) return;
+          positions[index] = (positions[index] + 1) % group.length;
+          var current = group[positions[index]];
+          row.cells[1].innerHTML = colorCell(current.exterior, !motion.matches);
+          row.cells[2].innerHTML = colorCell(current.interior, !motion.matches);
+          row.querySelector('.ready-ask').href = consult(current);
+        }, index * 165);
       });
     }, 2800);
   }

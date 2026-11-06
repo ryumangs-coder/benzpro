@@ -1236,15 +1236,31 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 .hp-stock-snapshot>span{width:7px;height:7px;flex:none;border-radius:50%;background:#ffc653;box-shadow:0 0 8px #ffc65380}
 .hp-featured-stock tbody th strong,.hp-featured-stock .ready-color small{font-size:clamp(18px,1.8vw,21px);line-height:1.25;word-break:keep-all;overflow-wrap:break-word}
 .hp-featured-stock tbody th small{font-size:13px;font-variant-numeric:tabular-nums}
-.hp-stock-roll{display:block;overflow:hidden;perspective:320px}
-.hp-stock-roll-in{transform-origin:center bottom}
+.hp-stock-roll{position:relative;display:block;overflow:hidden;perspective:300px}
 .advisor-bio>p{line-height:1.75;letter-spacing:.005em}
 @media(prefers-reduced-motion:no-preference){
-  .hp-stock-roll-in{animation:hp-stock-roll-in .48s cubic-bezier(.22,.7,.35,1) var(--stock-delay,0ms) both}
+  .hp-stock-roll-active .hp-stock-roll-face{
+    transform-origin:50% 65%;
+    animation:hp-stock-cascade .68s cubic-bezier(.19,.7,.26,1) both;
+  }
+  .hp-stock-roll-active::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(110deg,transparent 25%,#ffc65350 50%,transparent 75%);
+    animation:hp-stock-sweep .72s ease-out both;
+  }
 }
-@keyframes hp-stock-roll-in{
-  from{transform:translateY(95%) rotateX(-55deg);opacity:0;text-shadow:0 0 8px #ffc653}
-  to{transform:translateY(0) rotateX(0);opacity:1;text-shadow:none}
+@keyframes hp-stock-cascade{
+  0%{transform:translateY(82%) rotateX(-78deg);opacity:.2}
+  52%{transform:translateY(-8%) rotateX(12deg);opacity:1;text-shadow:0 0 10px #ffc653b0}
+  76%{transform:translateY(2%) rotateX(-3deg)}
+  100%{transform:none;opacity:1;text-shadow:none}
+}
+@keyframes hp-stock-sweep{
+  from{transform:translateX(-110%);opacity:.85}
+  to{transform:translateX(110%);opacity:0}
 }
 @media(max-width:680px){
   .hp-featured-stock tbody th strong,.hp-featured-stock .ready-color small{font-size:clamp(14px,4vw,18px)}
