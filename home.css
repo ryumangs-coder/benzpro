@@ -1179,31 +1179,54 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
   to{transform:none;opacity:1}
 }
 
-/* One compact purchase strip directly below the showroom video. */
-.hp-purchase-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start;gap:10px;margin-block:12px 20px}
-.hp-purchase-grid>section{min-width:0;padding:10px 12px;border:1px solid #49606a;border-radius:10px;background:#101b22;color:#f1f5f7;font-size:13px;line-height:1.4}
-.hp-purchase-grid h2{margin:0 0 5px;font-size:17px;line-height:1.3;color:#f1f5f7}
+/* Full-width panels within the landing page content area. */
+.hp-purchase-grid{display:grid;gap:10px;margin-block:12px 20px}
+.hp-purchase-grid>section{min-width:0;padding:12px;border:1px solid #ffffff30;border-radius:10px;background:#0d0f12;color:#f1f5f7;font-size:13px;line-height:1.4;box-shadow:none}
+.hp-purchase-grid h2{margin:0 0 6px;font-size:17px;line-height:1.3;color:#f1f5f7;overflow:visible}
+.hp-purchase-grid #stock-board-title>span{animation:none}
 .hp-purchase-grid p{margin:0;font-size:12px;color:#cddce6}
-.hp-purchase-grid .hp-stock-board{border-top:2px solid #e4cb86;box-shadow:none}
-.hp-purchase-grid .hp-stock-board label{display:flex;align-items:center;gap:6px;margin:5px 0;max-width:none}
-.hp-purchase-grid .hp-stock-board input{min-width:0;flex:1;padding:4px 7px;min-height:32px;font-size:13px}
-.hp-purchase-grid .ready-note{margin-top:3px}
-.hp-purchase-grid .ready-table-scroll{max-height:126px;margin-top:4px}
-.hp-purchase-grid .ready-table th,.hp-purchase-grid .ready-table td{padding:4px;font-size:12px;line-height:1.25}
+.hp-purchase-grid .hp-stock-board label{display:flex;align-items:center;gap:6px;margin:6px 0;max-width:23rem}
+.hp-purchase-grid .hp-stock-board input{min-width:0;flex:1;padding:4px 7px;min-height:34px;font-size:13px}
+.hp-purchase-grid .ready-table-scroll{max-height:160px;margin-top:4px}
+.hp-purchase-grid .ready-table th,.hp-purchase-grid .ready-table td{padding:5px;font-size:12px;line-height:1.25}
 .hp-purchase-grid .ready-color b,.hp-purchase-grid .ready-color small{font-size:12px;line-height:1.25}
 .hp-purchase-grid .ready-color i{flex-basis:12px;height:12px}
-.hp-purchase-grid .ready-ask,.hp-purchase-grid .hp-btn{min-height:32px;padding:4px 8px;font-size:12px}
-.hp-purchase-grid .hp-btn{margin:4px 0 0}
+.hp-purchase-grid .ready-ask,.hp-purchase-grid .hp-btn{min-height:34px;padding:4px 8px;font-size:12px}
+.hp-purchase-grid .hp-btn{margin:5px 0 0}
 .hp-purchase-grid .ready-scroll-actions{justify-content:flex-start;min-height:0;padding-top:4px}
-.hp-purchase-grid .ready-scroll-actions button{min-height:30px;padding:3px 7px;font-size:12px}
+.hp-purchase-grid .ready-scroll-actions button{min-height:32px;padding:3px 7px;font-size:12px}
 .hp-purchase-grid .ready-has-more::after{display:none}
-.hp-purchase-grid .hp-insights fieldset{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:0;border:0;background:none}
-.hp-purchase-grid .hp-insights label{margin:0;padding:5px 3px;text-align:center;white-space:nowrap;border-radius:5px;min-height:32px}
-.hp-purchase-grid .hp-insights ol{grid-column:1/-1;margin:0}
-.hp-purchase-grid .hp-insights li a{gap:6px;padding:4px 2px;min-height:32px}
-.hp-purchase-grid .hp-insight-copy{display:block}
-.hp-purchase-grid .hp-insight-tag{display:inline-block;margin-right:4px;padding:0 3px;font-size:10px}
-@media(max-width:679px){
-  .hp-purchase-grid{grid-template-columns:minmax(0,1fr);gap:6px;margin-block:8px 14px}
+
+/* Each tile has two static faces and two independently hinged moving faces. */
+#stock-board-title .stock-flap-title{display:flex;flex-wrap:wrap;gap:4px 7px}
+.stock-flap-word{display:inline-flex;gap:2px}
+.stock-flap-tile{position:relative;display:block;width:1.42em;height:1.85em;perspective:260px;color:#ffb800;font:800 clamp(13px,2.4vw,19px)/1.85 ui-monospace,monospace;isolation:isolate}
+.stock-flap-half{position:absolute;inset-inline:0;height:50%;overflow:hidden;backface-visibility:hidden;text-align:center;border:1px solid #ffffff26}
+.stock-flap-half>span{position:absolute;inset-inline:0;height:1.85em}
+.stock-flap-top{top:0;border-radius:3px 3px 0 0;background:#24282d;border-bottom-color:#050608}
+.stock-flap-top>span{top:0}
+.stock-flap-bottom{bottom:0;border-radius:0 0 3px 3px;background:#171b20;border-top-color:#050608}
+.stock-flap-bottom>span{bottom:0}
+.stock-flap-out{z-index:2;transform-origin:bottom;animation:stock-flap-out 180ms ease-in var(--flap-delay) both}
+.stock-flap-in{z-index:2;transform-origin:top;animation:stock-flap-in 180ms ease-out calc(var(--flap-delay) + 180ms) both}
+@keyframes stock-flap-out{from{transform:rotateX(0)}to{transform:rotateX(-90deg)}}
+@keyframes stock-flap-in{from{transform:rotateX(90deg)}to{transform:rotateX(0)}}
+@media(prefers-reduced-motion:reduce){.stock-flap-out,.stock-flap-in{display:none}}
+
+.hp-purchase-grid .hp-insights fieldset{padding:0;border:0;background:none}
+.hp-purchase-grid .hp-insights label{margin:0 4px 0 0;padding:5px 10px;white-space:nowrap;border-radius:5px;min-height:32px}
+.hp-purchase-grid .hp-insights ol{margin:8px 0 0;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.hp-purchase-grid #insight-finance:checked~#insight-finance-titles,.hp-purchase-grid #insight-tax:checked~#insight-tax-titles{display:grid}
+.hp-purchase-grid .hp-insights li{min-width:0;border:0}
+.hp-purchase-grid .hp-insights li a{height:100%;align-items:start;gap:5px;padding:8px;border:1px solid #ffffff2c;border-radius:6px;background:#181c21}
+.hp-purchase-grid .hp-insights li a:hover,.hp-purchase-grid .hp-insights li a:focus-visible{background:#202832;box-shadow:0 0 12px #b6ddff24}
+@media(prefers-reduced-motion:no-preference){
+  .hp-purchase-grid .hp-insights li a{transition:transform .18s,background-color .18s,box-shadow .18s}
+  .hp-purchase-grid .hp-insights li a:hover{transform:scale(1.015)}
+}
+@media(max-width:680px){
+  .hp-purchase-grid{gap:6px;margin-block:8px 14px}
   .hp-purchase-grid>section{padding:8px}
+  .hp-purchase-grid .hp-insights ol{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:76%;overflow-x:auto;scroll-snap-type:x proximity;padding:4px}
+  .hp-purchase-grid .hp-insights li{scroll-snap-align:start}
 }
