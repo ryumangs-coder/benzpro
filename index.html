@@ -38,10 +38,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="chrome.css?v=20261104-insights" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
-  <link rel="stylesheet" href="home.css?v=20261103-visibility" />
+  <link rel="stylesheet" href="home.css?v=20261107-board" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/","name":"벤츠프로 | 메르세데스-벤츠 코리아 공식 파트너 김민구 차장","description":"메르세데스-벤츠 코리아 공식 파트너 김민구 차장의 프리미엄 포털. 최신 공식 프로모션 분석, 차종별 맞춤 금융 솔루션(리스·장기렌트·할부), 실시간 견적 및 사전예약 가이드.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/assets/og-image.jpg"},"inLanguage":"ko-KR"}]}</script>
-    <link rel="stylesheet" href="ready-stock.css?v=20261105-colors" />
+    <link rel="stylesheet" href="ready-stock.css?v=20261107-board" />
 <link rel="stylesheet" href="november-benefits.css?v=20261104-theme" /><link rel="stylesheet" href="vehicle-ui.css?v=20261104-theme"><link rel="stylesheet" href="showroom-hero.css?v=20261103-visibility" /><script src="showroom-hero.js?v=20261103-contact" defer></script></head>
 <body class="hp-home showroom-in-view bg-[#F6F3EE] text-[#1C1917] antialiased">
 <script src="chrome.js?v=20261105-colors"></script>
@@ -65,6 +65,42 @@
         </div>
       </div>
       <div class="showroom-bottom hp-wrap"><p>메르세데스-벤츠 모터원 고양전시장</p><button type="button" class="showroom-play" aria-label="배경 영상 재생" hidden>영상 재생 <span aria-hidden="true">▷</span></button></div>
+    </section>
+
+    <section class="hp-section" id="stock-board" aria-labelledby="stock-board-title">
+      <div class="hp-wrap">
+        <div class="hp-stock-board">
+          <p class="hp-board-kicker">● STOCK BOARD</p>
+          <h2 id="stock-board-title">11월 출고 상담 재고 현황판</h2>
+          <p>입고 및 입고 예정 색상 조합입니다. 배정 가능 여부와 예상 출고일은 상담에서 확인해 주세요.</p>
+          <div id="home-stock-list"></div>
+          <a class="hp-btn" href="#consulting">실시간 잔여 재고 배정 신청 (선착순)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="hp-section" id="purchase-insights" aria-labelledby="purchase-insights-title">
+      <div class="hp-wrap hp-insights">
+        <p class="hp-board-kicker">BENZ PRO INSIGHTS</p>
+        <h2 id="purchase-insights-title">벤츠프로 인사이트</h2>
+        <fieldset>
+          <legend class="ready-sr">구매 인사이트 주제</legend>
+          <input type="radio" name="insight-topic" id="insight-finance" aria-controls="insight-finance-titles" checked /><label for="insight-finance">금융</label>
+          <input type="radio" name="insight-topic" id="insight-tax" aria-controls="insight-tax-titles" /><label for="insight-tax">절세</label>
+          <ol id="insight-finance-titles" aria-label="금융 글">
+            <li><a href="https://mercedes.benzpro.co.kr/posts/ev-resale-value-protection-mercedes-glc-financing">전기차 중고 감가 폭탄 방어 벤츠 GLC 일렉트릭 MB-Sure 잔가보장형 할부 금융 팁</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr/posts/financial-promotion-low-interest-installment-fact-check">금융 프로모션 저금리 유예 할부의 잔존가치 조건과 중도상환 수수료 면제 조항 팩트체크</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr/posts/mercedes-benz-financial-vs-other-lease-return-depreciation">메르세데스-벤츠 파이낸셜 vs 타 금융사 반납 감가 기준과 스크래치 대처법</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr/posts/mercedes-operating-vs-finance-lease-acquisition-tax">벤츠 운용리스 vs 금융리스 취득세 납부 시점 및 재무제표 부채 차이</a></li>
+          </ol>
+          <ol id="insight-tax-titles" aria-label="절세 글">
+            <li><a href="https://mercedes.benzpro.co.kr/posts/tax-saving-plan-sole-proprietor-mercedes-lease">개인사업자 종합소득세 절세 플랜: 하반기 벤츠 리스 계약 세무 세팅법</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr/posts/green-license-plate-corporate-tax-strategy">연두색 번호판 제도 시행 하반기 점검: 법인차 절세 전략</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr/posts/2027-corporate-car-tax-mercedes-lease-guide">2027 법인차 세금 개정안 대비 벤츠 리스 및 렌트 절세 가이드</a></li>
+            <li><a href="https://mercedes.benzpro.co.kr/posts/%EB%B2%95%EC%9D%B8-%EB%A6%AC%EC%8A%A4-%EB%8C%80%ED%91%9C%EB%8B%98-%ED%95%84%EC%88%98-%ED%99%95%EC%9D%B8-27%EB%85%84%EC%8B%9D-S%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%97%B0%EB%91%90%EC%83%89-%EB%B2%88%ED%98%B8%ED%8C%90-%EC%A0%88%EC%84%B8-%EA%B0%80%EC%9D%B4%EB%93%9C">법인 리스 대표님 필수 확인 27년식 S클래스 연두색 번호판 절세 가이드</a></li>
+          </ol>
+        </fieldset>
+      </div>
     </section>
 
     <section class="advisor-panel" id="advisor-panel" aria-labelledby="advisor-title" hidden inert>
@@ -206,7 +242,7 @@
               <div id="privacy-detail" class="bp-consent-detail" hidden><p>수집 항목은 성함, 연락처, 관심 차종입니다. 선택하면 구매 시기, 구매 방식, 지역, 보유 차량, 문의 내용이 함께 전달됩니다. 견적에서 고른 연식과 구매 방식은 문의 내용에 포함됩니다. 목적: 견적 안내 및 상담. 보유: 상담 종료 후 1년 이내 파기. 동의하지 않으면 상담 접수가 어렵습니다.</p></div>
               <p class="hp-error">개인정보 수집 및 이용에 동의해 주세요.</p>
             </div>
-            <button id="consult-submit" class="hp-btn" type="submit">상담 신청하기</button>
+            <button id="consult-submit" class="hp-btn" type="submit">실시간 잔여 재고 배정 신청 (선착순)</button>
             <p id="consult-network-error" class="hp-error" hidden>전송에 실패했습니다. 전화나 카카오톡으로 연락해 주세요.</p>
           </form>
           <div class="hp-place">
@@ -326,10 +362,10 @@
 
   <script src="october-2026.js?v=20261105-special"></script><script src="november-retail.js?v=20261105-special"></script><script src="november-2026.js?v=20261102-full"></script><script src="vehicle-catalogue.js?v=20261102-nav"></script><script src="november-finance.js?v=20261105-special"></script><script src="november-benefits.js?v=20261104-theme"></script>
   <script src="quote.js?v=20261105-special"></script>
-  <script src="ready-stock-data.js?v=20261105-availability"></script><script src="ready-stock.js?v=20261105-colors"></script><script src="stock.js?v=20261102b"></script>
+  <script src="ready-stock-data.js?v=20261105-availability"></script><script src="ready-stock.js?v=20261107-board"></script><script src="stock.js?v=20261102b"></script>
   <script src="car-photo.js?v=20261105-special"></script>
   <script src="pick.js?v=20261102-nov"></script>
-  <script src="home.js?v=20261104-photo-note"></script>
+  <script src="home.js?v=20261107-board"></script>
   <script src="site-ui.js?v=20261023y"></script>
 <script src="vehicle-ui.js?v=20261104-theme"></script></body>
 </html>

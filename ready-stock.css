@@ -17,3 +17,7 @@
 .ready-color>span{min-width:0}
 .ready-color b,.ready-color small{line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
 .ready-disclaimer{margin:10px 0 0;color:#c6d1c9;font-size:13px;line-height:1.6;font-weight:400}
+
+
+.ready-table .ready-ask{white-space:normal;text-align:center;font-size:clamp(11px,2.8vw,14px);overflow-wrap:anywhere}
+.ready-table thead th:last-child,.ready-table td:last-child{width:clamp(84px,24vw,144px)}

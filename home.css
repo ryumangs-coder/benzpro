@@ -1128,3 +1128,30 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 .hp-filter-group{border:0;padding:0;margin:0;min-width:0}
 .hp-filter-group legend{padding:0;margin-bottom:10px;font-size:16px;font-weight:700;color:#f0e4cc}
 .hp-filter-options{display:flex;flex-wrap:wrap;gap:8px}
+
+
+/* Landing stock board and purchase reading list */
+.hp-stock-board,.hp-insights fieldset{border:1px solid #49606a;border-radius:16px;padding:clamp(16px,4vw,36px);background:#0c1b23}
+.hp-stock-board{background:#0a1419;border-top:3px solid #e4cb86}
+.hp-board-kicker{color:#e4cb86;font:700 .8rem ui-monospace,monospace;letter-spacing:.18em}
+.hp-stock-board h2,.hp-insights h2{margin:.45em 0}
+.hp-stock-board label{display:grid;gap:6px;margin:14px 0;max-width:25rem}
+.hp-stock-board input{background:#142632;color:#fff;border:1px solid #637680;border-radius:8px;padding:10px 12px;font:inherit}
+.hp-stock-board .ready-group th{color:#f0d894;letter-spacing:.05em;background:#14232a}
+.hp-stock-board .hp-btn{margin-top:16px;text-align:center;white-space:normal}
+.hp-insights fieldset{margin:0;min-inline-size:0}
+.hp-insights input{position:absolute;opacity:0}
+.hp-insights label{display:inline-block;padding:8px 20px;margin-right:6px;border:1px solid #647680;border-radius:999px;cursor:pointer}
+.hp-insights input:checked+label{background:#e4cb86;border-color:#e4cb86;color:#10202a;font-weight:700}
+.hp-insights input:focus-visible+label{outline:2px solid white;outline-offset:3px}
+.hp-insights ol{display:none;padding:0;margin:14px 0 0;list-style:none;counter-reset:insight}
+#insight-finance:checked~#insight-finance-titles,#insight-tax:checked~#insight-tax-titles{display:block}
+.hp-insights li{counter-increment:insight;border-top:1px solid #49606a}
+.hp-insights li a{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.75rem;padding:14px 6px;color:#f1f5f7;text-decoration:none;transition:background-color .18s,color .18s}
+.hp-insights li a::before{content:counter(insight,decimal-leading-zero);font-family:ui-monospace,monospace;color:#e4cb86}
+.hp-insights li a::after{content:"↗";color:#e4cb86}
+.hp-insights li a:hover,.hp-insights li a:focus-visible{background:#1d3541;color:#ffe29d}
+@media(prefers-reduced-motion:reduce){.hp-insights li a{transition:none}}
+.hp-stock-board .ready-table-scroll{background:#101b22;border-color:#49606a}
+.hp-stock-board .ready-table thead th{background:#26343c;color:#f0d894}
+.hp-stock-board .ready-combo:nth-child(even){background:#15232a}
