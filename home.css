@@ -1175,26 +1175,10 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 /* Full-width panels within the landing page content area. */
 .hp-purchase-grid{display:grid;gap:10px;margin-block:12px 20px}
 .hp-purchase-grid>section{min-width:0;padding:12px;border:1px solid #ffffff30;border-radius:10px;background:#0d0f12;color:#f1f5f7;font-size:13px;line-height:1.4;box-shadow:none}
-.hp-purchase-grid h2{margin:0 0 6px;font-size:17px;line-height:1.3;color:#f1f5f7;overflow:visible}
+.hp-purchase-grid .hp-insights h2{margin:0 0 6px;font-size:17px;line-height:1.3;color:#f1f5f7;overflow:visible}
 .hp-purchase-grid p{margin:0;font-size:12px;color:#cddce6}
 .hp-purchase-grid .ready-color b,.hp-purchase-grid .ready-color small{font-size:12px;line-height:1.25}
 .hp-purchase-grid .ready-color i{flex-basis:12px;height:12px}
-
-/* Each tile has two static faces and two independently hinged moving faces. */
-#stock-board-title .stock-flap-title{display:flex;flex-wrap:wrap;gap:4px 7px}
-.stock-flap-word{display:inline-flex;gap:2px}
-.stock-flap-tile{position:relative;display:block;width:1.42em;height:1.85em;perspective:260px;color:#ffb800;font:800 clamp(13px,2.4vw,19px)/1.85 ui-monospace,monospace;isolation:isolate}
-.stock-flap-half{position:absolute;inset-inline:0;height:50%;overflow:hidden;backface-visibility:hidden;text-align:center;box-shadow:inset 0 0 0 1px #ffffff26}
-.stock-flap-half>span{position:absolute;inset-inline:0;height:1.85em}
-.stock-flap-top{top:0;border-radius:3px 3px 0 0;background:#24282d;box-shadow:inset 0 -1px #050608,inset 0 0 0 1px #ffffff26}
-.stock-flap-top>span{top:0}
-.stock-flap-bottom{bottom:0;border-radius:0 0 3px 3px;background:#171b20;}
-.stock-flap-bottom>span{bottom:0}
-.stock-flap-out{z-index:2;transform-origin:bottom;animation:stock-flap-out 180ms ease-in var(--flap-delay) both}
-.stock-flap-in{z-index:2;transform-origin:top;animation:stock-flap-in 180ms ease-out calc(var(--flap-delay) + 180ms) both}
-@keyframes stock-flap-out{from{transform:rotateX(0)}to{transform:rotateX(-90deg)}}
-@keyframes stock-flap-in{from{transform:rotateX(90deg)}to{transform:rotateX(0)}}
-@media(prefers-reduced-motion:reduce){.stock-flap-out,.stock-flap-in{display:none}}
 
 .hp-purchase-grid .hp-insights{display:block}
 .hp-purchase-grid .hp-insights fieldset{width:100%;padding:0;border:0;background:none}
@@ -1243,4 +1227,27 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
   .hp-featured-stock .ready-color i{display:none}
   .hp-featured-stock .ready-ask{padding-inline:4px;font-size:12px}
 
+}
+
+/* Match the landing section headings and roll only the actual stock values. */
+#stock-board-title{margin:0 0 5px;color:#fff}
+.hp-purchase-grid .hp-stock-board>p{font-size:15px;line-height:1.55}
+.hp-purchase-grid .hp-stock-snapshot{display:flex;align-items:center;gap:7px;margin-top:5px;font-variant-numeric:tabular-nums}
+.hp-stock-snapshot>span{width:7px;height:7px;flex:none;border-radius:50%;background:#ffc653;box-shadow:0 0 8px #ffc65380}
+.hp-featured-stock tbody th strong,.hp-featured-stock .ready-color small{font-size:clamp(18px,1.8vw,21px);line-height:1.25;word-break:keep-all;overflow-wrap:break-word}
+.hp-featured-stock tbody th small{font-size:13px;font-variant-numeric:tabular-nums}
+.hp-stock-roll{display:block;overflow:hidden;perspective:320px}
+.hp-stock-roll>span{display:block;transform-origin:center bottom}
+.advisor-bio>p{line-height:1.75;letter-spacing:.005em}
+@media(prefers-reduced-motion:no-preference){
+  .hp-stock-is-rolling .hp-stock-roll>span{animation:hp-stock-roll-in .48s cubic-bezier(.22,.7,.35,1) var(--stock-delay) both}
+  .hp-stock-is-rolling .hp-stock-snapshot>span{animation:hp-stock-led .45s ease-in-out 3 alternate}
+}
+@keyframes hp-stock-roll-in{
+  from{transform:translateY(-105%) rotateX(-75deg);opacity:0}
+  to{transform:translateY(0) rotateX(0);opacity:1}
+}
+@keyframes hp-stock-led{to{opacity:.35}}
+@media(max-width:680px){
+  .hp-featured-stock tbody th strong,.hp-featured-stock .ready-color small{font-size:clamp(14px,4vw,18px)}
 }

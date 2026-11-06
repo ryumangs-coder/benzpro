@@ -155,7 +155,7 @@
         return r.exterior.indexOf(choice[1]) >= 0 && r.interior.indexOf(choice[2]) >= 0;
       }) || modelRows[0];
     }).filter(Boolean);
-    var date = stock.asOf ? '<p class="ready-note">' + esc(stock.asOf) + ' 재고표 스냅샷</p>' : '';
+    var date = stock.asOf ? '<p class="ready-note hp-stock-snapshot"><span aria-hidden="true"></span>' + esc(stock.asOf) + ' 재고표 스냅샷</p>' : '';
     if (!rows.length) {
       host.innerHTML = date + '<p>표시할 색상 조합이 없습니다.</p>';
       return;

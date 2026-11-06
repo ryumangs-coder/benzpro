@@ -1,56 +1,31 @@
-/* Decorative split-flap faces. The original heading stays available to AT. */
-(function () {
-  var heading = document.querySelector('#stock-board-title > span');
-  if (!heading) return;
+/* Roll the verified stock text once when the board comes into view. */
+document.addEventListener('DOMContentLoaded', function () {
+  var board = document.getElementById('stock-board');
+  if (!board || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var title = document.createElement('span');
-  title.className = 'stock-flap-title';
-  title.setAttribute('aria-hidden', 'true');
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var tiles = [];
-  var previous = '0123456789';
-
-  function face(side, letter, moving) {
-    var panel = document.createElement('span');
-    panel.className = 'stock-flap-half stock-flap-' + side + (moving ? ' stock-flap-' + moving : '');
-    var ink = document.createElement('span');
-    ink.textContent = letter;
-    panel.append(ink);
-    return panel;
+  function roll() {
+    board.querySelectorAll('.hp-featured-stock tbody tr').forEach(function (row, index) {
+      row.querySelectorAll('th strong, th small, .ready-color small').forEach(function (field, column) {
+        var clip = document.createElement('span');
+        var face = document.createElement('span');
+        clip.className = 'hp-stock-roll';
+        clip.style.setProperty('--stock-delay', (index * 85 + column * 35) + 'ms');
+        face.textContent = field.textContent;
+        clip.append(face);
+        field.replaceChildren(clip);
+      });
+    });
+    board.classList.add('hp-stock-is-rolling');
   }
 
-  heading.textContent.trim().split(/\s+/).forEach(function (word) {
-    var group = document.createElement('span');
-    group.className = 'stock-flap-word';
-    Array.from(word).forEach(function (letter) {
-      var tile = document.createElement('span');
-      tile.className = 'stock-flap-tile';
-      tile.style.setProperty('--flap-delay', tiles.length * 30 + 'ms');
-      group.append(tile);
-      tiles.push({ node: tile, letter: letter });
-    });
-    title.append(group);
-  });
-
-  function reveal(animate) {
-    tiles.forEach(function (tile, index) {
-      var old = animate ? previous[index % previous.length] : tile.letter;
-      var lower = face('bottom', old);
-      tile.node.replaceChildren(face('top', tile.letter), lower);
-      if (!animate) return;
-
-      var upperFlip = face('top', old, 'out');
-      var lowerFlip = face('bottom', tile.letter, 'in');
-      lowerFlip.addEventListener('animationend', function () {
-        lower.replaceWith(face('bottom', tile.letter));
-        upperFlip.remove();
-        lowerFlip.remove();
-      }, { once: true });
-      tile.node.append(upperFlip, lowerFlip);
-    });
+  if (!('IntersectionObserver' in window)) {
+    roll();
+    return;
   }
-
-  heading.classList.add('ready-sr');
-  heading.parentNode.append(title);
-  reveal(!reducedMotion);
-})();
+  var observer = new IntersectionObserver(function (entries) {
+    if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+    observer.disconnect();
+    roll();
+  }, { threshold: 0.2 });
+  observer.observe(board);
+});
