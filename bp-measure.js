@@ -37,6 +37,7 @@
     /* 방문 동의 배너가 생기면 true로 바꾸고 BenzTrack.setConsent(true|false)를 연결합니다. 지금은 사이트에 분석 동의 화면이 없습니다. */
     requireAnalyticsConsent: false
   };
+  var CLICK_LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
 
   /* ---------- 환경 판단 ---------- */
   var PLACEHOLDER = /^G-(X+|0+|1234567890|XXXXXXXXXX)$/i;
@@ -359,6 +360,29 @@
     } catch (err) { return {}; }
   }
   var lastClick = { key: "", at: 0 };
+  function logContactClick(channel, placement) {
+    if (!isProd || !CLICK_LOG_ENDPOINT) return;
+    try {
+      var data = new URLSearchParams();
+      data.set("action", "contact_click");
+      data.set("channel", channel);
+      data.set("page", cleanPath(location.pathname));
+      data.set("placement", placement || "content");
+      data.set("source", cleanReferrer());
+      var query = new URLSearchParams(location.search || "");
+      ["utm_source", "utm_medium", "utm_campaign"].forEach(function (key) {
+        var value = query.get(key);
+        if (value && value.length <= 100 && !PERSONAL.test(value)) data.set(key, value);
+      });
+      var body = data.toString();
+      if (navigator.sendBeacon && navigator.sendBeacon(CLICK_LOG_ENDPOINT, new Blob([body], { type: "application/x-www-form-urlencoded;charset=UTF-8" }))) return;
+      fetch(CLICK_LOG_ENDPOINT, {
+        method: "POST", mode: "no-cors", keepalive: true,
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: body
+      }).catch(function () {});
+    } catch (err) { /* 문의 링크 기능은 그대로 진행합니다. */ }
+  }
   function onLinkClick(event) {
     try {
       var el = event.target && event.target.closest ? event.target.closest("a[href], [data-pick]") : null;
@@ -419,6 +443,7 @@
       /* 1초가 되기 전에 눌러도 "본 사람" 안에 들어가도록, 노출을 먼저 기록합니다. */
       if (name === "phone_click" || name === "kakao_click") ctaView(params.cta_id, place, { beacon: true });
       send(name, params, { beacon: true });
+      if (name === "phone_click" || name === "kakao_click") logContactClick(params.contact_method, place);
     } catch (err) { /* 링크 이동은 항상 그대로 진행합니다. */ }
   }
 
