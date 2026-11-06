@@ -12,7 +12,7 @@ for (const r of data.combinations) {
   assert.ok(!/[a-z]{3,}/.test(r.exterior + ' ' + r.interior));
   assert.ok(!/MEMO|VIN|전시장|위탁|배정|W1[K-N][A-Z0-9]{14}/.test(JSON.stringify(r)));
   assert.equal(c.window.BenzStock.of(r).code, 'live');
-  assert.match(api.card(r), /실시간 잔여 재고 배정 신청/);
+  assert.match(api.card(r), /배정 요청/);
   assert.doesNotMatch(api.card(r), /즉시 출고|입고 예정|[0-9]+대/);
   const notes = [...api.card(r).matchAll(/href="([^"]+)"/g)].map(m => new URL(m[1].replace(/&amp;/g, '&'), 'https://benzpro.co.kr/').searchParams.get('note'));
   assert.ok(notes.some(note => note.includes(r.exterior) && note.includes(r.interior)));

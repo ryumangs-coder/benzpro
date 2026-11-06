@@ -71,8 +71,8 @@
       if (accent & bit) classes += ' ready-a' + bit;
       rails += '<i class="ready-rail-' + bit + (accent & bit ? ' on' : '') + '"></i>';
     });
-    var label = r.name + ' ' + r.my + ', 외장 ' + r.exterior + ', 실내 ' + r.interior + ' 조합으로 실시간 잔여 재고 배정 신청 (선착순)';
-    return '<tr class="ready-combo' + classes + '"><td><span class="ready-rails" aria-hidden="true">' + rails + '</span>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">실시간 잔여 재고<span>배정 신청 (선착순)</span></a></td></tr>';
+    var label = r.name + ' ' + r.my + ', 외장 ' + r.exterior + ', 실내 ' + r.interior + ' 조합 배정 요청';
+    return '<tr class="ready-combo' + classes + '"><td><span class="ready-rails" aria-hidden="true">' + rails + '</span>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td><td><a class="ready-ask" aria-label="' + esc(label) + '" href="' + esc(consult(r)) + '">배정 요청</a></td></tr>';
   }
   function table(rows, label, grouped, years) {
     var previous = '';
@@ -85,7 +85,7 @@
       if (grouped && previous !== name) { heading = '<tr class="ready-group"><th colspan="3" scope="rowgroup">' + esc(name) + '</th></tr>'; previous = name; }
       return heading + combo(r);
     }).join('');
-    return '<div class="ready-table-block"><div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">배정 신청</th></tr></thead><tbody>' + body + '</tbody></table></div><div class="ready-scroll-actions"><button type="button" class="ready-scroll-next"><span aria-hidden="true">↓</span> 아래 조합 더 보기</button><span class="ready-scroll-end" hidden>마지막 조합입니다</span><button type="button" class="ready-scroll-top" hidden>↑ 처음으로</button></div></div>';
+    return '<div class="ready-table-block"><div class="ready-table-scroll' + (grouped ? ' ready-table-all' : '') + '" tabindex="0" role="region" aria-label="' + esc(label) + '"><table class="ready-table"><caption class="ready-sr">' + esc(label) + '</caption><thead><tr><th scope="col">차 밖 색상</th><th scope="col">실내 색상</th><th scope="col">배정 요청</th></tr></thead><tbody>' + body + '</tbody></table></div><div class="ready-scroll-actions"><button type="button" class="ready-scroll-next"><span aria-hidden="true">↓</span> 아래 조합 더 보기</button><span class="ready-scroll-end" hidden>마지막 조합입니다</span><button type="button" class="ready-scroll-top" hidden>↑ 처음으로</button></div></div>';
   }
   function card(row) {
     if (!snapshot().asOf) return '';
@@ -140,13 +140,26 @@
   function mountHomeBoard() {
     var host = document.getElementById('home-stock-list');
     if (!host) return;
+    var priority = [
+      /^e 200 exclusive$/, /^e 200 amg line$/,
+      /^e 300 4matic exclusive$/, /^e 300 4matic amg line$/,
+      /^glc 300 4matic(?: (?:avantgarde|amg line airmatic®))?$/,
+      /^gle 350 4matic$/, /^gle 450 4matic$/,
+      /^gls 450 4matic$/, /^gls 580 4matic$/
+    ];
+    function rank(row) {
+      var model = key(row.name);
+      var index = priority.findIndex(function (pattern) { return pattern.test(model); });
+      return index === -1 ? priority.length : index;
+    }
     var stock = snapshot();
+    var ordered = stock.combinations.slice().sort(function (a, b) { return rank(a) - rank(b); });
     host.innerHTML = '<p class="ready-note">' + esc(stock.asOf) + ' 재고표 스냅샷</p><label>차종·색상 검색<input type="search" placeholder="예: E200, GLB250, 베이지"></label><p class="ready-results" aria-live="polite"></p><div class="hp-board-results"></div>';
     var input = host.querySelector('input');
     var results = host.querySelector('.hp-board-results');
     var status = host.querySelector('.ready-results');
     function render() {
-      var rows = stock.combinations.filter(function (r) { return searchMatches(r, input.value.trim()); });
+      var rows = ordered.filter(function (r) { return searchMatches(r, input.value.trim()); });
       status.textContent = rows.length ? '' : '표시할 색상 조합이 없습니다.';
       results.innerHTML = rows.length ? table(rows, '차종·연식별 외장·실내 색상 조합', true) : '';
     }
@@ -156,7 +169,7 @@
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
-    host.innerHTML = '<details class="ready-catalogue"><summary>외장·실내 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고 일정은 상담에서 확인해 주세요.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="차종별 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 배정 신청을 누르시면 됩니다.</p></details>';
+    host.innerHTML = '<details class="ready-catalogue"><summary>외장·실내 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고 일정은 상담에서 확인해 주세요.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="차종별 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 배정 요청을 누르시면 됩니다.</p></details>';
     var details = host.querySelector('details'), input = host.querySelector('input'), grid = host.querySelector('.ready-catalogue-grid');
     function render() {
       var rows = snapshot().combinations.filter(function (r) { return searchMatches(r, input.value); });

@@ -1129,7 +1129,6 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 .hp-filter-group legend{padding:0;margin-bottom:10px;font-size:16px;font-weight:700;color:#f0e4cc}
 .hp-filter-options{display:flex;flex-wrap:wrap;gap:8px}
 
-
 /* Landing stock board and purchase reading list */
 .hp-stock-board,.hp-insights fieldset{border:1px solid #49606a;border-radius:16px;padding:clamp(16px,4vw,36px);background:#0c1b23}
 .hp-stock-board{background:#0a1419;border-top:3px solid #e4cb86}
@@ -1155,3 +1154,27 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 .hp-stock-board .ready-table-scroll{background:#101b22;border-color:#49606a}
 .hp-stock-board .ready-table thead th{background:#26343c;color:#f0d894}
 .hp-stock-board .ready-combo:nth-child(even){background:#15232a}
+
+/* Terminal display and editorial index */
+.hp-stock-board{background:linear-gradient(145deg,#172128,#090f14 55%);box-shadow:0 20px 55px #0005,inset 0 1px #fff1}
+.hp-stock-board .hp-board-kicker span{color:#ffdc84;text-shadow:0 0 12px #ffd071}
+.hp-stock-board h2{overflow:hidden;perspective:500px}
+.hp-stock-board h2 span{display:block}
+.hp-stock-board .hp-btn{background:#f0d58d;color:#17202a;box-shadow:0 0 20px #eac86b35}
+.hp-stock-board .hp-btn:hover,.hp-stock-board .hp-btn:focus-visible{background:#ffe7a7;box-shadow:0 0 24px #eac86b60}
+.hp-stock-board .ready-group th{background:linear-gradient(#26353f 49%,#10181e 50%,#1a2933 52%);padding-block:12px}
+.hp-insights li a{position:relative}
+.hp-insight-copy{display:grid;justify-items:start;gap:.35rem;min-width:0}
+.hp-insight-tag{border:1px solid #536775;border-radius:4px;padding:1px 6px;color:#cddce6;font-size:.75rem}
+.hp-insight-title{text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.25em;overflow-wrap:anywhere}
+.hp-insights li a:hover,.hp-insights li a:focus-visible{background:linear-gradient(110deg,#b6ddff26,#b6ddff0c)}
+.hp-insights li a:hover .hp-insight-title,.hp-insights li a:focus-visible .hp-insight-title{text-decoration-color:currentColor}
+@media(prefers-reduced-motion:no-preference){
+  .hp-stock-board h2 span{animation:hp-board-flip .46s ease-out both;transform-origin:center top}
+  .hp-insight-title,.hp-insights li a::after{transition:text-decoration-color .18s,transform .18s}
+  .hp-insights li a:hover::after,.hp-insights li a:focus-visible::after{transform:translate(2px,-2px)}
+}
+@keyframes hp-board-flip{
+  from{transform:rotateX(-32deg) translateY(8px);opacity:.55}
+  to{transform:none;opacity:1}
+}
