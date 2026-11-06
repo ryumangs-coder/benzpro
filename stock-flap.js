@@ -53,12 +53,4 @@
   heading.classList.add('ready-sr');
   heading.parentNode.append(title);
   reveal(!reducedMotion);
-  var search = document.querySelector('#home-stock-list input');
-  if (search && !reducedMotion) {
-    var timer;
-    search.addEventListener('input', function () {
-      clearTimeout(timer);
-      timer = setTimeout(function () { reveal(true); }, 220);
-    });
-  }
 })();

@@ -140,31 +140,35 @@
   function mountHomeBoard() {
     var host = document.getElementById('home-stock-list');
     if (!host) return;
-    var priority = [
-      /^e 200 exclusive$/, /^e 200 amg line$/,
-      /^e 300 4matic exclusive$/, /^e 300 4matic amg line$/,
-      /^glc 300 4matic(?: (?:avantgarde|amg line airmatic®))?$/,
-      /^gle 350 4matic$/, /^gle 450 4matic$/,
-      /^gls 450 4matic$/, /^gls 580 4matic$/
-    ];
-    function rank(row) {
-      var model = key(row.name);
-      var index = priority.findIndex(function (pattern) { return pattern.test(model); });
-      return index === -1 ? priority.length : index;
-    }
     var stock = snapshot();
-    var ordered = stock.combinations.slice().sort(function (a, b) { return rank(a) - rank(b); });
-    host.innerHTML = '<p class="ready-note">' + esc(stock.asOf) + ' 재고표 스냅샷</p><label>차종·색상 검색<input type="search" placeholder="예: E200, GLB250, 베이지"></label><p class="ready-results" aria-live="polite"></p><div class="hp-board-results"></div>';
-    var input = host.querySelector('input');
-    var results = host.querySelector('.hp-board-results');
-    var status = host.querySelector('.ready-results');
-    function render() {
-      var rows = ordered.filter(function (r) { return searchMatches(r, input.value.trim()); });
-      status.textContent = rows.length ? '' : '표시할 색상 조합이 없습니다.';
-      results.innerHTML = rows.length ? table(rows, '차종·연식별 외장·실내 색상 조합', true) : '';
+    // Preferences only. Every displayed value comes from the dated snapshot.
+    var featured = [
+      ['E 200 Exclusive', '그라파이트 그레이', '블랙'],
+      ['E 300 4MATIC Exclusive', '폴라 화이트', '통카 브라운'],
+      ['GLC 300 4MATIC', '옵시디안 블랙', '시에나 브라운'],
+      ['GLE 450 4MATIC Coupe AMG Line', '셀레나이트 그레이', '블랙'],
+      ['GLS 450 4MATIC AMG Line', '폴라 화이트', '마키아토 베이지']
+    ];
+    var rows = featured.map(function (choice) {
+      var modelRows = stock.combinations.filter(function (r) { return r.name === choice[0]; });
+      return modelRows.find(function (r) {
+        return r.exterior.indexOf(choice[1]) >= 0 && r.interior.indexOf(choice[2]) >= 0;
+      }) || modelRows[0];
+    }).filter(Boolean);
+    var date = stock.asOf ? '<p class="ready-note">' + esc(stock.asOf) + ' 재고표 스냅샷</p>' : '';
+    if (!rows.length) {
+      host.innerHTML = date + '<p>표시할 색상 조합이 없습니다.</p>';
+      return;
     }
-    input.addEventListener('input', render);
-    render();
+
+    var body = rows.map(function (r) {
+      var year = r.my.replace('MY', '20') + '년식';
+      return '<tr><th scope="row"><strong>' + esc(r.name) + '</strong><small>' + esc(year) + '</small></th>' +
+        '<td>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td>' +
+        '<td><a class="ready-ask" href="' + esc(consult(r)) + '" aria-label="' + esc(r.name + ' ' + year + ' 배정 신청') + '">배정 신청</a></td></tr>';
+    }).join('');
+    host.innerHTML = date + '<table class="hp-featured-stock"><caption class="ready-sr">대표 차종의 외장·실내 색상 조합</caption>' +
+      '<thead><tr><th scope="col">차종·연식</th><th scope="col">외장</th><th scope="col">실내</th><th scope="col">배정</th></tr></thead><tbody>' + body + '</tbody></table>';
   }
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
