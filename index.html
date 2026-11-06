@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="chrome.css?v=20261104-insights" />
 <link rel="stylesheet" href="site.css?v=20261028a" />
-  <link rel="stylesheet" href="home.css?v=20261107-flap" />
+  <link rel="stylesheet" href="home.css?v=20261107-compact" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://benzpro.co.kr/#organization","name":"벤츠프로","url":"https://benzpro.co.kr/","logo":{"@type":"ImageObject","url":"https://benzpro.co.kr/images/brand/icon-512.png","width":512,"height":512}},{"@type":"WebSite","@id":"https://benzpro.co.kr/#website","name":"벤츠프로","url":"https://benzpro.co.kr/","inLanguage":"ko-KR","publisher":{"@id":"https://benzpro.co.kr/#organization"}},{"@type":"WebPage","url":"https://benzpro.co.kr/","name":"벤츠프로 | 메르세데스-벤츠 코리아 공식 파트너 김민구 차장","description":"메르세데스-벤츠 코리아 공식 파트너 김민구 차장의 프리미엄 포털. 최신 공식 프로모션 분석, 차종별 맞춤 금융 솔루션(리스·장기렌트·할부), 실시간 견적 및 사전예약 가이드.","isPartOf":{"@id":"https://benzpro.co.kr/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://benzpro.co.kr/assets/og-image.jpg"},"inLanguage":"ko-KR"}]}</script>
     <link rel="stylesheet" href="ready-stock.css?v=20261107-flap" />
@@ -67,21 +67,15 @@
       <div class="showroom-bottom hp-wrap"><p>메르세데스-벤츠 모터원 고양전시장</p><button type="button" class="showroom-play" aria-label="배경 영상 재생" hidden>영상 재생 <span aria-hidden="true">▷</span></button></div>
     </section>
 
-    <section class="hp-section" id="stock-board" aria-labelledby="stock-board-title">
-      <div class="hp-wrap">
-        <div class="hp-stock-board">
-          <p class="hp-board-kicker"><span aria-hidden="true">●</span> STOCK BOARD</p>
+    <div class="hp-wrap hp-purchase-grid">
+      <section class="hp-stock-board" id="stock-board" aria-labelledby="stock-board-title">
           <h2 id="stock-board-title"><span>11월 출고 상담 재고 현황판</span></h2>
-          <p>입고 및 입고 예정 색상 조합입니다. 배정 가능 여부와 예상 출고일은 상담에서 확인해 주세요.</p>
+          <p>배정 가능 여부와 예상 출고일은 상담에서 확인하세요.</p>
           <div id="home-stock-list"></div>
           <a class="hp-btn" href="#consulting">재고 배정 요청</a>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="hp-section" id="purchase-insights" aria-labelledby="purchase-insights-title">
-      <div class="hp-wrap hp-insights">
-        <p class="hp-board-kicker">BENZ PRO INSIGHTS</p>
+      <section class="hp-insights" id="purchase-insights" aria-labelledby="purchase-insights-title">
         <h2 id="purchase-insights-title">벤츠프로 인사이트</h2>
         <fieldset>
           <legend class="ready-sr">구매 인사이트 주제</legend>
@@ -100,8 +94,8 @@
             <li><a href="https://mercedes.benzpro.co.kr/posts/%EB%B2%95%EC%9D%B8-%EB%A6%AC%EC%8A%A4-%EB%8C%80%ED%91%9C%EB%8B%98-%ED%95%84%EC%88%98-%ED%99%95%EC%9D%B8-27%EB%85%84%EC%8B%9D-S%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%97%B0%EB%91%90%EC%83%89-%EB%B2%88%ED%98%B8%ED%8C%90-%EC%A0%88%EC%84%B8-%EA%B0%80%EC%9D%B4%EB%93%9C" target="_blank" rel="noopener noreferrer"><span class="hp-insight-copy"><span class="hp-insight-tag">법인 리스</span><span class="hp-insight-title">법인 리스 대표님 필수 확인 27년식 S클래스 연두색 번호판 절세 가이드</span><span class="ready-sr"> (새 창)</span></span></a></li>
           </ol>
         </fieldset>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <section class="advisor-panel" id="advisor-panel" aria-labelledby="advisor-title" hidden inert>
       <div class="advisor-inner hp-wrap">
