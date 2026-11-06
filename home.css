@@ -1237,17 +1237,19 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 .hp-featured-stock tbody th strong,.hp-featured-stock .ready-color small{font-size:clamp(18px,1.8vw,21px);line-height:1.25;word-break:keep-all;overflow-wrap:break-word}
 .hp-featured-stock tbody th small{font-size:13px;font-variant-numeric:tabular-nums}
 .hp-stock-roll{display:block;overflow:hidden;perspective:320px}
-.hp-stock-roll>span{display:block;transform-origin:center bottom}
+.hp-stock-roll-in{transform-origin:center bottom}
 .advisor-bio>p{line-height:1.75;letter-spacing:.005em}
 @media(prefers-reduced-motion:no-preference){
-  .hp-stock-is-rolling .hp-stock-roll>span{animation:hp-stock-roll-in .48s cubic-bezier(.22,.7,.35,1) var(--stock-delay) both}
-  .hp-stock-is-rolling .hp-stock-snapshot>span{animation:hp-stock-led .45s ease-in-out 3 alternate}
+  .hp-stock-roll-in{animation:hp-stock-roll-in .48s cubic-bezier(.22,.7,.35,1) var(--stock-delay,0ms) both}
 }
 @keyframes hp-stock-roll-in{
-  from{transform:translateY(-105%) rotateX(-75deg);opacity:0}
-  to{transform:translateY(0) rotateX(0);opacity:1}
+  from{transform:translateY(95%) rotateX(-55deg);opacity:0;text-shadow:0 0 8px #ffc653}
+  to{transform:translateY(0) rotateX(0);opacity:1;text-shadow:none}
 }
-@keyframes hp-stock-led{to{opacity:.35}}
 @media(max-width:680px){
   .hp-featured-stock tbody th strong,.hp-featured-stock .ready-color small{font-size:clamp(14px,4vw,18px)}
 }
+
+.hp-featured-stock .ready-color small{font-size:clamp(18px,1.9vw,22px)}
+.hp-stock-pause{margin-top:7px;min-height:32px;padding:4px 8px;border:1px solid #61717d;border-radius:5px;background:#1c2730;color:#f1f5f7;font:inherit;cursor:pointer}
+@media(max-width:680px){.hp-featured-stock .ready-color small{font-size:clamp(14px,4vw,18px)}}

@@ -137,11 +137,7 @@
     new MutationObserver(function () { if (!scheduled) { scheduled = true; requestAnimationFrame(scan); } }).observe(document.body, {childList:true, subtree:true});
     scan();
   }
-  function mountHomeBoard() {
-    var host = document.getElementById('home-stock-list');
-    if (!host) return;
-    var stock = snapshot();
-    // Preferences only. Every displayed value comes from the dated snapshot.
+  function featuredGroups(stock) {
     var featured = [
       ['E 200 Exclusive', '그라파이트 그레이', '블랙'],
       ['E 300 4MATIC Exclusive', '폴라 화이트', '통카 브라운'],
@@ -149,26 +145,78 @@
       ['GLE 450 4MATIC Coupe AMG Line', '셀레나이트 그레이', '블랙'],
       ['GLS 450 4MATIC AMG Line', '폴라 화이트', '마키아토 베이지']
     ];
-    var rows = featured.map(function (choice) {
+    return featured.map(function (choice) {
       var modelRows = stock.combinations.filter(function (r) { return r.name === choice[0]; });
-      return modelRows.find(function (r) {
+      var first = modelRows.find(function (r) {
         return r.exterior.indexOf(choice[1]) >= 0 && r.interior.indexOf(choice[2]) >= 0;
       }) || modelRows[0];
-    }).filter(Boolean);
+      if (!first) return [];
+      var peers = modelRows.filter(function (r) { return r !== first && r.my === first.my; });
+      // Show distinct exterior colors first, then fill with other interiors.
+      var used = new Set([first.exterior]);
+      var varied = peers.filter(function (r) {
+        if (used.has(r.exterior)) return false;
+        used.add(r.exterior);
+        return true;
+      });
+      return [first].concat(varied, peers.filter(function (r) { return !varied.includes(r); })).slice(0, 4);
+    }).filter(function (group) { return group.length; });
+  }
+  window.BenzReadyStock.featuredGroups = featuredGroups;
+  window.BenzReadyStock.consult = consult;
+
+  function mountHomeBoard() {
+    var host = document.getElementById('home-stock-list');
+    if (!host) return;
+    var stock = snapshot();
+    var groups = featuredGroups(stock);
     var date = stock.asOf ? '<p class="ready-note hp-stock-snapshot"><span aria-hidden="true"></span>' + esc(stock.asOf) + ' 재고표 스냅샷</p>' : '';
-    if (!rows.length) {
+    if (!groups.length) {
       host.innerHTML = date + '<p>표시할 색상 조합이 없습니다.</p>';
       return;
     }
 
-    var body = rows.map(function (r) {
-      var year = r.my.replace('MY', '20') + '년식';
-      return '<tr><th scope="row"><strong>' + esc(r.name) + '</strong><small>' + esc(year) + '</small></th>' +
-        '<td>' + swatch(r.exterior) + '</td><td>' + swatch(r.interior) + '</td>' +
+    function colorCell(color, delay, animate) {
+      return '<div class="hp-stock-roll"' + (animate ? ' style="--stock-delay:' + delay + 'ms"' : '') + '>' +
+        '<div' + (animate ? ' class="hp-stock-roll-in"' : '') + '>' + swatch(color) + '</div></div>';
+    }
+    var body = groups.map(function (group) {
+      var r = group[0], year = r.my.replace('MY', '20') + '년식';
+      var badge = r.my === 'MY27' ? ' <em class="bp-new">NEW</em>' : '';
+      return '<tr><th scope="row"><strong>' + esc(r.name) + '</strong><small data-year-decorated>' + esc(year) + badge + '</small></th>' +
+        '<td>' + colorCell(r.exterior, 0, false) + '</td><td>' + colorCell(r.interior, 0, false) + '</td>' +
         '<td><a class="ready-ask" href="' + esc(consult(r)) + '" aria-label="' + esc(r.name + ' ' + year + ' 배정 신청') + '">배정 신청</a></td></tr>';
     }).join('');
     host.innerHTML = date + '<table class="hp-featured-stock"><caption class="ready-sr">대표 차종의 외장·실내 색상 조합</caption>' +
       '<thead><tr><th scope="col">차종·연식</th><th scope="col">외장</th><th scope="col">실내</th><th scope="col">배정</th></tr></thead><tbody>' + body + '</tbody></table>';
+
+    var rows = Array.from(host.querySelectorAll('tbody tr'));
+    var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!groups.some(function (group) { return group.length > 1; })) return;
+    var control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'hp-stock-pause';
+    host.append(control);
+    var paused = motion.matches;
+    var round = 0;
+    function syncButton() { control.textContent = paused ? '색상 순환 시작' : '색상 순환 일시정지'; }
+    syncButton();
+    control.addEventListener('click', function () { paused = !paused; syncButton(); });
+    motion.addEventListener('change', function (event) { if (event.matches) { paused = true; syncButton(); } });
+
+    window.setInterval(function () {
+      var bounds = host.getBoundingClientRect();
+      if (paused || document.hidden || (host.contains(document.activeElement) && document.activeElement !== control) ||
+          host.querySelector('table:hover') || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
+      round++;
+      rows.forEach(function (row, index) {
+        var group = groups[index], current = group[round % group.length];
+        if (group.length < 2) return;
+        row.cells[1].innerHTML = colorCell(current.exterior, index * 90, !motion.matches);
+        row.cells[2].innerHTML = colorCell(current.interior, index * 90, !motion.matches);
+        row.querySelector('.ready-ask').href = consult(current);
+      });
+    }, 2800);
   }
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
