@@ -1105,3 +1105,56 @@ html.bp-fx .bp-mark.bp-mark-run {
   body .bp-dock .bp-dock-top{position:static;width:36px;height:40px;border-radius:6px;box-shadow:none}
   body .bp-dock a{height:40px;padding-inline:6px;border-radius:6px;box-shadow:none}
 }
+
+.bp-page-layout { --bp-toc-top: 60px; }
+.bp-left-toc { display: none; }
+@media (min-width: 1200px) {
+  .bp-page-layout {
+    display: grid;
+    grid-template-columns: clamp(10rem, 14vw, 13rem) minmax(0, 1fr);
+    gap: 1rem;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  .bp-page-layout > main { grid-area: 1 / 2; min-width: 0; width: 100%; }
+  .bp-left-toc {
+    display: block;
+    grid-area: 1 / 1;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--bp-toc-top) + 1rem);
+    max-height: calc(100dvh - var(--bp-toc-top) - 2rem);
+    margin-top: 1rem;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    border: 1px solid #344954;
+    border-radius: 1rem;
+    background: #0b1f2a;
+    padding: 0.75rem;
+  }
+  .bp-left-toc > p {
+    margin: 0 0 0.5rem;
+    padding-inline: 0.6rem;
+    color: #e4cb86;
+    font-size: 0.875rem;
+    font-weight: 800;
+  }
+  .bp-left-toc a {
+    display: block;
+    padding: 0.55rem 0.6rem;
+    border-radius: 0.5rem;
+    color: #d8e2e9;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .bp-left-toc a:hover,
+  .bp-left-toc a:focus-visible,
+  .bp-left-toc a[aria-current] {
+    color: #ffe3a2;
+    background: #1b3543;
+  }
+  .bp-left-toc a:focus-visible { outline: 2px solid #e4cb86; }
+}

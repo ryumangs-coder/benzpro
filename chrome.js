@@ -63,7 +63,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261108-sticky";
+    css.href = "chrome.css?v=20261108-left-toc";
     document.head.appendChild(css);
   }
 
@@ -268,10 +268,61 @@
         if (intro) intro.after(chips);
       }
     }
+    var layout = document.createElement("div");
+    layout.className = "bp-page-layout";
+    main.before(layout);
+    var toc = document.createElement("nav");
+    toc.className = "bp-left-toc";
+    toc.setAttribute("aria-label", "본문 목차");
+    var tocTitle = document.createElement("p");
+    tocTitle.textContent = "본문 목차";
+    var tocLinks = document.createElement("div");
+    toc.append(tocTitle, tocLinks);
+    layout.append(toc, main);
+
+    var desktop = window.matchMedia("(min-width: 1200px)");
+    var previousHeadings = [];
+    var nextHeadingId = 1;
+    function refreshHeadings() {
+      var selector = file === "prices" ? "h2, #november-shortcuts h3, #ready-stock-catalogue summary" : "h2";
+      var headings = Array.from(main.querySelectorAll(selector)).filter(function (heading) {
+        return heading.textContent.trim() && !heading.closest("[aria-hidden=true]") &&
+          (!heading.closest("details") || heading.matches("summary")) && heading.getClientRects().length;
+      });
+      if (!headings.length) headings = [main.querySelector("h1") || main];
+      var labels = headings.map(function (heading) {
+        return heading === main ? "본문 처음" : heading.textContent.trim().replace(/\s+/g, " ");
+      });
+      if (labels.length === previousHeadings.length && headings.every(function (heading, index) {
+        return heading === previousHeadings[index].heading && labels[index] === previousHeadings[index].label;
+      })) return;
+      tocLinks.replaceChildren();
+      previousHeadings = headings.map(function (heading, index) {
+        if (!heading.id) {
+          var id;
+          do { id = "bp-toc-section-" + nextHeadingId++; }
+          while (document.getElementById(id));
+          heading.id = id;
+        }
+        var link = document.createElement("a");
+        link.href = "#" + heading.id;
+        link.textContent = labels[index];
+        link.setAttribute("data-spy", "");
+        tocLinks.append(link);
+        return { heading: heading, label: labels[index] };
+      });
+    }
+
+    var header = document.getElementById("bp-head");
+    function measureHeader() {
+      if (header) layout.style.setProperty("--bp-toc-top", header.offsetHeight + "px");
+    }
+    measureHeader();
+    if (header && window.ResizeObserver) new ResizeObserver(measureHeader).observe(header);
     var pending = false;
     function update() {
       pending = false;
-      var groups = document.querySelectorAll('aside nav, .bp-shortcuts');
+      var groups = document.querySelectorAll('aside nav, .bp-shortcuts, .bp-left-toc');
       groups.forEach(function (nav) {
         var links = Array.from(nav.querySelectorAll('a[data-spy][href^="#"]'));
         var targets = links.map(function (link) {
@@ -281,8 +332,11 @@
         }).filter(function (item) { return item.target && item.target.getClientRects().length; });
         targets.sort(function (a, b) { return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top; });
         var current = targets[0];
+        var isLeftToc = nav === toc;
+        var scrollPadding = isLeftToc ? parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0 : 0;
         targets.forEach(function (item) {
-          if (item.target.getBoundingClientRect().top <= 150) current = item;
+          var limit = isLeftToc ? scrollPadding + (parseFloat(getComputedStyle(item.target).scrollMarginTop) || 0) + 2 : 150;
+          if (item.target.getBoundingClientRect().top <= limit) current = item;
         });
         links.forEach(function (link) {
           if (current && link === current.link) link.setAttribute("aria-current", "location");
@@ -294,7 +348,7 @@
       if (!pending) { pending = true; requestAnimationFrame(update); }
     }
     document.addEventListener("click", function (event) {
-      var link = event.target.closest('.bp-shortcuts a, aside a[data-spy]');
+      var link = event.target.closest('.bp-shortcuts a, .bp-left-toc a, aside a[data-spy]');
       if (event.defaultPrevented || !link || !link.getAttribute("href").startsWith("#") || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       var target = document.getElementById(link.hash.slice(1));
       if (!target) return;
@@ -303,10 +357,25 @@
       history.replaceState(null, "", link.hash);
     });
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    window.addEventListener("load", schedule);
-    if (window.ResizeObserver) new ResizeObserver(schedule).observe(main);
-    if (window.MutationObserver) new MutationObserver(schedule).observe(main, { subtree: true, attributes: true, attributeFilter: ["class"] });
+    var refreshPending = false;
+    function scheduleRefresh() {
+      if (refreshPending) return;
+      refreshPending = true;
+      requestAnimationFrame(function () {
+        refreshPending = false;
+        if (desktop.matches) refreshHeadings();
+        schedule();
+      });
+    }
+    desktop.addEventListener("change", scheduleRefresh);
+    window.addEventListener("resize", scheduleRefresh);
+    window.addEventListener("load", scheduleRefresh);
+    if (window.ResizeObserver) new ResizeObserver(scheduleRefresh).observe(main);
+    if (window.MutationObserver) new MutationObserver(scheduleRefresh).observe(main, {
+      subtree: true, childList: true, characterData: true, attributes: true,
+      attributeFilter: ["class", "hidden", "aria-hidden"]
+    });
+    if (desktop.matches) refreshHeadings();
     update();
   }
 
