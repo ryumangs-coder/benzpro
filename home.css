@@ -1269,3 +1269,10 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 .hp-featured-stock .ready-color small{font-size:clamp(18px,1.9vw,22px)}
 .hp-stock-pause{margin-top:7px;min-height:32px;padding:4px 8px;border:1px solid #61717d;border-radius:5px;background:#1c2730;color:#f1f5f7;font:inherit;cursor:pointer}
 @media(max-width:680px){.hp-featured-stock .ready-color small{font-size:clamp(14px,4vw,18px)}}
+
+/* Latest purchase Insights loading and fallback states */
+.hp-insight-skeleton{min-height:108px;border:1px solid #ffffff26!important;border-radius:6px;background:linear-gradient(100deg,#1b232b 20%,#33404d 48%,#1b232b 76%);background-size:220% 100%}
+.hp-purchase-grid .hp-insight-load-error{display:none;margin-top:6px;color:#e4cb86}
+#insight-tax:checked~[data-insight-list="insight-tax-titles"],#insight-finance:checked~[data-insight-list="insight-finance-titles"]{display:block}
+@media(prefers-reduced-motion:no-preference){.hp-insight-skeleton{animation:hp-insight-loading 1.35s linear infinite}}
+@keyframes hp-insight-loading{from{background-position:100% 0}to{background-position:0 0}}

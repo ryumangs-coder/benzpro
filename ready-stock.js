@@ -170,7 +170,7 @@
     if (!host) return;
     var stock = snapshot();
     var groups = featuredGroups(stock);
-    var date = stock.asOf ? '<p class="ready-note hp-stock-snapshot"><span aria-hidden="true"></span>' + esc(stock.asOf) + ' 재고표 스냅샷</p>' : '';
+    var date = stock.asOf ? '<p class="ready-note hp-stock-snapshot"><span aria-hidden="true"></span>' + esc(stock.asOf) + ' 최신 업데이트</p>' : '';
     if (!groups.length) {
       host.innerHTML = date + '<p>표시할 색상 조합이 없습니다.</p>';
       return;
@@ -230,7 +230,7 @@
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
-    host.innerHTML = '<details class="ready-catalogue"><summary>외장·실내 색상표 보기</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고 일정은 상담에서 확인해 주세요.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="차종별 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 배정 요청을 누르시면 됩니다.</p></details>';
+    host.innerHTML = '<details class="ready-catalogue"><summary title="재고표 기준 차종별 외장·실내 색상 조회">출고 상담 가능 컬러 조회</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고 일정은 상담에서 확인해 주세요.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="차종별 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 배정 요청을 누르시면 됩니다.</p></details>';
     var details = host.querySelector('details'), input = host.querySelector('input'), grid = host.querySelector('.ready-catalogue-grid');
     function render() {
       var rows = snapshot().combinations.filter(function (r) { return searchMatches(r, input.value); });
@@ -239,6 +239,11 @@
     }
     input.addEventListener('input', render);
     details.addEventListener('toggle', function () { if (details.open) render(); });
+    function openLinkedCatalogue() {
+      if (location.hash === '#ready-stock-catalogue') details.open = true;
+    }
+    window.addEventListener('hashchange', openLinkedCatalogue);
+    openLinkedCatalogue();
   }
   if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded', function () { mount(); mountHomeBoard(); mountScrollControls(); });
 })();

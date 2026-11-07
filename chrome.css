@@ -1079,3 +1079,15 @@ html.bp-fx .bp-mark.bp-mark-run {
 @media(max-width:389px) {
   #bp-head .bp-markline { flex-wrap:wrap; gap:0.2rem 0.35rem; }
 }
+
+/* Reading progress and shared quick actions */
+.bp-scroll-progress{position:absolute;inset-inline:0;bottom:0;height:3px;background:#e4cb86;transform:scaleX(0);transform-origin:left center;pointer-events:none}
+.bp-dock .bp-dock-quote,.bp-dock .bp-dock-stock{background:#203744;color:#fff;border:1px solid #687d8b}
+@media(max-width:600px){
+  body .bp-dock{right:50%;bottom:calc(.5rem + env(safe-area-inset-bottom));flex-direction:row;align-items:center;gap:4px;transform:translateX(50%)}
+  body .bp-dock a{width:auto;min-width:0;padding-inline:8px;gap:4px}
+  body .bp-dock svg{width:16px;height:16px}
+  body .bp-dock .bp-dock-label{font-size:12px}
+  body .bp-dock a.bp-dock-yt{display:none!important}
+  body .bp-dock.has-top button.bp-dock-top{display:inline-flex!important}
+}

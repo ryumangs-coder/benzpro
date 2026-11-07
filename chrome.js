@@ -63,7 +63,7 @@
   if (!document.querySelector('link[href^="chrome.css"]')) {
     var css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "chrome.css?v=20261104-insights";
+    css.href = "chrome.css?v=20261108-ux";
     document.head.appendChild(css);
   }
 
@@ -123,9 +123,11 @@
 
   var dock = document.createElement("nav");
   dock.className = "bp-dock";
-  dock.setAttribute("aria-label", "문의");
+  dock.setAttribute("aria-label", "빠른 메뉴");
   dock.innerHTML =
     '<button type="button" class="bp-dock-top" aria-label="맨 위로" title="맨 위로">' + I.up + "</button>" +
+    '<a class="bp-dock-quote" href="quote.html" aria-label="빠른 견적 문의" title="빠른 견적 문의">' + I.calc + '<span class="bp-dock-label" aria-hidden="true">견적</span></a>' +
+    '<a class="bp-dock-stock" href="prices.html#ready-stock-catalogue" aria-label="출고 상담 가능 컬러 조회" title="출고 상담 가능 컬러 조회">' + I.car + '<span class="bp-dock-label" aria-hidden="true">재고</span></a>' +
     '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브" title="유튜브">' + I.yt + '<span class="bp-dock-label" aria-hidden="true">유튜브</span></a>' +
     '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 카카오톡 채널 상담" title="벤츠프로 카카오톡 채널 상담">' + I.talk + '<span class="bp-dock-label" aria-hidden="true">카톡</span></a>' +
     '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의" title="전화 문의">' + I.phone + '<span class="bp-dock-label" aria-hidden="true">전화</span></a>';
@@ -354,6 +356,26 @@
     });
   }
 
+  function mountScrollProgress() {
+    var progress = document.createElement("div");
+    progress.className = "bp-scroll-progress";
+    progress.setAttribute("aria-hidden", "true");
+    head.appendChild(progress);
+    var frame = 0;
+    function paint() {
+      frame = 0;
+      var root = document.scrollingElement || document.documentElement;
+      var range = root.scrollHeight - root.clientHeight;
+      var value = range > 0 ? Math.max(0, Math.min(root.scrollTop / range, 1)) : 0;
+      progress.style.transform = "scaleX(" + value + ")";
+    }
+    function schedule() { if (!frame) frame = requestAnimationFrame(paint); }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    if ("ResizeObserver" in window) new ResizeObserver(schedule).observe(document.body);
+    schedule();
+  }
+
   /* 맨 위로 버튼. 위치는 공통 고정 버튼 영역(.bp-dock) 안에서만 관리합니다. */
   function mountTopButton() {
     var top = dock.querySelector(".bp-dock-top");
@@ -528,6 +550,7 @@
     decorateQuote();
     mountToc();
     mountTopButton();
+    mountScrollProgress();
     fitLogoSub();
     window.addEventListener("resize", function () {
       tidyBars();
