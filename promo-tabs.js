@@ -27,6 +27,7 @@
     { id: "card", label: "카드 결제", icon: icons.card, ids: ["paycard"] }
   ];
   var hashTab = {
+    "ready-stock-catalogue": "cars",
     finder: "cars",
     "promo-board": "cars",
     highlights: "cars",
