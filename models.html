@@ -92,7 +92,8 @@
     <script src="ready-stock-data.js?v=20261105-availability"></script><script src="ready-stock.js?v=20261107-flap"></script><script src="stock.js?v=20261102b"></script>
     <script src="guide-data.js?v=20261105-special"></script>
     <script src="approach-specs.js?v=20261016b"></script>
-    <script src="approach-options.js?v=20261029a"></script>
+    <script src="comparison-my27.js?v=20261107"></script>
+    <script src="approach-options.js?v=20261107"></script>
     <script src="preorder-guides.js?v=20261102-five-seats"></script>
     <script src="spec-fill.js?v=20261028d"></script>
     <script src="spec-updates.js?v=20261102-complete"></script>
@@ -451,6 +452,11 @@
           var n = normName(row.name);
           var same = guideOf(row);
           var newGeneration = row.my === "MY27" && (/^CLA\b/i.test(row.name || "") || /^GLB\b.*electric/i.test(row.name || "") || /^GLC\b.*electric/i.test(row.name || ""));
+          var current = comparisonUpdate(row);
+          if (current) {
+            var equipment = Object.assign({}, same, { name: row.name, year: row.my, gear: current.gear, options: [] });
+            return { spec: same, feat: equipment, borrowed: false, thin: false };
+          }
           var prior = null;
           if (row.my === "MY27" && !newGeneration) {
             prior = book["MY26|" + n] || null;
@@ -509,6 +515,9 @@
           }
           return false;
         }
+        function comparisonUpdate(row) {
+          return row.my === "MY27" && (window.COMPARISON_MY27 || {})[row.name];
+        }
         function bookHit(row) {
           var list = window.APPROACH_SPECS || [];
           var best = null;
@@ -541,6 +550,15 @@
               if (result.replace.indexOf(label) === -1) result.replace.push(label);
             });
           });
+          var current = comparisonUpdate(row);
+          if (current) {
+            current.specs.forEach(function (pair) {
+              var label = pair[0];
+              result.specs = result.specs.filter(function (old) { return canonSpec(old[0]) !== label; });
+              result.specs.push([label, pair[1], { my: row.my }]);
+              if (result.replace.indexOf(label) === -1) result.replace.push(label);
+            });
+          }
           return result.specs.length ? result : null;
         }
         function missingSpec(value) {

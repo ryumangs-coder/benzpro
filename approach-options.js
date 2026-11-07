@@ -55,6 +55,8 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"제공 사양 
       var s = r.need.join("").length + (r.year ? 20 : 0);
       if (s > score) { score = s; best = r; }
     });
+    var current = row.my === "MY27" && (window.COMPARISON_MY27 || {})[row.name];
+    if (current) return { f: current.features, partial: true };
     return best;
   }
 
@@ -94,6 +96,10 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"제공 사양 
   }
 
   function cellOf(rule, feat, rec) {
+    var key = feat.seat || feat.k;
+    if (rule.partial && !Object.prototype.hasOwnProperty.call(rule.f, key)) {
+      return { k: "unknown", t: "확인 필요", d: "", old: "" };
+    }
     if (feat.seat) {
       var rawSeat = rule.f[feat.seat];
       if (rawSeat && seatOn(rawSeat, feat.bit)) return { k: "yes", t: "●", d: "있음", old: "" };
@@ -137,6 +143,7 @@ window.BASIC_OPTIONS = [{"need":["A 220","Hatch"],"not":[],"src":"제공 사양 
           notes.push({ who: names[s[2]], text: feat.label + "은(는) 요약 자료에는 미적용으로 되어 있었지만 기준 사양표에는 기본으로 표시되어 있습니다." });
         }
       });
+      if (left.k === "unknown" && right.k === "unknown") return;
       if (left.k === "no" && right.k === "no" && !feat.always) return;
       var bothNo = left.k === "no" && right.k === "no";
       var differ = !sameCell(feat, left, right) || (feat.always && bothNo);

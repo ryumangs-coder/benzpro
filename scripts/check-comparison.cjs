@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const context = { window: {}, document: { addEventListener() {}, getElementById() { return null; }, readyState: 'loading' } };
 vm.createContext(context);
-for (const file of ['october-2026.js', 'november-retail.js', 'november-2026.js', 'guide-data.js', 'approach-specs.js', 'preorder-guides.js', 'spec-fill.js', 'spec-updates.js', 'compare-specs.js', 'tech-data.js', 'compare-visual.js']) {
+for (const file of ['october-2026.js', 'november-retail.js', 'november-2026.js', 'guide-data.js', 'approach-specs.js', 'comparison-my27.js', 'approach-options.js', 'preorder-guides.js', 'spec-fill.js', 'spec-updates.js', 'compare-specs.js', 'tech-data.js', 'compare-visual.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context, { filename: file });
 }
 const html = fs.readFileSync(path.join(root, 'models.html'), 'utf8');
@@ -67,6 +67,21 @@ const glb = result(models.find(r => r.name === 'GLB 250+ electric'));
 assert.match(glb.find(p => p[0] === '배터리')[2].url, /media\.mercedes-benz\.com/);
 const glbImage = context.window.BenzVisual.modelInfo({name:'GLB 250+ electric',my:'MY27',seg:'Compact'});
 assert.match(glbImage.trim.front, /^https:\/\/api\.media\.mercedes-benz\.com\//);
+const my27 = context.window.COMPARISON_MY27;
+for (const name of Object.keys(my27)) {
+  assert.ok(models.some(row => row.name === name && row.my === 'MY27'), name);
+  assert.equal(context.comparisonUpdate({ name, my: 'MY26' }), false);
+}
+assert.equal(specs('AMG A 45 S 4MATIC+', 'MY27')['복합연비'], '9.3km/L');
+assert.equal(specs('E 200 AMG Line', 'MY27')['타이어'], '245/45 R 19 · 275/40 R 19');
+assert.equal(specs('GLB 250+ electric', 'MY27')['1회 충전 주행거리'], '454km');
+const coupe = 'GLC 300 4MATIC Coupé AMG Line';
+const coupeGear = name => context.featureRecord({ name, my: 'MY27' }).feat.gear.map(item => item[1]);
+assert.ok(!coupeGear(coupe).includes('에어매틱 서스펜션'));
+assert.ok(coupeGear(coupe + ' (이후 생산)').includes('에어매틱 서스펜션'));
+const basics = context.window.BenzBasics;
+assert.equal(basics.ruleOf({ name: 'GLC 300 4MATIC', my: 'MY27' }).f.hud, null);
+assert.equal(basics.ruleOf({ name: 'GLC 300 4MATIC AMG Line', my: 'MY27' }).f.hud, '');
 const cs = context.window.BenzSpecs;
 const reference = {by:'제조사 해외 참고', reference:true};
 assert.equal(cs.row('0-100km/h','4.2초','5초',reference,null,{my:'MY27',pt:'gas'},{my:'MY27',pt:'gas'},false).judge.type, 'plain');
