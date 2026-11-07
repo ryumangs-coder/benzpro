@@ -230,7 +230,7 @@
   function mount() {
     var host = document.getElementById('ready-stock-catalogue');
     if (!host) return;
-    host.innerHTML = '<details class="ready-catalogue"><summary title="재고표 기준 차종별 외장·실내 색상 조회">출고 상담 가능 컬러 조회</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고 일정은 상담에서 확인해 주세요.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="차종별 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 배정 요청을 누르시면 됩니다.</p></details>';
+    host.innerHTML = '<details class="ready-catalogue"><summary title="이번 달 재고표 기준. 즉시 출고 및 배정 가능 여부는 상담에서 확인해 주세요.">이번달 즉시 출고 상담 가능 컬러 조회</summary><p class="ready-note">' + esc(snapshot().asOf) + ' 재고표 기준. 한 줄은 차 밖·실내 색상 조합입니다. 배정 가능 여부와 출고 일정은 상담에서 확인해 주세요.</p><label>차종·색상 검색<input type="search" placeholder="예: GLB250, E200, 베이지" aria-label="차종별 색상 검색"></label><p class="ready-results" aria-live="polite"></p><div class="ready-catalogue-grid"></div><p class="ready-scroll-hint">표 안을 아래로 내려 더 보세요. 원하는 색상 줄에서 배정 요청을 누르시면 됩니다.</p></details>';
     var details = host.querySelector('details'), input = host.querySelector('input'), grid = host.querySelector('.ready-catalogue-grid');
     function render() {
       var rows = snapshot().combinations.filter(function (r) { return searchMatches(r, input.value); });

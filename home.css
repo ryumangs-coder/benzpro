@@ -628,9 +628,6 @@ header.hp-head a[href*="youtube"] {
   transform: translateY(120%);
   pointer-events: none;
 }
-body.hp-home .bp-dock.is-low {
-  bottom: calc(0.75rem + env(safe-area-inset-bottom));
-}
 body.hp-home {
   padding-bottom: calc(5rem + env(safe-area-inset-bottom));
 }
@@ -1095,7 +1092,6 @@ body.hp-home { font-size: 18px; line-height: 1.6; }
 #cta { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; padding: 0.65rem max(0.75rem, env(safe-area-inset-right)) calc(0.65rem + env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left)); background: rgba(8, 20, 28, 0.98); box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.28); }
 #cta a { min-width: 0; min-height: 52px; padding: 0.55rem 0.35rem; font-size: 1.0625rem; line-height: 1.25; }
 #cta a.hp-btn-line { border-color: #9caeb6; }
-body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-bottom)); }
 @media (min-width: 760px) { .hp-grid-2 { gap: 1.25rem; } }
 @media (min-width: 960px) { body.hp-home { padding-bottom: 2rem; } }
 @media (max-width: 759px) { .hp-hero { padding-top: 1.5rem; } }
@@ -1106,10 +1102,6 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
   .hp-section .hp-lead { font-size: 1.0625rem; }
   #cta { gap: 0.45rem; padding-inline: max(0.5rem, env(safe-area-inset-right)); }
   #cta a { font-size: 1rem; }
-}
-@media (max-width: 959px) {
-  body.hp-home:has(#cta:not(.is-away)) .bp-dock .bp-dock-kakao,
-  body.hp-home:has(#cta:not(.is-away)) .bp-dock .bp-dock-tel { display: none !important; }
 }
 
 /* 3차 검토안: 구매 동선을 유지하며 담당자와 오너 가이드 연결. */
@@ -1276,3 +1268,6 @@ body.hp-home .bp-dock:not(.is-low) { bottom: calc(5.25rem + env(safe-area-inset-
 #insight-tax:checked~[data-insight-list="insight-tax-titles"],#insight-finance:checked~[data-insight-list="insight-finance-titles"]{display:block}
 @media(prefers-reduced-motion:no-preference){.hp-insight-skeleton{animation:hp-insight-loading 1.35s linear infinite}}
 @keyframes hp-insight-loading{from{background-position:100% 0}to{background-position:0 0}}
+
+/* The shared quick menu takes over when it is available. */
+body.hp-home:has(.bp-dock) #cta{display:none}

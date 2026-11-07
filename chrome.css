@@ -446,7 +446,6 @@ body.bp-lock {
   }
   body .bp-dock a.bp-dock-yt,
   body .bp-dock button.bp-dock-top { display: none !important; }
-  body.bp-inline-contact .bp-dock { display: none; }
 }
 .bp-dock.is-low {
   bottom: calc(0.75rem + env(safe-area-inset-bottom));
@@ -1090,4 +1089,19 @@ html.bp-fx .bp-mark.bp-mark-run {
   body .bp-dock .bp-dock-label{font-size:12px}
   body .bp-dock a.bp-dock-yt{display:none!important}
   body .bp-dock.has-top button.bp-dock-top{display:inline-flex!important}
+}
+
+/* One persistent quick menu for desktop, tablet, and mobile. */
+@media(min-width:601px){
+  body .bp-dock{right:max(.55rem,env(safe-area-inset-right));bottom:50%;transform:translateY(50%);align-items:stretch;padding:5px;gap:4px;border:1px solid #657780;background:#10222cf2;border-radius:12px}
+  body .bp-dock a{width:auto;min-width:0;height:40px;padding:0 8px;gap:5px;border-radius:6px;box-shadow:none}
+  body .bp-dock svg{width:17px;height:17px}
+  body .bp-dock .bp-dock-label{font-size:12px}
+  body .bp-dock .bp-dock-top{position:static;width:100%;height:32px;border-radius:6px;box-shadow:none}
+  body .bp-dock:not(.has-top) .bp-dock-top{display:none}
+}
+@media(max-width:600px){
+  body .bp-dock{padding:4px;border:1px solid #657780;background:#10222cf2;border-radius:12px}
+  body .bp-dock .bp-dock-top{position:static;width:36px;height:40px;border-radius:6px;box-shadow:none}
+  body .bp-dock a{height:40px;padding-inline:6px;border-radius:6px;box-shadow:none}
 }
