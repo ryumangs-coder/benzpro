@@ -21,3 +21,7 @@
 .bp-quote-page #family .finance-zero-note{margin-bottom:0}
 @media(min-width:1280px){.bp-quote-page #family{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
 @media(max-width:600px){.bp-quote-page #family{grid-template-columns:1fr}}
+@media (max-width: 820px) {
+  .preorder-controls { flex-wrap: wrap; }
+  .preorder-dots { flex: 1 0 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
