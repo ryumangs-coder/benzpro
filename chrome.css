@@ -1158,3 +1158,55 @@ html.bp-fx .bp-mark.bp-mark-run {
   }
   .bp-left-toc a:focus-visible { outline: 2px solid #e4cb86; }
 }
+
+/* Model guides share the contact dock, with a mobile-only reservation link. */
+.bp-dock-model a.bp-dock-reserve { display: none !important; }
+@media (max-width: 767px) {
+  body .bp-dock.bp-dock-model {
+    inset: auto 0 0;
+    transform: none;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 4px;
+    box-sizing: border-box;
+    padding: 6px max(6px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+    background: #0b1f2a;
+    border: 0;
+    border-top: 1px solid #47616e;
+    border-radius: 0;
+  }
+  body .bp-dock-model a.bp-dock-yt,
+  body .bp-dock-model a.bp-dock-reserve { display: inline-flex !important; }
+  body .bp-dock.bp-dock-model a {
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--bp-touch-size);
+    height: auto;
+    padding: 5px 1px;
+    gap: 4px;
+    border-radius: 10px;
+    box-shadow: none;
+  }
+  .bp-dock-model a svg,
+  .bp-dock-model a.bp-dock-yt svg { width: 18px; height: 18px; }
+  body .bp-dock.bp-dock-model .bp-dock-label {
+    font-size: .6875rem;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+  .bp-dock-model a.bp-dock-reserve {
+    background: #a6d1ff;
+    color: #0b263c;
+  }
+  html:has(.bp-dock-model) {
+    scroll-padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+  body.my27-page:has(.bp-dock-model) {
+    padding-bottom: calc(var(--bp-model-dock-height, 4rem + env(safe-area-inset-bottom)) + 1rem);
+  }
+}

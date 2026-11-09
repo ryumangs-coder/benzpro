@@ -51,7 +51,7 @@
     if (file === "prices") return "prices";
     if (file === "quote") return "quote";
     if (file === "models") return "models";
-    if (file === "preorder" || file === "glb-electric") return "preorder";
+    if (file === "preorder" || file === "glb-electric" || file === "gle-my27" || file === "gls-my27") return "preorder";
     if (file === "warranty" || file === "cards" || file === "mou") return file;
     return "";
   }
@@ -131,6 +131,27 @@
     '<a class="bp-dock-yt" href="' + YT + '" target="_blank" rel="noopener noreferrer" aria-label="유튜브" title="유튜브">' + I.yt + '<span class="bp-dock-label" aria-hidden="true">유튜브</span></a>' +
     '<a class="bp-dock-kakao" href="' + KAKAO + '" target="_blank" rel="noopener noreferrer" aria-label="벤츠프로 카카오톡 채널 상담" title="벤츠프로 카카오톡 채널 상담">' + I.talk + '<span class="bp-dock-label" aria-hidden="true">카톡</span></a>' +
     '<a class="bp-dock-tel" href="' + TEL + '" aria-label="전화 문의" title="전화 문의">' + I.phone + '<span class="bp-dock-label" aria-hidden="true">전화</span></a>';
+
+  function mountModelDock() {
+    var reserve = document.querySelector(".my27-reserve a[href]");
+    if (!reserve) return;
+    dock.classList.add("bp-dock-model");
+    dock.querySelector(".bp-dock-top").remove();
+
+    var link = document.createElement("a");
+    link.href = reserve.getAttribute("href");
+    link.className = "bp-dock-reserve";
+    link.dataset.cta = pageFile().split("-")[0] + "_my27_bar";
+    link.innerHTML = I.cal + '<span class="bp-dock-label">사전예약</span>';
+    dock.append(link);
+
+    function measure() {
+      document.body.style.setProperty("--bp-model-dock-height", dock.offsetHeight + "px");
+    }
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(dock);
+    else window.addEventListener("resize", measure);
+    measure();
+  }
 
   var parent = document.body || document.documentElement;
   parent.insertBefore(dock, parent.firstChild);
@@ -614,6 +635,7 @@
       if (old.id !== "bp-head") old.remove();
     });
     document.body.classList.add("bp-has-kakao");
+    mountModelDock();
     normalizeKakao(document);
     tidyBars();
     decorateQuote();
