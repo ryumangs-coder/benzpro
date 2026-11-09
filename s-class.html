@@ -41,6 +41,7 @@
     .sc-image-grid img:first-child{height:460px;grid-row:span 2}
     .sc-table-shell{overflow:auto;border-radius:18px;border:1px solid var(--sc-line);background:var(--sc-card)}
     .sc-table{width:100%;min-width:820px;border-collapse:collapse;text-align:left;font-size:14px;line-height:1.55}
+    .sc-equipment-table{min-width:1060px}
     .sc-table caption{padding:14px;text-align:left;color:var(--sc-muted)}
     .sc-table th,.sc-table td{padding:15px 14px;border-bottom:1px solid #314b58;vertical-align:top}
     .sc-table thead th{font-size:12px;letter-spacing:.04em;color:#d2dce0;background:#1a3948}
@@ -52,8 +53,7 @@
     .sc-feature{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;margin-top:18px;padding:14px;border-radius:22px;background:#122936;border:1px solid #405965;color:#fff}
     .sc-feature img{width:100%;height:400px;object-fit:cover;border-radius:15px}.sc-feature-copy{padding:22px}
     .sc-feature-copy h3{font-size:27px;line-height:1.25;margin:0 0 12px}.sc-feature-copy p{color:#d1d0c9;line-height:1.85}
-    .sc-trim-list{display:grid;gap:10px}.sc-trim{display:grid;grid-template-columns:210px 1fr;gap:20px;padding:19px 21px;border-radius:16px;background:var(--sc-card);border:1px solid var(--sc-line)}
-    .sc-trim h3{font-size:17px;margin:0}.sc-trim p{font-size:14px;line-height:1.8;color:#c3cdd2;margin:0}.sc-trim strong{color:#e4cb86}
+    .sc-options-common{margin-top:15px;padding:19px 21px;border-radius:16px;background:#173746;border:1px solid #48616c;color:#d2dce0;line-height:1.8}.sc-options-common strong{color:#e4cb86}
     .sc-colors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
     .sc-colors figure{margin:0;padding:10px;border-radius:16px;background:var(--sc-card);border:1px solid var(--sc-line)}
     .sc-colors img{display:block;width:100%;height:150px;object-fit:cover;border-radius:11px;background:#183443}
@@ -108,16 +108,21 @@
     </section>
 
     <section class="sc-section" id="comfort">
-      <div class="sc-heading"><div><span class="sc-kicker">03 · Rear-seat comfort</span><h2>트림이 높아질수록<br>뒷좌석이 깊어집니다</h2></div><p>기본 사양에서 시작해 뒷좌석의 휴식과 엔터테인먼트, 차체 제어까지 단계별로 더해집니다.</p></div>
-      <div class="sc-feature"><img src="images/preorder/sclass-5.webp" alt="S-Class 롱바디 뒷좌석 화면과 실내"><div class="sc-feature-copy"><span class="sc-kicker" style="color:#e1ca8b">A calm space, in motion</span><h3>뒷좌석에 앉는 순간<br>이동은 휴식이 됩니다.</h3><p>롱바디는 뒷좌석 공간을 넓히고, 트림에 따라 전동 시트와 통풍, 마사지, 엔터테인먼트, 쇼퍼 패키지까지 선택 폭을 넓힙니다. 직접 운전할지, 뒷좌석을 주로 이용할지 먼저 정하면 트림이 쉬워집니다.</p></div></div>
-      <div class="sc-trim-list" style="margin-top:15px">
-        <article class="sc-trim"><h3>전 모델 기본</h3><p>디지털 라이트, MBUX 슈퍼스크린(중앙 14.4인치·동승석 12.3인치), 헤드업 디스플레이, 부메스터 3D 서라운드, 앞좌석 열선·통풍, 파노라믹 선루프, 에어 밸런스, 360° 카메라와 주행 보조 시스템 등을 갖춥니다.</p></article>
-        <article class="sc-trim"><h3>S 450에서 추가</h3><p>뒷좌석 전동 시트와 메모리, 뒷좌석 열선·통풍, 시트 히팅 플러스가 더해집니다. 숏바디와 롱바디는 휠과 시트 소재 등 세부 구성이 다릅니다.</p></article>
-        <article class="sc-trim"><h3>롱 Exclusive</h3><p>뒷좌석 컴포트 패키지, 뒷좌석 무선 충전과 리모컨, 뒷좌석 에어백, 엔터테인먼트와 무선 헤드셋, 앞좌석 액티브 멀티컨투어 시트 등을 더합니다.</p></article>
-        <article class="sc-trim"><h3>롱 AMG Line</h3><p>컴포트 패키지 플러스, 마사지, 쇼퍼 패키지, 이그제큐티브 시트와 벨트 피더가 포함됩니다. 뒷바퀴 조향각은 10도 사양으로 커져 좁은 길에서 회전 편의성을 높입니다.</p></article>
-        <article class="sc-trim"><h3>S 500에서 추가</h3><p>증강현실 헤드업 디스플레이와 3D 계기반, 익스클루시브 패키지, E-액티브 바디 컨트롤 등이 더해져 차체 움직임과 승차감을 한층 세밀하게 조절합니다.</p></article>
-      </div>
-      <p class="sc-note">사양은 트림과 생산 시점에 따라 달라질 수 있습니다. 상담 시 원하시는 기능과 좌석 이용 방식을 알려 주시면 적용 가능한 구성을 확인해 드립니다.</p>
+      <div class="sc-heading"><div><span class="sc-kicker">03 · Equipment by trim</span><h2>기본 사양표로<br>트림별 차이를 비교합니다</h2></div><p>앞좌석 편의는 전 모델에 공통으로 들어갑니다. 뒷좌석 통풍, 안전벨트 구성, 헤드램프와 HUD에서 트림 차이가 선명합니다.</p></div>
+      <div class="sc-feature"><img src="images/preorder/sclass-5.webp" alt="S-Class 롱바디 뒷좌석 화면과 실내"><div class="sc-feature-copy"><span class="sc-kicker" style="color:#e1ca8b">A calm space, in motion</span><h3>뒷좌석의 편안함은<br>트림마다 다르게 설계됩니다.</h3><p>롱바디의 기본 사양부터 S 580과 마이바흐의 증강현실 HUD, 상위 에어백·벨트 구성까지 적용 모델을 표로 비교했습니다.</p></div></div>
+      <div class="sc-table-shell" style="margin-top:18px"><table class="sc-table sc-equipment-table"><caption>S-Class 트림별 기본 사양 비교 · 제공된 어프로치북 기준</caption><thead><tr><th scope="col">모델</th><th scope="col">주행 보조</th><th scope="col">MBUX</th><th scope="col">HUD</th><th scope="col">앞좌석</th><th scope="col">뒷좌석</th><th scope="col">에어백·벨트</th><th scope="col">헤드램프</th></tr></thead><tbody>
+        <tr><th scope="row">S 350 d 4MATIC</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>HUD</td><td>열선·통풍</td><td>열선</td><td>11개 · 열선 벨트</td><td>디지털 라이트</td></tr>
+        <tr><th scope="row">S 450 4MATIC 숏바디</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>HUD</td><td>열선·통풍</td><td>열선</td><td>11개 · 열선 벨트</td><td>디지털 라이트</td></tr>
+        <tr><th scope="row">S 450 4MATIC 롱바디 기본 사양</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>13개 · 열선 벨트</td><td>디지털 라이트</td></tr>
+        <tr><th scope="row">S 450 4MATIC 롱바디 Exclusive</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>11개 · 열선 벨트</td><td>디지털 라이트</td></tr>
+        <tr><th scope="row">S 450 4MATIC 롱바디 AMG Line</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>13개 · 열선 벨트</td><td>디지털 라이트</td></tr>
+        <tr><th scope="row">S 500 4MATIC 롱바디</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>15개 · 벨트백 · 열선 벨트</td><td>프로젝션 디지털 라이트</td></tr>
+        <tr><th scope="row">S 580 4MATIC 롱바디</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>증강현실 HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>15개 · 벨트백 · 열선 벨트</td><td>프로젝션 디지털 라이트</td></tr>
+        <tr><th scope="row">Mercedes-Maybach S 580</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>증강현실 HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>15개 · 벨트백 · 열선 벨트 · 벨트 피더</td><td>프로젝션 디지털 라이트</td></tr>
+        <tr><th scope="row">Mercedes-Maybach S 680</th><td>MB.DRIVE 어시스트</td><td>슈퍼스크린</td><td>증강현실 HUD</td><td>열선·통풍</td><td>열선·통풍</td><td>15개 · 벨트백 · 열선 벨트 · 벨트 피더</td><td>프로젝션 디지털 라이트</td></tr>
+      </tbody></table></div>
+      <div class="sc-options-common"><strong>전 모델 공통 기본 사양</strong><br>앞좌석 열선·통풍 · MBUX 슈퍼스크린 · MB.DRIVE 어시스트 · HUD · 디지털 라이트 계열 · 액티브 앰비언트 라이트 · 파노라마 선루프 · 360° 카메라 · 에어 밸런스</div>
+      <p class="sc-note">트림별 기본 사양은 제공된 어프로치북 S-Class 사양표를 기준으로 정리했습니다. 선택 사양과 생산 시점별 세부 구성은 계약 전에 확인해 주세요.</p>
     </section>
 
     <section class="sc-section" id="editions">
