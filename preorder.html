@@ -311,6 +311,9 @@
           } else {
             window.addEventListener("load", scheduleReservationJump, { once: true });
           }
+          window.addEventListener("pageshow", function (event) {
+            if (event.persisted && location.hash === "#reserve") scheduleReservationJump();
+          });
         }
         document.querySelectorAll("[data-pick]").forEach(function (btn) {
           btn.addEventListener("click", function () {
