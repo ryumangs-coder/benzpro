@@ -54,3 +54,15 @@ body.my27-page{margin:0;background:var(--my27-paper);color:#1c1917;font-family:P
 @media(max-width:780px){.my27-hero-grid{grid-template-columns:1fr;gap:22px;padding-top:20px}.my27-hero-copy{max-width:650px}.my27-gallery{grid-template-columns:1fr}.my27-stage img{min-height:220px;max-height:420px}.my27-thumbs{grid-template-columns:repeat(4,minmax(0,1fr))}.my27-thumb img{height:68px}.my27-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.my27-section{padding-top:44px}}
 @media(max-width:540px){.my27-wrap{width:calc(100% - 24px)}.my27-top{padding:14px 0}.my27-top .brand{font-size:13px}.my27-hero{padding-bottom:32px}.my27-hero-grid{padding-top:13px}.my27-hero-photo{border-radius:18px}.my27-pill{font-size:13px}.my27-thumbs{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.my27-thumb{padding:5px;border-radius:12px}.my27-thumb img{height:62px;border-radius:8px}.my27-thumb span{font-size:14px;padding-top:6px}.my27-card-grid,.my27-lineups,.my27-seat-grid{grid-template-columns:1fr}.my27-card{padding:19px}.my27-card h3{font-size:20px}.my27-card p,.my27-lineup p,.my27-seat-copy p{font-size:16px}.my27-lineup{padding:20px}.my27-bottom-inner{width:100%;gap:8px}.my27-bottom p{display:none}.my27-cta{width:100%;padding:7px 12px;font-size:15px;line-height:1.25;min-height:50px;white-space:normal;text-align:center}}
 @media(prefers-reduced-motion:reduce){.my27-thumb,.my27-stage img{transition:none}}
+
+/* Match the shared Benzpro dark theme on the model guides. */
+body.my27-page{--my27-paper:#0b1f2a;--my27-ink:#f1f5f7;--my27-muted:#b8c6cd;color:#edf2f4}
+.my27-hero{background:#102936}
+.my27-section-head p,.my27-card p,.my27-lineup p,.my27-lineup ul,.my27-seat-copy p,.my27-caution,.my27-bottom p{color:#c8d4da}
+.my27-card,.my27-lineup,.my27-seat,.my27-thumb,.my27-caution{background:#142e3b;border-color:#2f4855}
+.my27-thumb{color:#f1f5f7}
+.my27-thumb[aria-pressed="true"]{border-color:#e4cb86}
+.my27-lineup .eyebrow{color:#e4cb86}
+.my27-wheel{background:#263e4b;color:#f0d99e}
+.my27-bottom{background:#0b1f2af5;border-color:#2f4855;z-index:41}
+.my27-page .my27-stage{margin:0}
