@@ -985,12 +985,7 @@
     var HOOK = "https://script.google.com/macros/s/AKfycbxxmpBDdwXA5mqTpXznNTpMoOBah2nRgHc69cIe4yQ1iww-U79CXGcxFGdh-o96J7Qd/exec";
     var request = window.BenzSubmit
       ? window.BenzSubmit.post(HOOK, body.toString())
-      : fetch(HOOK, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-          body: body.toString()
-        });
+      : Promise.reject(new Error("submission unavailable"));
     var leadRow = car.value === "상담 후 결정" ? null : calcRow();
     var leadPay = leadRow ? state.pay : "";
     track(function (T) { T.formSubmit("home_consult", T.vehicleParams(leadRow, leadPay), button); });

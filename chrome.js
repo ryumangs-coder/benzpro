@@ -538,7 +538,7 @@
         else if (kind === "timeout") reject(new Error("timeout"));
         else if (kind === "server") reject(new Error("http 500"));
         else if (kind === "confirmed") {
-          var res = { type: "basic", ok: true, status: 200, json: function () { return Promise.resolve({ ok: true }); } };
+          var res = { type: "basic", ok: true, status: 200, json: function () { return Promise.resolve({ ok: true }); }, text: function () { return Promise.resolve("success"); } };
           res.clone = function () { return res; };
           resolve(res);
         } else resolve({ type: "opaque", ok: false, status: 0 });
@@ -590,7 +590,7 @@
         live.textContent = "";
       };
     },
-    /* 기존 방식 그대로 전송합니다(no-cors). 응답 본문은 읽을 수 없어, 네트워크 오류·시간 초과·HTTP 오류가 확인될 때만 실패로 처리합니다. */
+    /* Apps Script가 시트 저장 뒤 반환하는 success만 접수 완료로 봅니다. CORS 실패·불투명 응답·오류 본문은 성공으로 처리하지 않습니다. */
     post: function (url, body) {
       if (SUBMIT_TEST) return mockPost();
       return new Promise(function (resolve, reject) {
@@ -601,14 +601,27 @@
         }, SUBMIT_TIMEOUT);
         fetch(url, {
           method: "POST",
-          mode: "no-cors",
+          mode: "cors",
+          credentials: "omit",
           headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
           body: body,
           signal: ctrl ? ctrl.signal : undefined
         }).then(function (res) {
-          window.clearTimeout(timer);
-          if (res && res.type !== "opaque" && res.ok === false) reject(new Error("http " + res.status));
-          else resolve(res);
+          if (!res || !res.ok || res.type === "opaque" || res.type === "opaqueredirect") {
+            window.clearTimeout(timer);
+            reject(new Error("http " + (res ? res.status : 0)));
+            return;
+          }
+          res.clone().text().then(function (text) {
+            window.clearTimeout(timer);
+            var confirmed = text.trim() === "success";
+            try { confirmed = confirmed || JSON.parse(text).ok === true; } catch (err) { /* plain success response */ }
+            if (!confirmed) reject(new Error("http unconfirmed"));
+            else resolve(res);
+          }, function (err) {
+            window.clearTimeout(timer);
+            reject(err);
+          });
         }, function (err) {
           window.clearTimeout(timer);
           reject(err);

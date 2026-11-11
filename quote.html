@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="dark" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261106-contact-clicks"></script>
+    <meta charset="UTF-8" /> <meta name="color-scheme" content="dark" /><style id="bp-theme-lock">:root{color-scheme:dark}html{background:#0b1f2a}</style><script src="bp-measure.js?v=20261111-conversion"></script>
     <meta name="naver-site-verification" content="040c95fca8b7b0d82a222f853cb5733638b03ce0" />
     <link rel="icon" type="image/png" sizes="48x48" href="/images/brand/icon-48.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -248,9 +248,9 @@
       #car-empty { color: #c5ced3; font-size: 16px; }
     </style>
       <link rel="stylesheet" href="ready-stock.css?v=20261107-flap" />
-<link rel="stylesheet" href="november-benefits.css?v=20261104-theme" /><link rel="stylesheet" href="vehicle-ui.css?v=20261108-ux"></head>
+<link rel="stylesheet" href="november-benefits.css?v=20261104-theme" /><link rel="stylesheet" href="vehicle-ui.css?v=20261108-ux"><link rel="stylesheet" href="selection-contact.css?v=20261111"><script src="selection-contact.js?v=20261111"></script></head>
   <body class="bp-quote-page bp-inline-contact bg-[#F6F3EE] text-[#1C1917] antialiased">
-<script src="chrome.js?v=20261108-sticky"></script>
+<script src="chrome.js?v=20261111-confirmed"></script>
     
 
     <main class="mx-auto max-w-6xl px-4 pb-36 pt-8"><aside id="s-class-guide" hidden class="mb-5 rounded-3xl border border-[#E4CB86]/40 bg-[#10222C] p-4 text-white"><p class="font-bold text-[#E4CB86]">S-Class를 알아보고 계신가요?</p><p class="mt-1 text-[15px] text-[#D8E0E4]">차량 안내와 1:1 맞춤 견적 상담을 확인하세요.</p><a href="/s-class" class="mt-3 inline-flex rounded-full bg-[#E4CB86] px-4 py-2.5 font-bold text-[#0B1F2A]">S-Class 자세히 보기 →</a></aside>
@@ -265,7 +265,7 @@
             <p>아래 차종을 누르면 다른 모델로 바꿀 수 있습니다.</p>
             <label class="sr-only" for="car">차종</label>
             <select id="car" data-pick-kicker="현재 선택한 차종" data-pick-action="차종 변경" data-pick-search="차종명 검색" data-pick-placeholder="모델명 또는 연식"></select>
-            <div id="car-photo" class="mt-3"></div>
+            <div id="selected-contact"></div><div id="car-photo" class="mt-3"></div>
             <div id="family-filters" class="vehicle-filters" aria-label="관련 차종 필터"></div><div id="family" class="vehicle-models" aria-label="관련 차종 선택" aria-live="polite"></div>
           </div>
           <div id="q-video"></div>
@@ -351,7 +351,7 @@
       </div>
     </main>
 
-    <script src="october-2026.js?v=20261105-special"></script><script src="november-retail.js?v=20261105-special"></script><script src="november-2026.js?v=20261102-full"></script><script src="vehicle-catalogue.js?v=20261102-nav"></script><script src="november-finance.js?v=20261105-special"></script><script src="november-benefits.js?v=20261104-theme"></script>
+    <script src="october-2026.js?v=20261111-price"></script><script src="november-retail.js?v=20261105-special"></script><script src="november-2026.js?v=20261102-full"></script><script src="vehicle-catalogue.js?v=20261102-nav"></script><script src="november-finance.js?v=20261105-special"></script><script src="november-benefits.js?v=20261104-theme"></script>
     <script src="quote.js?v=20261105-special"></script>
     <script src="benz-video.js?v=20261102-nav"></script>
     <script src="ready-stock-data.js?v=20261105-availability"></script><script src="ready-stock.js?v=20261107-flap"></script><script src="stock.js?v=20261102b"></script>
@@ -536,6 +536,8 @@
             opt("showcar", "전시장에 오래 있던 차", "해당 차인지는 상담에서 확인합니다.", "+1%", true);
         }
         function paintSheet(view) {
+          document.getElementById("selected-contact").innerHTML = window.BenzSelectionContact(current, "#lead", "quote_selection");
+
           var q = view.q;
           var sold = isEnded(current);
           var st = stockOf(current);
